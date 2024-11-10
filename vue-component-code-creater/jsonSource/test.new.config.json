@@ -1,0 +1,29 @@
+{
+    "template": {
+      "el-radio-group": {
+        "value": 3,
+        "__children": [
+          {
+            "el-radio": {
+              "label": 3
+            }
+          },
+          {
+            "el-radio": {
+              "label": 3,
+              "__children": [
+                {
+                  "text": {
+                    "a": "a",
+                    "b": "b",
+                    "undefined": "备选项"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+  

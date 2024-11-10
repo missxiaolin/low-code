@@ -1,0 +1,17 @@
+{
+  "name": "html2object",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/test.js",
+    "build": "rollup index.js --file ./dist/bundle-common.js --format cjs"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^3.16.0",
+    "htmlparser2": "^6.0.0",
+    "rollup": "^4.17.0"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "vue-component-code-creater",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run buildCore && npm run buildHtml2Json",
+    "buildCore": "rollup ./src/core.js --file ./product/bundle-core-esm.js --format es --intro \"//该文件会遍历Object，获取关键的class,事件,data, 最终拼装为一个完整的SFC文件\"",
+    "buildCore4CJS": "rollup ./src/core.js --file ./product/bundle-core-common.js --format cjs --intro \"//该文件会遍历Object，获取关键的class,事件,data, 最终拼装为一个完整的SFC文件\"",
+    "buildHtml2Json": "rollup ./src/html2Json.js --file ./product/bundle-html2json-esm.js --format es --intro \"//该文件用于解析HTML，输出为Object对象\"",
+    "buildJson2Html4CJS": "rollup ./utils/json2xml.js --file ./product/bundle-json2html-common.js --format cjs --intro \"// 该文件用于将Object对象转换为HTML\"",
+    "buildHtml2Json4CJS": "rollup ./src/html2Json.js --file ./product/bundle-html2json-common.js --format cjs --intro \"//该文件用于解析HTML，输出为Object对象\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^2.60.2",
+    "prettier": "2.4.0"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^3.16.0",
+    "htmlparser2": "^6.0.0",
+    "lodash": "^4.17.21",
+    "ora": "^4.0.3",
+    "stringify-object": "^4.0.0"
+  }
+}
+
