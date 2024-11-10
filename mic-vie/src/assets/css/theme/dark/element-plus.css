@@ -1,0 +1,15 @@
+/**
+ * dark-blue 主题下的 Element Plus CSS 变量
+ * 在此查阅所有可自定义的变量：https://github.com/element-plus/element-plus/blob/dev/packages/theme-chalk/src/common/var.scss
+ * 也可以打开浏览器控制台选择元素，查看要覆盖的变量名
+ */
+
+html.dark {
+  --el-color-primary: #6C6E72 !important;
+
+  --el-color-primary-light-3: #863e3e;
+  --el-color-primary-dark-2: rgba(1, 167, 128, 0.7866666667);
+
+  /* search 全局 */
+  --search-bg-color: #1d1e1f;
+}
