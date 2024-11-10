@@ -1,0 +1,1 @@
+import{r as t}from"./fetch-DczUQKTY.js";function a(a){return t({url:"/adm/project/save",method:"post",data:a})}function r(a){return t({url:"/adm/project/list",method:"post",data:a})}function o(a){return t({url:"/adm/project/detail",method:"post",data:a})}export{a,o as b,r as p};

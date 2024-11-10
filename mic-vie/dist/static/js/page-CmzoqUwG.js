@@ -1,0 +1,1 @@
+import{r as t}from"./fetch-DczUQKTY.js";function a(a){return t({url:"/adm/page/save",method:"post",data:a})}function e(a){return t({url:"/adm/page/detail",method:"post",data:a})}function r(a){return t({url:"/adm/page/list",method:"post",data:a})}function o(a){return t({url:"/adm/page/generate",method:"post",data:a})}export{o as a,e as b,a as c,r as p};
