@@ -1,10 +1,20 @@
 <template>
-  <div class="editor-container" :id="uuid" :style="style"></div>
+  <div :id="uuid" :style="style"></div>
+  <!-- <div class="editor-container" :id="uuid" :style="style"></div> -->
 </template>
 
 <script>
 import { loadScript } from "../../utils/loadScript";
-import { uuid } from '../../utils/utils'
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
+import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
+import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import { uuid } from "../../utils/utils";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
+
+let editor;
+
 export default {
   props: {
     value: {
@@ -41,45 +51,34 @@ export default {
     return {
       style: "",
       uuid: uuid(10),
+      text: "",
     };
   },
   mounted() {
-    loadScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/loader.js",
-      "monaco-editor",
-      async () => {
-        let url = `${window.location.origin}/vie/edit.js`
-        if (process.env.NODE_ENV === 'development') {
-          url = '/edit.js'
-        }
-        loadScript(url, "monaco-editor-config", async () => {
-          const fn = () => {
-            if (!window.monaco) {
-              setTimeout(() => {
-                fn();
-              }, 50);
-              return;
-            }
-            this.editor = monaco.editor.create(document.getElementById(`${this.uuid}`), {
-              ...this.options,
-              value: this.value,
-              language: this.language
-            });
-            this.style = `width: ${this.width};height: ${this.height};`;
-          };
-          setTimeout(() => {
-            fn();
-          }, 20);
-        });
-      }
-    );
+    this.style = `width: ${this.width};height: ${this.height};`;
+    this.text = this.value;
+    this.editorInit();
   },
   methods: {
+    editorInit() {
+      this.$nextTick(() => {
+        editor = monaco.editor.create(document.getElementById(`${this.uuid}`), {
+          ...this.options,
+          value: this.text,
+          language: this.language
+        });
+        // 监听值的变化
+        editor.onDidChangeModelContent((val) => {
+          // text.value = editor.getValue();
+          this.text = editor.getValue();
+        });
+      });
+    },
     getEditorCode() {
-      let code = this.editor.getValue()
+      let code = editor.getValue();
       const excludeUnuseal = code.replace("export default ", "");
-      return excludeUnuseal
-    }
-  }
+      return excludeUnuseal;
+    },
+  },
 };
 </script>

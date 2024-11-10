@@ -7,13 +7,25 @@ import commonjs from "rollup-plugin-commonjs";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import svgLoader from "vite-svg-loader";
 import externalGlobals from "rollup-plugin-external-globals";
+import monacoEditorPlugin from 'vite-plugin-monaco-editor'
+
+// 强制预构建插件包
+//  optimizeDeps: {
+//   include: [
+//     `monaco-editor/esm/vs/language/json/json.worker`,
+//     `monaco-editor/esm/vs/language/css/css.worker`,
+//     `monaco-editor/esm/vs/language/html/html.worker`,
+//     `monaco-editor/esm/vs/language/typescript/ts.worker`,
+//     `monaco-editor/esm/vs/editor/editor.worker`
+//   ],
+// },
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   const isBuild = command === "build";
   return {
     // 生产环境需要在域名基础上加上vie
-    base: isBuild ? "/vie" : "/",
+    base: "/",
     server: {
       fs: {
         // 可以为项目根目录的上一级提供服务
@@ -43,9 +55,11 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
       ],
       extensions: [".vue", ".js"],
     },
-
     plugins: [
       vue(),
+      monacoEditorPlugin.default({
+        languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html', 'css']
+      }),
       /** 将 SVG 静态图转化为 Vue 组件 */
       svgLoader({ defaultImport: "url" }),
       /** SVG */
@@ -53,6 +67,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
         iconDirs: [path.resolve(process.cwd(), "src/assets/icons")],
         symbolId: "icon-[name]",
       }),
+      
     ],
     build: {
       target: "es2015",

@@ -459,14 +459,14 @@ export default {
 .vcc-box {
   width: 100%;
   display: flex;
-  min-height: calc(100vh - 90px);
+  min-height: 100vh;
   height: auto;
   overflow: hidden;
 }
 
 .main-main {
   width: 100%;
-  min-height: calc(100vh - 90px);
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   flex: 1;

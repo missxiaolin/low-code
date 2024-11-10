@@ -545,5 +545,6 @@ export default {
 .vue-ruler-wrapper {
   overflow: auto;
   overflow-x: hidden;
+  z-index: 1;
 }
 </style>
