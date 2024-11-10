@@ -1,6 +1,6 @@
 <template>
   <el-card class="row-container">
-    <el-scrollbar height="calc(100vh - 130px)" class="row-container-scrollbar">
+    <el-scrollbar height="100%" class="row-container-scrollbar">
       <el-collapse v-model="activeNames">
         <el-collapse-item
           v-for="(item, index) in iconArray"
