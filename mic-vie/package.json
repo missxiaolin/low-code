@@ -59,7 +59,7 @@
     "require": "^2.4.20",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-external-globals": "^0.10.0",
-    "sass": "^1.75.0",
+    "sass": "1.32.13",
     "sass-loader": "^14.2.1",
     "terser": "^5.31.0",
     "vite": "^5.2.0",
