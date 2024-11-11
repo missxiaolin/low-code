@@ -14,13 +14,7 @@
           />
         </el-tab-pane>
         <el-tab-pane label="自定义组件" name="custom">
-          <lFormA
-            v-if="componentName == 'l-form' || componentName == 'l-s-form'"
-            :componentName="componentName"
-            v-model:localAttributes="localAttributes"
-            @childSave="childSave"
-          />
-          <el-empty v-else description="该组件不支持设定"></el-empty>
+          <el-empty description="该组件不支持设定"></el-empty>
         </el-tab-pane>
         <el-tab-pane label="高级" name="senior">
           <div style="text-align: center">
@@ -177,13 +171,11 @@ import { getRawComponentKey, getRawComponentContent } from "@/utils/common";
 import { brotherEleEnum, copyBroCode } from "@/libs/bro-ele-config";
 import keymaster from "keymaster";
 import styleComponent from "./vccComponents/style.vue";
-import lFormA from "./vccComponents/l-form-a.vue";
 import { store as _store } from "@/libs/store.js";
 
 export default {
   components: {
     styleComponent,
-    lFormA,
   },
   props: [
     "__rawVueInfo__",
