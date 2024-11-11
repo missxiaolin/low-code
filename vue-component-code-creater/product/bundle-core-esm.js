@@ -1,6 +1,8 @@
 //该文件会遍历Object，获取关键的class,事件,data, 最终拼装为一个完整的SFC文件
 
-import stringifyObject from 'stringify-object';
+import postcss from 'postcss';
+import isRegexp from 'is-regexp';
+import isObject from 'is-obj';
 import _ from 'lodash';
 import prettier from 'prettier/standalone.js';
 import parserBabel from 'prettier/parser-babel.js';
@@ -24,29 +26,127 @@ function vueTemplate () {
 }
 
 const scriptTemplate = `{
-    props: [],
-    components: {},
-    data() {
-      return {
-        // $datas
-      };
+  props: [],
+  components: {},
+  data() {
+    return {
+      // $datas
+    };
+  },
+  watch: {},
+  computed: {},
+  created() {},
+  mounted() {},
+  methods: {
+    request() {
     },
-    watch: {},
-    computed: {},
-    beforeCreate() {},
-    created() {},
-    beforeMount() {},
-    mounted() {},
-    beforeUpdate() {},
-    updated() {},
-    destroyed() {},
-    methods: {
-      request() {
-      },
-      // $eventMethods
-    },
-    fillter: {},
+    // $eventMethods
+  },
+  
 };`;
+
+function mergeSameClassStyles() {
+  return {
+    postcssPlugin: "merge-same-class-styles",
+    Once: function (root) {
+      const mergedRules = {};
+
+      root.walkRules((rule) => {
+        const selector = rule.selector;
+        const declarations = rule.nodes;
+
+        if (mergedRules[selector]) {
+          declarations.forEach((declaration) => {
+            const property = declaration.prop;
+            const value = declaration.value;
+            const important = declaration.important;
+
+            if (mergedRules[selector][property]) {
+              // Check if the property value is important and update accordingly
+              if (important || !mergedRules[selector][property].important) {
+                mergedRules[selector][property] = {
+                  value: value,
+                  important: important,
+                };
+              } else {
+                const existingValue = mergedRules[selector][property].value;
+                const newValue = value;
+
+                if (existingValue !== newValue) {
+                  // Compare and update if new value is greater
+                  if (parseInt(newValue, 10) > parseInt(existingValue, 10)) {
+                    mergedRules[selector][property] = {
+                      value: value,
+                      important: important,
+                    };
+                  }
+                }
+              }
+            } else {
+              mergedRules[selector][property] = {
+                value: value,
+                important: important,
+              };
+            }
+          });
+        } else {
+          mergedRules[selector] = {};
+          declarations.forEach((declaration) => {
+            const property = declaration.prop;
+            const value = declaration.value;
+            const important = declaration.important;
+            mergedRules[selector][property] = {
+              value: value,
+              important: important,
+            };
+          });
+        }
+      });
+
+      root.removeAll();
+
+      Object.keys(mergedRules).forEach((selector) => {
+        const rule = postcss.rule({ selector: selector });
+
+        Object.keys(mergedRules[selector]).forEach((property) => {
+          const { value, important } = mergedRules[selector][property];
+          const declaration = postcss.decl({ prop: property, value: value });
+
+          if (important) {
+            declaration.important = true;
+          }
+
+          rule.append(declaration);
+        });
+
+        root.append(rule);
+      });
+    },
+  };
+}
+
+function mCss(cssStr1, cssStr2) {
+  return new Promise((resolve, reject) => {
+    // 合并两个CSS字符串
+    const combinedCss = cssStr1 + cssStr2;
+
+    // 将合并后的CSS字符串转换为PostCSS Root对象
+    const root = postcss.parse(combinedCss);
+
+    // 使用自定义插件和autoprefixer处理CSS
+    postcss([mergeSameClassStyles()])
+      .process(root, { from: undefined }) // `from`设置为undefined避免PostCSS在输出中添加source map注释
+      .then((result) => {
+        // 输出或使用处理后的CSS
+        const finalCss = result.css;
+        resolve(finalCss);
+        // 或者写入文件等其他操作
+      })
+      .catch((error) => {
+        console.error("Error processing CSS:", error);
+      });
+  });
+}
 
 // 生成一个方法
 function generateFunction(functionName) {
@@ -101,12 +201,13 @@ function replaceMethods(template, set, options) {
 }
 
 // 从模板中替换样式
-function replaceStyles(template, set, options) {
+// 从模板中替换样式
+const replaceStyles = async (template, set, options, customCss = '') => {
   return template.replace(
     "/** $stylesTemplate */",
-    convertStyles(set, options)
+    await mCss(convertStyles(set, options), customCss)
   );
-}
+};
 
 // 从模板中替换样式
 function replaceDatas(template, set, options) {
@@ -452,12 +553,186 @@ function isCDATA(name) {
 //indentation
 //\n after each closing or self closing tag
 
+const getOwnEnumPropSymbols = (object) =>
+  Object.getOwnPropertySymbols(object).filter((keySymbol) =>
+    Object.prototype.propertyIsEnumerable.call(object, keySymbol)
+  );
+
+function stringifyObject(input, options, pad) {
+  const seen = [];
+
+  return (function stringify(input, options = {}, pad = "") {
+    const indent = options.indent || "\t";
+
+    let tokens;
+    if (options.inlineCharacterLimit === undefined) {
+      tokens = {
+        newline: "\n",
+        newlineOrSpace: "\n",
+        pad,
+        indent: pad + indent,
+      };
+    } else {
+      tokens = {
+        newline: "@@__STRINGIFY_OBJECT_NEW_LINE__@@",
+        newlineOrSpace: "@@__STRINGIFY_OBJECT_NEW_LINE_OR_SPACE__@@",
+        pad: "@@__STRINGIFY_OBJECT_PAD__@@",
+        indent: "@@__STRINGIFY_OBJECT_INDENT__@@",
+      };
+    }
+
+    const expandWhiteSpace = (string) => {
+      if (options.inlineCharacterLimit === undefined) {
+        return string;
+      }
+
+      const oneLined = string
+        .replace(new RegExp(tokens.newline, "g"), "")
+        .replace(new RegExp(tokens.newlineOrSpace, "g"), " ")
+        .replace(new RegExp(tokens.pad + "|" + tokens.indent, "g"), "");
+
+      if (oneLined.length <= options.inlineCharacterLimit) {
+        return oneLined;
+      }
+
+      return string
+        .replace(
+          new RegExp(tokens.newline + "|" + tokens.newlineOrSpace, "g"),
+          "\n"
+        )
+        .replace(new RegExp(tokens.pad, "g"), pad)
+        .replace(new RegExp(tokens.indent, "g"), pad + indent);
+    };
+
+    if (seen.includes(input)) {
+      return '"[Circular]"';
+    }
+
+    if (
+      input === null ||
+      input === undefined ||
+      typeof input === "number" ||
+      typeof input === "boolean" ||
+      typeof input === "function" ||
+      typeof input === "symbol" ||
+      isRegexp(input)
+    ) {
+      return String(input);
+    }
+
+    if (input instanceof Date) {
+      return `new Date('${input.toISOString()}')`;
+    }
+
+    if (Array.isArray(input)) {
+      if (input.length === 0) {
+        return "[]";
+      }
+
+      seen.push(input);
+
+      const returnValue =
+        "[" +
+        tokens.newline +
+        input
+          .map((element, i) => {
+            const eol =
+              input.length - 1 === i
+                ? tokens.newline
+                : "," + tokens.newlineOrSpace;
+
+            let value = stringify(element, options, pad + indent);
+            if (options.transform) {
+              value = options.transform(input, i, value);
+            }
+
+            return tokens.indent + value + eol;
+          })
+          .join("") +
+        tokens.pad +
+        "]";
+
+      seen.pop();
+
+      return expandWhiteSpace(returnValue);
+    }
+
+    if (isObject(input)) {
+      let objectKeys = [...Object.keys(input), ...getOwnEnumPropSymbols(input)];
+
+      if (options.filter) {
+        objectKeys = objectKeys.filter((element) =>
+          options.filter(input, element)
+        );
+      }
+
+      if (objectKeys.length === 0) {
+        return "{}";
+      }
+
+      seen.push(input);
+
+      const returnValue =
+        "{" +
+        tokens.newline +
+        objectKeys
+          .map((element, i) => {
+            const eol =
+              objectKeys.length - 1 === i
+                ? tokens.newline
+                : "," + tokens.newlineOrSpace;
+            const isSymbol = typeof element === "symbol";
+            const isClassic = !isSymbol && /^[a-z$_][$\w]*$/i.test(element);
+            const key =
+              isSymbol || isClassic ? element : stringify(element, options);
+
+            let value = stringify(input[element], options, pad + indent);
+            if (options.transform) {
+              value = options.transform(input, element, value);
+            }
+
+            return tokens.indent + String(key) + ": " + value + eol;
+          })
+          .join("") +
+        tokens.pad +
+        "}";
+
+      seen.pop();
+
+      return expandWhiteSpace(returnValue);
+    }
+
+    input = String(input).replace(/[\r\n]/g, (x) =>
+      x === "\n" ? "\\n" : "\\r"
+    );
+
+    if (options.singleQuotes === false) {
+      input = input.replace(/"/g, '\\"');
+      return `"${input}"`;
+    }
+
+    input = input.replace(/\\?'/g, "\\'");
+    return `'${input}'`;
+  })(input, options, pad);
+}
+
 const { merge, cloneDeep } = _;
 
 const rawAdd = Set.prototype.add;
-Set.prototype.add = function (value) {
-  rawAdd.apply(this, arguments);
-};
+try {
+  // 为何不能给add赋值？且没有报错？
+  Set.prototype.addeee = function (value) {
+    if (typeof value === "string" && checkKeyword(value))
+      rawAdd.apply(this, arguments);
+  };
+  // 经验证可以赋值，而代码会直接跳转至最后一行
+} catch (error) {
+  console.error(error);
+}
+
+function checkKeyword(value) {
+  return value != "true" && value != "false";
+}
 
 /**
  * @param {*} template
@@ -526,6 +801,10 @@ function findVarFormExpression(expression) {
   }
 }
 
+function sort(set) {
+  return new Set(Array.from(set).sort());
+}
+
 // 核心代码
 class CodeGenerator {
   constructor(options = {}) {
@@ -538,13 +817,18 @@ class CodeGenerator {
     this.methodSet = new Set();
     // 数据引用放入其中
     this.dataSet = new Set();
+
     this.externalJS = {};
+
+    this.customCss = "";
   }
+
   clearDataSet() {
     this.classSet.clear();
     this.methodSet.clear();
     this.dataSet.clear();
   }
+
   /**
    * 设置外部编辑代码
    * @param {*} code
@@ -552,6 +836,15 @@ class CodeGenerator {
   setExternalJS(JSCodeInfo) {
     this.externalJS = cloneDeep(JSCodeInfo);
   }
+
+  /**
+   * 设置外部css
+   * @param {*} cssCode
+   */
+  setExternalCss(cssCode) {
+    this.customCss = cssCode;
+  }
+
   /**
    * 直接输入Json文本
    * @param {*} json
@@ -560,27 +853,33 @@ class CodeGenerator {
     this.jsonObj = JSON.parse(json);
     return this.outputVueCodeWithJsonObj(this.jsonObj);
   }
+
   /**
    * 输入Json对象
    * @param {*} jsonObj
    */
   outputVueCodeWithJsonObj(_jsonObj) {
     this.jsonObj = _jsonObj;
+
     // 解析对象
     this.parseJson(_jsonObj);
+
     // 对集合进行排序
     this.dataSet = sort(this.dataSet);
     this.methodSet = sort(this.methodSet);
     this.classSet = sort(this.classSet);
+
     // 生成执行结果
     return this.generateResult();
   }
 
   // 将所有需要替换的内容通过装饰器逐步替换
-  replaceKeyInfo() {
+  async replaceKeyInfo() {
     // 将对象转换为html并替换
     const templateTemp = replaceHtmlTemplate(getVueTemplate(), this.jsonObj);
+
     // ==================== 生成脚本 ====================
+
     // 生成方法
     const methodTemp = replaceMethods(
       scriptTemplate,
@@ -589,24 +888,34 @@ class CodeGenerator {
     );
     // 生成data
     const dataTemp = replaceDatas(methodTemp, this.dataSet, this.options);
+
     // 转化为对象
     const JSCodeInfo = eval(`(function(){return ${dataTemp}})()`);
+
     // 合并外部脚本对象
     let externalData = {};
+
     if (this.externalJS && typeof this.externalJS.data === "function") {
       externalData = this.externalJS.data();
       // 防止在后面的生成污染新的对象
       delete this.externalJS.data;
     }
+
     // 生成新的data返回值
     const newData = merge({}, JSCodeInfo.data(), externalData);
+
     const dataFunction = new Function(`return ${stringifyObject(newData)}`);
+
     JSCodeInfo.data = dataFunction;
+
     let externalJSLogic = {};
+
     if (this.externalJS) {
       externalJSLogic = this.externalJS;
     }
+
     const mergedJSObject = merge(JSCodeInfo, externalJSLogic);
+
     // 序列化为脚本代码
     const finalJSCode = stringifyObject(mergedJSObject, {
       transform: (object, property, originalResult) => {
@@ -621,10 +930,13 @@ class CodeGenerator {
           );
           return after;
         }
+
         return originalResult;
       },
     });
+
     // ==================== 生成脚本 ====================
+
     const beautiful = prettier.format(`export default ` + finalJSCode, {
       semi: false,
       parser: "babel",
@@ -633,10 +945,17 @@ class CodeGenerator {
     const excludeUnuseal = beautiful.replace("export default ", "");
     // 插入到最终模板
     const JSTemp = templateTemp.replace("// $script", excludeUnuseal);
+
     // 生成class
-    const styleTemp = replaceStyles(JSTemp, this.classSet, this.options);
+    const styleTemp = await replaceStyles(
+      JSTemp,
+      this.classSet,
+      this.options,
+      this.customCss
+    );
     return styleTemp;
   }
+
   // 分发解析结果
   deliveryResult(key, value) {
     if (key === "class") {
@@ -644,12 +963,12 @@ class CodeGenerator {
       classes.forEach((item) => {
         // 处理多个空字符串
         if (!item) return;
-        this.classSet.add(item);
+        this.classSet.addeee(item);
       });
     } else if (/^v-on/g.test(key) || /^@/g.test(key)) {
       // 匹配@,v-on
       if (getVarName(value)) {
-        this.methodSet.add(value);
+        this.methodSet.addeee(value);
       }
     } else if (/^v-/g.test(key) || /^:+/g.test(key)) {
       // 优先使Method消费，因为有的:也是method
@@ -658,7 +977,7 @@ class CodeGenerator {
         this.options.checkIsMethodDirectives(key)
       ) {
         value = getVarName(value);
-        value && this.methodSet.add(value);
+        value && this.methodSet.addeee(value);
       }
       // 业务侧可能会全部消费/^:+/g.test(key)
       else if (
@@ -666,7 +985,7 @@ class CodeGenerator {
         this.options.checkIsDataDirectives(key)
       ) {
         value = getVarName(value);
-        value && this.dataSet.add(value);
+        value && this.dataSet.addeee(value);
       } else {
         this.options.unSupportedKey && this.options.unSupportedKey(key, value);
       }
@@ -676,7 +995,7 @@ class CodeGenerator {
         // 用于匹配v-text {{}}
         const temp = findVarFormExpression(value);
         temp.forEach((element) => {
-          this.dataSet.add(element);
+          this.dataSet.addeee(element);
         });
       }
     } else {
@@ -684,6 +1003,7 @@ class CodeGenerator {
       this.options.unSupportedKey && this.options.unSupportedKey(key, value);
     }
   }
+
   generateResult() {
     // 需要输出的结果有：
     // 1.html template
@@ -693,6 +1013,7 @@ class CodeGenerator {
     // 返回一个格式化后的字符串
     return this.replaceKeyInfo();
   }
+
   // 递归解析Json
   parseJson(json) {
     for (const key in json) {
@@ -710,4 +1031,4 @@ class CodeGenerator {
   }
 }
 
-export { CodeGenerator };
+export { CodeGenerator, sort };

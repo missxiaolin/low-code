@@ -1,26 +1,151 @@
 //该文件会遍历Object，获取关键的class,事件,data, 最终拼装为一个完整的SFC文件
-import stringifyObject from "@/libs/stringify-object";
-import merge from "lodash-es/merge";
-import cloneDeep from "lodash-es/cloneDeep";
-import prettier from "prettier/standalone.js";
-import parserBabel from "prettier/parser-babel.js";
-import { mCss } from './m-css'
+
+import postcss from 'postcss';
+import isRegexp from 'is-regexp';
+import isObject from 'is-obj';
+import _ from 'lodash';
+import prettier from 'prettier/standalone.js';
+import parserBabel from 'prettier/parser-babel.js';
 
 // 导出组件模板文件
 
-function vueTemplate() {
-  return `<template> 
-<!--在此自动生成--> 
-</template>
+function vueTemplate () {
+    return `
+  <template> 
+    <!--在此自动生成--> 
+  </template>
+  
+  <script>
+  export default // $script
+  </script>
+  
+  <style scoped>
+  /** $stylesTemplate */
+  </style>
+    `;
+}
 
-<script>
-export default // $script
-</script>
+const scriptTemplate = `{
+  props: [],
+  components: {},
+  data() {
+    return {
+      // $datas
+    };
+  },
+  watch: {},
+  computed: {},
+  created() {},
+  mounted() {},
+  methods: {
+    request() {
+    },
+    // $eventMethods
+  },
+  
+};`;
 
-<style scoped>
-/** $stylesTemplate */
-</style>
-  `;
+function mergeSameClassStyles() {
+  return {
+    postcssPlugin: "merge-same-class-styles",
+    Once: function (root) {
+      const mergedRules = {};
+
+      root.walkRules((rule) => {
+        const selector = rule.selector;
+        const declarations = rule.nodes;
+
+        if (mergedRules[selector]) {
+          declarations.forEach((declaration) => {
+            const property = declaration.prop;
+            const value = declaration.value;
+            const important = declaration.important;
+
+            if (mergedRules[selector][property]) {
+              // Check if the property value is important and update accordingly
+              if (important || !mergedRules[selector][property].important) {
+                mergedRules[selector][property] = {
+                  value: value,
+                  important: important,
+                };
+              } else {
+                const existingValue = mergedRules[selector][property].value;
+                const newValue = value;
+
+                if (existingValue !== newValue) {
+                  // Compare and update if new value is greater
+                  if (parseInt(newValue, 10) > parseInt(existingValue, 10)) {
+                    mergedRules[selector][property] = {
+                      value: value,
+                      important: important,
+                    };
+                  }
+                }
+              }
+            } else {
+              mergedRules[selector][property] = {
+                value: value,
+                important: important,
+              };
+            }
+          });
+        } else {
+          mergedRules[selector] = {};
+          declarations.forEach((declaration) => {
+            const property = declaration.prop;
+            const value = declaration.value;
+            const important = declaration.important;
+            mergedRules[selector][property] = {
+              value: value,
+              important: important,
+            };
+          });
+        }
+      });
+
+      root.removeAll();
+
+      Object.keys(mergedRules).forEach((selector) => {
+        const rule = postcss.rule({ selector: selector });
+
+        Object.keys(mergedRules[selector]).forEach((property) => {
+          const { value, important } = mergedRules[selector][property];
+          const declaration = postcss.decl({ prop: property, value: value });
+
+          if (important) {
+            declaration.important = true;
+          }
+
+          rule.append(declaration);
+        });
+
+        root.append(rule);
+      });
+    },
+  };
+}
+
+function mCss(cssStr1, cssStr2) {
+  return new Promise((resolve, reject) => {
+    // 合并两个CSS字符串
+    const combinedCss = cssStr1 + cssStr2;
+
+    // 将合并后的CSS字符串转换为PostCSS Root对象
+    const root = postcss.parse(combinedCss);
+
+    // 使用自定义插件和autoprefixer处理CSS
+    postcss([mergeSameClassStyles()])
+      .process(root, { from: undefined }) // `from`设置为undefined避免PostCSS在输出中添加source map注释
+      .then((result) => {
+        // 输出或使用处理后的CSS
+        const finalCss = result.css;
+        resolve(finalCss);
+        // 或者写入文件等其他操作
+      })
+      .catch((error) => {
+        console.error("Error processing CSS:", error);
+      });
+  });
 }
 
 // 生成一个方法
@@ -76,12 +201,13 @@ function replaceMethods(template, set, options) {
 }
 
 // 从模板中替换样式
+// 从模板中替换样式
 const replaceStyles = async (template, set, options, customCss = '') => {
   return template.replace(
     "/** $stylesTemplate */",
     await mCss(convertStyles(set, options), customCss)
   );
-}
+};
 
 // 从模板中替换样式
 function replaceDatas(template, set, options) {
@@ -199,8 +325,7 @@ Parser.prototype.j2x = function (jObj, level) {
   const len = keys.length;
   for (let i = 0; i < len; i++) {
     const key = keys[i];
-    if (typeof jObj[key] === "undefined");
-    else if (jObj[key] === null) {
+    if (typeof jObj[key] === "undefined") ; else if (jObj[key] === null) {
       val += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
     } else if (jObj[key] instanceof Date) {
       val += this.buildTextNode(jObj[key], key, "", level);
@@ -255,8 +380,7 @@ Parser.prototype.j2x = function (jObj, level) {
       } else {
         //tag value
         if (key === this.options.textNodeName) {
-          if (jObj[this.options.cdataTagName]);
-          else {
+          if (jObj[this.options.cdataTagName]) ; else {
             val += this.options.tagValueProcessor("" + jObj[key]);
           }
         } else {
@@ -280,8 +404,7 @@ Parser.prototype.j2x = function (jObj, level) {
         const arrLen = jObj[key].length;
         for (let j = 0; j < arrLen; j++) {
           const item = jObj[key][j];
-          if (typeof item === "undefined");
-          else if (item === null) {
+          if (typeof item === "undefined") ; else if (item === null) {
             val += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
           } else if (typeof item === "object") {
             const result = this.j2x(item, level + 1);
@@ -429,40 +552,193 @@ function isCDATA(name) {
 //formatting
 //indentation
 //\n after each closing or self closing tag
-// beforeCreate() {},
-// beforeMount() {},
-// beforeUpdate() {},
-//     updated() {},
-//     destroyed() {},
-// fillter: {},
-const scriptTemplate = `{
-    props: [],
-    components: {},
-    data() {
-      return {
-        // $datas
+
+const getOwnEnumPropSymbols = (object) =>
+  Object.getOwnPropertySymbols(object).filter((keySymbol) =>
+    Object.prototype.propertyIsEnumerable.call(object, keySymbol)
+  );
+
+function stringifyObject(input, options, pad) {
+  const seen = [];
+
+  return (function stringify(input, options = {}, pad = "") {
+    const indent = options.indent || "\t";
+
+    let tokens;
+    if (options.inlineCharacterLimit === undefined) {
+      tokens = {
+        newline: "\n",
+        newlineOrSpace: "\n",
+        pad,
+        indent: pad + indent,
       };
-    },
-    watch: {},
-    computed: {},
-    created() {},
-    mounted() {},
-    methods: {
-      request() {
-      },
-      // $eventMethods
-    },
-    
-  };`;
+    } else {
+      tokens = {
+        newline: "@@__STRINGIFY_OBJECT_NEW_LINE__@@",
+        newlineOrSpace: "@@__STRINGIFY_OBJECT_NEW_LINE_OR_SPACE__@@",
+        pad: "@@__STRINGIFY_OBJECT_PAD__@@",
+        indent: "@@__STRINGIFY_OBJECT_INDENT__@@",
+      };
+    }
+
+    const expandWhiteSpace = (string) => {
+      if (options.inlineCharacterLimit === undefined) {
+        return string;
+      }
+
+      const oneLined = string
+        .replace(new RegExp(tokens.newline, "g"), "")
+        .replace(new RegExp(tokens.newlineOrSpace, "g"), " ")
+        .replace(new RegExp(tokens.pad + "|" + tokens.indent, "g"), "");
+
+      if (oneLined.length <= options.inlineCharacterLimit) {
+        return oneLined;
+      }
+
+      return string
+        .replace(
+          new RegExp(tokens.newline + "|" + tokens.newlineOrSpace, "g"),
+          "\n"
+        )
+        .replace(new RegExp(tokens.pad, "g"), pad)
+        .replace(new RegExp(tokens.indent, "g"), pad + indent);
+    };
+
+    if (seen.includes(input)) {
+      return '"[Circular]"';
+    }
+
+    if (
+      input === null ||
+      input === undefined ||
+      typeof input === "number" ||
+      typeof input === "boolean" ||
+      typeof input === "function" ||
+      typeof input === "symbol" ||
+      isRegexp(input)
+    ) {
+      return String(input);
+    }
+
+    if (input instanceof Date) {
+      return `new Date('${input.toISOString()}')`;
+    }
+
+    if (Array.isArray(input)) {
+      if (input.length === 0) {
+        return "[]";
+      }
+
+      seen.push(input);
+
+      const returnValue =
+        "[" +
+        tokens.newline +
+        input
+          .map((element, i) => {
+            const eol =
+              input.length - 1 === i
+                ? tokens.newline
+                : "," + tokens.newlineOrSpace;
+
+            let value = stringify(element, options, pad + indent);
+            if (options.transform) {
+              value = options.transform(input, i, value);
+            }
+
+            return tokens.indent + value + eol;
+          })
+          .join("") +
+        tokens.pad +
+        "]";
+
+      seen.pop();
+
+      return expandWhiteSpace(returnValue);
+    }
+
+    if (isObject(input)) {
+      let objectKeys = [...Object.keys(input), ...getOwnEnumPropSymbols(input)];
+
+      if (options.filter) {
+        objectKeys = objectKeys.filter((element) =>
+          options.filter(input, element)
+        );
+      }
+
+      if (objectKeys.length === 0) {
+        return "{}";
+      }
+
+      seen.push(input);
+
+      const returnValue =
+        "{" +
+        tokens.newline +
+        objectKeys
+          .map((element, i) => {
+            const eol =
+              objectKeys.length - 1 === i
+                ? tokens.newline
+                : "," + tokens.newlineOrSpace;
+            const isSymbol = typeof element === "symbol";
+            const isClassic = !isSymbol && /^[a-z$_][$\w]*$/i.test(element);
+            const key =
+              isSymbol || isClassic ? element : stringify(element, options);
+
+            let value = stringify(input[element], options, pad + indent);
+            if (options.transform) {
+              value = options.transform(input, element, value);
+            }
+
+            return tokens.indent + String(key) + ": " + value + eol;
+          })
+          .join("") +
+        tokens.pad +
+        "}";
+
+      seen.pop();
+
+      return expandWhiteSpace(returnValue);
+    }
+
+    input = String(input).replace(/[\r\n]/g, (x) =>
+      x === "\n" ? "\\n" : "\\r"
+    );
+
+    if (options.singleQuotes === false) {
+      input = input.replace(/"/g, '\\"');
+      return `"${input}"`;
+    }
+
+    input = input.replace(/\\?'/g, "\\'");
+    return `'${input}'`;
+  })(input, options, pad);
+}
+
+const { merge, cloneDeep } = _;
+
+const rawAdd = Set.prototype.add;
+try {
+  // 为何不能给add赋值？且没有报错？
+  Set.prototype.addeee = function (value) {
+    if (typeof value === "string" && checkKeyword(value))
+      rawAdd.apply(this, arguments);
+  };
+  // 经验证可以赋值，而代码会直接跳转至最后一行
+} catch (error) {
+  console.error(error);
+}
 
 function checkKeyword(value) {
   return value != "true" && value != "false";
 }
 
-function sort(set) {
-  return new Set(Array.from(set).sort());
-}
-
+/**
+ * @param {*} template
+ * @param {*} jsonObj
+ * @returns
+ */
 function replaceHtmlTemplate(template, jsonObj) {
   const defaultOptions = {
     attributeNamePrefix: "@_",
@@ -525,7 +801,12 @@ function findVarFormExpression(expression) {
   }
 }
 
-export class CodeGenerator {
+function sort(set) {
+  return new Set(Array.from(set).sort());
+}
+
+// 核心代码
+class CodeGenerator {
   constructor(options = {}) {
     this.options = options;
     // 解析后的Json对象
@@ -539,7 +820,7 @@ export class CodeGenerator {
 
     this.externalJS = {};
 
-    this.customCss = ""
+    this.customCss = "";
   }
 
   clearDataSet() {
@@ -558,10 +839,10 @@ export class CodeGenerator {
 
   /**
    * 设置外部css
-   * @param {*} cssCode 
+   * @param {*} cssCode
    */
   setExternalCss(cssCode) {
-    this.customCss = cssCode
+    this.customCss = cssCode;
   }
 
   /**
@@ -666,7 +947,12 @@ export class CodeGenerator {
     const JSTemp = templateTemp.replace("// $script", excludeUnuseal);
 
     // 生成class
-    const styleTemp = await replaceStyles(JSTemp, this.classSet, this.options, this.customCss);
+    const styleTemp = await replaceStyles(
+      JSTemp,
+      this.classSet,
+      this.options,
+      this.customCss
+    );
     return styleTemp;
   }
 
@@ -745,14 +1031,4 @@ export class CodeGenerator {
   }
 }
 
-const rawAdd = Set.prototype.add;
-try {
-  //为何不能给add赋值？且没有报错？
-  Set.prototype.addeee = function (value) {
-    if (typeof value === "string" && checkKeyword(value))
-      rawAdd.apply(this, arguments);
-  };
-  // 经验证可以赋值，而代码会直接跳转至最后一行
-} catch (error) {
-  console.error(error);
-}
+export { CodeGenerator, sort };

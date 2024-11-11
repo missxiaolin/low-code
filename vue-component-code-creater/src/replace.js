@@ -1,3 +1,5 @@
+import { mCss } from "./m-css"
+
 // 生成一个方法
 function generateFunction(functionName) {
   return `${functionName}: function(){}`;
@@ -51,10 +53,11 @@ export function replaceMethods(template, set, options) {
 }
 
 // 从模板中替换样式
-export function replaceStyles(template, set, options) {
+// 从模板中替换样式
+export const replaceStyles = async (template, set, options, customCss = '') => {
   return template.replace(
     "/** $stylesTemplate */",
-    convertStyles(set, options)
+    await mCss(convertStyles(set, options), customCss)
   );
 }
 

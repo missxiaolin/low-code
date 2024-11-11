@@ -2,7 +2,7 @@ import vueTemplate from "../template/index.js";
 import { scriptTemplate } from "../template/script.js";
 import { replaceDatas, replaceMethods, replaceStyles } from "./replace.js";
 import { Parser } from "../utils/json2xml.js";
-import stringifyObject from "stringify-object";
+import stringifyObject from "./stringify-object";
 import _ from "lodash";
 import prettier from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
@@ -11,7 +11,7 @@ const { merge, cloneDeep } = _;
 
 const rawAdd = Set.prototype.add;
 try {
-  //为何不能给add赋值？且没有报错？
+  // 为何不能给add赋值？且没有报错？
   Set.prototype.addeee = function (value) {
     if (typeof value === "string" && checkKeyword(value))
       rawAdd.apply(this, arguments);
@@ -92,6 +92,10 @@ function findVarFormExpression(expression) {
   }
 }
 
+export function sort(set) {
+  return new Set(Array.from(set).sort());
+}
+
 // 核心代码
 export class CodeGenerator {
   constructor(options = {}) {
@@ -104,13 +108,18 @@ export class CodeGenerator {
     this.methodSet = new Set();
     // 数据引用放入其中
     this.dataSet = new Set();
+
     this.externalJS = {};
+
+    this.customCss = "";
   }
+
   clearDataSet() {
     this.classSet.clear();
     this.methodSet.clear();
     this.dataSet.clear();
   }
+
   /**
    * 设置外部编辑代码
    * @param {*} code
@@ -118,6 +127,15 @@ export class CodeGenerator {
   setExternalJS(JSCodeInfo) {
     this.externalJS = cloneDeep(JSCodeInfo);
   }
+
+  /**
+   * 设置外部css
+   * @param {*} cssCode
+   */
+  setExternalCss(cssCode) {
+    this.customCss = cssCode;
+  }
+
   /**
    * 直接输入Json文本
    * @param {*} json
@@ -126,27 +144,33 @@ export class CodeGenerator {
     this.jsonObj = JSON.parse(json);
     return this.outputVueCodeWithJsonObj(this.jsonObj);
   }
+
   /**
    * 输入Json对象
    * @param {*} jsonObj
    */
   outputVueCodeWithJsonObj(_jsonObj) {
     this.jsonObj = _jsonObj;
+
     // 解析对象
     this.parseJson(_jsonObj);
+
     // 对集合进行排序
     this.dataSet = sort(this.dataSet);
     this.methodSet = sort(this.methodSet);
     this.classSet = sort(this.classSet);
+
     // 生成执行结果
     return this.generateResult();
   }
 
   // 将所有需要替换的内容通过装饰器逐步替换
-  replaceKeyInfo() {
+  async replaceKeyInfo() {
     // 将对象转换为html并替换
     const templateTemp = replaceHtmlTemplate(getVueTemplate(), this.jsonObj);
+
     // ==================== 生成脚本 ====================
+
     // 生成方法
     const methodTemp = replaceMethods(
       scriptTemplate,
@@ -155,24 +179,34 @@ export class CodeGenerator {
     );
     // 生成data
     const dataTemp = replaceDatas(methodTemp, this.dataSet, this.options);
+
     // 转化为对象
     const JSCodeInfo = eval(`(function(){return ${dataTemp}})()`);
+
     // 合并外部脚本对象
     let externalData = {};
+
     if (this.externalJS && typeof this.externalJS.data === "function") {
       externalData = this.externalJS.data();
       // 防止在后面的生成污染新的对象
       delete this.externalJS.data;
     }
+
     // 生成新的data返回值
     const newData = merge({}, JSCodeInfo.data(), externalData);
+
     const dataFunction = new Function(`return ${stringifyObject(newData)}`);
+
     JSCodeInfo.data = dataFunction;
+
     let externalJSLogic = {};
+
     if (this.externalJS) {
       externalJSLogic = this.externalJS;
     }
+
     const mergedJSObject = merge(JSCodeInfo, externalJSLogic);
+
     // 序列化为脚本代码
     const finalJSCode = stringifyObject(mergedJSObject, {
       transform: (object, property, originalResult) => {
@@ -187,10 +221,13 @@ export class CodeGenerator {
           );
           return after;
         }
+
         return originalResult;
       },
     });
+
     // ==================== 生成脚本 ====================
+
     const beautiful = prettier.format(`export default ` + finalJSCode, {
       semi: false,
       parser: "babel",
@@ -199,10 +236,17 @@ export class CodeGenerator {
     const excludeUnuseal = beautiful.replace("export default ", "");
     // 插入到最终模板
     const JSTemp = templateTemp.replace("// $script", excludeUnuseal);
+
     // 生成class
-    const styleTemp = replaceStyles(JSTemp, this.classSet, this.options);
+    const styleTemp = await replaceStyles(
+      JSTemp,
+      this.classSet,
+      this.options,
+      this.customCss
+    );
     return styleTemp;
   }
+
   // 分发解析结果
   deliveryResult(key, value) {
     if (key === "class") {
@@ -232,7 +276,7 @@ export class CodeGenerator {
         this.options.checkIsDataDirectives(key)
       ) {
         value = getVarName(value);
-        value && this.dataSet.add(value);
+        value && this.dataSet.addeee(value);
       } else {
         this.options.unSupportedKey && this.options.unSupportedKey(key, value);
       }
@@ -242,7 +286,7 @@ export class CodeGenerator {
         // 用于匹配v-text {{}}
         const temp = findVarFormExpression(value);
         temp.forEach((element) => {
-          this.dataSet.add(element);
+          this.dataSet.addeee(element);
         });
       }
     } else {
@@ -250,6 +294,7 @@ export class CodeGenerator {
       this.options.unSupportedKey && this.options.unSupportedKey(key, value);
     }
   }
+
   generateResult() {
     // 需要输出的结果有：
     // 1.html template
@@ -259,6 +304,7 @@ export class CodeGenerator {
     // 返回一个格式化后的字符串
     return this.replaceKeyInfo();
   }
+
   // 递归解析Json
   parseJson(json) {
     for (const key in json) {

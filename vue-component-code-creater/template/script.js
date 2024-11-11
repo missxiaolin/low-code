@@ -1,24 +1,19 @@
 export const scriptTemplate = `{
-    props: [],
-    components: {},
-    data() {
-      return {
-        // $datas
-      };
+  props: [],
+  components: {},
+  data() {
+    return {
+      // $datas
+    };
+  },
+  watch: {},
+  computed: {},
+  created() {},
+  mounted() {},
+  methods: {
+    request() {
     },
-    watch: {},
-    computed: {},
-    beforeCreate() {},
-    created() {},
-    beforeMount() {},
-    mounted() {},
-    beforeUpdate() {},
-    updated() {},
-    destroyed() {},
-    methods: {
-      request() {
-      },
-      // $eventMethods
-    },
-    fillter: {},
+    // $eventMethods
+  },
+  
 };`;
