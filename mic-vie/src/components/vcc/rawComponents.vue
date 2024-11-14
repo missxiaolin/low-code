@@ -18,43 +18,25 @@
 </template>
 
 <script>
-import elBase from "../../rawComponents/elBase/index.vue";
 import htmlRow from "../../rawComponents/html/index.vue";
-import elForm from "../../rawComponents/elForm/index.vue";
 import customRow from "../../rawComponents/custom/index.vue";
 
 export default {
   components: {
-    elBase,
     htmlRow,
-    elForm,
     customRow,
   },
   computed: {},
   data() {
     return {
       isExpand: true,
-      activeNames: ['htmlRow', 'elBase', 'elForm', 'customRow'],
+      activeNames: ["htmlRow", "customRow"],
       iconArray: [
         {
           labelName: "html组件",
           className: "demonstration-raw",
           selectIndex: 0,
           componentName: "htmlRow",
-          titleArray: [],
-        },
-        {
-          labelName: "el基础组件",
-          className: "demonstration-element-base",
-          selectIndex: 1,
-          componentName: "elBase",
-          titleArray: [],
-        },
-        {
-          labelName: "el表单组件",
-          className: "demonstration-element-form",
-          selectIndex: 2,
-          componentName: "elForm",
           titleArray: [],
         },
         {

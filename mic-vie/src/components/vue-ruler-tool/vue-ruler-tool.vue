@@ -64,11 +64,11 @@ export default {
   props: {
     width: {
       type: [String],
-      default: ""
+      default: "",
     },
     height: {
       type: [String],
-      default: ""
+      default: "",
     },
     position: {
       type: String,
@@ -136,7 +136,7 @@ export default {
         r: 82,
       }, // 快捷键参数
       rulerToggle: true, // 标尺辅助线显示开关
-      time: null
+      time: null,
     };
   },
   computed: {
@@ -211,18 +211,17 @@ export default {
         : this.dragVerticalLine(id);
     },
     regenerateScale() {
-      this.time && clearTimeout(this.time)
+      this.time && clearTimeout(this.time);
       this.time = setTimeout(() => {
         // 根据内容部分进行刻度修正
         let content = this.$refs.vueRulerWrapper;
-        this.xScale = []
-        this.yScale = []
+        this.xScale = [];
+        this.yScale = [];
         this.$refs.verticalRuler.style.height = "100%";
         this.getCalc(this.xScale, content.scrollWidth);
         this.getCalc(this.yScale, content.scrollHeight);
         this.$refs.verticalRuler.style.height = content.scrollHeight + "px";
-      }, 200)
-      
+      }, 200);
     },
     box() {
       if (this.isScaleRevise) {
@@ -230,7 +229,6 @@ export default {
         const content = this.$refs.content;
         const contentLeft = content.offsetLeft;
         const contentTop = content.offsetTop;
-        
 
         this.getCalcRevise(this.xScale, contentLeft);
         this.getCalcRevise(this.yScale, contentTop);

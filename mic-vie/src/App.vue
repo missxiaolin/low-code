@@ -1,7 +1,5 @@
 <template>
-  <el-config-provider :locale="lang">
-    <router-view></router-view>
-  </el-config-provider>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -17,8 +15,8 @@ export default {
   mounted() {
     const { initTheme } = useTheme();
 
-    initTheme()
-  }
+    initTheme();
+  },
 };
 </script>
 

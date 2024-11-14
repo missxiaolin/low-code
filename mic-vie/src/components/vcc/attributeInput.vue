@@ -7,15 +7,18 @@
     </div>
     <el-scrollbar height="calc(100vh - 130px)" v-else>
       <el-tabs v-model="activeName">
+        <el-tab-pane label="组件设置" name="component">
+          <el-empty description="请选择组件"></el-empty>
+        </el-tab-pane>
         <el-tab-pane label="样式" name="style">
           <styleComponent
             v-model:localAttributes="localAttributes"
             @childSave="childSave"
           />
         </el-tab-pane>
-        <el-tab-pane label="自定义组件" name="custom">
+        <!-- <el-tab-pane label="自定义组件" name="custom">
           <el-empty description="该组件不支持设定"></el-empty>
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane label="高级" name="senior">
           <div style="text-align: center">
             <el-switch
