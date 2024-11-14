@@ -2,68 +2,66 @@
   <div class="top-tools-bar">
     <ul>
       <!-- <li>
-        <el-link
-          type="primary"
+        <a-button type="link"
           @click="$emit('undo')"
           style="margin-right: 3px"
         >
           <svg-icon icon-class="undo" />
-        </el-link>
-        <el-link type="primary" @click="$emit('redo')" class="ml5">
+        <a-button>
+        <a-button type="primary" @click="$emit('redo')" class="ml5">
           <svg-icon icon-class="redo" />
-        </el-link>
+        </<a-button>
       </li> -->
       <li>
-        <el-link
-          :type="editMode ? 'primary' : 'danger'"
-          @click="onEditModeChange"
-        >
-          <el-icon class="mr5"><View v-if="editMode" /><Edit v-else /></el-icon
-          >{{ editMode ? "视图" : "编辑" }}
-        </el-link>
+        <a-button type="link" @click="onEditModeChange">
+          <EyeOutlined v-if="editMode" />
+          <EyeInvisibleOutlined v-else />
+
+          {{ editMode ? "视图" : "编辑" }}
+        </a-button>
       </li>
       <li>
-        <el-link type="primary" @click="$emit('structureVisible')">
-          <el-icon class="mr5"><Guide /></el-icon>结构树
-        </el-link>
+        <a-button type="link" @click="$emit('structureVisible')">
+          <ApartmentOutlined />结构树
+        </a-button>
       </li>
     </ul>
     <ul>
       <li>
-        <el-link type="primary" @click="$emit('clear')">
-          <el-icon class="mr5"><Delete /></el-icon>
+        <a-button type="link" @click="$emit('clear')">
+          <DeleteOutlined />
           清空
-        </el-link>
+        </a-button>
       </li>
       <li>
-        <el-link type="primary" @click="$emit('showVueDialogVisible')">
-          <el-icon class="mr5"><Edit /></el-icon>
+        <a-button type="link" @click="$emit('showVueDialogVisible')">
+          <FormOutlined />
           Vue 二次编辑
-        </el-link>
+        </a-button>
       </li>
       <li>
-        <el-link type="primary" @click="$emit('showCssDialogVisible')">
-          <el-icon class="mr5"><Edit /></el-icon>
+        <a-button type="link" @click="$emit('showCssDialogVisible')">
+          <FormOutlined />
           编辑Css
-        </el-link>
+        </a-button>
       </li>
       <li>
-        <el-link type="primary" @click="$emit('showJsDialogVisible')">
-          <el-icon class="mr5"><Edit /></el-icon>
+        <a-button type="link" @click="$emit('showJsDialogVisible')">
+          <FormOutlined />
           编辑JS逻辑
-        </el-link>
+        </a-button>
       </li>
       <li>
-        <el-link type="primary" @click="$emit('showCodeDialogVisible')">
-          <el-icon class="mr5"><View /></el-icon>
+        <a-button type="link" @click="$emit('showCodeDialogVisible')">
+          <EyeOutlined />
           查看实时代码
-        </el-link>
+        </a-button>
       </li>
       <li>
-        <el-link type="primary" @click="$emit('save')">
-          <el-icon class="mr5"><Document /></el-icon>
+        <a-button type="link" @click="$emit('save')">
+          <SaveOutlined />
           保存
-        </el-link>
+        </a-button>
       </li>
     </ul>
   </div>
@@ -71,12 +69,14 @@
 
 <script>
 import { ElNotification } from "element-plus";
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons-vue";
+import { h } from "vue";
 
 export default {
   props: [],
-  components: {},
   data() {
     return {
+      h,
       previewMode: false,
       editMode: true,
     };

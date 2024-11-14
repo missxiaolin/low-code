@@ -1,11 +1,11 @@
 <template>
-  <el-dialog
+  <a-modal
     title="Vue二次编辑"
-    v-model="dialogVisible"
+    v-model:open="dialogVisible"
     width="70%"
-    top="10vh"
     :before-close="handleClose"
-    :center="true"
+    :mask="true"
+    :centered="true"
   >
     <codeEditor
       v-if="vueDialogVisible"
@@ -16,7 +16,7 @@
     ></codeEditor>
 
     <div style="text-align: center; padding: 10px">
-      <el-button type="primary" @click="compile">开始解析</el-button>
+      <a-button type="primary" @click="compile">开始解析</a-button>
       <div style="color: #6c6c6c; font-size: 12px; margin-top: 5px">
         Tips: 解析成功后VCC将展示解析后的效果
       </div>
@@ -24,7 +24,7 @@
         请检查语法错误：{{ error }}
       </div>
     </div>
-  </el-dialog>
+  </a-modal>
 </template>
 
 <script>
@@ -60,9 +60,9 @@ export default {
       // 创建DOMParser实例
       const parser = new DOMParser();
       // 解析HTML字符串
-      const doc = parser.parseFromString(code, 'text/html');
+      const doc = parser.parseFromString(code, "text/html");
       // 获取最外层的<template>标签
-      const templateElement = doc.querySelector('template');
+      const templateElement = doc.querySelector("template");
       // 提取并打印其内容
       const templateContent = templateElement.outerHTML;
       this.code = `${templateContent}`;
