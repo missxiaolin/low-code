@@ -1,5 +1,10 @@
 <template>
-  <el-drawer v-model="drawer" :with-header="false" size="70%" direction="btt">
+  <a-drawer
+    v-model:open="drawer"
+    width="90%"
+    placement="right"
+    root-class-name="code-drawer"
+  >
     <div class="cs-container">
       <div class="center">
         组件结构检视图
@@ -7,18 +12,13 @@
         <span style="font-size: 12px">Components Structure</span>
       </div>
 
-      <el-row :gutter="20" style="height: 0px; flex-grow: 1">
-        <el-col :span="16" style="height: 100%">
-          <div
-            class="container-left"
-            style="
-              
-            "
-          >
+      <a-row :gutter="20" style="height: 0px; flex-grow: 1">
+        <a-col :span="16" style="height: 100%">
+          <div class="container-left" style="">
             <nested-draggable :data="treeData" />
           </div>
-        </el-col>
-        <el-col :span="8" style="height: 100%; overflow:auto;">
+        </a-col>
+        <a-col :span="8" style="height: 100%; overflow: auto">
           <attribute-input
             ref="attributeInput"
             :isShowAttribute="currentEditRawInfo"
@@ -29,10 +29,10 @@
             :__rawVueInfo__="currentEditRawInfo"
           >
           </attribute-input>
-        </el-col>
-      </el-row>
+        </a-col>
+      </a-row>
     </div>
-  </el-drawer>
+  </a-drawer>
 </template>
 
 <script>
@@ -45,14 +45,13 @@ export default {
   props: ["visible", "initStructure"],
   emits: ["onLevelChange", "remove", "save", "update:visible", "reRender"],
   components: {
-    attributeInput: defineAsyncComponent(() =>
-      import("./attributeInput.vue")
-    ),
+    attributeInput: defineAsyncComponent(() => import("./attributeInput.vue")),
     nestedDraggable,
   },
 
   data() {
     return {
+      a: true,
       // 在此自动生成
       treeData: [],
     };
@@ -150,3 +149,9 @@ export default {
   border: 1px solid var(--el-border-color-light);
 }
 </style>
+
+<!-- <style lang="scss">
+.code-drawer {
+  height: 70%;
+}
+</style> -->

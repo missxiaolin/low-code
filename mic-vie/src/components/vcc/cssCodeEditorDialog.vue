@@ -1,7 +1,7 @@
 <template>
-  <el-dialog
+  <a-modal
     title="CSS编写"
-    v-model="dialogVisible"
+    v-model:open="dialogVisible"
     width="70%"
     top="10vh"
     :before-close="handleClose"
@@ -14,13 +14,15 @@
       :value="`${code}`"
     ></codeEditor>
 
-    <div class="js-bottom">
-      <div>
-        <el-button type="primary" @click="onSave">保存</el-button>
-        <div v-if="error" class="error">请检查语法错误：{{ error }}</div>
+    <template #footer>
+      <div class="js-bottom">
+        <div>
+          <a-button type="primary" @click="onSave">保存</a-button>
+          <div v-if="error" class="error">请检查语法错误：{{ error }}</div>
+        </div>
       </div>
-    </div>
-  </el-dialog>
+    </template>
+  </a-modal>
 </template>
 
 <script>
@@ -40,20 +42,20 @@ export default {
   data() {
     return {
       error: "",
-      code: '',
-      example: '',
+      code: "",
+      example: "",
     };
   },
   methods: {
     updateLogicCode(newCode) {
-      this.code = newCode || ""
+      this.code = newCode || "";
     },
     handleClose() {
       this.$emit("update:cssCodeDialogVisible", false);
     },
     onSave() {
       const code = this.$refs.codeEditor.getEditorCode();
-      this.$emit('saveCssCode', code);
+      this.$emit("saveCssCode", code);
       this.$emit("update:cssCodeDialogVisible", false);
     },
   },

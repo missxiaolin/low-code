@@ -1,11 +1,11 @@
 <template>
-  <el-card class="attribute-container">
+  <a-card class="attribute-container">
     <div v-if="!isShowAttribute" class="attribute-empty">
-      <el-empty description="还没有数据哦">
+      <a-empty description="还没有数据哦">
         <template #default> 赶快拖拽组件来生成你的H5页面吧～ </template>
-      </el-empty>
+      </a-empty>
     </div>
-    <el-scrollbar height="calc(100vh - 130px)" v-else>
+    <a-scrollbar height="calc(100vh - 130px)" v-else>
       <el-tabs v-model="activeName">
         <el-tab-pane label="组件设置" name="component">
           <el-empty description="请选择组件"></el-empty>
@@ -145,7 +145,7 @@
               placement="bottom"
             >
               <el-button type="danger" class="center" @click="remove" circle>
-                <el-icon><Delete /></el-icon>
+                <DeleteOutlined style="color: white" />
               </el-button>
             </el-tooltip>
             <el-tooltip
@@ -156,7 +156,7 @@
               placement="bottom"
             >
               <el-button type="primary" class="center" @click="copyBro" circle>
-                <el-icon><document-copy /></el-icon>
+                <CopyOutlined style="color: white" />
               </el-button>
             </el-tooltip>
             <div style="text-algin: center">
@@ -165,8 +165,8 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-    </el-scrollbar>
-  </el-card>
+    </a-scrollbar>
+  </a-card>
 </template>
 
 <script>

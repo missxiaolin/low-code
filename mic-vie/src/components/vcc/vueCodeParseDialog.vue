@@ -15,15 +15,17 @@
       :value="`${code}`"
     ></codeEditor>
 
-    <div style="text-align: center; padding: 10px">
-      <a-button type="primary" @click="compile">开始解析</a-button>
-      <div style="color: #6c6c6c; font-size: 12px; margin-top: 5px">
-        Tips: 解析成功后VCC将展示解析后的效果
+    <template #footer>
+      <div style="text-align: center; padding: 10px">
+        <a-button type="primary" @click="compile">开始解析</a-button>
+        <div style="color: #6c6c6c; font-size: 12px; margin-top: 5px">
+          Tips: 解析成功后VCC将展示解析后的效果
+        </div>
+        <div v-if="error" style="color: red; font-size: 12px; margin-top: 5px">
+          请检查语法错误：{{ error }}
+        </div>
       </div>
-      <div v-if="error" style="color: red; font-size: 12px; margin-top: 5px">
-        请检查语法错误：{{ error }}
-      </div>
-    </div>
+    </template>
   </a-modal>
 </template>
 

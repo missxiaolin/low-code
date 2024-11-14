@@ -57,7 +57,7 @@
         @save="onSaveAttr"
         @remove="onRemove"
         ref="codeStructure"
-        v-model="structureVisible"
+        v-model:visible="structureVisible"
         @reRender="render"
         :initStructure="codeRawVueInfo"
       >
@@ -99,7 +99,7 @@ import { replaceKeyInfo, getJsTemData } from "../utils/utils";
 import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
 import cssCodeEditor from "../components/vcc/cssCodeEditorDialog.vue";
 import vueEditor from "../components/vcc/vueCodeParseDialog.vue";
-import codeEditor from '../components/vcc/jSCodeEditorDialog.vue';
+import codeEditor from "../components/vcc/jSCodeEditorDialog.vue";
 import keymaster from "keymaster";
 
 export default {
@@ -312,7 +312,7 @@ export default {
       this.$emit("updateCodeEntity", {
         codeRawVueInfo: this.codeRawVueInfo,
         JSCode: this.JSCode,
-        css: this.customCss
+        css: this.customCss,
       });
     },
 
@@ -427,7 +427,7 @@ export default {
     },
 
     showVueDialogVisible() {
-      this.$refs.vueEditor.updateCode(this.code)
+      this.$refs.vueEditor.updateCode(this.code);
       this.vueDialogVisible = true;
     },
 

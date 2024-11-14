@@ -1,7 +1,7 @@
 <template>
-  <el-dialog
+  <a-modal
     title="代码预览"
-    v-model="dialogVisible"
+    v-model:open="dialogVisible"
     width="70%"
     top="10vh"
     :before-close="handleClose"
@@ -19,89 +19,48 @@
       使用代码前请确认相应的组件库已集成至项目
     </div>
     <div style="text-align: left">
-      <el-row>
-        <el-col :span="5">
+      <a-row>
+        <a-col :span="5">
           输出形式：
-          <el-radio-group
-            v-model="outputMode"
+          <a-radio-group
+            v-model:value="outputMode"
             style="display: flex; flex-direction: column"
           >
-            <el-radio label="vue">Vue</el-radio>
-            <el-radio label="vue3">Vue3 setup模式</el-radio>
-            <!-- <el-radio label="html">单页Html</el-radio> -->
-          </el-radio-group>
-        </el-col>
-
-        <el-col :span="5" v-if="outputMode === 'html'">
-          选择所使用的组件库：
-          <el-checkbox-group
-            v-model="checkList"
-            style="display: flex; flex-direction: column"
-          >
-            <el-checkbox label="ele">Element UI</el-checkbox>
-            <!-- <el-checkbox label="antd">Ant Design</el-checkbox> -->
-            <!-- <el-checkbox label="vant">Vant</el-checkbox> -->
-          </el-checkbox-group>
-        </el-col>
-        <el-col :span="4" v-if="outputMode === 'html'">
-          选择Vue版本：
-          <el-radio-group
-            v-model="vueVersion"
-            style="display: flex; flex-direction: column"
-          >
-            <el-radio label="2">Vue 2</el-radio>
-            <el-radio label="3">Vue 3</el-radio>
-          </el-radio-group>
-        </el-col>
-        <el-col :span="10" style="display: flex; flex-direction: column;">
+            <a-radio value="vue">Vue</a-radio>
+            <a-radio value="vue3">Vue3 setup模式</a-radio>
+          </a-radio-group>
+        </a-col>
+        <a-col :span="10" style="display: flex; flex-direction: column">
           代码获取方式：
-          <div style="margin-top: 10px;display: flex; flex-direction: row;">
-            <el-tooltip effect="dark" content="拷贝" placement="left">
-              <div
-                class="round-icon icon-js"
-                alt=""
-              >
-                <el-icon size="15" @click="copyCheck">
-                  <CopyDocument />
-                </el-icon>
+          <div style="margin-top: 10px; display: flex; flex-direction: row">
+            <a-tooltip placement="left">
+              <template #title>
+                <span>拷贝</span>
+              </template>
+              <div class="round-icon icon-js" alt="">
+                <CopyOutlined @click="copyCheck" style="color: #fff" />
               </div>
-            </el-tooltip>
-            <el-tooltip effect="dark" content="下载" placement="right">
+            </a-tooltip>
+            <a-tooltip placement="right">
+              <template #title>
+                <span>下载</span>
+              </template>
               <div
                 class="round-icon icon-js"
                 alt=""
                 @click="codeDialogVisible = true"
               >
-                <el-icon size="15" @click="download">
-                  <Download />
-                </el-icon>
+                <VerticalAlignBottomOutlined
+                  @click="download"
+                  style="color: #fff"
+                />
               </div>
-            </el-tooltip>
+            </a-tooltip>
           </div>
-          <!-- <div style="margin-top: 10px" v-if="outputMode === 'html'">
-            <el-input
-              v-model="fileName"
-              placeholder="部署文件名"
-              style="width: 150px; margin-right: 10px"
-              size="small"
-            >
-            </el-input>
-            <el-button
-              size="small"
-              type="danger"
-              :loading="loading"
-              @click="release"
-            >
-              一键部署至VCC静态页面托管服务</el-button
-            >
-            <div v-if="accessUrl">
-              部署成功：<a :href="accessUrl" target="_blank">{{ accessUrl }}</a>
-            </div>
-          </div> -->
-        </el-col>
-      </el-row>
+        </a-col>
+      </a-row>
     </div>
-  </el-dialog>
+  </a-modal>
 </template>
 
 <script>
@@ -110,7 +69,7 @@ import prettier from "prettier/standalone";
 import parserHtml from "prettier/parser-html";
 import copy from "copy-to-clipboard";
 import { saveAs } from "file-saver";
-import { toV3 } from '../../utils/toV3.js'
+import { toV3 } from "../../utils/toV3.js";
 
 import codeEditor from "./codeEditor.vue";
 import singleIndexOutput from "../../libs/singleIndexOutput.js";
@@ -194,8 +153,8 @@ export default {
       return this.outputMode === "vue";
     },
     outputCode() {
-      if (this.outputMode == 'vue3') {
-        return this.v2ToV3
+      if (this.outputMode == "vue3") {
+        return this.v2ToV3;
       }
       return this.isVueMode ? this.prettyCode : this.singleIndex;
     },

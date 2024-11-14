@@ -6,6 +6,8 @@ import {
   DeleteOutlined,
   FormOutlined,
   SaveOutlined,
+  VerticalAlignBottomOutlined,
+  CopyOutlined,
 } from "@ant-design/icons-vue";
 import "ant-design-vue/dist/reset.css";
 
@@ -18,4 +20,6 @@ export function loadAnt(app) {
   app.component("DeleteOutlined", DeleteOutlined);
   app.component("FormOutlined", FormOutlined);
   app.component("SaveOutlined", SaveOutlined);
+  app.component("VerticalAlignBottomOutlined", VerticalAlignBottomOutlined);
+  app.component("CopyOutlined", CopyOutlined);
 }

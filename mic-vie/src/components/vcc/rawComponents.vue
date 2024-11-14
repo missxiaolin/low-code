@@ -1,20 +1,24 @@
 <template>
-  <el-card class="row-container">
-    <el-scrollbar height="100%" class="row-container-scrollbar">
-      <el-collapse v-model="activeNames">
-        <el-collapse-item
-          v-for="(item, index) in iconArray"
-          :key="index"
-          :title="item.labelName"
+  <a-card class="row-container">
+    <a-scrollbar height="100%" class="row-container-scrollbar">
+      <a-collapse
+        v-model:activeKey="activeNames"
+        :bordered="false"
+        class="row-collapse"
+      >
+        <a-collapse-panel
+          v-for="item in iconArray"
+          :key="item.componentName"
+          :header="item.labelName"
           :name="item.componentName"
         >
           <keep-alive>
             <component :is="item.componentName" @mounted="onMouted"></component>
           </keep-alive>
-        </el-collapse-item>
-      </el-collapse>
-    </el-scrollbar>
-  </el-card>
+        </a-collapse-panel>
+      </a-collapse>
+    </a-scrollbar>
+  </a-card>
 </template>
 
 <script>
@@ -88,9 +92,12 @@ export default {
   .row-container-scrollbar {
     padding-right: 20px;
   }
-  :deep(.el-card__body) {
+  :deep(.ant-card-body) {
     width: 100%;
     padding-right: 0;
+  }
+  :deep(.ant-collapse) {
+    background-color: transparent !important;
   }
   .left-tabs {
     position: relative;
