@@ -6,29 +6,29 @@
       </a-empty>
     </div>
     <a-scrollbar height="calc(100vh - 130px)" v-else>
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="组件设置" name="component">
-          <el-empty description="请选择组件"></el-empty>
-        </el-tab-pane>
-        <el-tab-pane label="样式" name="style">
+      <a-tabs v-model:activeKey="activeName">
+        <a-tab-pane tab="组件设置" key="component">
+          <a-empty description="请选择组件"></a-empty>
+        </a-tab-pane>
+        <a-tab-pane tab="样式" key="style">
           <styleComponent
             v-model:localAttributes="localAttributes"
             @childSave="childSave"
           />
-        </el-tab-pane>
-        <!-- <el-tab-pane label="自定义组件" name="custom">
-          <el-empty description="该组件不支持设定"></el-empty>
-        </el-tab-pane> -->
-        <el-tab-pane label="高级" name="senior">
+        </a-tab-pane>
+        <a-tab-pane tab="自定义组件" key="custom">
+          <a-empty description="该组件不支持设定"></a-empty>
+        </a-tab-pane>
+        <a-tab-pane tab="高级" key="senior">
           <div style="text-align: center">
-            <el-switch
-              v-model="editMode"
+            <a-switch
+              v-model:checked="editMode"
               active-text="自由编辑"
               inactive-text="约束编辑"
               active-color="#13ce66"
               inactive-color="#13ce66"
             >
-            </el-switch>
+            </a-switch>
           </div>
 
           <div style="margin-top: 20px">
@@ -39,61 +39,62 @@
                   v-for="(item, index) in localAttributes"
                   :key="index"
                 >
-                  <el-input
-                    v-model="item.key"
+                  <a-input
+                    v-model:value="item.key"
                     :placeholder="'key' + index"
                     class="half-width"
                     type="textarea"
                     :autosize="{ minRows: 2, maxRows: 4 }"
-                  ></el-input>
+                  ></a-input>
                   <div class="split">:</div>
-                  <el-input
-                    v-model="item.value"
+                  <a-input
+                    v-model:value="item.value"
                     type="textarea"
                     :placeholder="'value' + index"
                     class="half-width"
                     style="flex-grow: 4"
                     :autosize="{ minRows: 2, maxRows: 4 }"
-                  ></el-input>
-                  <el-icon style="margin-left: 5px" @click="deleteItem(index)"
-                    ><Remove
-                  /></el-icon>
+                  ></a-input>
+                  <MinusCircleOutlined
+                    style="margin-left: 5px"
+                    @click="deleteItem(index)"
+                  />
                 </div>
 
                 <div class="quick-add-root">
                   快速增加一些属性:
                   <div style="margin-top: 5px">
                     <transition name="el-zoom-in-center">
-                      <el-tag
+                      <a-tag
                         v-if="attributeKeys.indexOf('class') == -1"
                         size="small"
-                        type="success"
+                        color="success"
                         @click="onClassClick"
                         effect="dark"
                         class="tag"
                         >Class
-                      </el-tag>
+                      </a-tag>
                     </transition>
                     <transition name="el-zoom-in-center">
-                      <el-tag
+                      <a-tag
                         v-if="attributeKeys.indexOf('@click') == -1"
                         size="small"
-                        type="success"
+                        color="success"
                         @click="onEventClick"
                         effect="dark"
                         class="tag"
-                        >点击事件</el-tag
+                        >点击事件</a-tag
                       >
                     </transition>
                     <transition name="el-zoom-in-center">
-                      <el-tag
+                      <a-tag
                         v-if="!attributeKeys.includes('__text__')"
                         size="small"
-                        type="success"
+                        color="success"
                         @click="onTextClick"
                         effect="dark"
                         class="tag"
-                        >文本内容</el-tag
+                        >文本内容</a-tag
                       >
                     </transition>
                   </div>
@@ -101,70 +102,85 @@
               </div>
             </div>
             <div name="2" v-show="editMode">
-              <el-input
+              <a-input
                 type="textarea"
                 :autosize="{ minRows: 4 }"
                 placeholder="请输入属性, 以key: value的形式(冒号后要有空格)"
-                v-model="textAttributes"
+                v-model:value="textAttributes"
               >
-              </el-input>
+              </a-input>
             </div>
           </div>
 
           <div style="margin-top: 10px; text-align: center">
-            <el-tooltip
+            <a-tooltip
               class="item"
               effect="dark"
-              content="新增属性 ctrl+a"
+              title="新增属性 ctrl+a"
               placement="bottom"
             >
-              <el-button
+              <a-button
                 type="primary"
+                shape="circle"
                 class="center"
                 @click="createNew"
-                circle
               >
-                <el-icon><Plus /></el-icon>
-              </el-button>
-            </el-tooltip>
-            <el-tooltip
+                <PlusOutlined style="color: white" />
+              </a-button>
+            </a-tooltip>
+            <a-tooltip
               class="item"
               effect="dark"
-              content="保存属性 ctrl+s"
+              title="保存属性 ctrl+s"
               placement="bottom"
             >
-              <el-button type="success" class="center" @click="save" circle>
-                <el-icon><Refresh /></el-icon>
-              </el-button>
-            </el-tooltip>
-            <el-tooltip
+              <a-button
+                type="primary"
+                shape="circle"
+                class="center"
+                @click="save"
+              >
+                <RedoOutlined style="color: white" />
+              </a-button>
+            </a-tooltip>
+            <a-tooltip
               v-if="enableRemoveButton"
               class="item"
               effect="dark"
               content="移除该组件 ctrl+d"
               placement="bottom"
             >
-              <el-button type="danger" class="center" @click="remove" circle>
+              <a-button
+                type="primary"
+                shape="circle"
+                class="center"
+                @click="remove"
+              >
                 <DeleteOutlined style="color: white" />
-              </el-button>
-            </el-tooltip>
-            <el-tooltip
+              </a-button>
+            </a-tooltip>
+            <a-tooltip
               v-if="enableBroButton"
               class="item"
               effect="dark"
-              content="复制一个兄弟组件 ctrl+c"
+              title="复制一个兄弟组件 ctrl+c"
               placement="bottom"
             >
-              <el-button type="primary" class="center" @click="copyBro" circle>
+              <a-button
+                type="primary"
+                class="center"
+                @click="copyBro"
+                shape="circle"
+              >
                 <CopyOutlined style="color: white" />
-              </el-button>
-            </el-tooltip>
+              </a-button>
+            </a-tooltip>
             <div style="text-algin: center">
               <span class="shortcut-tip">支持快捷键操作</span>
             </div>
           </div>
-        </el-tab-pane>
-      </el-tabs>
+        </a-tab-pane>
+      </a-tabs>
     </a-scrollbar>
   </a-card>
 </template>
@@ -189,7 +205,7 @@ export default {
   ], // __rawVueInfo__为当前编辑的原始代码对象, shortcutInitMode快捷键的初始化方式
   data: function () {
     return {
-      activeName: "style",
+      activeName: "senior",
       input: "",
       localAttributes: [],
       enable: true,

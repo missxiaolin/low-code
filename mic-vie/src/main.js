@@ -6,8 +6,8 @@ import router from "@/router";
 import "@/utils/permission";
 import "@/assets/css/index.scss";
 import "normalize.css";
-import "element-plus/dist/index.css";
-import "element-plus/theme-chalk/dark/css-vars.css";
+// import "element-plus/dist/index.css";
+// import "element-plus/theme-chalk/dark/css-vars.css";
 import { isSubMicro, handleMicroData } from "@/utils/subMicro";
 import { loadPlugins } from "@/plugins";
 
@@ -42,7 +42,7 @@ let app = null;
 function mount() {
   app = createApp(App);
   app.use(router);
-  
+
   /** 加载插件 */
   loadPlugins(app);
   window.createBaseAppAsync = createBaseAppAsync;
