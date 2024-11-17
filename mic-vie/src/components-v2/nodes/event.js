@@ -25,14 +25,15 @@ export const eventNode = {
   },
   drawShape(cfg, group) {
     const styles = this.getShapeStyle(cfg);
-    const h = styles.height;
-    const w = styles.width;
+    const [w, h] = this.getSize(cfg);
 
     const keyShape = group.addShape("rect", {
       attrs: {
-        x: 0,
-        y: 0,
         ...styles,
+        width: w,
+        height: h,
+        x: -(w / 2),
+        y: -(h / 2),
       },
     });
 

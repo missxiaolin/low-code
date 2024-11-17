@@ -1,11 +1,17 @@
 <template>
   <div style="flow-node-box">
+    <flowDropDown
+      :curModel="curModel"
+      :menuPosition="menuPosition"
+      @onSelect="onSelect"
+    />
     <div id="mount-node" ref="nodeRef"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import G6 from "@antv/g6";
+import flowDropDown from "./flowDropdown/index.vue";
 import { ref } from "vue";
 import { registerNodes } from "./nodes";
 import { registerLines } from "./lines/index";
@@ -17,9 +23,54 @@ import { getTreeDepth } from "../utils/utils";
 
 const nodeRef = ref(null);
 const graphRef = ref(null);
+// 菜单
 const curModel = ref(null);
+const menuPosition = ref({});
 registerNodes();
 registerLines();
+
+const onSelect = (key) => {
+  const menu = curModel.value.menus?.find((o) => o.key === key);
+  const type = menu.nodeType;
+  const name = menu.nodeName;
+  if (!curModel.value) return;
+  const id = `n-${Math.random()}`; // 生成唯一id
+  if (!curModel.value.children) {
+    curModel.value.children = [];
+  }
+  let menus = [];
+  if (["condition", "action"].includes(type)) {
+    menus = [];
+  } else if (type === "event") {
+    menus = [
+      {
+        key: "action",
+        label: "动作",
+        nodeType: "action",
+        nodeName: "动作",
+        eventKey: menu.eventKey,
+      },
+      {
+        key: "condition",
+        label: "条件",
+        nodeType: "condition",
+        nodeName: "条件",
+        eventKey: menu.eventKey,
+      },
+    ];
+  }
+  curModel.value.children.push({
+    type,
+    id,
+    label: name,
+    key,
+    menus,
+    conditionId: menu.conditionId,
+    eventKey: menu.eventKey,
+  });
+  graphRef.value.updateChild(curModel.value, curModel.value.id);
+  curModel.value = null;
+};
 
 onMounted(() => {
   nextTick(() => {
@@ -116,10 +167,10 @@ onMounted(() => {
           curModel.value = item.getModel();
 
           const { left, top } = nodeRef?.value?.getBoundingClientRect() || {};
-          console.log({
-            top: newBox.y + top,
-            left: newBox.x + left,
-          });
+          menuPosition.value = {
+            top: `${newBox.y + top - 80}px`,
+            left: `${newBox.x + left - 30}px`,
+          };
         }
       });
       graph.on("canvas:click", () => {});
@@ -132,6 +183,7 @@ onMounted(() => {
 .flow-node-box {
   width: 100%;
   height: 100%;
+  position: relative;
   #mount-node {
     width: 100%;
     height: 100%;

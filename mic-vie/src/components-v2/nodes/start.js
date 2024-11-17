@@ -19,6 +19,8 @@ export const startNode = {
         fontSize: 14,
         fontWeight: 400,
         fillOpacity: "0.7",
+        textAlign: "center",
+        textBaseline: "middle",
       },
     },
     size: [120, 40],
@@ -33,7 +35,10 @@ export const startNode = {
         y: -(h / 2),
         width: w,
         height: h,
+        textAlign: "center",
+        textBaseline: "middle",
       },
+      size: [120, 40],
     });
 
     group.addShape("marker", {

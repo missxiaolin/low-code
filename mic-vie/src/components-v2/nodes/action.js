@@ -24,14 +24,15 @@ export const actionNode = {
   },
   drawShape(cfg, group) {
     const styles = this.getShapeStyle(cfg);
-    const h = styles.height;
-    const w = styles.width;
+    const [w, h] = this.getSize(cfg);
 
     const keyShape = group.addShape("rect", {
       attrs: {
-        x: 0,
-        y: 0,
         ...styles,
+        x: -60,
+        y: -20,
+        width: w,
+        height: h,
       },
     });
 
@@ -51,7 +52,7 @@ export const actionNode = {
       group.addShape("marker", {
         attrs: {
           x: 0,
-          y: h / 2 + 7,
+          y: h / 2 + 27,
           r: 6,
           stroke: "#73d13d",
           cursor: "pointer",
@@ -64,7 +65,7 @@ export const actionNode = {
   },
   update(cfg, node) {
     const styles = this.getShapeStyle(cfg);
-    const h = styles.height;
+    const [w, h] = this.getSize(cfg);
     const group = node.getContainer();
 
     const child = group.find((item) => {

@@ -25,14 +25,15 @@ export const conditionNode = {
   },
   drawShape(cfg, group) {
     const styles = this.getShapeStyle(cfg);
-    const h = styles.height;
-    const w = styles.width;
+    const [w, h] = this.getSize(cfg);
 
     const keyShape = group.addShape("rect", {
       attrs: {
-        x: 0,
-        y: 0,
         ...styles,
+        x: -(w / 2),
+        y: -(h / 2),
+        width: w,
+        height: h,
       },
     });
 
@@ -67,7 +68,7 @@ export const conditionNode = {
   },
   update(cfg, node) {
     const styles = this.getShapeStyle(cfg);
-    const h = styles.height;
+    const [w, h] = this.getSize(cfg);
     const group = node.getContainer();
     const child = group.find((item) => {
       return item.get("name") === "add-item";
