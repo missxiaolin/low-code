@@ -4,7 +4,11 @@ export const defaultRoute = [
   {
     path: "/",
     component: () => import("@/views/vcc/form.vue"),
-  }
+  },
+  {
+    path: "/flow/node",
+    component: () => import("@/views/vcc/flow.vue"),
+  },
 ];
 
 let prdRoutesList = [...defaultRoute];

@@ -88,7 +88,7 @@ export function uuid(len, radix) {
 export function replaceKeyInfo(dataTemp, externalJS) {
   // 转化为对象
   const JSCodeInfo = eval(`(function(){return ${dataTemp}})()`);
-  
+
   // 合并外部脚本对象
   let externalData = {};
 
@@ -102,11 +102,9 @@ export function replaceKeyInfo(dataTemp, externalJS) {
   let newData = merge({}, externalData);
   try {
     for (let key in JSCodeInfo.data()) {
-      newData[key] = JSCodeInfo.data()[key]
+      newData[key] = JSCodeInfo.data()[key];
     }
-  } catch(e) {
-
-  }
+  } catch (e) {}
 
   const dataFunction = new Function(`return ${stringifyObject(newData)}`);
 
@@ -128,10 +126,7 @@ export function replaceKeyInfo(dataTemp, externalJS) {
         !originalResult.match(/^\{/g)
       ) {
         // 不对以(/{ 开头的情况做处理，只对包含有方法名的情况做处理
-        const after = originalResult.replace(
-          /[^\(]+?\(([\w,\s]*)\)/,
-          "($1)=>"
-        );
+        const after = originalResult.replace(/[^\(]+?\(([\w,\s]*)\)/, "($1)=>");
         return after;
       }
 
@@ -147,19 +142,19 @@ export function replaceKeyInfo(dataTemp, externalJS) {
 
   const excludeUnuseal = beautiful.replace("export default ", "");
 
-  return excludeUnuseal
+  return excludeUnuseal;
 }
 
 /**
- * @param {*} d 
+ * @param {*} d
  * @param {*} fn
- * @returns 
+ * @returns
  */
 export function getJsTemData(d, fn = []) {
-  const data = JSON.stringify(d)
-  let f = ''
+  const data = JSON.stringify(d);
+  let f = "";
   if (fn && fn.length > 0) {
-    f = fn.join(',');
+    f = fn.join(",");
   }
   return `{
     data() {
@@ -168,5 +163,24 @@ export function getJsTemData(d, fn = []) {
     methods: {
       ${f}
     }
-  };`
+  };`;
+}
+
+// 获取树的深度
+export function getTreeDepth(node) {
+  if (!node) {
+    return 0; // 如果节点为空，深度为0
+  }
+
+  let maxChildDepth = 0; // 当前节点的子节点的最大深度
+
+  // 遍历当前节点的所有子节点，递归调用 getTreeDepth 函数获取子节点的深度
+  for (const child of node.children || []) {
+    const childDepth = getTreeDepth(child);
+    if (childDepth > maxChildDepth) {
+      maxChildDepth = childDepth;
+    }
+  }
+
+  return maxChildDepth + 1; // 当前节点的深度为子节点的最大深度加1
 }

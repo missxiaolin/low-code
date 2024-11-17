@@ -10,6 +10,7 @@
     "compileComponent": "node ./src/script/compile.js"
   },
   "dependencies": {
+    "@antv/g6": "4.8.23",
     "@element-plus/icons-vue": "2.1.0",
     "@micro-zoe/micro-app": "1.0.0-beta.5",
     "@vue/compiler-sfc": "^3.2.22",
