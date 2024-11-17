@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import flowNode from "../../components-v2/flowNode.vue";
+import flowNode from "../../components/flow-node/flowNode.vue";
 export default {
   components: {
     flowNode,

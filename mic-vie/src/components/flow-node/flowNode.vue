@@ -5,21 +5,22 @@
       :menuPosition="menuPosition"
       @onSelect="onSelect"
     />
+
     <div id="mount-node" ref="nodeRef"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import G6 from "@antv/g6";
-import flowDropDown from "./flowDropdown/index.vue";
+import flowDropDown from "./flow-drop-down/index.vue";
 import { ref } from "vue";
 import { registerNodes } from "./nodes";
 import { registerLines } from "./lines/index";
 import { defaultLayout } from "./nodes/default-layout";
 import { nextTick, onMounted } from "vue";
-import { data } from "./flowNodeData/index";
+import { data } from "./flow-node-data/index";
 import { cloneDeep } from "lodash-es";
-import { getTreeDepth } from "../utils/utils";
+import { getTreeDepth } from "../../utils/utils";
 
 const nodeRef = ref(null);
 const graphRef = ref(null);
@@ -29,6 +30,7 @@ const menuPosition = ref({});
 registerNodes();
 registerLines();
 
+// 添加新节点
 const onSelect = (key) => {
   const menu = curModel.value.menus?.find((o) => o.key === key);
   const type = menu.nodeType;
@@ -152,6 +154,14 @@ onMounted(() => {
         const targetType = target.get("type");
         const name = target.get("name");
         const model = item.getModel();
+
+        if (
+          ["action", "condition"].includes(model.type) &&
+          targetType !== "marker"
+        ) {
+          curModel.value = item.getModel();
+          return;
+        }
         // 点击加号
         if (targetType === "marker" && name === "add-item") {
           // 获取当前节点的位置
@@ -171,6 +181,8 @@ onMounted(() => {
             top: `${newBox.y + top - 80}px`,
             left: `${newBox.x + left - 30}px`,
           };
+        } else if (name === "remove-item") {
+          graph.removeChild(model.id);
         }
       });
       graph.on("canvas:click", () => {});
