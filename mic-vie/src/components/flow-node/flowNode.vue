@@ -5,13 +5,22 @@
       :menuPosition="menuPosition"
       @onSelect="onSelect"
     />
-
+    <a-drawer
+      v-model:open="open"
+      title="设置"
+      :key="2"
+      placement="right"
+      :push="true"
+    >
+      <settingPanel />
+    </a-drawer>
     <div id="mount-node" ref="nodeRef"></div>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import G6 from "@antv/g6";
+import settingPanel from "./setting-panel";
 import flowDropDown from "./flow-drop-down/index.vue";
 import { ref } from "vue";
 import { registerNodes } from "./nodes";
@@ -27,6 +36,7 @@ const graphRef = ref(null);
 // 菜单
 const curModel = ref(null);
 const menuPosition = ref({});
+const open = ref(false);
 registerNodes();
 registerLines();
 
@@ -122,7 +132,7 @@ onMounted(() => {
         if (sourceModel?.type === "condition") {
           const { name } =
             sourceModel?.config?.find(
-              (o: any) => o.id === targetModel?.conditionId
+              (o) => o.id === targetModel?.conditionId
             ) || {};
           label = name;
         }
@@ -160,6 +170,7 @@ onMounted(() => {
           targetType !== "marker"
         ) {
           curModel.value = item.getModel();
+          open.value = true;
           return;
         }
         // 点击加号
