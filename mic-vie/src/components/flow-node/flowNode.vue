@@ -9,6 +9,7 @@
     <a-drawer
       v-model:open="open"
       title="设置"
+      width="30%"
       :key="2"
       placement="right"
       :push="true"

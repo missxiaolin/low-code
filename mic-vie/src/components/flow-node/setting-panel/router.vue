@@ -1,7 +1,13 @@
 <template>
-  <a-form :model="form" ref="formRef" @finish="onFinish">
-    <a-form-item name="url" label="请求url" v-model="form.url">
-      <a-input />
+  <a-form :model="form" ref="formRef">
+    <a-form-item name="routeType" label="跳转方式">
+      <a-select :options="options" v-model:value="form.routeType" />
+    </a-form-item>
+    <a-form-item name="routeUrl" label="跳转链接">
+      <a-input v-model="form.routeUrl" />
+    </a-form-item>
+    <a-form-item>
+      <a-button type="primary" @click="onFinish">保存</a-button>
     </a-form-item>
   </a-form>
 </template>
@@ -15,19 +21,26 @@ export default {
       default: () => ({}),
     },
   },
+  emits: ["save"],
   setup(props, { emit, expose }) {
     const formRef = ref(null);
+    const options = ref([
+      { label: "打开新页面", value: "push" },
+      { label: "后退", value: "back" },
+    ]);
     const form = ref({
-      url: "",
+      routeType: "",
+      routeUrl: "",
     });
-    const onFinish = (values) => {
-      console.log("Received values of form:", values);
-      //   console.log('dynamicValidateForm:', dynamicValidateForm);
+    const onFinish = () => {
+      emit("save", form.value);
     };
 
     return {
       formRef,
       form,
+      onFinish,
+      options,
     };
   },
 };

@@ -1,14 +1,14 @@
 <template>
   <a-form :model="form" ref="formRef">
     <a-form-item name="url" label="请求url">
-      <a-input v-model:value="form.url" />
+      <a-input v-model:value="form.requestUrl" />
     </a-form-item>
     <a-form-item name="method" label="请求方式">
-      <a-select :options="options" v-model:value="form.method" />
+      <a-select :options="options" v-model:value="form.requestMethod" />
     </a-form-item>
     <a-tabs>
       <a-tab-pane key="prams" tab="prams">
-        <a-form-item v-for="(item, index) in form.params" :key="index">
+        <a-form-item v-for="(item, index) in form.requestParams" :key="index">
           <div class="prams-form-item">
             <a-input v-model:value="item.key" placeholder="key" />
             <a-input v-model:value="item.value" placeholder="value" />
@@ -24,22 +24,29 @@
       </a-tab-pane>
       <a-tab-pane key="body" tab="body">
         <a-form-item name="body.type" label="类型">
-          <a-select :options="bodyTypeOptions" v-model:value="form.body.type" />
+          <a-select
+            :options="bodyTypeOptions"
+            v-model:value="form.requestBody.type"
+          />
         </a-form-item>
         <a-form-item
-          v-if="form.body.type === 'script'"
+          v-if="form.requestBody.type === 'script'"
           name="script"
           label="脚本"
         >
           <a-textarea
-            v-model:value="form.body.script"
+            v-model:value="form.requestBody.script"
             placeholder="script"
             :auto-size="{ minRows: 2, maxRows: 5 }"
           />
         </a-form-item>
-        <a-form-item v-if="form.body.type === 'json'" name="json" label="json">
+        <a-form-item
+          v-if="form.requestBody.type === 'json'"
+          name="json"
+          label="json"
+        >
           <a-textarea
-            v-model:value="form.body.json"
+            v-model:value="form.requestBody.json"
             placeholder="json"
             :auto-size="{ minRows: 2, maxRows: 5 }"
           />
@@ -66,10 +73,10 @@ export default {
   setup(props, { emit, expose }) {
     const formRef = ref(null);
     const form = ref({
-      url: "",
-      method: "",
-      params: [],
-      body: {
+      requestUrl: "",
+      requestMethod: "",
+      requestParams: [],
+      requestBody: {
         type: "json",
         script: "",
         json: "",
@@ -88,14 +95,14 @@ export default {
     };
 
     const addParams = () => {
-      form.value.params.push({
+      form.value.requestParams.push({
         key: "",
         value: "",
       });
     };
 
     const delPrams = (index) => {
-      form.value.params.splice(index, 1);
+      form.value.requestParams.splice(index, 1);
     };
 
     expose({

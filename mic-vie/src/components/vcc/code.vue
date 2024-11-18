@@ -27,7 +27,7 @@
             style="display: flex; flex-direction: column"
           >
             <a-radio value="vue">Vue</a-radio>
-            <a-radio value="vue3">Vue3 setup模式</a-radio>
+            <!-- <a-radio value="vue3">Vue3 setup模式</a-radio> -->
           </a-radio-group>
         </a-col>
         <a-col :span="10" style="display: flex; flex-direction: column">

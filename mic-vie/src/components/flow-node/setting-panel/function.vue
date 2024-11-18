@@ -1,7 +1,14 @@
 <template>
-  <a-form :model="form" ref="formRef" @finish="onFinish">
-    <a-form-item name="url" label="请求url" v-model="form.url">
-      <a-input />
+  <a-form :model="form" ref="formRef">
+    <a-form-item name="url" label="请求url">
+      <a-textarea
+        v-model:value="form.functionScript"
+        placeholder="function"
+        :auto-size="{ minRows: 2, maxRows: 5 }"
+      />
+    </a-form-item>
+    <a-form-item>
+      <a-button type="primary" @click="onFinish">保存</a-button>
     </a-form-item>
   </a-form>
 </template>
@@ -15,19 +22,20 @@ export default {
       default: () => ({}),
     },
   },
+  emits: ["save"],
   setup(props, { emit, expose }) {
     const formRef = ref(null);
     const form = ref({
-      url: "",
+      functionScript: "",
     });
-    const onFinish = (values) => {
-      console.log("Received values of form:", values);
-      //   console.log('dynamicValidateForm:', dynamicValidateForm);
+    const onFinish = () => {
+      emit("save", form.value);
     };
 
     return {
       formRef,
       form,
+      onFinish,
     };
   },
 };
