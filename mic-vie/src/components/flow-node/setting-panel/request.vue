@@ -73,13 +73,13 @@ export default {
   setup(props, { emit, expose }) {
     const formRef = ref(null);
     const form = ref({
-      requestUrl: "",
-      requestMethod: "",
-      requestParams: [],
+      requestUrl: props.config.requestUrl || "",
+      requestMethod: props.config.requestMethod || "",
+      requestParams: props.config.requestParams || [],
       requestBody: {
-        type: "json",
-        script: "",
-        json: "",
+        type: props.config.requestBody.type || "json",
+        script: props.config.requestBody.script || "",
+        json: props.config.requestBody.json || "",
       },
     });
     const bodyTypeOptions = ref([

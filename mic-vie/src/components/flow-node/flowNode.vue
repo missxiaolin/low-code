@@ -17,6 +17,7 @@
       <settingPanel
         :graphRef="graphRef"
         :curModel="curModel"
+        :popConfig="curModel"
         @clock="
           open = false;
           curModel = null;
@@ -30,7 +31,7 @@
 
 <script>
 import G6 from "@antv/g6";
-import settingPanel from "./setting-panel";
+import settingPanel from "./setting-panel/index.vue";
 import flowDropDown from "./flow-drop-down/index.vue";
 import { ref } from "vue";
 import { registerNodes } from "./nodes";

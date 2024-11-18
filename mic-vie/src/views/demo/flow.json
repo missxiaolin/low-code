@@ -62,11 +62,11 @@
       "config": {
         "type": "request",
         "config": {
-          "requestUrl": "",
+          "requestUrl": "/a",
           "requestMethod": "",
           "requestParams": [],
           "requestBody": {
-            "type": "json",
+            "type": "script",
             "script": "",
             "json": ""
           }

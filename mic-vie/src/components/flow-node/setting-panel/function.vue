@@ -26,7 +26,7 @@ export default {
   setup(props, { emit, expose }) {
     const formRef = ref(null);
     const form = ref({
-      functionScript: "",
+      functionScript: props.config.functionScript || "",
     });
     const onFinish = () => {
       emit("save", form.value);

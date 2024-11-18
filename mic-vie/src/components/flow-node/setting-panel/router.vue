@@ -29,8 +29,8 @@ export default {
       { label: "后退", value: "back" },
     ]);
     const form = ref({
-      routeType: "",
-      routeUrl: "",
+      routeType: props.config.routeType || "",
+      routeUrl: props.config.routeUrl || "",
     });
     const onFinish = () => {
       emit("save", form.value);
