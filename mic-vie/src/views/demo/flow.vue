@@ -17,9 +17,10 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref, getCurrentInstance } from "vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
 import flowData from "./flow.json";
+import { execEventFlow } from "../../utils/action";
 export default {
   components: {
     flowNode,
@@ -27,10 +28,17 @@ export default {
   setup() {
     const open = ref(true);
     const flowNodeRef = ref(null);
+    const instance = getCurrentInstance();
+
     const save = () => {
       flowNodeRef.value.flowSave();
       console.log("保存", flowNodeRef.value.flowSave());
     };
+
+    onMounted(() => {
+      execEventFlow(flowData.children, instance);
+    });
+
     return { open, save, flowNodeRef, flowData };
   },
 };

@@ -20,8 +20,6 @@ export const registerLines = () => {
       });
 
       if (cfg.label && cfg.label.length) {
-        console.log(32323232);
-
         // the left label
         group.addShape("text", {
           attrs: {

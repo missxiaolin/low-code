@@ -63,8 +63,8 @@ export default {
   emits: ["clock"],
   setup(props, { emit, expose }) {
     const config = ref({
-      type: props.popConfig.config.type,
-      config: props.popConfig.config.config,
+      type: props.popConfig.config ? props.popConfig.config.type : "",
+      config: props.popConfig.config ? props.popConfig.config.config : {},
     });
 
     const options = ref([

@@ -1,11 +1,10 @@
 import axios from "axios";
-import { ElMessage } from "element-plus";
 import { get, merge } from "lodash-es";
 import { getCookie, getToken } from "./cache/cookies";
 
 /** 退出登录并强制刷新页面（会重定向到登录页） */
 function logout() {
-  window.microApp.dispatch({isPushLogin: true})
+  window.microApp.dispatch({ isPushLogin: true });
 }
 
 /** 创建请求实例 */
@@ -28,9 +27,6 @@ function createService() {
       if (code === 10000) {
         // Token 过期时
         return logout();
-      } else if (!apiData.success) {
-        ElMessage.error(apiData.errorMessage);
-        return apiData;
       } else {
         return apiData;
       }
@@ -76,23 +72,25 @@ function createService() {
         default:
           break;
       }
-      ElMessage.error(error.message);
       return Promise.reject(error);
     }
   );
   return service;
 }
 
-let baseURL = "http://micro-serve.missxiaolin.com"
-const urls = ['127.0.0.1', "localhost", "mic.missxiaolin.com", "micro-adm-h.missxiaolin.com"]
+let baseURL = "http://micro-serve.missxiaolin.com";
+const urls = [
+  "127.0.0.1",
+  "localhost",
+  "mic.missxiaolin.com",
+  "micro-adm-h.missxiaolin.com",
+];
 
 if (urls.indexOf(window.location.hostname) > -1) {
   baseURL = "http://127.0.0.1:9002";
 }
 
-export {
-  baseURL
-}
+export { baseURL };
 
 /** 创建请求方法 */
 function createRequest(service) {

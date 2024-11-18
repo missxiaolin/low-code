@@ -21,7 +21,6 @@ export default {
       url: "",
     });
     const onFinish = (values) => {
-      console.log("Received values of form:", values);
       //   console.log('dynamicValidateForm:', dynamicValidateForm);
     };
 

@@ -21,10 +21,8 @@ export default {
   methods: {
     init() {
       setTimeout(() => {
-        // console.log("this.uuid", this.uuid);
         // 基于准备好的dom，初始化echarts实例
 
-        // console.log("执行了");
         let myChart = echarts.init(
           document.getElementById(`${this.uuid}`),
           "dark",
@@ -33,7 +31,6 @@ export default {
             height: 400,
           }
         );
-        // console.log(myChart, myChart.getOption());
         // 绘制图表
         myChart.setOption(
           {

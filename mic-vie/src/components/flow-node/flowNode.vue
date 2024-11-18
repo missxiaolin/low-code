@@ -15,6 +15,7 @@
       :push="true"
     >
       <settingPanel
+        v-if="open"
         :graphRef="graphRef"
         :curModel="curModel"
         :popConfig="curModel"
