@@ -101,7 +101,10 @@ export default {
       const item = options.value.find((o) => config.value.type === o.value);
       props.graphRef.updateItem(props.curModel.id, {
         ...props.curModel.current,
-        config: saveConfig,
+        config: {
+          type: config.value.type,
+          config: saveConfig,
+        },
         label: item.label,
         menus,
       });

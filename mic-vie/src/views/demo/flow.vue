@@ -5,30 +5,33 @@
     :mask="false"
     title="事件流配置"
     placement="right"
-    @after-open-change="afterOpenChange"
     width="100%"
   >
+    <template #extra>
+      <a-button type="primary" @click="save">保存</a-button>
+    </template>
     <div class="node-viewer">
-      <flowNode></flowNode>
+      <flowNode :nodeData="flowData" ref="flowNodeRef"></flowNode>
     </div>
   </a-drawer>
 </template>
 
 <script>
+import { ref } from "vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
+import flowData from "./flow.json";
 export default {
   components: {
     flowNode,
   },
-  data() {
-    return {
-      open: true,
+  setup() {
+    const open = ref(true);
+    const flowNodeRef = ref(null);
+    const save = () => {
+      flowNodeRef.value.flowSave();
+      console.log("保存", flowNodeRef.value.flowSave());
     };
-  },
-  methods: {
-    afterOpenChange() {
-      //   console.log("afterOpenChange");
-    },
+    return { open, save, flowNodeRef, flowData };
   },
 };
 </script>

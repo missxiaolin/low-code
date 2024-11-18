@@ -7,7 +7,7 @@ export const defaultRoute = [
   },
   {
     path: "/flow/node",
-    component: () => import("@/views/vcc/flow.vue"),
+    component: () => import("@/views/demo/flow.vue"),
   },
 ];
 

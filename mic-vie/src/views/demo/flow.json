@@ -1,0 +1,254 @@
+{
+  "id": "root",
+  "label": "开始",
+  "type": "start",
+  "menus": [
+    {
+      "key": "action",
+      "label": "动作",
+      "nodeType": "action",
+      "nodeName": "动作"
+    },
+    {
+      "key": "condition",
+      "label": "条件",
+      "nodeType": "condition",
+      "nodeName": "条件"
+    }
+  ],
+  "x": -148,
+  "y": -88,
+  "depth": 0,
+  "style": {
+    "hover": {},
+    "selected": {}
+  },
+  "children": [
+    {
+      "type": "action",
+      "id": "n-0.29617382716168295",
+      "label": "请求接口",
+      "key": "action",
+      "menus": [
+        {
+          "label": "成功",
+          "key": "success",
+          "nodeType": "event",
+          "nodeName": "成功",
+          "eventKey": "success"
+        },
+        {
+          "label": "失败",
+          "key": "error",
+          "nodeType": "event",
+          "nodeName": "失败",
+          "eventKey": "error"
+        },
+        {
+          "label": "成功或失败",
+          "key": "finally",
+          "nodeType": "event",
+          "nodeName": "成功或失败",
+          "eventKey": "finally"
+        }
+      ],
+      "x": -148,
+      "y": 8,
+      "depth": 1,
+      "style": {
+        "hover": {},
+        "selected": {}
+      },
+      "config": {
+        "type": "request",
+        "config": {
+          "requestUrl": "",
+          "requestMethod": "",
+          "requestParams": [],
+          "requestBody": {
+            "type": "json",
+            "script": "",
+            "json": ""
+          }
+        }
+      },
+      "children": [
+        {
+          "type": "event",
+          "id": "n-0.5264987295049508",
+          "label": "成功",
+          "key": "success",
+          "menus": [
+            {
+              "key": "action",
+              "label": "动作",
+              "nodeType": "action",
+              "nodeName": "动作",
+              "eventKey": "success"
+            },
+            {
+              "key": "condition",
+              "label": "条件",
+              "nodeType": "condition",
+              "nodeName": "条件",
+              "eventKey": "success"
+            }
+          ],
+          "eventKey": "success",
+          "x": -226,
+          "y": 104,
+          "depth": 2,
+          "style": {
+            "hover": {},
+            "selected": {}
+          },
+          "children": [
+            {
+              "type": "condition",
+              "id": "n-0.3791877446319327",
+              "label": "条件",
+              "key": "condition",
+              "menus": [],
+              "eventKey": "success",
+              "x": -226,
+              "y": 200,
+              "depth": 3,
+              "style": {}
+            }
+          ]
+        },
+        {
+          "type": "event",
+          "id": "n-0.600742600357012",
+          "label": "失败",
+          "key": "error",
+          "menus": [
+            {
+              "key": "action",
+              "label": "动作",
+              "nodeType": "action",
+              "nodeName": "动作",
+              "eventKey": "error"
+            },
+            {
+              "key": "condition",
+              "label": "条件",
+              "nodeType": "condition",
+              "nodeName": "条件",
+              "eventKey": "error"
+            }
+          ],
+          "eventKey": "error",
+          "x": -70,
+          "y": 104,
+          "depth": 2,
+          "style": {
+            "hover": {},
+            "selected": {}
+          },
+          "children": [
+            {
+              "type": "action",
+              "id": "n-0.6319323474390643",
+              "label": "执行脚本",
+              "key": "action",
+              "menus": [
+                {
+                  "label": "成功",
+                  "key": "success",
+                  "nodeType": "event",
+                  "nodeName": "成功",
+                  "eventKey": "success"
+                },
+                {
+                  "label": "失败",
+                  "key": "error",
+                  "nodeType": "event",
+                  "nodeName": "失败",
+                  "eventKey": "error"
+                },
+                {
+                  "label": "成功或失败",
+                  "key": "finally",
+                  "nodeType": "event",
+                  "nodeName": "成功或失败",
+                  "eventKey": "finally"
+                }
+              ],
+              "eventKey": "error",
+              "x": -70,
+              "y": 200,
+              "depth": 3,
+              "style": {
+                "hover": {},
+                "selected": {}
+              },
+              "config": {
+                "type": "function",
+                "config": {
+                  "functionScript": ""
+                }
+              },
+              "children": [
+                {
+                  "type": "event",
+                  "id": "n-0.40205939403880775",
+                  "label": "成功",
+                  "key": "success",
+                  "menus": [
+                    {
+                      "key": "action",
+                      "label": "动作",
+                      "nodeType": "action",
+                      "nodeName": "动作",
+                      "eventKey": "success"
+                    },
+                    {
+                      "key": "condition",
+                      "label": "条件",
+                      "nodeType": "condition",
+                      "nodeName": "条件",
+                      "eventKey": "success"
+                    }
+                  ],
+                  "eventKey": "success",
+                  "x": -148,
+                  "y": 296,
+                  "depth": 4,
+                  "style": {}
+                },
+                {
+                  "type": "event",
+                  "id": "n-0.4595740373943682",
+                  "label": "失败",
+                  "key": "error",
+                  "menus": [
+                    {
+                      "key": "action",
+                      "label": "动作",
+                      "nodeType": "action",
+                      "nodeName": "动作",
+                      "eventKey": "error"
+                    },
+                    {
+                      "key": "condition",
+                      "label": "条件",
+                      "nodeType": "condition",
+                      "nodeName": "条件",
+                      "eventKey": "error"
+                    }
+                  ],
+                  "eventKey": "error",
+                  "x": 8,
+                  "y": 296,
+                  "depth": 4,
+                  "style": {}
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
