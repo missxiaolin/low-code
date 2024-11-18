@@ -1,6 +1,7 @@
 <template>
   <div style="flow-node-box">
     <flowDropDown
+      v-if="isShowDropDown"
       :curModel="curModel"
       :menuPosition="menuPosition"
       @onSelect="onSelect"
@@ -12,7 +13,15 @@
       placement="right"
       :push="true"
     >
-      <settingPanel />
+      <settingPanel
+        :graphRef="graphRef"
+        :curModel="curModel"
+        @clock="
+          open = false;
+          curModel = null;
+          isShowDropDown = false;
+        "
+      />
     </a-drawer>
     <div id="mount-node" ref="nodeRef"></div>
   </div>
@@ -37,6 +46,7 @@ const graphRef = ref(null);
 const curModel = ref(null);
 const menuPosition = ref({});
 const open = ref(false);
+const isShowDropDown = ref(false);
 registerNodes();
 registerLines();
 
@@ -186,6 +196,7 @@ onMounted(() => {
           );
 
           curModel.value = item.getModel();
+          isShowDropDown.value = true;
 
           const { left, top } = nodeRef?.value?.getBoundingClientRect() || {};
           menuPosition.value = {
@@ -196,7 +207,10 @@ onMounted(() => {
           graph.removeChild(model.id);
         }
       });
-      graph.on("canvas:click", () => {});
+      graph.on("canvas:click", () => {
+        isShowDropDown.value = false;
+        curModel.value = null;
+      });
     });
   });
 });

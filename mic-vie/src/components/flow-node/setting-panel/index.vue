@@ -2,28 +2,100 @@
   <div class="setting-panel">
     <div class="type">
       <div class="label">类型：</div>
-      <a-select :options="options" />
+      <a-select :options="options" v-model:value="config.type" />
     </div>
-    <http />
+    <request
+      v-if="config.type === 'request'"
+      :config="config.config"
+      @save="save"
+    />
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import http from "./http.vue";
-const formRef = ref(null);
-const form = ref({
-  type: "http",
-  url: "",
-});
-const options = ref([
-  { label: "请求接口", value: "http" },
-  { label: "设置变量", value: "seetingValue" },
-]);
+<script>
+import { ref, defineAsyncComponent } from "vue";
+export default {
+  name: "SettingPanel",
+  components: {
+    request: defineAsyncComponent(() => import("./request.vue")),
+  },
+  props: {
+    popConfig: {
+      type: Object,
+      default: () => {
+        return {
+          type: "",
+          config: {},
+        };
+      },
+    },
+    graphRef: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+    curModel: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
+  emits: ["clock"],
+  setup(props, { emit, expose }) {
+    const config = ref({
+      type: props.popConfig.type,
+      config: props.popConfig.config,
+    });
 
-const onFinish = (values) => {
-  console.log("Received values of form:", values);
-  //   console.log('dynamicValidateForm:', dynamicValidateForm);
+    const options = ref([
+      { label: "请求接口", value: "request" },
+      { label: "设置变量", value: "seetingValue" },
+      { label: "执行脚本", value: "function" },
+      { label: "路由跳转", value: "router" },
+    ]);
+
+    const save = (saveConfig) => {
+      let menus = [
+        {
+          label: "成功",
+          key: "success",
+          nodeType: "event",
+          nodeName: "成功",
+          eventKey: "success",
+        },
+        {
+          label: "失败",
+          key: "error",
+          nodeType: "event",
+          nodeName: "失败",
+          eventKey: "error",
+        },
+        {
+          label: "成功或失败",
+          key: "finally",
+          nodeType: "event",
+          nodeName: "成功或失败",
+          eventKey: "finally",
+        },
+      ];
+      const item = options.value.find((o) => config.value.type === o.value);
+      props.graphRef.updateItem(props.curModel.id, {
+        ...props.curModel.current,
+        config: saveConfig,
+        label: item.label,
+        menus,
+      });
+      emit("clock");
+    };
+
+    return {
+      config,
+      options,
+      save,
+    };
+  },
 };
 </script>
 

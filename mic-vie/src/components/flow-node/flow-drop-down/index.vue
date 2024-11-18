@@ -25,7 +25,7 @@ export default {
 <style lang="scss" scoped>
 .flow-menu {
   position: absolute;
-  width: 100px;
+  width: 150px;
   top: 167px;
   left: 612px;
 }
