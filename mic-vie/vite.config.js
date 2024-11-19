@@ -7,7 +7,8 @@ import commonjs from "rollup-plugin-commonjs";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import svgLoader from "vite-svg-loader";
 import externalGlobals from "rollup-plugin-external-globals";
-import monacoEditorPlugin from 'vite-plugin-monaco-editor'
+import monacoEditorPlugin from "vite-plugin-monaco-editor";
+import { viteMockServe } from "vite-plugin-mock";
 
 // 强制预构建插件包
 //  optimizeDeps: {
@@ -58,7 +59,13 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
     plugins: [
       vue(),
       monacoEditorPlugin.default({
-        languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html', 'css']
+        languageWorkers: [
+          "editorWorkerService",
+          "typescript",
+          "json",
+          "html",
+          "css",
+        ],
       }),
       /** 将 SVG 静态图转化为 Vue 组件 */
       svgLoader({ defaultImport: "url" }),
@@ -67,7 +74,17 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
         iconDirs: [path.resolve(process.cwd(), "src/assets/icons")],
         symbolId: "icon-[name]",
       }),
-      
+      viteMockServe({
+        mockPath: "mock", // mock文件夹路径
+        enable: true, // 只有开发环境才开启mock
+        // mockPath?: string; // mock文件夹路径
+        // ignore?: RegExp | ((fileName: string) => boolean); // 自动读取模拟.ts 文件时，请忽略指定格式的文件
+        // watchFiles?: boolean; // 设置是否监视mockPath对应的文件夹内文件中的更改
+        // enable?: boolean; // 是否启用 mock 功能
+        // ignoreFiles?: string[];
+        // configPath?: string; // 设置模拟读取的数据条目
+        // logger?:boolean; // 是否在控制台显示请求日志
+      }),
     ],
     build: {
       target: "es2015",

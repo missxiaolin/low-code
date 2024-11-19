@@ -79,15 +79,10 @@ function createService() {
 }
 
 let baseURL = "http://micro-serve.missxiaolin.com";
-const urls = [
-  "127.0.0.1",
-  "localhost",
-  "mic.missxiaolin.com",
-  "micro-adm-h.missxiaolin.com",
-];
+const urls = ["127.0.0.1", "localhost"];
 
 if (urls.indexOf(window.location.hostname) > -1) {
-  baseURL = "http://127.0.0.1:9002";
+  baseURL = "";
 }
 
 export { baseURL };
@@ -100,7 +95,6 @@ function createRequest(service) {
       headers: {
         // 携带 Token
         Authorization: token ? `${token}` : undefined,
-        MonitorAppId: getCookie("PROJECT_ID"),
         "Content-Type": "application/json",
       },
       timeout: 5000,

@@ -6,8 +6,8 @@
     <a-form-item name="method" label="请求方式">
       <a-select :options="options" v-model:value="form.requestMethod" />
     </a-form-item>
-    <a-tabs>
-      <a-tab-pane key="prams" tab="prams">
+    <a-tabs v-model:activeKey="form.activeKey">
+      <a-tab-pane key="requestParams" tab="参数">
         <a-form-item v-for="(item, index) in form.requestParams" :key="index">
           <div class="prams-form-item">
             <a-input v-model:value="item.key" placeholder="key" />
@@ -22,32 +22,11 @@
           </a-button>
         </a-form-item>
       </a-tab-pane>
-      <a-tab-pane key="body" tab="body">
-        <a-form-item name="body.type" label="类型">
-          <a-select
-            :options="bodyTypeOptions"
-            v-model:value="form.requestBody.type"
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="form.requestBody.type === 'script'"
-          name="script"
-          label="脚本"
-        >
+      <a-tab-pane key="script" tab="脚本">
+        <a-form-item name="requestParamsScript" label="脚本">
           <a-textarea
-            v-model:value="form.requestBody.script"
-            placeholder="script"
-            :auto-size="{ minRows: 2, maxRows: 5 }"
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="form.requestBody.type === 'json'"
-          name="json"
-          label="json"
-        >
-          <a-textarea
-            v-model:value="form.requestBody.json"
-            placeholder="json"
+            v-model:value="form.requestParamsScript"
+            placeholder="function"
             :auto-size="{ minRows: 2, maxRows: 5 }"
           />
         </a-form-item>
@@ -79,35 +58,22 @@ export default {
         props.config && props.config.requestMethod
           ? props.config.requestMethod
           : "",
+      activeKey:
+        props.config && props.config.activeKey
+          ? rops.config.activeKey
+          : "requestParams",
       requestParams:
         props.config && props.config.requestParams
           ? rops.config.requestParams
           : [],
-      requestBody: {
-        type:
-          props.config &&
-          props.config.requestBody &&
-          props.config.requestBody.type
-            ? props.config.requestBody.type
-            : "json",
-        script:
-          props.config &&
-          props.config.requestBody &&
-          props.config.requestBody.script
-            ? props.config.requestBody.script
-            : "",
-        json:
-          props.config &&
-          props.config.requestBody &&
-          props.config.requestBody.json
-            ? props.config.requestBody.json
-            : "",
-      },
+      requestParamsScript:
+        props.config && props.config.requestParamsScript
+          ? rops.config.requestParamsScript
+          : `(function (ctx) {
+  // TODO
+                    
+})(ctx)`,
     });
-    const bodyTypeOptions = ref([
-      { label: "json", value: "json" },
-      { label: "script", value: "script" },
-    ]);
     const options = ref([
       { label: "POST", value: "post" },
       { label: "GET", value: "get" },
@@ -138,7 +104,6 @@ export default {
       options,
       addParams,
       delPrams,
-      bodyTypeOptions,
     };
   },
 };

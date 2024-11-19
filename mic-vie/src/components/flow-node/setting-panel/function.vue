@@ -1,6 +1,6 @@
 <template>
   <a-form :model="form" ref="formRef">
-    <a-form-item name="url" label="请求url">
+    <a-form-item name="functionScript" label="脚本">
       <a-textarea
         v-model:value="form.functionScript"
         placeholder="function"
@@ -29,7 +29,10 @@ export default {
       functionScript:
         props.config && props.config.functionScript
           ? props.config.functionScript
-          : "",
+          : `(function (ctx) {
+  // TODO
+                    
+})(ctx)`,
     });
     const onFinish = () => {
       emit("save", form.value);

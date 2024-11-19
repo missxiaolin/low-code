@@ -62,7 +62,7 @@
       "config": {
         "type": "request",
         "config": {
-          "requestUrl": "/a",
+          "requestUrl": "/api/user/get",
           "requestMethod": "",
           "requestParams": [],
           "requestBody": {

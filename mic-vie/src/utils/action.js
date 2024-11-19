@@ -42,10 +42,10 @@ export const requestHandle = async (
   eventData,
   initEventData
 ) => {
+  const instance = getCurrentInstance();
   const url = actionConfig.requestUrl || "";
   const method = actionConfig.requestMethod || "";
   const params = actionConfig.requestParams || [];
-  const body = actionConfig.requestBody || [];
   try {
     // 解析代码里的变量
     const paramsValue = params.reduce((prev, cur) => {
@@ -54,7 +54,7 @@ export const requestHandle = async (
           {
             eventData,
             initEventData,
-            data: usePageDataStore.getState().data,
+            data: instance.proxy,
           },
           $2
         );
@@ -62,19 +62,16 @@ export const requestHandle = async (
       return prev;
     }, {});
 
-    let bodyValue;
-
-    if (body && body.type === "script" && body.script) {
-      bodyValue = execScript(body.script, eventData, initEventData);
-    } else if (body && body.type === "json" && body.json) {
-      bodyValue = JSON.parse(body.json);
-    }
-    const res = await request({
+    let param = {
       url,
       method,
-      params: paramsValue,
-      data: bodyValue,
-    });
+    };
+    if (method === "get") {
+      param.params = paramsValue;
+    } else {
+      param.data = paramsValue;
+    }
+    const res = await request(param);
 
     // 执行成功后，执行后续成功success事件
     const nodes = item.children?.filter((o) => o.eventKey === "success");
@@ -101,7 +98,7 @@ export const requestHandle = async (
 function execScript(script, eventData, initEventData) {
   const func = new Function("ctx", `return ${script}`);
 
-  const ctx = { setData, getComponentRef, getData, eventData, initEventData };
+  const ctx = { setData, getData, eventData, initEventData };
   return func(ctx);
 }
 
@@ -113,12 +110,12 @@ function execScript(script, eventData, initEventData) {
  * @param {*} initEventData
  */
 async function execScriptHandle(item, actionConfig, eventData, initEventData) {
-  const { script } = actionConfig || {};
+  const { functionScript } = actionConfig || {};
 
-  if (script) {
+  if (functionScript) {
     try {
       // 执行脚本
-      execScript(script, eventData, initEventData);
+      execScript(functionScript, eventData, initEventData);
 
       // 执行成功后，执行后续成功success事件
       const nodes = item.children?.filter((o) => o.eventKey === "success");
