@@ -73,13 +73,35 @@ export default {
   setup(props, { emit, expose }) {
     const formRef = ref(null);
     const form = ref({
-      requestUrl: props.config.requestUrl || "",
-      requestMethod: props.config.requestMethod || "",
-      requestParams: props.config.requestParams || [],
+      requestUrl:
+        props.config && props.config.requestUrl ? props.config.requestUrl : "",
+      requestMethod:
+        props.config && props.config.requestMethod
+          ? props.config.requestMethod
+          : "",
+      requestParams:
+        props.config && props.config.requestParams
+          ? rops.config.requestParams
+          : [],
       requestBody: {
-        type: props.config.requestBody.type || "json",
-        script: props.config.requestBody.script || "",
-        json: props.config.requestBody.json || "",
+        type:
+          props.config &&
+          props.config.requestBody &&
+          props.config.requestBody.type
+            ? props.config.requestBody.type
+            : "json",
+        script:
+          props.config &&
+          props.config.requestBody &&
+          props.config.requestBody.script
+            ? props.config.requestBody.script
+            : "",
+        json:
+          props.config &&
+          props.config.requestBody &&
+          props.config.requestBody.json
+            ? props.config.requestBody.json
+            : "",
       },
     });
     const bodyTypeOptions = ref([

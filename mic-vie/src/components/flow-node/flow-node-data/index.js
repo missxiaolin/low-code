@@ -9,11 +9,11 @@ export const data = {
       nodeType: "action",
       nodeName: "动作",
     },
-    // {
-    //   key: "condition",
-    //   label: "条件",
-    //   nodeType: "condition",
-    //   nodeName: "条件",
-    // },
+    {
+      key: "condition",
+      label: "条件",
+      nodeType: "condition",
+      nodeName: "条件",
+    },
   ],
 };

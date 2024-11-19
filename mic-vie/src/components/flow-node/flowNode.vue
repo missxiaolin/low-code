@@ -175,7 +175,6 @@ export default {
           // 读取数据
           const initData =
             Object.keys(props.nodeData).length > 0 ? props.nodeData : data;
-          console.log(initData);
           graph.data(cloneDeep(initData));
           // 渲染图
           graph.render();

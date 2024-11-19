@@ -1,7 +1,22 @@
 import { get } from "lodash-es";
 import { request } from "./fetch";
 import { message } from "ant-design-vue";
+import { getCurrentInstance } from "vue";
+
 const [messageApi, contextHolder] = message.useMessage();
+
+/**
+ * 获取变量
+ * @param {*} key
+ * @returns
+ */
+export function getData(key) {
+  const instance = getCurrentInstance();
+  if (instance) {
+    return instance.proxy[key];
+  }
+  return null;
+}
 
 /**
  * 设置变量
@@ -9,8 +24,9 @@ const [messageApi, contextHolder] = message.useMessage();
  * @param {*} key
  * @param {*} value
  */
-function setData(instance, key, value) {
-  instance.proxy.$data[key] = value;
+export function setData(key, value) {
+  const instance = getCurrentInstance();
+  instance.proxy[key] = value;
 }
 
 /**
@@ -21,7 +37,6 @@ function setData(instance, key, value) {
  * @param {*} initEventData
  */
 export const requestHandle = async (
-  instance,
   item,
   actionConfig,
   eventData,
@@ -31,7 +46,6 @@ export const requestHandle = async (
   const method = actionConfig.requestMethod || "";
   const params = actionConfig.requestParams || [];
   const body = actionConfig.requestBody || [];
-  //   const { url, method, params = [], body = [] } = actionConfig || {};
   try {
     // 解析代码里的变量
     const paramsValue = params.reduce((prev, cur) => {
@@ -64,16 +78,16 @@ export const requestHandle = async (
 
     // 执行成功后，执行后续成功success事件
     const nodes = item.children?.filter((o) => o.eventKey === "success");
-    execEventFlow(nodes, instance, res.data, initEventData);
+    execEventFlow(nodes, res.data, initEventData);
   } catch (error) {
     // 执行失败后，执行后续失败error事件
     // console.log(error, "error");
 
     const nodes = item.children?.filter((o) => o.eventKey === "error");
-    execEventFlow(nodes, instance, error);
+    execEventFlow(nodes, error);
   } finally {
     const nodes = item.children?.filter((o) => o.eventKey === "finally");
-    execEventFlow(nodes, instance);
+    execEventFlow(nodes);
   }
 };
 
@@ -93,19 +107,12 @@ function execScript(script, eventData, initEventData) {
 
 /**
  * 执行脚本
- * @param {*} instance
  * @param {*} item
  * @param {*} actionConfig
  * @param {*} eventData
  * @param {*} initEventData
  */
-async function execScriptHandle(
-  instance,
-  item,
-  actionConfig,
-  eventData,
-  initEventData
-) {
+async function execScriptHandle(item, actionConfig, eventData, initEventData) {
   const { script } = actionConfig || {};
 
   if (script) {
@@ -115,26 +122,25 @@ async function execScriptHandle(
 
       // 执行成功后，执行后续成功success事件
       const nodes = item.children?.filter((o) => o.eventKey === "success");
-      execEventFlow(nodes, instance);
+      execEventFlow(nodes);
     } catch {
       // 执行失败后，执行后续error事件
       const nodes = item.children?.filter((o) => o.eventKey === "error");
-      execEventFlow(nodes, instance);
+      execEventFlow(nodes);
     } finally {
       // 执行后续成功或失败finally事件
       const nodes = item.children?.filter((o) => o.eventKey === "finally");
-      execEventFlow(nodes, instance);
+      execEventFlow(nodes);
     }
   }
 }
 
 /**
  * 显示提示
- * @param {*} instance
  * @param {*} item
  * @param {*} actionConfig
  */
-function showMessageHandle(instance, item, actionConfig) {
+function showMessageHandle(item, actionConfig) {
   if (actionConfig?.type && actionConfig?.text) {
     try {
       if (actionConfig.type === "success") {
@@ -145,11 +151,11 @@ function showMessageHandle(instance, item, actionConfig) {
 
       // 执行成功后，执行后续成功success事件
       const nodes = item.children?.filter((o) => o.eventKey === "success");
-      execEventFlow(nodes, instance);
+      execEventFlow(nodes);
     } catch {
       // 执行失败后，执行后续error事件
       const nodes = item.children?.filter((o) => o.eventKey === "error");
-      execEventFlow(nodes, instance);
+      execEventFlow(nodes);
     } finally {
       // 执行后续成功或失败finally事件
       const nodes = item.children?.filter((o) => o.eventKey === "finally");
@@ -166,24 +172,17 @@ const eventHandleMap = {
 /**
  * 事件流
  * @param {*} nodes
- * @param {*} instance
  * @param {*} eventData
  * @param {*} initEventData
  * @returns
  */
-export function execEventFlow(
-  nodes,
-  instance,
-  eventData = "",
-  initEventData = ""
-) {
+export function execEventFlow(nodes, eventData = "", initEventData = "") {
   if (!nodes.length) return;
   nodes.forEach(async (item) => {
     // 判断是否是动作节点，如果是动作节点并且条件结果不为false，则执行动作
     if (item.type === "action" && item.conditionResult !== false) {
       // 根据不同动作类型执行不同动作
       await eventHandleMap[item.config.type](
-        instance,
         item,
         item.config.config,
         eventData,
