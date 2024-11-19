@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { getCurrentInstance, onMounted, ref } from "vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
 import data from "./flow.json";
 import { execEventFlow } from "../../utils/action";
@@ -28,7 +28,9 @@ export default {
   setup() {
     const open = ref(true);
     const flowNodeRef = ref(null);
-    const flowData = ref({});
+    const flowData = ref(data);
+
+    const instance = getCurrentInstance();
 
     const save = () => {
       flowNodeRef.value.flowSave();
@@ -36,7 +38,7 @@ export default {
     };
 
     onMounted(() => {
-      execEventFlow(data.children);
+      execEventFlow(instance, data.children);
     });
 
     return { open, save, flowNodeRef, flowData };

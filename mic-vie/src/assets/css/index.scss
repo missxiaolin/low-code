@@ -458,3 +458,15 @@ $layout-height: 50px;
     }
   }
 }
+
+.form-item {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  .label {
+    line-height: 35px;
+  }
+  .content {
+    flex: 1;
+  }
+}

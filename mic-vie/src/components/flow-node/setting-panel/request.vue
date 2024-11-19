@@ -60,15 +60,15 @@ export default {
           : "",
       activeKey:
         props.config && props.config.activeKey
-          ? rops.config.activeKey
+          ? props.config.activeKey
           : "requestParams",
       requestParams:
         props.config && props.config.requestParams
-          ? rops.config.requestParams
+          ? props.config.requestParams
           : [],
       requestParamsScript:
         props.config && props.config.requestParamsScript
-          ? rops.config.requestParamsScript
+          ? props.config.requestParamsScript
           : `(function (ctx) {
   // TODO
                     

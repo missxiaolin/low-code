@@ -8,12 +8,6 @@
       "label": "动作",
       "nodeType": "action",
       "nodeName": "动作"
-    },
-    {
-      "key": "condition",
-      "label": "条件",
-      "nodeType": "condition",
-      "nodeName": "条件"
     }
   ],
   "x": -148,
@@ -26,7 +20,7 @@
   "children": [
     {
       "type": "action",
-      "id": "n-0.29617382716168295",
+      "id": "n-0.47867639966454933",
       "label": "请求接口",
       "key": "action",
       "menus": [
@@ -63,19 +57,21 @@
         "type": "request",
         "config": {
           "requestUrl": "/api/user/get",
-          "requestMethod": "",
-          "requestParams": [],
-          "requestBody": {
-            "type": "script",
-            "script": "",
-            "json": ""
-          }
+          "requestMethod": "get",
+          "activeKey": "requestParams",
+          "requestParams": [
+            {
+              "key": "a",
+              "value": "{{route.a}}"
+            }
+          ],
+          "requestParamsScript": "(function (ctx) {\n  // TODO\n                    \n})(ctx)"
         }
       },
       "children": [
         {
           "type": "event",
-          "id": "n-0.5264987295049508",
+          "id": "n-0.5576941675489195",
           "label": "成功",
           "key": "success",
           "menus": [
@@ -95,51 +91,7 @@
             }
           ],
           "eventKey": "success",
-          "x": -226,
-          "y": 104,
-          "depth": 2,
-          "style": {
-            "hover": {},
-            "selected": {}
-          },
-          "children": [
-            {
-              "type": "condition",
-              "id": "n-0.3791877446319327",
-              "label": "条件",
-              "key": "condition",
-              "menus": [],
-              "eventKey": "success",
-              "x": -226,
-              "y": 200,
-              "depth": 3,
-              "style": {}
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "id": "n-0.600742600357012",
-          "label": "失败",
-          "key": "error",
-          "menus": [
-            {
-              "key": "action",
-              "label": "动作",
-              "nodeType": "action",
-              "nodeName": "动作",
-              "eventKey": "error"
-            },
-            {
-              "key": "condition",
-              "label": "条件",
-              "nodeType": "condition",
-              "nodeName": "条件",
-              "eventKey": "error"
-            }
-          ],
-          "eventKey": "error",
-          "x": -70,
+          "x": -148,
           "y": 104,
           "depth": 2,
           "style": {
@@ -149,7 +101,7 @@
           "children": [
             {
               "type": "action",
-              "id": "n-0.6319323474390643",
+              "id": "n-0.8794526240647318",
               "label": "执行脚本",
               "key": "action",
               "menus": [
@@ -175,8 +127,8 @@
                   "eventKey": "finally"
                 }
               ],
-              "eventKey": "error",
-              "x": -70,
+              "eventKey": "success",
+              "x": -148,
               "y": 200,
               "depth": 3,
               "style": {
@@ -186,13 +138,13 @@
               "config": {
                 "type": "function",
                 "config": {
-                  "functionScript": ""
+                  "functionScript": "(function (ctx) {\n  // TODO\nconsole.log(ctx)\n                    \n})(ctx)"
                 }
               },
               "children": [
                 {
                   "type": "event",
-                  "id": "n-0.40205939403880775",
+                  "id": "n-0.7764397035199453",
                   "label": "成功",
                   "key": "success",
                   "menus": [
@@ -215,34 +167,24 @@
                   "x": -148,
                   "y": 296,
                   "depth": 4,
-                  "style": {}
-                },
-                {
-                  "type": "event",
-                  "id": "n-0.4595740373943682",
-                  "label": "失败",
-                  "key": "error",
-                  "menus": [
+                  "style": {
+                    "hover": {},
+                    "selected": {}
+                  },
+                  "children": [
                     {
-                      "key": "action",
+                      "type": "action",
+                      "id": "n-0.04909131607846251",
                       "label": "动作",
-                      "nodeType": "action",
-                      "nodeName": "动作",
-                      "eventKey": "error"
-                    },
-                    {
-                      "key": "condition",
-                      "label": "条件",
-                      "nodeType": "condition",
-                      "nodeName": "条件",
-                      "eventKey": "error"
+                      "key": "action",
+                      "menus": [],
+                      "eventKey": "success",
+                      "x": -148,
+                      "y": 392,
+                      "depth": 5,
+                      "style": {}
                     }
-                  ],
-                  "eventKey": "error",
-                  "x": 8,
-                  "y": 296,
-                  "depth": 4,
-                  "style": {}
+                  ]
                 }
               ]
             }
