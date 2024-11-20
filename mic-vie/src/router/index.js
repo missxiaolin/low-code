@@ -9,6 +9,10 @@ export const defaultRoute = [
     path: "/flow/node",
     component: () => import("@/views/demo/flow.vue"),
   },
+  {
+    path: "/script/code",
+    component: () => import("@/views/demo/code.vue"),
+  },
 ];
 
 let prdRoutesList = [...defaultRoute];
