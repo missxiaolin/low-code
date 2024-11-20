@@ -4,16 +4,20 @@
 
 <script>
 import { nextTick, onMounted, ref, getCurrentInstance } from "vue";
+import * as Vue from "vue";
+import Antd from "ant-design-vue";
+import { loadPlugins } from "../../plugins/index";
 // 假设有一个 Vue 文件的内容
 // <a-button type="primary">Primary Button</a-button>
+// <a-button type="primary">Primary Button</a-button>
+// <icon type="icon-tuichu" />
+// <heart-two-tone two-tone-color="#eb2f96" />
 const config = {
   files: {
     "/main.vue": `
         <template>
             <div class="content">
                 <a-button type="primary">Primary Button</a-button>
-                <icon type="icon-tuichu" />
-                <heart-two-tone two-tone-color="#eb2f96" />
                 <EyeOutlined />
                 {{ message }}
             </div>
@@ -22,7 +26,6 @@ const config = {
         <script>
             import { ref, getCurrentInstance } from "vue";
             export default {
-                
                 setup() {
                     const message = ref("Hello, Vue 3!");
                     console.log(getCurrentInstance())
@@ -50,7 +53,11 @@ export default {
         const options = {
           moduleCache: {
             vue: Vue,
-            antd: antd,
+            // "@ant-design/icons-vue": {
+            //   EyeOutlined,
+            // },
+            // EyeOutlined: EyeOutlined,
+            // antd: Antd,
           },
           getFile: (url) => {
             return config.files[url];
@@ -77,10 +84,11 @@ export default {
             window["vue3-sfc-loader"].loadModule("/main.vue", options)
           )
         );
-
-        app.use(antd);
+        // app.use(Antd);
+        loadPlugins(app);
+        // app.component("EyeOutlined", EyeOutlined);
         app.mount(document.getElementById("my-component"));
-        console.log(window.antd.Icon);
+        // console.log(window.antd.Icon);
       });
     });
   },
