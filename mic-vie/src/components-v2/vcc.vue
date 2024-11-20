@@ -467,6 +467,7 @@ export default {
 .main-main {
   width: 100%;
   min-height: 100vh;
+  padding: 10px;
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -493,6 +494,7 @@ export default {
 .attribute {
   width: 300px;
   z-index: 2;
+  box-sizing: border-box;
 }
 
 #render-control-panel {
