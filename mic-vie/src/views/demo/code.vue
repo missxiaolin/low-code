@@ -8,10 +8,6 @@ import * as Vue from "vue";
 import Antd from "ant-design-vue";
 import { loadPlugins } from "../../plugins/index";
 // 假设有一个 Vue 文件的内容
-// <a-button type="primary">Primary Button</a-button>
-// <a-button type="primary">Primary Button</a-button>
-// <icon type="icon-tuichu" />
-// <heart-two-tone two-tone-color="#eb2f96" />
 const config = {
   files: {
     "/main.vue": `
@@ -53,11 +49,6 @@ export default {
         const options = {
           moduleCache: {
             vue: Vue,
-            // "@ant-design/icons-vue": {
-            //   EyeOutlined,
-            // },
-            // EyeOutlined: EyeOutlined,
-            // antd: Antd,
           },
           getFile: (url) => {
             return config.files[url];
@@ -84,11 +75,8 @@ export default {
             window["vue3-sfc-loader"].loadModule("/main.vue", options)
           )
         );
-        // app.use(Antd);
         loadPlugins(app);
-        // app.component("EyeOutlined", EyeOutlined);
         app.mount(document.getElementById("my-component"));
-        // console.log(window.antd.Icon);
       });
     });
   },
