@@ -4,7 +4,7 @@
 
 export function loadAnt(app) {
   /** Ant 组件完整引入 */
-  // app.use(Antd);
+  app.use(ant);
   // app.component("EyeOutlined", EyeOutlined);
   // app.component("EyeInvisibleOutlined", EyeInvisibleOutlined);
   // app.component("ApartmentOutlined", ApartmentOutlined);

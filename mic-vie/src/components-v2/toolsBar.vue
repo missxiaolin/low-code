@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import { ElNotification } from "element-plus";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons-vue";
 import { h } from "vue";
 
@@ -112,12 +111,7 @@ export default {
         this.editMode = true;
       }, 500);
     },
-    notification() {
-      ElNotification({
-        message: "暂未开发",
-        type: "warning",
-      });
-    },
+    notification() {},
   },
   fillter: {},
 };

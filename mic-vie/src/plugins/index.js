@@ -1,5 +1,3 @@
-// import { loadElementPlus } from "./element-plus";
-// import { loadElementPlusIcon } from "./element-plus-icon";
 // import { loadAnt } from "./ant/index.js";
 import SvgIcon from "@/components/svgIcon/index.vue"; // svg组件
 

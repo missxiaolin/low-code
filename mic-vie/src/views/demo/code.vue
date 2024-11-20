@@ -12,7 +12,9 @@ const config = {
         <template>
             <div class="content">
                 <a-button type="primary">Primary Button</a-button>
-                <StepForwardOutlined />
+                <icon type="icon-tuichu" />
+                <heart-two-tone two-tone-color="#eb2f96" />
+                <EyeOutlined />
                 {{ message }}
             </div>
         </template>
@@ -75,9 +77,10 @@ export default {
             window["vue3-sfc-loader"].loadModule("/main.vue", options)
           )
         );
-        console.log(antdIcon);
+
         app.use(antd);
         app.mount(document.getElementById("my-component"));
+        console.log(window.antd.Icon);
       });
     });
   },
