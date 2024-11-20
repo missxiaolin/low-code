@@ -13,16 +13,20 @@
 import { defineAsyncComponent } from "vue";
 // 以这样一段结构初始化VCC组件
 const initCodeStr =
-  '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","style":"min-height: 100%;","lc_id":"container","__children":[]}}]}}';
+  '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","lc_id":"container","style":"min-height: 100%;","__children":[{"span":{"lc_id":"5qjk7s4o3f","@click":"ceshi","__children":[],"__text__":"Span Element"}}]}}]}}';
 
-const jsTem = `
-{
-  data() {
+const jsTem = `{
+  setup() {
+    const data = toRefs({})
+    const ceshi333 = () => {
+      console.log("ceshi333")
+    }
+
     return {
-    };
-  },
-  methods: {
-  },
+      ...data,
+      ceshi333
+    }
+  }
 }
 `;
 
@@ -43,16 +47,19 @@ export default {
   mounted() {
     this.codeInfoEntity.JSCode = jsTem;
     this.codeInfoEntity.css = "";
+    this.codeInfoEntity.codeStructure = JSON.parse(initCodeStr);
   },
   methods: {
     onCodeUpdate({ codeRawVueInfo, JSCode, css }) {
       // 编辑后新的代码结构
       // codeRawVueInfo为template对象表示结构
       // JSCode为显式输入的JS逻辑
-      // console.log("onCodeUpdate", codeRawVueInfo, JSCode);
+      // console.log("onCodeUpdate", codeRawVueInfo, JSCode, css);
     },
     onLoadFinish() {},
-    async save(code) {},
+    async save(code) {
+      // console.log(code);
+    },
   },
 };
 </script>

@@ -207,9 +207,7 @@ export default {
   methods: {
     convertLogicCode(JSCode) {
       try {
-        const JSCodeInfo = eval(
-          `(function(){return ${JSCode.replace(/\s+/g, "")}})()`
-        );
+        const JSCodeInfo = new Function(`return ${JSCode}`);
         // 保留JS代码
         this.JSCode = JSCode;
         const fn = () => {
@@ -226,7 +224,7 @@ export default {
 
         return JSCodeInfo;
       } catch (e) {
-        console.warn(
+        console.log(
           `外部逻辑代码解析出错，解析的逻辑代码为: ${JSCode}, Error: ${e}`
         );
       }

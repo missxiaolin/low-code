@@ -1,21 +1,22 @@
 //该文件会遍历Object，获取关键的class,事件,data, 最终拼装为一个完整的SFC文件
 
-import postcss from 'postcss';
-import isRegexp from 'is-regexp';
-import isObject from 'is-obj';
-import _ from 'lodash';
-import prettier from 'prettier/standalone.js';
-import parserBabel from 'prettier/parser-babel.js';
+import postcss from "postcss";
+import isRegexp from "is-regexp";
+import isObject from "is-obj";
+import _ from "lodash";
+import prettier from "prettier/standalone.js";
+import parserBabel from "prettier/parser-babel.js";
 
 // 导出组件模板文件
 
-function vueTemplate () {
-    return `
+function vueTemplate() {
+  return `
   <template> 
     <!--在此自动生成--> 
   </template>
   
   <script>
+  import { toRefs } from "vue";
   export default // $script
   </script>
   
@@ -26,20 +27,12 @@ function vueTemplate () {
 }
 
 const scriptTemplate = `{
-  props: [],
-  components: {},
   data() {
     return {
       // $datas
     };
   },
-  watch: {},
-  computed: {},
-  created() {},
-  mounted() {},
   methods: {
-    request() {
-    },
     // $eventMethods
   },
   
@@ -202,7 +195,7 @@ function replaceMethods(template, set, options) {
 
 // 从模板中替换样式
 // 从模板中替换样式
-const replaceStyles = async (template, set, options, customCss = '') => {
+const replaceStyles = async (template, set, options, customCss = "") => {
   return template.replace(
     "/** $stylesTemplate */",
     await mCss(convertStyles(set, options), customCss)
@@ -325,7 +318,8 @@ Parser.prototype.j2x = function (jObj, level) {
   const len = keys.length;
   for (let i = 0; i < len; i++) {
     const key = keys[i];
-    if (typeof jObj[key] === "undefined") ; else if (jObj[key] === null) {
+    if (typeof jObj[key] === "undefined");
+    else if (jObj[key] === null) {
       val += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
     } else if (jObj[key] instanceof Date) {
       val += this.buildTextNode(jObj[key], key, "", level);
@@ -380,7 +374,8 @@ Parser.prototype.j2x = function (jObj, level) {
       } else {
         //tag value
         if (key === this.options.textNodeName) {
-          if (jObj[this.options.cdataTagName]) ; else {
+          if (jObj[this.options.cdataTagName]);
+          else {
             val += this.options.tagValueProcessor("" + jObj[key]);
           }
         } else {
@@ -404,7 +399,8 @@ Parser.prototype.j2x = function (jObj, level) {
         const arrLen = jObj[key].length;
         for (let j = 0; j < arrLen; j++) {
           const item = jObj[key][j];
-          if (typeof item === "undefined") ; else if (item === null) {
+          if (typeof item === "undefined");
+          else if (item === null) {
             val += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
           } else if (typeof item === "object") {
             const result = this.j2x(item, level + 1);
@@ -891,9 +887,11 @@ class CodeGenerator {
 
     // 转化为对象
     const JSCodeInfo = eval(`(function(){return ${dataTemp}})()`);
+    console.log("JSCodeInfo", JSCodeInfo);
 
     // 合并外部脚本对象
     let externalData = {};
+    console.log("this.externalJS", this.externalJS);
 
     if (this.externalJS && typeof this.externalJS.data === "function") {
       externalData = this.externalJS.data();
@@ -916,24 +914,46 @@ class CodeGenerator {
 
     const mergedJSObject = merge(JSCodeInfo, externalJSLogic);
 
-    // 序列化为脚本代码
-    const finalJSCode = stringifyObject(mergedJSObject, {
-      transform: (object, property, originalResult) => {
-        if (
-          !originalResult.match(/^\([^\(]+/g) &&
-          !originalResult.match(/^\{/g)
-        ) {
-          // 不对以(/{ 开头的情况做处理，只对包含有方法名的情况做处理
-          const after = originalResult.replace(
-            /[^\(]+?\(([\w,\s]*)\)/,
-            "($1)=>"
-          );
-          return after;
-        }
-
-        return originalResult;
-      },
+    let toRefsData = mergedJSObject.data(),
+      functionData = ``;
+    Object.keys(mergedJSObject.methods).forEach((key) => {
+      functionData += `const ${key} = ${mergedJSObject.methods[key]};\n`;
     });
+
+    // 序列化为脚本代码
+    // const finalJSCode = stringifyObject(mergedJSObject, {
+    //   transform: (object, property, originalResult) => {
+    //     if (
+    //       !originalResult.match(/^\([^\(]+/g) &&
+    //       !originalResult.match(/^\{/g)
+    //     ) {
+    //       // 不对以(/{ 开头的情况做处理，只对包含有方法名的情况做处理
+    //       const after = originalResult.replace(
+    //         /[^\(]+?\(([\w,\s]*)\)/,
+    //         "($1)=>"
+    //       );
+    //       return after;
+    //     }
+
+    //     return originalResult;
+    //   },
+    // });
+    // console.log(toRefsData);
+    // console.log(functionData);
+
+    const finalJSCode = `
+{
+setup(props) {
+  const data = toRefs(${stringifyObject(toRefsData)});
+  ${functionData}
+  return {
+    ...data,
+    ${Object.keys(mergedJSObject.methods).join(",")}
+  }
+}
+
+}
+    `;
 
     // ==================== 生成脚本 ====================
 
@@ -942,10 +962,11 @@ class CodeGenerator {
       parser: "babel",
       plugins: [parserBabel],
     });
+
     const excludeUnuseal = beautiful.replace("export default ", "");
+
     // 插入到最终模板
     const JSTemp = templateTemp.replace("// $script", excludeUnuseal);
-
     // 生成class
     const styleTemp = await replaceStyles(
       JSTemp,
@@ -953,6 +974,7 @@ class CodeGenerator {
       this.options,
       this.customCss
     );
+
     return styleTemp;
   }
 

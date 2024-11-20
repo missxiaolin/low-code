@@ -88,14 +88,14 @@ export class MainPanelProvider {
 
     // console.groupEnd();
 
-    const { template, script, styles, customBlocks } = parseComponent(code);
-    this.loadStyle(styles);
+    // const { template, script, styles, customBlocks } = parseComponent(code);
+    // this.loadStyle(styles);
 
-    let newScript = script.content.replace(/\s*export default\s*/, "");
+    // let newScript = script.content.replace(/\s*export default\s*/, "");
 
-    const componentOptions = new Function(`return ${newScript}`)();
+    // const componentOptions = new Function(`return ${newScript}`)();
     // 保存script代码
-    this.componentOptions = componentOptions;
+    // this.componentOptions = componentOptions;
 
     // componentOptions.template = template.content;
 
@@ -216,7 +216,7 @@ export class MainPanelProvider {
   }
 
   saveJSCodeOnly(code) {
-    this.externalJS = code || {};
+    this.externalJS = code() || {};
     return this;
   }
 

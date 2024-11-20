@@ -23,4 +23,4 @@ const xmlData = fs.readFileSync("./test/test.vue", {
   });
   const xml = parser.parse(root.root);
   console.info(xml);
-})()
+})();

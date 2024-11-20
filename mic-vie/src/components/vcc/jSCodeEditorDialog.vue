@@ -32,23 +32,16 @@ import prettier from "prettier/standalone";
 import babel from "prettier/parser-babel";
 
 const example = dedent`{
-        data() {
-          return {
-  
-          };
-        },
-        watch: {
-  
-        },
-  
-        computed: {
-  
-        },
-  
-        methods: {
-          
-        },
-};
+  setup() {
+    const data = toRefs({
+      
+    })
+
+    return {
+      data
+    }
+  }
+}
         `;
 
 export default {
@@ -86,6 +79,7 @@ export default {
       try {
         // 转换为对象
         const JSCodeInfo = eval(`(function(){return ${temp}})()`);
+        console.log("JSCodeInfo", JSCodeInfo);
         this.$emit("saveJSCode", {
           JSCodeInfo,
           JSCode: temp,
