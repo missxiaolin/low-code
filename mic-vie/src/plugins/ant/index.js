@@ -1,10 +1,10 @@
-// import Antd from "ant-design-vue";
-// import * as AntIcon from "@ant-design/icons-vue";
-// import "ant-design-vue/dist/reset.css";
+import Antd from "ant-design-vue";
+import * as AntIcon from "@ant-design/icons-vue";
+import "ant-design-vue/dist/reset.css";
 
 export function loadAnt(app) {
   /** Ant 组件完整引入 */
-  app.use(ant);
+  app.use(Antd);
   // app.component("EyeOutlined", EyeOutlined);
   // app.component("EyeInvisibleOutlined", EyeInvisibleOutlined);
   // app.component("ApartmentOutlined", ApartmentOutlined);
@@ -16,7 +16,7 @@ export function loadAnt(app) {
   // app.component("MinusCircleOutlined", MinusCircleOutlined);
   // app.component("PlusOutlined", PlusOutlined);
   // app.component("RedoOutlined", RedoOutlined);
-  // for (const [key, component] of Object.entries(AntIcon)) {
-  //   app.component(key, component);
-  // }
+  for (const [key, component] of Object.entries(AntIcon)) {
+    app.component(key, component);
+  }
 }

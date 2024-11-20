@@ -10,9 +10,11 @@
     "compileComponent": "node ./src/script/compile.js"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
     "@antv/g6": "4.8.23",
     "@micro-zoe/micro-app": "1.0.0-beta.5",
     "@vue/compiler-sfc": "^3.2.22",
+    "ant-design-vue": "^4.2.6",
     "autoprefixer": "^10.4.19",
     "axios": "1.4.0",
     "codemirror-editor-vue3": "^0.2.4",
