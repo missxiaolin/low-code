@@ -102,38 +102,7 @@ export class MainPanelProvider {
     if (this.editMode) {
       // 渲染当前代码
       const readyForMoutedElement = this.createMountedElement();
-      console.log("readyForMoutedElement", readyForMoutedElement);
-      const options = {
-        moduleCache: {
-          vue: Vue,
-        },
-        getFile: (url) => {
-          return code;
-        },
-        addStyle(textContent) {
-          const style = Object.assign(document.createElement("style"), {
-            textContent,
-          });
-          const ref = document.head.getElementsByTagName("style")[0] || null;
-          document.head.insertBefore(style, ref);
-        },
-        handleModule: async function (type, getContentData, path, options) {
-          switch (type) {
-            case ".svg":
-              return getContentData(false);
-          }
-        },
-        log(type, ...args) {
-          console[type](...args);
-        },
-      };
-      const app = Vue.createApp(
-        Vue.defineAsyncComponent(() =>
-          window["vue3-sfc-loader"].loadModule("/main.vue", options)
-        )
-      );
-      loadPlugins(app);
-      app.mount(readyForMoutedElement);
+      this.appLoad(code, readyForMoutedElement);
       this.enableEditMode();
       // window.createBaseAppAsync(componentOptions).then((app) => {
       //   app.mount(readyForMoutedElement);
@@ -145,12 +114,53 @@ export class MainPanelProvider {
       this.flatDataStructure(rawDataStructure);
     } else {
       // 渲染当前代码
-      window
-        .createBaseAppAsync(componentOptions)
-        .then((app) => app.mount(this.mountedEle));
+      this.appLoad(code, this.mountedEle);
+      // window
+      //   .createBaseAppAsync(componentOptions)
+      //   .then((app) => app.mount(this.mountedEle));
     }
 
     return this;
+  }
+
+  /**
+   * 使用vue3-sfc-loader 渲染拖拽组件
+   * @param {*} code
+   */
+  appLoad(code, readyForMoutedElement) {
+    // 渲染当前代码
+
+    const options = {
+      moduleCache: {
+        vue: Vue,
+      },
+      getFile: (url) => {
+        return code;
+      },
+      addStyle(textContent) {
+        const style = Object.assign(document.createElement("style"), {
+          textContent,
+        });
+        const ref = document.head.getElementsByTagName("style")[0] || null;
+        document.head.insertBefore(style, ref);
+      },
+      handleModule: async function (type, getContentData, path, options) {
+        switch (type) {
+          case ".svg":
+            return getContentData(false);
+        }
+      },
+      log(type, ...args) {
+        console[type](...args);
+      },
+    };
+    const app = Vue.createApp(
+      Vue.defineAsyncComponent(() =>
+        window["vue3-sfc-loader"].loadModule("/main.vue", options)
+      )
+    );
+    window.loadApp(app);
+    app.mount(readyForMoutedElement);
   }
 
   /**

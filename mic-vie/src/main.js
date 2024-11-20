@@ -36,6 +36,15 @@ function createBaseAppAsync(renderComponent = {}) {
   });
 }
 
+/**
+ * 画布使用
+ * @param {*} app
+ */
+function loadApp(app) {
+  /** 加载插件 */
+  loadPlugins(app);
+}
+
 let app = null;
 function mount() {
   app = createApp(App);
@@ -44,6 +53,7 @@ function mount() {
   /** 加载插件 */
   loadPlugins(app);
   window.createBaseAppAsync = createBaseAppAsync;
+  window.loadApp = loadApp;
   if (isSubMicro) {
     // 微前端环境下， 处理路由下发跳转
     handleMicroData(router, app);
