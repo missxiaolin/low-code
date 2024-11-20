@@ -16,15 +16,23 @@ const initCodeStr =
   '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","lc_id":"container","style":"min-height: 100%;","__children":[{"span":{"lc_id":"5qjk7s4o3f","@click":"ceshi","__children":[],"__text__":"Span Element"}}]}}]}}';
 
 const jsTem = `{
+  data() {
+    return {
+      a: 1
+    }
+  },
   setup() {
-    const data = toRefs({})
     const ceshi333 = () => {
       console.log("ceshi333")
     }
 
     return {
-      ...data,
       ceshi333
+    }
+  },
+  methods: {
+    ceshi2() {
+      console.log("ceshi2")
     }
   }
 }

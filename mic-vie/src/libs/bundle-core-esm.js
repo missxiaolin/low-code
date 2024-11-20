@@ -882,16 +882,15 @@ class CodeGenerator {
       this.methodSet,
       this.options
     );
+
     // 生成data
     const dataTemp = replaceDatas(methodTemp, this.dataSet, this.options);
 
     // 转化为对象
     const JSCodeInfo = eval(`(function(){return ${dataTemp}})()`);
-    console.log("JSCodeInfo", JSCodeInfo);
 
     // 合并外部脚本对象
     let externalData = {};
-    console.log("this.externalJS", this.externalJS);
 
     if (this.externalJS && typeof this.externalJS.data === "function") {
       externalData = this.externalJS.data();
@@ -906,10 +905,16 @@ class CodeGenerator {
 
     JSCodeInfo.data = dataFunction;
 
-    let externalJSLogic = {};
+    let externalJSLogic = {
+      methods: {},
+    };
 
     if (this.externalJS) {
-      externalJSLogic = this.externalJS;
+      const setupFun = this.externalJS.setup();
+      console.log("setupFun", setupFun);
+      Object.keys(setupFun).forEach((key) => {
+        externalJSLogic.methods[key] = setupFun[key];
+      });
     }
 
     const mergedJSObject = merge(JSCodeInfo, externalJSLogic);
