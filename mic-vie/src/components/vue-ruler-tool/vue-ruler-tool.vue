@@ -244,12 +244,18 @@ export default {
           document.documentElement.clientHeight - this.topSpacing;
       }
       this.rulerWidth = this.$refs.verticalRuler.clientWidth;
-      this.rulerHeight = this.$refs.horizontalRuler.clientHeight;
+      this.rulerHeight = this.$refs.horizontalRuler
+        ? this.$refs.horizontalRuler.clientHeight
+        : 0;
       this.setSpacing();
     }, // 获取窗口宽与高
     setSpacing() {
-      this.topSpacing = this.$refs.horizontalRuler.getBoundingClientRect().y; //.offsetParent.offsetTop
-      this.leftSpacing = this.$refs.verticalRuler.getBoundingClientRect().x; // .offsetParent.offsetLeft
+      this.topSpacing = this.$refs.horizontalRuler
+        ? this.$refs.horizontalRuler.getBoundingClientRect().y
+        : 0; //.offsetParent.offsetTop
+      this.leftSpacing = this.$refs.verticalRuler
+        ? this.$refs.verticalRuler.getBoundingClientRect().x
+        : 0; // .offsetParent.offsetLeft
     },
     scaleCalc() {
       this.getCalc(this.xScale, this.windowWidth);

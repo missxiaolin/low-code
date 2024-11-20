@@ -6,6 +6,8 @@
  *
  */
 import { parseComponent } from "vue-template-compiler/browser";
+import * as Vue from "vue";
+import { loadPlugins } from "../plugins/index";
 import {
   merge,
   insertPresetAttribute,
@@ -80,7 +82,7 @@ export class MainPanelProvider {
     // 生成展示代码
     let codeForShow = code.replace(/\s{1}lc_id=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}lc-mark/g, "");
-    // console.log('codeForShow', codeForShow)
+    // console.log("codeForShow", codeForShow);
 
     this.eventEmitter.emit("codeCreated", codeForShow);
 
@@ -95,16 +97,49 @@ export class MainPanelProvider {
     // 保存script代码
     this.componentOptions = componentOptions;
 
-    componentOptions.template = template.content;
+    // componentOptions.template = template.content;
 
     if (this.editMode) {
       // 渲染当前代码
       const readyForMoutedElement = this.createMountedElement();
-      window.createBaseAppAsync(componentOptions).then((app) => {
-        app.mount(readyForMoutedElement);
-        // 开启编辑模式，这个方式会导致正常渲染的事件被中断， 例如EChart的加载渲染。
-        this.enableEditMode();
-      });
+      console.log("readyForMoutedElement", readyForMoutedElement);
+      const options = {
+        moduleCache: {
+          vue: Vue,
+        },
+        getFile: (url) => {
+          return code;
+        },
+        addStyle(textContent) {
+          const style = Object.assign(document.createElement("style"), {
+            textContent,
+          });
+          const ref = document.head.getElementsByTagName("style")[0] || null;
+          document.head.insertBefore(style, ref);
+        },
+        handleModule: async function (type, getContentData, path, options) {
+          switch (type) {
+            case ".svg":
+              return getContentData(false);
+          }
+        },
+        log(type, ...args) {
+          console[type](...args);
+        },
+      };
+      const app = Vue.createApp(
+        Vue.defineAsyncComponent(() =>
+          window["vue3-sfc-loader"].loadModule("/main.vue", options)
+        )
+      );
+      loadPlugins(app);
+      app.mount(readyForMoutedElement);
+      this.enableEditMode();
+      // window.createBaseAppAsync(componentOptions).then((app) => {
+      //   app.mount(readyForMoutedElement);
+      //   // 开启编辑模式，这个方式会导致正常渲染的事件被中断， 例如EChart的加载渲染。
+      //   this.enableEditMode();
+      // });
 
       // 拍平数据结构
       this.flatDataStructure(rawDataStructure);
