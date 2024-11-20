@@ -5,7 +5,6 @@
 <script>
 import { nextTick, onMounted, ref, getCurrentInstance } from "vue";
 import * as Vue from "vue";
-import Antd from "ant-design-vue";
 import { loadPlugins } from "../../plugins/index";
 // 假设有一个 Vue 文件的内容
 const config = {
