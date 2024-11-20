@@ -1,17 +1,17 @@
 <template>
-  <AConfigProvider :locale="lang">
-    <router-view></router-view>
-  </AConfigProvider>
+  <!-- <AConfigProvider :locale="lang"> -->
+  <router-view></router-view>
+  <!-- </AConfigProvider> -->
 </template>
 
 <script>
-import zhCN from "ant-design-vue/locale/zh_CN";
+// import zhCN from "ant-design-vue/locale/zh_CN";
 import { useTheme } from "./hooks/useTheme";
 
 export default {
   data() {
     return {
-      lang: zhCN,
+      // lang: zhCN,
     };
   },
   mounted() {

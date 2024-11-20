@@ -11,10 +11,8 @@
   },
   "dependencies": {
     "@antv/g6": "4.8.23",
-    "@element-plus/icons-vue": "2.1.0",
     "@micro-zoe/micro-app": "1.0.0-beta.5",
     "@vue/compiler-sfc": "^3.2.22",
-    "ant-design-vue": "4.2.5",
     "autoprefixer": "^10.4.19",
     "axios": "1.4.0",
     "codemirror-editor-vue3": "^0.2.4",
@@ -26,7 +24,6 @@
     "dedent": "^1.5.3",
     "echarts": "^5.5.0",
     "ejs": "^3.1.6",
-    "element-plus": "^2.7.3",
     "escodegen": "^2.0.0",
     "espree": "^7.3.0",
     "eventemitter3": "^4.0.7",

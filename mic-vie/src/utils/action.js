@@ -1,7 +1,7 @@
 import { get } from "lodash-es";
 import router from "../router/index";
 import { request } from "./fetch";
-import { message } from "ant-design-vue";
+import { message } from "antd";
 import urlUtils from "./url";
 const urlTool = new urlUtils();
 
