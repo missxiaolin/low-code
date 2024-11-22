@@ -13,32 +13,14 @@
 import { defineAsyncComponent } from "vue";
 // 以这样一段结构初始化VCC组件
 const initCodeStr =
-  '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","lc_id":"container","style":"min-height: 100%;","__children":[{"span":{"lc_id":"5qjk7s4o3f","@click":"ceshi","__children":[],"__text__":"Span Element"}}]}}]}}';
+  '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","lc_id":"container","style":"min-height: 100%;","__children":[]}}]}}';
 
 const jsTem = `export default {
   setup() {
-    let $data = toRefs({
-      a: 1
-    })
-
-    let b = ref(1)
-    const ceshi = () => {
-      console.log("ceshi2222vue")
-    }
-    const ceshi333 = () => {
-      console.log("ceshi333")
-    }
-
-    const ceshi2 = (b) => {
-      console.log("ceshi333", b)
-    }
+    let $data = toRefs({})
 
     return {
-    $data,
-      ceshi,
-      b,
-      ceshi333,
-      ceshi2
+      $data
     }
   }
 }

@@ -1,24 +1,31 @@
 <template>
-  <AConfigProvider :locale="lang">
+  <AConfigProvider
+    :locale="lang"
+    :theme="{
+      algorithm: [darkAlgorithm, compactAlgorithm],
+    }"
+  >
     <router-view></router-view>
   </AConfigProvider>
 </template>
 
 <script>
 import zhCN from "ant-design-vue/locale/zh_CN";
-// import "ant-design-vue/dist/"
+import { theme } from "ant-design-vue";
 import { useTheme } from "./hooks/useTheme";
+const { darkAlgorithm, compactAlgorithm } = theme;
 
 export default {
   data() {
     return {
       lang: zhCN,
+      darkAlgorithm,
+      compactAlgorithm,
     };
   },
   mounted() {
     const { initTheme } = useTheme();
-
-    // initTheme();
+    initTheme();
   },
 };
 </script>

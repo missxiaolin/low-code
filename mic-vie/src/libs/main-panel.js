@@ -5,9 +5,7 @@
  *      结构 -> vue代码 -> html
  *
  */
-import { parseComponent } from "vue-template-compiler/browser";
 import * as Vue from "vue";
-import { loadPlugins } from "../plugins/index";
 import {
   merge,
   insertPresetAttribute,
@@ -86,38 +84,17 @@ export class MainPanelProvider {
 
     this.eventEmitter.emit("codeCreated", codeForShow);
 
-    // console.groupEnd();
-
-    // const { template, script, styles, customBlocks } = parseComponent(code);
-    // this.loadStyle(styles);
-
-    // let newScript = script.content.replace(/\s*export default\s*/, "");
-
-    // const componentOptions = new Function(`return ${newScript}`)();
-    // 保存script代码
-    // this.componentOptions = componentOptions;
-
-    // componentOptions.template = template.content;
-
     if (this.editMode) {
       // 渲染当前代码
       const readyForMoutedElement = this.createMountedElement();
       this.appLoad(code, readyForMoutedElement);
       this.enableEditMode();
-      // window.createBaseAppAsync(componentOptions).then((app) => {
-      //   app.mount(readyForMoutedElement);
-      //   // 开启编辑模式，这个方式会导致正常渲染的事件被中断， 例如EChart的加载渲染。
-      //   this.enableEditMode();
-      // });
 
       // 拍平数据结构
       this.flatDataStructure(rawDataStructure);
     } else {
       // 渲染当前代码
       this.appLoad(code, this.mountedEle);
-      // window
-      //   .createBaseAppAsync(componentOptions)
-      //   .then((app) => app.mount(this.mountedEle));
     }
 
     return this;

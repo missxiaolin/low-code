@@ -957,7 +957,7 @@ setup(props) {
   ${functionData}
   return {
     ...$data,
-    ${settingData.join(",")},
+    ${settingData && settingData.length > 0 ? settingData.join(",") + "," : ""}
     ${Object.keys(mergedJSObject.methods).join(",")}
   }
 }
