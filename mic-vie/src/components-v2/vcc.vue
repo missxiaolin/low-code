@@ -385,16 +385,17 @@ export default {
 
     // 保存js data fn
     viewSaveJs(d = {}, fn = []) {
-      const temScript = getJsTemData(d, fn);
+      console.log(d, fn);
+      // const temScript = getJsTemData(d, fn);
 
-      let jsCode = this.JSCode.trim();
-      const JSCodeInfo = eval(`(function(){return ${jsCode};})()`);
-      const newJsCode = replaceKeyInfo(temScript, JSCodeInfo);
-      this.saveJSCode({
-        JSCodeInfo: eval(`(function(){return ${newJsCode};})()`),
-        JSCode: newJsCode,
-      });
-      this.$refs.codeEditor.updateLogicCode(newJsCode);
+      // let jsCode = this.JSCode.trim();
+      // const JSCodeInfo = eval(`(function(){return ${jsCode};})()`);
+      // const newJsCode = replaceKeyInfo(temScript, JSCodeInfo);
+      // this.saveJSCode({
+      //   JSCodeInfo: eval(`(function(){return ${newJsCode};})()`),
+      //   JSCode: newJsCode,
+      // });
+      // this.$refs.codeEditor.updateLogicCode(newJsCode);
     },
 
     saveJSCode({ JSCodeInfo: code, JSCode }) {

@@ -34,6 +34,8 @@ const jsTem = `export default {
     }
 
     return {
+    $data,
+      ceshi,
       b,
       ceshi333,
       ceshi2

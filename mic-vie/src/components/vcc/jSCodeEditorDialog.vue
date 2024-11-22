@@ -10,7 +10,7 @@
     <codeEditor
       :height="'65vh;'"
       ref="codeEditor"
-      :value="`export default ${code}`"
+      :value="`${code}`"
     ></codeEditor>
 
     <template #footer>
@@ -31,7 +31,7 @@ import codeEditor from "../editor/index.vue";
 import prettier from "prettier/standalone";
 import babel from "prettier/parser-babel";
 
-const example = dedent`{
+const example = dedent`export default {
   setup() {
     const data = toRefs({
       
@@ -71,13 +71,12 @@ export default {
     },
     onSave() {
       const code = this.$refs.codeEditor.getEditorCode();
+      console.log("code", code);
       // 去掉注释
       // const temp = code.replace(/.+\*\/\s*/gs, "").replace(/\s+/g, "");
       try {
         // 转换为对象
-        const JSCodeInfo = code;
-        // const JSCodeInfo = eval(`(function(){return ${temp}})()`);
-        console.log("JSCodeInfo", JSCodeInfo);
+        const JSCodeInfo = `export default ${code}`;
         this.$emit("saveJSCode", {
           JSCodeInfo,
           JSCode: code,
