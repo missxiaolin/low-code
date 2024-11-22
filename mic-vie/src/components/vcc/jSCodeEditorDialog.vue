@@ -61,12 +61,9 @@ export default {
   methods: {
     updateLogicCode(newCode) {
       if (newCode) {
-        const pre = "const a = ";
-        this.code = prettier
-          .format(pre + newCode, {
-            plugins: [babel],
-          })
-          .replace(pre, "");
+        this.code = prettier.format(newCode, {
+          plugins: [babel],
+        });
       }
     },
     handleClose() {
@@ -75,14 +72,15 @@ export default {
     onSave() {
       const code = this.$refs.codeEditor.getEditorCode();
       // 去掉注释
-      const temp = code.replace(/.+\*\/\s*/gs, "").replace(/\s+/g, "");
+      // const temp = code.replace(/.+\*\/\s*/gs, "").replace(/\s+/g, "");
       try {
         // 转换为对象
-        const JSCodeInfo = eval(`(function(){return ${temp}})()`);
+        const JSCodeInfo = code;
+        // const JSCodeInfo = eval(`(function(){return ${temp}})()`);
         console.log("JSCodeInfo", JSCodeInfo);
         this.$emit("saveJSCode", {
           JSCodeInfo,
-          JSCode: temp,
+          JSCode: code,
         });
         this.handleClose();
         this.error = "";

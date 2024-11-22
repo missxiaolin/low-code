@@ -15,24 +15,28 @@ import { defineAsyncComponent } from "vue";
 const initCodeStr =
   '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","lc_id":"container","style":"min-height: 100%;","__children":[{"span":{"lc_id":"5qjk7s4o3f","@click":"ceshi","__children":[],"__text__":"Span Element"}}]}}]}}';
 
-const jsTem = `{
-  data() {
-    return {
-      a: 1
-    }
-  },
+const jsTem = `export default {
   setup() {
+    let $data = toRefs({
+      a: 1
+    })
+
+    let b = ref(1)
+    const ceshi = () => {
+      console.log("ceshi2222vue")
+    }
     const ceshi333 = () => {
       console.log("ceshi333")
     }
 
-    return {
-      ceshi333
+    const ceshi2 = (b) => {
+      console.log("ceshi333", b)
     }
-  },
-  methods: {
-    ceshi2() {
-      console.log("ceshi2")
+
+    return {
+      b,
+      ceshi333,
+      ceshi2
     }
   }
 }

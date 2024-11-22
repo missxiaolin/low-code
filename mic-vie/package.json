@@ -2,6 +2,7 @@
   "name": "mic-vite",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,6 +15,7 @@
     "@micro-zoe/micro-app": "1.0.0-beta.5",
     "@vue/compiler-sfc": "^3.2.22",
     "ant-design-vue": "^4.2.6",
+    "ast-traverse": "^0.1.1",
     "autoprefixer": "^10.4.19",
     "axios": "1.4.0",
     "codemirror-editor-vue3": "^0.2.4",

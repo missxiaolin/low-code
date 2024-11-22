@@ -216,7 +216,7 @@ export class MainPanelProvider {
   }
 
   saveJSCodeOnly(code) {
-    this.externalJS = code() || {};
+    this.externalJS = code || "";
     return this;
   }
 

@@ -207,7 +207,7 @@ export default {
   methods: {
     convertLogicCode(JSCode) {
       try {
-        const JSCodeInfo = new Function(`return ${JSCode}`);
+        let JSCodeInfo = JSCode;
         // 保留JS代码
         this.JSCode = JSCode;
         const fn = () => {

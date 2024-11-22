@@ -6,6 +6,7 @@ import isObject from "is-obj";
 import _ from "lodash";
 import prettier from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
+import { jsSetup } from "./setup";
 
 // 导出组件模板文件
 
@@ -16,7 +17,7 @@ function vueTemplate() {
   </template>
   
   <script>
-  import { toRefs } from "vue";
+  import { // $vueExport } from "vue";
   export default // $script
   </script>
   
@@ -871,6 +872,21 @@ class CodeGenerator {
 
   // 将所有需要替换的内容通过装饰器逐步替换
   async replaceKeyInfo() {
+    let $data,
+      funs,
+      vueExport,
+      str = "",
+      settingData;
+
+    // 解析外层代码
+    if (this.externalJS) {
+      const js = jsSetup(this.externalJS);
+      $data = js.$data || "";
+      funs = js.funs || [];
+      vueExport = js.vueExport || [];
+      str = js.str || "";
+      settingData = js.settingData || [];
+    }
     // 将对象转换为html并替换
     const templateTemp = replaceHtmlTemplate(getVueTemplate(), this.jsonObj);
 
@@ -891,11 +907,16 @@ class CodeGenerator {
 
     // 合并外部脚本对象
     let externalData = {};
-
-    if (this.externalJS && typeof this.externalJS.data === "function") {
-      externalData = this.externalJS.data();
-      // 防止在后面的生成污染新的对象
-      delete this.externalJS.data;
+    if ($data) {
+      const regExp = /toRefs\(([\s\S]+?)\)/;
+      const match = $data.match(regExp);
+      if (match && match[1]) {
+        const objStr = match[1].trim();
+        try {
+          const newObj = eval(`(${objStr})`);
+          externalData = newObj;
+        } catch (e) {}
+      }
     }
 
     // 生成新的data返回值
@@ -909,11 +930,14 @@ class CodeGenerator {
       methods: {},
     };
 
-    if (this.externalJS) {
-      const setupFun = this.externalJS.setup();
-      console.log("setupFun", setupFun);
-      Object.keys(setupFun).forEach((key) => {
-        externalJSLogic.methods[key] = setupFun[key];
+    if (funs && funs.length > 0) {
+      funs.forEach((methodString) => {
+        // 获取方法名
+        const match = methodString.match(/(let|const)\s+(\w+)\s*=\s*([\s\S]+)/);
+        if (match && match[1] && match[2] && match[3]) {
+          const variableName = match[2];
+          externalJSLogic.methods[variableName] = match[3];
+        }
       });
     }
 
@@ -925,34 +949,15 @@ class CodeGenerator {
       functionData += `const ${key} = ${mergedJSObject.methods[key]};\n`;
     });
 
-    // 序列化为脚本代码
-    // const finalJSCode = stringifyObject(mergedJSObject, {
-    //   transform: (object, property, originalResult) => {
-    //     if (
-    //       !originalResult.match(/^\([^\(]+/g) &&
-    //       !originalResult.match(/^\{/g)
-    //     ) {
-    //       // 不对以(/{ 开头的情况做处理，只对包含有方法名的情况做处理
-    //       const after = originalResult.replace(
-    //         /[^\(]+?\(([\w,\s]*)\)/,
-    //         "($1)=>"
-    //       );
-    //       return after;
-    //     }
-
-    //     return originalResult;
-    //   },
-    // });
-    // console.log(toRefsData);
-    // console.log(functionData);
-
     const finalJSCode = `
 {
 setup(props) {
-  const data = toRefs(${stringifyObject(toRefsData)});
+  const $data = toRefs(${stringifyObject(toRefsData)});
+  ${str}
   ${functionData}
   return {
-    ...data,
+    ...$data,
+    ${settingData.join(",")},
     ${Object.keys(mergedJSObject.methods).join(",")}
   }
 }
@@ -980,7 +985,11 @@ setup(props) {
       this.customCss
     );
 
-    return styleTemp;
+    vueExport.push("toRefs");
+    vueExport = Array.from(new Set(vueExport));
+    const zTemp = styleTemp.replace("// $vueExport", vueExport.join(","));
+
+    return zTemp;
   }
 
   // 分发解析结果

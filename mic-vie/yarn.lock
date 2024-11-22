@@ -1179,6 +1179,11 @@ assign-symbols@^1.0.0:
   resolved "https://registry.npmmirror.com/assign-symbols/-/assign-symbols-1.0.0.tgz#59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367"
   integrity sha512-Q+JC7Whu8HhmTdBph/Tq59IoRtoy6KAm5zzPv00WdujX82lbAL8K7WVjne7vdCsAmbF4AYaDOPyO3k0kl8qIrw==
 
+ast-traverse@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmmirror.com/ast-traverse/-/ast-traverse-0.1.1.tgz#69cf2b8386f19dcda1bb1e05d68fe359d8897de6"
+  integrity sha512-CPuE4BWIhJjsNMvFkrzjiBgOl56NJTuBPBkBqyRyfq/nZtx1Z1f5I+qx7G/Zt+FAOS+ABhghkEuWJrfW9Njjog==
+
 ast-types-yx@0.14.2:
   version "0.14.2"
   resolved "https://registry.npmmirror.com/ast-types-yx/-/ast-types-yx-0.14.2.tgz#0aa0f4f0025759b59780c1ad0c6f437730fcd363"
