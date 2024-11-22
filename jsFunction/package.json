@@ -1,0 +1,15 @@
+{
+  "name": "jsfunction",
+  "version": "1.0.0",
+  "description": "",
+  "main": "setup.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/parser": "^7.26.2",
+    "ast-traverse": "^0.1.1"
+  }
+}
