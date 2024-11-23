@@ -18,7 +18,14 @@
           class="attribute-seeting-content-item-content"
           v-if="item.settingType == 'input'"
         >
-          <a-input :value="item.value"></a-input>
+          <a-input
+            v-model:value="item.value"
+            @blur="
+              (e) => {
+                handleBlur(e, item.key);
+              }
+            "
+          ></a-input>
         </div>
       </div>
     </div>
@@ -33,8 +40,11 @@ import _ from "lodash";
 const { merge } = _;
 export default {
   props: ["localAttributes", "vueRawTag"],
-  setup(props) {
-    const list = ref([]);
+  emits: ["childSave"],
+  setup(props, { emit }) {
+    let list = ref([]);
+    let localAttr = ref(props.localAttributes);
+    let vueRawTag = ref(props.vueRawTag);
 
     const init = (localAttributes, vueRawTag) => {
       const attrObj = getAttrKeys(localAttributes);
@@ -46,7 +56,6 @@ export default {
       }
       obj.class = attrObj.class || "";
       list.value = getAttrJson(obj, vueRawTag, "style");
-      console.log(list.value);
     };
 
     init(props.localAttributes, props.vueRawTag);
@@ -54,13 +63,55 @@ export default {
     watch(
       props,
       (newValue) => {
+        vueRawTag.value = newValue.vueRawTag;
+        localAttr.value = newValue.localAttributes;
         init(newValue.localAttributes, newValue.vueRawTag);
       },
       { deep: true }
     );
 
+    const handleBlur = (e, key) => {
+      if (key === "class") {
+        emit("childSave", "class", `${e.srcElement.value}`);
+        return;
+      }
+      // 单独处理style
+      const attrObj = getAttrKeys(localAttr.value);
+      let style = {};
+      list.value.forEach((item) => {
+        if (item.key !== "class") {
+          style[item.key] = item.value;
+        }
+      });
+      // 不存在不需要进行合并直接添加存在进行添加
+      if (!attrObj.style) {
+        const str = Object.entries(style)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(";");
+        emit("childSave", "style", str);
+        return;
+      }
+      const obj = attrObj.style.split(";").reduce((result, item) => {
+        const [key, value] = item.split(":").map((entry) => entry.trim());
+        if (key && value) {
+          result[key] = value;
+        }
+        return result;
+      }, {});
+      const newStyle = merge(obj, style);
+      const str = Object.entries(newStyle)
+        .map(([key, value]) => {
+          if (value) {
+            return `${key}: ${value}`;
+          }
+        })
+        .join(";");
+      emit("childSave", "style", str);
+    };
+
     return {
       list,
+      handleBlur,
     };
   },
 };

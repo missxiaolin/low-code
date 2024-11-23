@@ -38,7 +38,6 @@ export function getAttrKeys(tags) {
  * @returns
  */
 export function getAttrJson(oldAttr, tag, v) {
-  console.log(oldAttr);
   let arr = [];
   let tagAttr = tagsJson[tag];
   let attrValKeys = tagAttr ? tagAttr[v] : null;
