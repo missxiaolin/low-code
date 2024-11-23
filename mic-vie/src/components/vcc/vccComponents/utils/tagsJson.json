@@ -1,0 +1,8 @@
+{
+  "div": {
+    "style": ["class", "width"]
+  },
+  "span": {
+    "style": ["class", "height"]
+  }
+}

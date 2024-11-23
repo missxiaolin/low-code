@@ -13,7 +13,7 @@
 import { defineAsyncComponent } from "vue";
 // 以这样一段结构初始化VCC组件
 const initCodeStr =
-  '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","lc_id":"container","style":"min-height: 100%;","__children":[]}}]}}';
+  '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","lc_id":"container","__children":[]}}]}}';
 
 const jsTem = `export default {
   setup() {

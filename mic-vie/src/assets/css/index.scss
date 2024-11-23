@@ -454,7 +454,12 @@ $layout-height: 50px;
     display: flex;
     flex-direction: row;
     .label {
+      padding-right: 10px;
+      box-sizing: border-box;
+      text-align: right;
+      min-width: 70px;
       line-height: 30px;
+      margin-right: 5px;
     }
   }
 }
@@ -468,5 +473,11 @@ $layout-height: 50px;
   }
   .content {
     flex: 1;
+  }
+}
+
+#render-control-panel {
+  > div {
+    min-height: 100%;
   }
 }

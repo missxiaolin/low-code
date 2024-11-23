@@ -506,6 +506,9 @@ export default {
 
   transition: width 1s;
   padding: 20px;
+  > div {
+    min-height: 100%;
+  }
 }
 
 .preview-container {

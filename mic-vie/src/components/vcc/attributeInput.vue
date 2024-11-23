@@ -12,9 +12,12 @@
         </a-tab-pane>
         <a-tab-pane tab="样式" key="style">
           <styleComponent
-            v-model:localAttributes="localAttributes"
+            v-if="vueRawTag"
+            :localAttributes="localAttributes"
+            :vueRawTag="vueRawTag"
             @childSave="childSave"
           />
+          <a-empty v-else description="请选择组件"></a-empty>
         </a-tab-pane>
         <a-tab-pane tab="自定义组件" key="custom">
           <a-empty description="该组件不支持设定"></a-empty>
@@ -205,7 +208,8 @@ export default {
   ], // __rawVueInfo__为当前编辑的原始代码对象, shortcutInitMode快捷键的初始化方式
   data: function () {
     return {
-      activeName: "senior",
+      vueRawTag: "",
+      activeName: "style",
       input: "",
       localAttributes: [],
       enable: true,
@@ -364,10 +368,16 @@ export default {
       return checkResult && false;
     },
     attributeList() {
-      const result = [];
+      let result = [];
+      let tag = "";
       const vueRawInfo = this.__rawVueInfo__;
-      // console.log(vueRawInfo)
+
       if (vueRawInfo) {
+        tag =
+          Object.keys(vueRawInfo) && Object.keys(vueRawInfo).length > 0
+            ? Object.keys(vueRawInfo)[0]
+            : "";
+
         const object = vueRawInfo[getRawComponentKey(vueRawInfo)];
 
         for (const key in object) {
@@ -384,7 +394,7 @@ export default {
           }
         }
       }
-      return result;
+      return [result, tag];
     },
 
     attributeKeys() {
@@ -394,7 +404,9 @@ export default {
   watch: {
     attributeList: {
       handler: function () {
-        this.localAttributes = this.attributeList;
+        const [result, tag] = this.attributeList;
+        this.localAttributes = result;
+        this.vueRawTag = tag;
       },
       immediate: true,
     },

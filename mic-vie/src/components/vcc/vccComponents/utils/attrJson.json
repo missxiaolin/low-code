@@ -1,0 +1,28 @@
+{
+  "style": {
+    "class": {
+      "label": "类名",
+      "tip": "",
+      "type": "string",
+      "settingType": "input",
+      "key": "class",
+      "value": ""
+    },
+    "width": {
+      "label": "宽度",
+      "tip": "单位像素",
+      "type": "string",
+      "key": "width",
+      "settingType": "input",
+      "value": ""
+    },
+    "height": {
+      "label": "高度",
+      "tip": "单位像素",
+      "type": "string",
+      "settingType": "input",
+      "key": "height",
+      "value": ""
+    }
+  }
+}

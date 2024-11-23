@@ -118,7 +118,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.top-tools-bar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
 .top-tools-bar {
+  overflow-x: scroll;
   padding: 5px 10px;
   font-size: 14px;
   font-weight: 500;
