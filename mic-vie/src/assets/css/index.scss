@@ -481,3 +481,11 @@ $layout-height: 50px;
     min-height: 100%;
   }
 }
+
+.color-input {
+  outline-style: none;
+  border: 0px;
+  border: 1px solid #ccc;
+  margin: 0;
+  padding: 0;
+}

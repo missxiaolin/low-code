@@ -14,11 +14,9 @@
             <QuestionCircleOutlined />
           </a-tooltip>
         </div>
-        <div
-          class="attribute-seeting-content-item-content"
-          v-if="item.settingType == 'input'"
-        >
+        <div class="attribute-seeting-content-item-content">
           <a-input
+            v-if="item.settingType == 'input'"
             v-model:value="item.value"
             @blur="
               (e) => {
@@ -26,6 +24,17 @@
               }
             "
           ></a-input>
+          <input
+            v-if="item.settingType == 'color'"
+            class="color-input"
+            type="color"
+            v-model="item.value"
+            @blur="
+              (e) => {
+                handleBlur(e, item.key);
+              }
+            "
+          />
         </div>
       </div>
     </div>
@@ -85,10 +94,11 @@ export default {
       });
       // 不存在不需要进行合并直接添加存在进行添加
       if (!attrObj.style) {
-        const str = Object.entries(style)
+        const cssString = Object.entries(style)
+          .filter(([key, value]) => value !== "")
           .map(([key, value]) => `${key}: ${value}`)
-          .join(";");
-        emit("childSave", "style", str);
+          .join(";\n");
+        emit("childSave", "style", cssString);
         return;
       }
       const obj = attrObj.style.split(";").reduce((result, item) => {
@@ -99,14 +109,11 @@ export default {
         return result;
       }, {});
       const newStyle = merge(obj, style);
-      const str = Object.entries(newStyle)
-        .map(([key, value]) => {
-          if (value) {
-            return `${key}: ${value}`;
-          }
-        })
-        .join(";");
-      emit("childSave", "style", str);
+      const cssString = Object.entries(newStyle)
+        .filter(([key, value]) => value !== "")
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(";\n");
+      emit("childSave", "style", cssString);
     };
 
     return {
@@ -115,47 +122,6 @@ export default {
     };
   },
 };
-// export default {
-//   props: ["localAttributes", "vueRawTag"],
-//   data() {
-//     return {
-//       className: "",
-//       styleCode: "",
-//     };
-//   },
-//   mounted() {
-//     console.log(this.localAttributes, this.vueRawTag);
-//     // this.init(this.localAttributes);
-//   },
-//   watch: {
-//     localAttributes: {
-//       handler(v) {
-//         this.init(v);
-//       },
-//       deep: true,
-//     },
-//   },
-//   methods: {
-//     // 初始化
-//     init(localAttributes) {
-//       const classNameValue = localAttributes.filter(
-//         (item) => item.key === "class"
-//       );
-//       if (classNameValue && classNameValue.length > 0) {
-//         this.className = classNameValue[0].value;
-//       } else {
-//         this.className = "";
-//       }
-//     },
-//     clickProp(event) {
-//       event.stopPropagation();
-//     },
-
-//     inputClassName(e) {
-//       // this.$emit("childSave", "class", `${e}`);
-//     },
-//   },
-// };
 </script>
 
 <style lang="scss">

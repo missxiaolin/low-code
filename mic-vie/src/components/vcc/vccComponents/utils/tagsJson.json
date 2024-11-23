@@ -1,8 +1,41 @@
 {
   "div": {
-    "style": ["class", "width"]
+    "style": [
+      "class",
+      "width",
+      "height",
+      "margin",
+      "padding",
+      "fontSize",
+      "lineHeight",
+      "color",
+      "background"
+    ]
   },
   "span": {
-    "style": ["class", "height"]
+    "style": [
+      "class",
+      "width",
+      "height",
+      "margin",
+      "padding",
+      "fontSize",
+      "lineHeight",
+      "color",
+      "background"
+    ]
+  },
+  "a": {
+    "style": [
+      "class",
+      "width",
+      "height",
+      "margin",
+      "padding",
+      "fontSize",
+      "lineHeight",
+      "color",
+      "background"
+    ]
   }
 }
