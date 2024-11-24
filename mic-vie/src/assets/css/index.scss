@@ -489,6 +489,10 @@ $layout-height: 50px;
   }
 }
 
+.scrollbar {
+  overflow-y: scroll;
+}
+
 .form-item {
   display: flex;
   flex-direction: row;

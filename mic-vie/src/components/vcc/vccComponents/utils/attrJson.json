@@ -107,6 +107,69 @@
           "value": ""
         }
       ]
+    },
+    "position": {
+      "title": "定位",
+      "children": [
+        {
+          "label": "定位方式",
+          "options": [
+            {
+              "label": "static",
+              "value": "static"
+            },
+            {
+              "label": "relative",
+              "value": "relative"
+            },
+            {
+              "label": "absolute",
+              "value": "absolute"
+            },
+            {
+              "label": "fixed",
+              "value": "fixed"
+            },
+            {
+              "label": "sticky",
+              "value": "sticky"
+            }
+          ],
+          "settingType": "select",
+          "key": "position",
+          "value": ""
+        },
+        {
+          "label": "层级",
+          "settingType": "input",
+          "key": "z-index",
+          "value": ""
+        },
+        {
+          "label": "距离顶部",
+          "settingType": "input",
+          "key": "top",
+          "value": ""
+        },
+        {
+          "label": "距离底部",
+          "settingType": "input",
+          "key": "bottom",
+          "value": ""
+        },
+        {
+          "label": "距离左侧",
+          "settingType": "input",
+          "key": "left",
+          "value": ""
+        },
+        {
+          "label": "距离右侧",
+          "settingType": "input",
+          "key": "right",
+          "value": ""
+        }
+      ]
     }
   }
 }

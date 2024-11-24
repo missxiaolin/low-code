@@ -1,5 +1,5 @@
 import attrJson from "./attrJson.json";
-import tagsJson from "./tagsJson.json";
+import tagsJson from "./tagsJson";
 
 /**
  * style to obj

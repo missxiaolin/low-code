@@ -1,6 +1,6 @@
 <template>
   <a-card class="row-container">
-    <a-scrollbar height="100%" class="row-container-scrollbar">
+    <div class="row-container-scrollbar">
       <a-collapse
         v-model:activeKey="activeNames"
         :bordered="false"
@@ -17,7 +17,7 @@
           </keep-alive>
         </a-collapse-panel>
       </a-collapse>
-    </a-scrollbar>
+    </div>
   </a-card>
 </template>
 
@@ -89,12 +89,23 @@ export default {
   display: flex;
   height: 100%;
   position: relative;
+  .row-container-scrollbar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
   .row-container-scrollbar {
-    padding-right: 20px;
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 16px;
+    :deep(.ant-collapse-content-box) {
+      padding-right: 0;
+    }
   }
   :deep(.ant-card-body) {
     width: 100%;
     padding-right: 0;
+    box-sizing: border-box;
+    overflow: hidden !important;
   }
   :deep(.ant-collapse) {
     background-color: transparent !important;

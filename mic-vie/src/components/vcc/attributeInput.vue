@@ -5,8 +5,8 @@
         <template #default> 赶快拖拽组件来生成你的H5页面吧～ </template>
       </a-empty>
     </div>
-    <a-scrollbar height="calc(100vh - 130px)" v-else>
-      <a-tabs v-model:activeKey="activeName">
+    <template v-else>
+      <a-tabs class="attribute-tabs" v-model:activeKey="activeName">
         <a-tab-pane tab="组件设置" key="component">
           <a-empty description="请选择组件"></a-empty>
         </a-tab-pane>
@@ -184,7 +184,7 @@
           </div>
         </a-tab-pane>
       </a-tabs>
-    </a-scrollbar>
+    </template>
   </a-card>
 </template>
 
@@ -433,11 +433,44 @@ export default {
   align-items: center;
 }
 .attribute-container {
-  :deep(.el-card__body) {
-    padding: 20px 0 20px 20px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  :deep(.ant-card-body) {
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden !important;
   }
   .el-scrollbar {
     padding-right: 20px;
+  }
+}
+
+.attribute-tabs {
+  height: 100%;
+  :deep(.ant-empty) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+  }
+  :deep(.ant-tabs-content-holder::-webkit-scrollbar) {
+    width: 0;
+    height: 0;
+  }
+  :deep(.ant-tabs-content) {
+    height: 100%;
+  }
+  :deep(.ant-tabs-tabpane) {
+    height: 100%;
+  }
+  :deep(.ant-tabs-content-holder) {
+    height: 100%;
+    overflow-y: scroll;
   }
 }
 .container {
