@@ -35,6 +35,22 @@
               v-model:pureColor="item.value"
               @update:pureColor="(e) => handleBlur(e, item.key)"
             ></vue3-color-picker>
+            <a-select
+              v-if="item.settingType == 'select'"
+              v-model:value="item.value"
+              @change="
+                (e) => {
+                  handleBlur(e, item.key);
+                }
+              "
+            >
+              <a-select-option
+                v-for="(v, key) in item.options"
+                :key="key"
+                :value="v.value"
+                >{{ v.label }}</a-select-option
+              >
+            </a-select>
           </div>
         </div>
       </div>
@@ -81,7 +97,6 @@ export default {
     );
 
     const handleBlur = (e, key) => {
-      console.log(e);
       if (key === "class") {
         emit("childSave", "class", `${e.srcElement.value}`);
         return;

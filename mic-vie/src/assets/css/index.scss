@@ -454,6 +454,7 @@ $layout-height: 50px;
     display: flex;
     flex-direction: column;
     
+    
     .attribute-seeting-content-title {
       font-size: 14px;
       font-weight: 500;
@@ -468,6 +469,14 @@ $layout-height: 50px;
       display: flex;
       flex-direction: row;
       margin-bottom: 10px;
+      flex-wrap: nowrap;
+    }
+    .attribute-seeting-content-item-content {
+      width: 100%;
+      .ant-select, .ant-input {
+        flex: 1;
+        width: 100%;
+      }
     }
     .label {
       padding-right: 10px;

@@ -22,7 +22,7 @@
       ]
     },
     "base": {
-      "title": "基础样式",
+      "title": "基础",
       "children": [
         {
           "label": "宽度",
@@ -66,7 +66,7 @@
       ]
     },
     "font": {
-      "title": "字体样式",
+      "title": "文字",
       "children": [
         {
           "label": "字号",
@@ -84,6 +84,26 @@
           "label": "行高",
           "settingType": "input",
           "key": "line-height",
+          "value": ""
+        },
+        {
+          "label": "对齐方式",
+          "options": [
+            {
+              "label": "左对齐",
+              "value": "left"
+            },
+            {
+              "label": "右对齐",
+              "value": "right"
+            },
+            {
+              "label": "居中对齐",
+              "value": "center"
+            }
+          ],
+          "settingType": "select",
+          "key": "text-align",
           "value": ""
         }
       ]

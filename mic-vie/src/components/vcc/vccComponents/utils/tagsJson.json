@@ -9,7 +9,8 @@
       "line-height",
       "color",
       "background",
-      "font-size"
+      "font-size",
+      "text-align"
     ]
   },
   "span": {
