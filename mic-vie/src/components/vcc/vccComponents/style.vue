@@ -72,7 +72,6 @@ export default {
       }
       obj.class = attrObj.class || "";
       list.value = getAttrJson(obj, vueRawTag, "style");
-      console.log(list.value);
     };
 
     init(props.localAttributes, props.vueRawTag);
@@ -96,16 +95,18 @@ export default {
       const attrObj = getAttrKeys(localAttr.value);
       let style = {};
       list.value.forEach((item) => {
-        if (item.key !== "class") {
-          style[item.key] = item.value;
-        }
+        item.children.forEach((child) => {
+          if (child.key !== "class") {
+            style[child.key] = child.value;
+          }
+        });
       });
       // 不存在不需要进行合并直接添加存在进行添加
       if (!attrObj.style) {
         const cssString = Object.entries(style)
           .filter(([key, value]) => value !== "")
           .map(([key, value]) => `${key}: ${value}`)
-          .join(";\n");
+          .join(";");
         emit("childSave", "style", cssString);
         return;
       }
@@ -120,7 +121,7 @@ export default {
       const cssString = Object.entries(newStyle)
         .filter(([key, value]) => value !== "")
         .map(([key, value]) => `${key}: ${value}`)
-        .join(";\n");
+        .join(";");
       emit("childSave", "style", cssString);
     };
 

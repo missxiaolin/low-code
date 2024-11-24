@@ -47,7 +47,6 @@ export function getAttrJson(oldAttr, tag, v) {
   }
   const att = attrJson[v];
   Object.keys(att).forEach((a) => {
-    console.log(a);
     let obj = {
       title: att[a].title,
       children: [],
