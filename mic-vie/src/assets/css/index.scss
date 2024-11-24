@@ -452,7 +452,23 @@ $layout-height: 50px;
   flex-direction: column;
   .attribute-seeting-content-item {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    
+    .attribute-seeting-content-title {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 30px;
+      margin-bottom: 10px;
+      padding: 0 10px;
+      border-top: 1px solid #f0f0f0;
+      background: #f9f9f9;
+      color: #000;
+    }
+    .attribute-seeting-content-content {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 10px;
+    }
     .label {
       padding-right: 10px;
       box-sizing: border-box;

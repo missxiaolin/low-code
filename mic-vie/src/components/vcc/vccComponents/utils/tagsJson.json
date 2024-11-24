@@ -6,10 +6,10 @@
       "height",
       "margin",
       "padding",
-      "fontSize",
-      "lineHeight",
+      "line-height",
       "color",
-      "background"
+      "background",
+      "fon-size"
     ]
   },
   "span": {
@@ -19,10 +19,10 @@
       "height",
       "margin",
       "padding",
-      "fontSize",
-      "lineHeight",
+      "line-height",
       "color",
-      "background"
+      "background",
+      "fon-size"
     ]
   },
   "a": {
@@ -32,10 +32,10 @@
       "height",
       "margin",
       "padding",
-      "fontSize",
-      "lineHeight",
+      "line-height",
       "color",
-      "background"
+      "background",
+      "fon-size"
     ]
   }
 }

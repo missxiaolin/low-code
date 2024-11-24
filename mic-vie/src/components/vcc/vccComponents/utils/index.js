@@ -32,6 +32,7 @@ export function getAttrKeys(tags) {
 }
 
 /**
+ * 获取属性
  * @param {*} oldAttr
  * @param {*} tag
  * @param {*} v
@@ -41,14 +42,23 @@ export function getAttrJson(oldAttr, tag, v) {
   let arr = [];
   let tagAttr = tagsJson[tag];
   let attrValKeys = tagAttr ? tagAttr[v] : null;
-  let json = attrJson[v];
-  if (!tag || !tagAttr || !attrValKeys || !json) {
+  if (!tagAttr || !attrValKeys) {
     return [];
   }
-  attrValKeys.forEach((item) => {
-    let obj = json[item];
-    if (obj) {
-      obj.value = oldAttr[item] || "";
+  const att = attrJson[v];
+  Object.keys(att).forEach((a) => {
+    console.log(a);
+    let obj = {
+      title: att[a].title,
+      children: [],
+    };
+    if (att[a].children && att[a].children.length > 0) {
+      att[a].children.forEach((item) => {
+        if (attrValKeys.includes(item.key)) {
+          item.value = oldAttr[item.key] || "";
+          obj.children.push(item);
+        }
+      });
       arr.push(obj);
     }
   });

@@ -3,38 +3,45 @@
     <div class="attribute-seeting-content" v-if="list.length > 0">
       <div
         class="attribute-seeting-content-item"
-        v-for="(item, key) in list"
+        v-for="(v, key) in list"
         :key="key"
       >
-        <div class="label">
-          {{ item.label }}：<a-tooltip placement="topLeft" v-if="item.tip">
-            <template #title>
-              <span>{{ item.tip }}</span>
-            </template>
-            <QuestionCircleOutlined />
-          </a-tooltip>
-        </div>
-        <div class="attribute-seeting-content-item-content">
-          <a-input
-            v-if="item.settingType == 'input'"
-            v-model:value="item.value"
-            @blur="
-              (e) => {
-                handleBlur(e, item.key);
-              }
-            "
-          ></a-input>
-          <input
-            v-if="item.settingType == 'color'"
-            class="color-input"
-            type="color"
-            v-model="item.value"
-            @blur="
-              (e) => {
-                handleBlur(e, item.key);
-              }
-            "
-          />
+        <div class="attribute-seeting-content-title">{{ v.title }}</div>
+        <div
+          class="attribute-seeting-content-content"
+          v-for="(item, index) in v.children"
+          :key="index"
+        >
+          <div class="label">
+            {{ item.label }}：<a-tooltip placement="topLeft" v-if="item.tip">
+              <template #title>
+                <span>{{ item.tip }}</span>
+              </template>
+              <QuestionCircleOutlined />
+            </a-tooltip>
+          </div>
+          <div class="attribute-seeting-content-item-content">
+            <a-input
+              v-if="item.settingType == 'input'"
+              v-model:value="item.value"
+              @blur="
+                (e) => {
+                  handleBlur(e, item.key);
+                }
+              "
+            ></a-input>
+            <input
+              v-if="item.settingType == 'color'"
+              class="color-input"
+              type="color"
+              v-model="item.value"
+              @blur="
+                (e) => {
+                  handleBlur(e, item.key);
+                }
+              "
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -65,6 +72,7 @@ export default {
       }
       obj.class = attrObj.class || "";
       list.value = getAttrJson(obj, vueRawTag, "style");
+      console.log(list.value);
     };
 
     init(props.localAttributes, props.vueRawTag);

@@ -1,77 +1,87 @@
 {
   "style": {
-    "class": {
-      "label": "类名",
-      "tip": "",
-      "placeholder": "请输入类名",
-      "type": "string",
-      "settingType": "input",
-      "key": "class",
-      "value": ""
+    "base": {
+      "title": "基础样式",
+      "children": [
+        {
+          "label": "类名",
+          "tip": "",
+          "placeholder": "请输入类名",
+          "type": "string",
+          "settingType": "input",
+          "key": "class",
+          "value": ""
+        },
+        {
+          "label": "宽度",
+          "tip": "单位像素/百分比……需要拼接到后面",
+          "placeholder": "10px",
+          "type": "string",
+          "key": "width",
+          "settingType": "input",
+          "value": ""
+        },
+        {
+          "label": "高度",
+          "tip": "单位像素/百分比……需要拼接到后面",
+          "placeholder": "10px",
+          "type": "string",
+          "settingType": "input",
+          "key": "height",
+          "value": ""
+        },
+        {
+          "label": "边距",
+          "tip": "单位像素/百分比……需要拼接到后面",
+          "placeholder": "10px",
+          "type": "string",
+          "settingType": "input",
+          "key": "margin",
+          "value": ""
+        },
+        {
+          "label": "填充",
+          "tip": "单位像素/百分比……需要拼接到后面",
+          "placeholder": "10px",
+          "type": "string",
+          "settingType": "input",
+          "key": "padding",
+          "value": ""
+        },
+        {
+          "label": "行高",
+          "type": "string",
+          "settingType": "input",
+          "key": "line-height",
+          "value": ""
+        },
+        {
+          "label": "颜色",
+          "type": "string",
+          "settingType": "color",
+          "key": "color",
+          "value": ""
+        },
+        {
+          "label": "背景颜色",
+          "type": "string",
+          "settingType": "color",
+          "key": "background",
+          "value": ""
+        }
+      ]
     },
-    "width": {
-      "label": "宽度",
-      "tip": "单位像素/百分比……需要拼接到后面",
-      "placeholder": "10px",
-      "type": "string",
-      "key": "width",
-      "settingType": "input",
-      "value": ""
-    },
-    "height": {
-      "label": "高度",
-      "tip": "单位像素/百分比……需要拼接到后面",
-      "placeholder": "10px",
-      "type": "string",
-      "settingType": "input",
-      "key": "height",
-      "value": ""
-    },
-    "margin": {
-      "label": "边距",
-      "tip": "单位像素/百分比……需要拼接到后面",
-      "placeholder": "10px",
-      "type": "string",
-      "settingType": "input",
-      "key": "margin",
-      "value": ""
-    },
-    "padding": {
-      "label": "填充",
-      "tip": "单位像素/百分比……需要拼接到后面",
-      "placeholder": "10px",
-      "type": "string",
-      "settingType": "input",
-      "key": "padding",
-      "value": ""
-    },
-    "fontSize": {
-      "label": "字号",
-      "type": "string",
-      "settingType": "input",
-      "key": "font-size",
-      "value": ""
-    },
-    "lineHeight": {
-      "label": "行高",
-      "type": "string",
-      "settingType": "input",
-      "key": "line-height",
-      "value": ""
-    },
-    "color": {
-      "label": "颜色",
-      "type": "string",
-      "settingType": "color",
-      "key": "color",
-      "value": ""
-    },
-    "background": {
-      "label": "背景颜色",
-      "type": "string",
-      "settingType": "color",
-      "key": "background",
-      "value": ""
+    "font": {
+      "title": "字体样式",
+      "children": [
+        {
+          "label": "字号",
+          "type": "string",
+          "settingType": "input",
+          "key": "font-size",
+          "value": ""
+        }
+      ]
     }
   }
 }
