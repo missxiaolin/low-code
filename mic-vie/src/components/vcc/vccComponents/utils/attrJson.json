@@ -1,16 +1,29 @@
 {
   "style": {
-    "base": {
-      "title": "基础样式",
+    "class": {
+      "title": "类名",
       "children": [
         {
-          "label": "类名",
+          "label": "class属性",
           "tip": "",
           "placeholder": "请输入类名",
           "settingType": "input",
           "key": "class",
           "value": ""
         },
+        {
+          "label": "Id属性",
+          "tip": "",
+          "placeholder": "请输入类名",
+          "settingType": "input",
+          "key": "id",
+          "value": ""
+        }
+      ]
+    },
+    "base": {
+      "title": "基础样式",
+      "children": [
         {
           "label": "宽度",
           "tip": "单位像素/百分比……需要拼接到后面",
@@ -43,18 +56,7 @@
           "key": "padding",
           "value": ""
         },
-        {
-          "label": "行高",
-          "settingType": "input",
-          "key": "line-height",
-          "value": ""
-        },
-        {
-          "label": "颜色",
-          "settingType": "color",
-          "key": "color",
-          "value": ""
-        },
+
         {
           "label": "背景颜色",
           "settingType": "color",
@@ -70,6 +72,18 @@
           "label": "字号",
           "settingType": "input",
           "key": "font-size",
+          "value": ""
+        },
+        {
+          "label": "颜色",
+          "settingType": "color",
+          "key": "color",
+          "value": ""
+        },
+        {
+          "label": "行高",
+          "settingType": "input",
+          "key": "line-height",
           "value": ""
         }
       ]

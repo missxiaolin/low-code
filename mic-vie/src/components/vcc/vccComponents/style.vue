@@ -30,17 +30,11 @@
                 }
               "
             ></a-input>
-            <input
+            <vue3-color-picker
               v-if="item.settingType == 'color'"
-              class="color-input"
-              type="color"
-              v-model="item.value"
-              @blur="
-                (e) => {
-                  handleBlur(e, item.key);
-                }
-              "
-            />
+              v-model:pureColor="item.value"
+              @update:pureColor="(e) => handleBlur(e, item.key)"
+            ></vue3-color-picker>
           </div>
         </div>
       </div>
@@ -87,6 +81,7 @@ export default {
     );
 
     const handleBlur = (e, key) => {
+      console.log(e);
       if (key === "class") {
         emit("childSave", "class", `${e.srcElement.value}`);
         return;
