@@ -4,10 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "compileComponent": "node ./src/script/compile.js"
+    "compileComponent": "node ./script/compile.js"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",

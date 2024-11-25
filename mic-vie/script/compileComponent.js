@@ -2,8 +2,8 @@
 
 const fse = require("fs-extra");
 const fs = require("fs");
-const { html2Json } = require("../libs/bundle-html2json-common.js");
-const { Parser } = require("../libs/bundle-json2html-common.js");
+const { html2Json } = require("./bundle-html2json-common.js");
+const { Parser } = require("./bundle-json2html-common.js");
 const _path = require("path");
 const process = require("process");
 const cryptoRandomString = require("crypto-random-string");
@@ -112,7 +112,7 @@ function findProperty(properties, findWhoStructure) {
 // 对JS代码进行编译
 function compileJsCode(code, onEncounterDuplicateDeclared = () => {}) {
   const ast = espree.parse(code, { ecmaVersion: 6, sourceType: "module" });
-  
+
   // 提取data中返回的对象结构, 如果文件引入了其它文件, 则body[0]为import语句。
   if (ast.body[0].declaration) {
     const properties = ast.body[0].declaration.properties;
@@ -237,7 +237,7 @@ async function compiler(path) {
 
     // 解析CSS
     const style = findAObject(obj.root.__children, "style");
-    const newStyle = _.cloneDeep(style)
+    const newStyle = _.cloneDeep(style);
     // if (newStyle.lang === 'scss') {
     //   newStyle["__text__"] = sass.renderSync({ data: newStyle["__text__"] }).css.toString();
     // }
@@ -297,16 +297,16 @@ async function compiler(path) {
     convert2Map(obj.root.__children[0].template);
 
     // 输出到template.index.js文件中
-    outputToFile(templateStructureMap, "src/map/template.index.js");
+    outputToFile(templateStructureMap, "../src/map/template.index.js");
 
     // data.index.js文件中
-    outputToFile(scriptDataMap, "src/map/data.index.js");
+    outputToFile(scriptDataMap, "../src/map/data.index.js");
 
     // method.index.js文件中
-    outputToFile(scriptMethodMap, "src/map/method.index.js");
+    outputToFile(scriptMethodMap, "../src/map/method.index.js");
 
     // style.index.js文件中
-    outputToFile(styleSourceMap, "src/map/style.index.js");
+    outputToFile(styleSourceMap, "../src/map/style.index.js");
   } else {
     console.info(`路径不存在:${path}`);
   }

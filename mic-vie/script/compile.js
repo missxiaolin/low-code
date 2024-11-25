@@ -4,7 +4,7 @@ const glob = require("glob");
 const path = require("path");
 const process = require("process");
 
-const componentsPath = path.join(process.cwd(), "src/rawComponents");
+const componentsPath = path.join(process.cwd(), "../src/rawComponents");
 
 console.info(`当前正在读取${componentsPath}中的vue原始组件`);
 

@@ -1,1 +1,1 @@
-export default {"ceshi":"function () {\n    console.log('ceshi');\n}"}
+export default {}

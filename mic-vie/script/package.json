@@ -1,0 +1,45 @@
+{
+  "name": "script",
+  "private": true,
+  "version": "0.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "compileComponent": "node ./compile.js"
+  },
+  "dependencies": {
+    "ast-traverse": "^0.1.1",
+    "autoprefixer": "^10.4.19",
+    "css": "^3.0.0",
+    "css-scoped": "^1.0.0",
+    "dedent": "^1.5.3",
+    "ejs": "^3.1.6",
+    "escodegen": "^2.0.0",
+    "espree": "^7.3.0",
+    "eventemitter3": "^4.0.7",
+    "file-saver": "^2.0.2",
+    "glob": "^7.1.6",
+    "gogocode": "^1.0.55",
+    "is-obj": "^3.0.0",
+    "is-regexp": "^3.0.0",
+    "keymaster": "^1.6.2",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
+    "mockjs": "^1.1.0",
+    "path-browserify": "^1.0.1",
+    "path-to-regexp": "^6.2.2",
+    "postcss-js": "^4.0.1",
+    "prettier": "^2.4.0",
+    "screenfull": "^6.0.2",
+    "split.js": "^1.6.2",
+    "stringify-object": "4.0.0"
+  },
+  "devDependencies": {
+    "require": "^2.4.20",
+    "sass": "1.32.13",
+    "sass-loader": "^14.2.1",
+    "terser": "^5.31.0"
+  }
+}
