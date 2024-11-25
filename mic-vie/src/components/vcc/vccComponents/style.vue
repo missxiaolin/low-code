@@ -6,53 +6,57 @@
         v-for="(v, key) in list"
         :key="key"
       >
-        <div class="attribute-seeting-content-title">{{ v.title }}</div>
-        <div
-          class="attribute-seeting-content-content"
-          v-for="(item, index) in v.children"
-          :key="index"
-        >
-          <div class="label">
-            {{ item.label }}：<a-tooltip placement="topLeft" v-if="item.tip">
-              <template #title>
-                <span>{{ item.tip }}</span>
-              </template>
-              <QuestionCircleOutlined />
-            </a-tooltip>
-          </div>
-          <div class="attribute-seeting-content-item-content">
-            <a-input
-              v-if="item.settingType == 'input'"
-              v-model:value="item.value"
-              @blur="
-                (e) => {
-                  handleBlur(e, item.key);
-                }
-              "
-            ></a-input>
-            <vue3-color-picker
-              v-if="item.settingType == 'color'"
-              v-model:pureColor="item.value"
-              @update:pureColor="(e) => handleBlur(e, item.key)"
-            ></vue3-color-picker>
-            <a-select
-              v-if="item.settingType == 'select'"
-              v-model:value="item.value"
-              @change="
-                (e) => {
-                  handleBlur(e, item.key);
-                }
-              "
-            >
-              <a-select-option
-                v-for="(v, key) in item.options"
-                :key="key"
-                :value="v.value"
-                >{{ v.label }}</a-select-option
-              >
-            </a-select>
-          </div>
+        <div class="attribute-seeting-content-title" v-if="v.title">
+          {{ v.title }}
         </div>
+        <template v-if="v.children && v.children.length > 0">
+          <div
+            class="attribute-seeting-content-content"
+            v-for="(item, index) in v.children"
+            :key="index"
+          >
+            <div class="label">
+              {{ item.label }}：<a-tooltip placement="topLeft" v-if="item.tip">
+                <template #title>
+                  <span>{{ item.tip }}</span>
+                </template>
+                <QuestionCircleOutlined />
+              </a-tooltip>
+            </div>
+            <div class="attribute-seeting-content-item-content">
+              <a-input
+                v-if="item.settingType == 'input'"
+                v-model:value="item.value"
+                @blur="
+                  (e) => {
+                    handleBlur(e, item.key);
+                  }
+                "
+              ></a-input>
+              <vue3-color-picker
+                v-if="item.settingType == 'color'"
+                v-model:pureColor="item.value"
+                @update:pureColor="(e) => handleBlur(e, item.key)"
+              ></vue3-color-picker>
+              <a-select
+                v-if="item.settingType == 'select'"
+                v-model:value="item.value"
+                @change="
+                  (e) => {
+                    handleBlur(e, item.key);
+                  }
+                "
+              >
+                <a-select-option
+                  v-for="(v, key) in item.options"
+                  :key="key"
+                  :value="v.value"
+                  >{{ v.label }}</a-select-option
+                >
+              </a-select>
+            </div>
+          </div>
+        </template>
       </div>
     </div>
     <a-empty v-else description="为匹配到样式设置"></a-empty>
