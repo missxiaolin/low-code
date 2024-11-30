@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "babel-node --presets env test/index.js"
+    "test": "jest",
+    "test1": "babel-node --presets env test/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,8 +15,10 @@
     "@babel/preset-env": "^7.26.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-jest": "^29.7.0",
     "babel-node": "^0.0.1-security",
     "babel-preset-env": "^1.7.0",
+    "jest": "^29.7.0",
     "lodash": "^4.17.21",
     "moment": "^2.30.1"
   }

@@ -104,7 +104,10 @@ export class Evaluator {
   }
 
   script(ast) {
-    const defaultFilter = this.options.defaultFilter;
+    const defaultFilter =
+      this.options && this.options.defaultFilter
+        ? this.options.defaultFilter
+        : "";
 
     // 只给简单的变量取值用法自动补fitler
     if (defaultFilter && ~["getter", "variable"].indexOf(ast.body.type)) {

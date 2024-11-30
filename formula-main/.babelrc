@@ -1,6 +1,17 @@
 {
     "presets": [
-        "env"
+        // "env",
+        // 使用当前插件，可以进行转换
+		// 数组的第二项为插件的配置项 test要开启
+		[
+			"@babel/preset-env",
+			{
+				// 根据 node 的版本号来结合插件对代码进行转换
+				"targets": {
+					"node": "current"
+				}
+			}
+		]
     ],
     "plugins": []
 }
