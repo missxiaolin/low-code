@@ -1,6 +1,7 @@
 import isPlainObject from "lodash/isPlainObject";
 import { Evaluator } from "./evalutor";
 import { parse } from "./parser";
+import { getFilters } from "./filter";
 import moment from "moment";
 
 // 方便取值的时候能够把上层的取到，但是获取的时候不会全部把所有的数据获取到。
@@ -194,7 +195,9 @@ export const tokenize = (str, data, defaultFilter = "| html") => {
     });
     const result = new Evaluator(data, {
       defaultFilter,
-    }).evalute(ast);
+    })
+      .setDefaultFilters(getFilters())
+      .evalute(ast);
 
     return `${result == null ? "" : result}`;
   } catch (e) {
@@ -397,7 +400,7 @@ export function resolveVariable(path, data = {}) {
   // 带 namespace 的用公式
   // 主要是用公式会严格点，不能出现奇怪的变量名
   try {
-    return new Evaluator(data).evalute(
+    return new Evaluator(data).setDefaultFilters(getFilters()).evalute(
       parse(path, {
         variableMode: true,
         allowFilter: false,
@@ -432,7 +435,9 @@ export const resolveVariableAndFilter = (
 
     const ret = new Evaluator(data, {
       defaultFilter,
-    }).evalute(ast);
+    })
+      .setDefaultFilters(getFilters())
+      .evalute(ast);
 
     return ret == null && !~path.indexOf("default") && !~path.indexOf("now")
       ? fallbackValue(ret)

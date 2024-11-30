@@ -413,7 +413,7 @@ export function parse(input, options) {
   }
 
   function stringLiteral() {
-    if (token.type === TokenName.StringLiteral) {
+    if (token.type && token.type === TokenName.StringLiteral) {
       const cToken = token;
       next();
       return {
@@ -427,7 +427,7 @@ export function parse(input, options) {
   }
 
   function numberLiteral() {
-    if (token.type === TokenName.NumericLiteral) {
+    if (token.type && token.type === TokenName.NumericLiteral) {
       const value = token.value;
       const cToken = token;
       next();
@@ -527,8 +527,9 @@ export function parse(input, options) {
 
   function literal() {
     if (
-      token.type === TokenName.Literal ||
-      token.type === TokenName.BooleanLiteral
+      token.type &&
+      (token.type === TokenName.Literal ||
+        token.type === TokenName.BooleanLiteral)
     ) {
       const value = token.value;
       const cToken = token;

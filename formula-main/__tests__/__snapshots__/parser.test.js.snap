@@ -50,7 +50,7 @@ exports[`parser:anonymous-function 2`] = `
       "index": 6,
       "line": 1,
     },
-    "type": "literal",
+    "type": "string",
     "value": "string",
   },
   "start": {
@@ -1266,7 +1266,7 @@ exports[`parser:multi-expression 1`] = `
           "index": 14,
           "line": 1,
         },
-        "type": "literal",
+        "type": "string",
         "value": "c",
       },
       "start": {
@@ -1686,7 +1686,7 @@ exports[`parser:single-string 1`] = `
     "index": 0,
     "line": 1,
   },
-  "type": "literal",
+  "type": "string",
   "value": "string",
 }
 `;
@@ -1703,7 +1703,7 @@ exports[`parser:string 1`] = `
     "index": 0,
     "line": 1,
   },
-  "type": "literal",
+  "type": "string",
   "value": "string literall, escape "",
 }
 `;
@@ -1943,7 +1943,7 @@ exports[`parser:variable-geter 1`] = `
           "index": 22,
           "line": 1,
         },
-        "type": "literal",
+        "type": "string",
         "value": "c",
       },
       "start": {
@@ -2096,7 +2096,7 @@ exports[`parser:variable-geter2 1`] = `
           "index": 5,
           "line": 1,
         },
-        "type": "literal",
+        "type": "string",
         "value": "c",
       },
       "start": {
@@ -2236,7 +2236,7 @@ exports[`parser:variable-geter2 2`] = `
           "index": 5,
           "line": 1,
         },
-        "type": "literal",
+        "type": "string",
         "value": "c",
       },
       "start": {

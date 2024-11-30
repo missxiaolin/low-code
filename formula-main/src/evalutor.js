@@ -73,6 +73,7 @@ export class Evaluator {
 
     while (filters.length) {
       const filter = filters.shift();
+
       const fn = this.filters[filter.name];
       if (!fn) {
         throw new Error(`filter \`${filter.name}\` not exits`);

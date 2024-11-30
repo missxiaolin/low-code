@@ -518,7 +518,7 @@ function skipRestTest(restFilters) {
       "isEquals",
       "notMatch",
       "notEquals",
-    ].indexOf(restFilters[0].name)
+    ].indexOf(restFilters && restFilters.length > 0 ? restFilters[0].name : "")
   ) {
     restFilters.shift();
   }

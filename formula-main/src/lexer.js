@@ -1,5 +1,6 @@
 export const TokenName = {
-  1: "Boolean",
+  BooleanLiteral: "Boolean",
+  Boolean: "Boolean",
   RAW: "RAW",
   Variable: "Variable",
   OpenScript: "OpenScript",
@@ -16,6 +17,8 @@ export const TokenName = {
   TemplateRightBrace: "TemplateRightBrace",
   OpenFilter: "OpenFilter",
   Char: "Char",
+  StringLiteral: "String",
+  NumericLiteral: "Numeric",
 };
 
 const mainStates = {

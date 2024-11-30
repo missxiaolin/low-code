@@ -1,4 +1,5 @@
 import { evaluate, tokenize } from "../src/index";
+import { resolveVariableAndFilter } from "../src";
 
 const defaultContext = {
   a: 1,
@@ -13,6 +14,28 @@ function evalFormual(expression, data = defaultContext) {
     evalMode: true,
   });
 }
+
+// console.log(
+//   resolveVariableAndFilter('${items|filter:text:match:"ab"}', {
+//     items: [
+//       {
+//         text: "abc",
+//       },
+//       {
+//         text: "bcd",
+//       },
+//       {
+//         text: "cde",
+//       },
+//     ],
+//   })
+// );
+
+// console.log(
+//   resolveVariableAndFilter("${a | map: toInt}", {
+//     a: ["123", "3434"],
+//   })
+// );
 
 // 基本运算
 // console.log(evalFormual("a + 3"));
@@ -37,8 +60,8 @@ function evalFormual(expression, data = defaultContext) {
 // IFS
 // console.log(evalFormual("IFS(1, 2, 3, 4, 5)"));
 
-console.log(
-  tokenize("abc${a}", {
-    a: "",
-  })
-);
+// console.log(
+//   tokenize("abc${a}", {
+//     a: "",
+//   })
+// );
