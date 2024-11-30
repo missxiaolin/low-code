@@ -328,9 +328,9 @@ export function lexer(input, options = {}) {
       punctuator() ||
       char();
 
-    if (token.value === "{") {
+    if (token && token.value === "{") {
       pushState(mainStates.BLOCK);
-    } else if (token.value === "}") {
+    } else if (token && token.value === "}") {
       if (mainState === mainStates.Filter) {
         popState();
       }
@@ -356,7 +356,12 @@ export function lexer(input, options = {}) {
     }
 
     // filter 过滤器部分需要特殊处理
-    if (mainState === mainStates.SCRIPT && token.value === "|" && allowFilter) {
+    if (
+      mainState === mainStates.SCRIPT &&
+      token &&
+      token.value === "|" &&
+      allowFilter
+    ) {
       pushState(mainStates.Filter);
       return {
         type: TokenName.OpenFilter,
@@ -364,7 +369,11 @@ export function lexer(input, options = {}) {
         start: position(),
         end: position("|"),
       };
-    } else if (mainState === mainStates.Filter && token.value === "|") {
+    } else if (
+      mainState === mainStates.Filter &&
+      token &&
+      token.value === "|"
+    ) {
       return {
         type: TokenName.OpenFilter,
         value: "|",
