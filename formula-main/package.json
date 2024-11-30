@@ -15,6 +15,8 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-node": "^0.0.1-security",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1"
   }
 }
