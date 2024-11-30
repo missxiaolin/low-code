@@ -7,6 +7,10 @@ import truncate from "lodash/truncate";
 import { createObject, stripNumber } from "./util";
 
 export class Evaluator {
+  /**
+   * @param {*} context
+   * @param {*} options functions?: 可以外部传入 ast 节点处理器，定制或者扩充自定义函数; filters?: 可以外部扩充 filter; defaultFilter
+   */
   constructor(
     context,
     options = {
@@ -14,7 +18,6 @@ export class Evaluator {
     }
   ) {
     this.contextStack = [];
-    this.defaultFilters = {};
     this.filters = {};
     this.functions = {};
     this.context = context;
@@ -24,7 +27,6 @@ export class Evaluator {
 
     this.filters = Object.assign(
       {},
-      Evaluator.defaultFilters,
       this.filters,
       options.filters ? options.filters : {}
     );
@@ -34,6 +36,12 @@ export class Evaluator {
       this.functions,
       options.functions ? options.functions : {}
     );
+  }
+
+  setDefaultFilters(filters) {
+    this.filters = Object.assign({}, this.filters, filters);
+
+    return this;
   }
 
   document(ast) {
