@@ -5,3 +5,4 @@ function evalFormual(expression, data) {
   });
 }
 console.log(evalFormual("IF(true, 2, 3)"));
+console.log(evalFormual("IF(IF(true, false, true), 2, 3)"));
