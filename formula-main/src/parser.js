@@ -515,7 +515,7 @@ export function parse(input, options) {
       (() => {
         const ast = expressionList();
 
-        if (ast.body.length === 1) {
+        if (ast && ast.body && ast.body.length === 1) {
           return ast.body[0];
         }
 

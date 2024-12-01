@@ -24,7 +24,6 @@ export class Evaluator {
     this.contextStack.push((varname) =>
       varname === "&" ? context : context[varname]
     );
-
     this.filters = Object.assign(
       {},
       this.filters,
@@ -39,19 +38,37 @@ export class Evaluator {
   }
 
   setDefaultFilters(filters) {
-    this.filters = Object.assign({}, this.filters, filters);
+    this.filters = Object.assign({}, filters, this.filters);
 
     return this;
   }
 
+  /**
+   * 执行
+   * @param {*} ast
+   * @returns
+   */
+  evalute(ast) {
+    if (ast && ast.type) {
+      const name = ast.type.replace(/(?:_|\-)(\w)/g, (_, l) => l.toUpperCase());
+
+      const fn = this.functions[name] || this[name];
+      if (!fn) {
+        throw new Error(`${ast.type} unkown.`);
+      }
+      return fn.call(this, ast);
+    } else {
+      return ast;
+    }
+  }
+
   document(ast) {
-    if (!ast.body.length) {
+    if (!ast || !ast.body || !ast.body.length) {
       return undefined;
     }
     const isString = ast.body.length > 1;
     const content = ast.body.map((item) => {
       let result = this.evalute(item);
-
       if (isString && result == null) {
         // 不要出现 undefined, null 之类的文案
         return "";
@@ -394,24 +411,6 @@ export class Evaluator {
     return this.evalute(ast.test)
       ? this.evalute(ast.consequent)
       : this.evalute(ast.alternate);
-  }
-
-  /**
-   * 执行
-   * @param {*} ast
-   * @returns
-   */
-  evalute(ast) {
-    if (ast && ast.type) {
-      const name = ast.type.replace(/(?:_|\-)(\w)/g, (_, l) => l.toUpperCase());
-      const fn = this.functions[name] || this[name];
-      if (!fn) {
-        throw new Error(`${ast.type} unkown.`);
-      }
-      return fn.call(this, ast);
-    } else {
-      return ast;
-    }
   }
 
   funcCall(ast) {

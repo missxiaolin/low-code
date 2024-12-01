@@ -16,6 +16,22 @@ function evalFormual(expression, data = defaultContext) {
 }
 
 // console.log(
+//   evaluate(
+//     "a is ${a | concat:233}",
+//     {
+//       a: 123,
+//     },
+//     {
+//       filters: {
+//         concat(input, arg) {
+//           return `${input}${arg}`;
+//         },
+//       },
+//     }
+//   )
+// );
+
+// console.log(
 //   resolveVariableAndFilter('${items|filter:text:match:"ab"}', {
 //     items: [
 //       {
