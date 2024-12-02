@@ -1,0 +1,7 @@
+/src
+/configs
+/__mocks__
+/__tests__
+tsconfig.json
+/coverage
+/scripts
