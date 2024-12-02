@@ -341,7 +341,7 @@ test("evalute:variableName", () => {
 
   expect(evaluate("${a-b}", data)).toBe("c");
   expect(evaluate("${222}", data)).toBe(222);
-  expect(evaluate("${222_221}", data)).toBe(233);
+  expect(evaluate("${222_221}", data)).toBe("233");
   expect(evaluate("${222-221}", data)).toBe(1);
   expect(evaluate("${222_abcde}", data)).toBe("abcde");
 

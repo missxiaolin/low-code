@@ -15,6 +15,26 @@ function evalFormual(expression, data = defaultContext) {
   });
 }
 
+// const data = {
+//   "a-b": "c",
+//   222: 10222,
+//   "222_221": 233,
+//   "222_abcde": "abcde",
+//   "222-221": 333,
+// };
+
+// console.log(typeof evaluate("${222_221}", data));
+
+// console.log(
+//   resolveVariableAndFilter(
+//     "${a | default:undefined}",
+//     {
+//       a: 12,
+//     },
+//     "| raw"
+//   )
+// );
+
 // console.log(
 //   evaluate(
 //     "a is ${a | concat:233}",

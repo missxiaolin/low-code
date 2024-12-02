@@ -142,6 +142,9 @@ export const filters = {
     (strict ? input : input ? input : undefined) &&
     (() => {
       try {
+        if (input) {
+          return input;
+        }
         if (defaultValue === "undefined") {
           return undefined;
         }

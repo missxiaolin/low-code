@@ -13,7 +13,7 @@ test(`filter:html`, () => {
     resolveVariableAndFilter("${a}", {
       a: "<html>",
     })
-  ).toEqual("<html>");
+  ).toEqual("&lt;html&gt;");
 });
 
 test(`filter:complex`, () => {
@@ -22,13 +22,11 @@ test(`filter:complex`, () => {
       a: "<html>",
     })
   ).toEqual("<html>");
-
   expect(
     resolveVariableAndFilter("${a ? a : a}", {
       a: "<html>",
     })
   ).toEqual("<html>");
-
   expect(
     resolveVariableAndFilter("${b.a}", {
       a: "<html>",
@@ -36,7 +34,7 @@ test(`filter:complex`, () => {
         a: "<br />",
       },
     })
-  ).toEqual("<br />");
+  ).toEqual("&lt;br &#x2F;&gt;");
 });
 
 test(`filter:json`, () => {

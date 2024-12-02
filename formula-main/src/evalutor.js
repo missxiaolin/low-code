@@ -21,6 +21,9 @@ export class Evaluator {
     this.filters = {};
     this.functions = {};
     this.context = context;
+    this.options = {
+      defaultFilter: "html",
+    };
     this.contextStack.push((varname) =>
       varname === "&" ? context : context[varname]
     );
@@ -35,6 +38,7 @@ export class Evaluator {
       this.functions,
       options.functions ? options.functions : {}
     );
+    this.options = Object.assign({}, this.options, options);
   }
 
   setDefaultFilters(filters) {
