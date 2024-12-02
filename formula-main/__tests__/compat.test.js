@@ -457,12 +457,12 @@ const filters = [
   },
 ];
 
-// filters.forEach((f) => {
-//   test(`compat:${f.type}`, () => {
-//     const result = resolveVariableAndFilter(f.path, f.data, f.filter);
-//     expect(result).toEqual(f.expectValue);
-//   });
-// });
+filters.forEach((f) => {
+  test(`compat:${f.type}`, () => {
+    //     const result = resolveVariableAndFilter(f.path, f.data, f.filter);
+    //     expect(result).toEqual(f.expectValue);
+  });
+});
 
 test(`compat:filter`, () => {
   expect(
@@ -534,62 +534,62 @@ test(`compat:&`, () => {
 });
 
 test(`compat:filter-default`, () => {
-  // expect(
-  //   resolveVariableAndFilter(
-  //     "${a | default:undefined}",
-  //     {
-  //       a: 1,
-  //     },
-  //     "| raw"
-  //   )
-  // ).toBe(1);
-  //   expect(
-  //     resolveVariableAndFilter(
-  //       "${a | default:undefined}",
-  //       {
-  //         a: [1, 2, 3],
-  //       },
-  //       "| raw"
-  //     )
-  //   ).toMatchObject([1, 2, 3]);
-  //   expect(
-  //     resolveVariableAndFilter(
-  //       "${b | default:undefined}",
-  //       {
-  //         a: 1,
-  //       },
-  //       "| raw"
-  //     )
-  //   ).toBe(undefined);
-  //   expect(
-  //     resolveVariableAndFilter(
-  //       "${b | default:-}",
-  //       {
-  //         a: 1,
-  //       },
-  //       "| raw"
-  //     )
-  //   ).toBe("-");
-  //   expect(
-  //     resolveVariableAndFilter(
-  //       "${b | default:undefined}",
-  //       {
-  //         a: 1,
-  //       },
-  //       "| raw",
-  //       () => ""
-  //     )
-  //   ).toBe(undefined);
-  //   expect(
-  //     resolveVariableAndFilter(
-  //       "${b}",
-  //       {
-  //         a: 1,
-  //       },
-  //       "| raw",
-  //       () => ""
-  //     )
-  //   ).toBe("");
+  expect(
+    resolveVariableAndFilter(
+      "${a | default:undefined}",
+      {
+        a: 1,
+      },
+      "| raw"
+    )
+  ).toBe(1);
+  expect(
+    resolveVariableAndFilter(
+      "${a | default:undefined}",
+      {
+        a: [1, 2, 3],
+      },
+      "| raw"
+    )
+  ).toMatchObject([1, 2, 3]);
+  expect(
+    resolveVariableAndFilter(
+      "${b | default:undefined}",
+      {
+        a: 1,
+      },
+      "| raw"
+    )
+  ).toBe(undefined);
+  expect(
+    resolveVariableAndFilter(
+      "${b | default:-}",
+      {
+        a: 1,
+      },
+      "| raw"
+    )
+  ).toBe("-");
+  expect(
+    resolveVariableAndFilter(
+      "${b | default:undefined}",
+      {
+        a: 1,
+      },
+      "| raw",
+      () => ""
+    )
+  ).toBe(undefined);
+  expect(
+    resolveVariableAndFilter(
+      "${b}",
+      {
+        a: 1,
+      },
+      "| raw",
+      () => ""
+    )
+  ).toBe("");
 });
 
 test(`compat:numberVariable`, () => {

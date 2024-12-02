@@ -138,11 +138,32 @@ export const filters = {
     return encodeURIComponent(input);
   },
   url_decode: (input) => decodeURIComponent(input),
+  /**
+   * 
+   * @param {*} input 
+   * @param {*} defaultValue 
+   * @param {*} strict 
+   * @returns 
+   * (() => {
+      if (strict || input) {
+        return input;
+      }
+      try {
+        if (defaultValue === "undefined") {
+          return undefined;
+        }
+
+        return JSON.parse(defaultValue);
+      } catch (e) {
+        return defaultValue;
+      }
+    })(),
+   */
   default: (input, defaultValue, strict = false) =>
-    (strict ? input : input ? input : undefined) &&
+    // (strict ? input : input ? input : undefined) &&
     (() => {
       try {
-        if (input) {
+        if ((input && input !== "undefined") || strict) {
           return input;
         }
         if (defaultValue === "undefined") {

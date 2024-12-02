@@ -94,7 +94,6 @@ export class Evaluator {
 
     while (filters.length) {
       const filter = filters.shift();
-
       const fn = this.filters[filter.name];
       if (!fn) {
         throw new Error(`filter \`${filter.name}\` not exits`);
@@ -130,7 +129,6 @@ export class Evaluator {
       this.options && this.options.defaultFilter
         ? this.options.defaultFilter
         : "";
-
     // 只给简单的变量取值用法自动补fitler
     if (defaultFilter && ~["getter", "variable"].indexOf(ast.body.type)) {
       ast.body = {

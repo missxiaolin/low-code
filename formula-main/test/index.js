@@ -15,6 +15,16 @@ function evalFormual(expression, data = defaultContext) {
   });
 }
 
+// console.log(
+//   resolveVariableAndFilter(
+//     "${b | default:-}",
+//     {
+//       a: 1,
+//     },
+//     "| raw"
+//   )
+// );
+
 // const data = {
 //   "a-b": "c",
 //   222: 10222,
