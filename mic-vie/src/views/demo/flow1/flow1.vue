@@ -1,30 +1,53 @@
 <template>
   <div class="flow-container">
-    <VueFlow :nodes="nodes" :edges="edges" default-marker-color="red">
+    <VueFlow
+      :nodes="nodes"
+      :edges="edges"
+      default-marker-color="#fff"
+      :node-styles="{
+        // 节点样式选项
+        default: {
+          backgroundColor: '#ffffff',
+        },
+      }"
+      :line-styles="{
+        // 线条样式选项
+        default: {
+          curve: 'smooth',
+          stroke: '#000000',
+          strokeWidth: 2,
+          arrowheadStyle: 'arrow',
+        },
+      }"
+    >
       <template #node-start="props">
         <startNode v-bind="props"></startNode>
       </template>
-
+      <template #node-customize="props">
+        <customizeNode v-bind="props"></customizeNode>
+      </template>
       <template #node-end="props">
         <endNode v-bind="props"></endNode>
       </template>
-      <!-- <Handle id="a" type="source" :position="Position.Right" /> -->
     </VueFlow>
   </div>
 </template>
 
 <script lang="ts">
 import { ref } from "vue";
-import { VueFlow, Handle, Position } from "@vue-flow/core";
+import { VueFlow, Handle, Position, MarkerType } from "@vue-flow/core";
 import startNode from "../flow1/startNode.vue";
 import endNode from "../flow1/endNode.vue";
+import customizeNode from "./customizeNode.vue";
 import "@vue-flow/core/dist/style.css";
 import "@vue-flow/core/dist/theme-default.css";
+// https://juejin.cn/post/7399678078357602319?searchId=20241205152138073B8BE74E8D091A8D87
 
 export default {
   components: {
     VueFlow,
     startNode,
+    customizeNode,
     endNode,
   },
   setup(props) {
@@ -37,8 +60,14 @@ export default {
       },
       {
         id: "2",
+        type: "customize",
+        position: { x: 100, y: 150 },
+        data: { label: "Node 2" },
+      },
+      {
+        id: "3",
         type: "end",
-        position: { x: 170, y: 150 },
+        position: { x: 150, y: 250 },
         data: { label: "Node 2" },
       },
       //   {
@@ -51,10 +80,23 @@ export default {
     const edges = ref([
       {
         id: "e1->2",
-        type: "special",
+        type: "step",
         source: "1",
         target: "2",
+        markerEnd: MarkerType.Arrow,
       },
+      // {
+      //   id: "e1->3",
+      //   type: "step",
+      //   source: "1",
+      //   target: "3",
+      // },
+      // {
+      //   id: "e2->3",
+      //   type: "step",
+      //   source: "2",
+      //   target: "3",
+      // },
       //   {
       //     id: "e1->3",
       //     type: "special",
@@ -69,19 +111,19 @@ export default {
       //   },
     ]);
 
-    setTimeout(() => {
-      nodes.value.push({
-        id: "3",
-        position: { x: 50, y: 250 },
-        data: { label: "Node 3" },
-      });
-      edges.value.push({
-        id: "e1->3",
-        type: "special",
-        source: "1",
-        target: "3",
-      });
-    }, 3000);
+    // setTimeout(() => {
+    //   nodes.value.push({
+    //     id: "3",
+    //     position: { x: 50, y: 250 },
+    //     data: { label: "Node 3" },
+    //   });
+    //   edges.value.push({
+    //     id: "e1->3",
+    //     type: "special",
+    //     source: "1",
+    //     target: "3",
+    //   });
+    // }, 3000);
     return {
       nodes,
       edges,

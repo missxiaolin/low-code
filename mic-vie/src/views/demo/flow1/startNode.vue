@@ -2,12 +2,12 @@
   <div class="custom-node">
     <div>开始</div>
     <!-- style="top: 50px; left: 10px" -->
-    <Handle
+    <handle
       id="source-a"
       type="source"
       :position="Position.Left"
-      style="top: 50px; left: 10px"
-    />
+      style="top: 50px; left: 10px; opacity: 0"
+    ></handle>
   </div>
 </template>
 

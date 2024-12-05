@@ -1,6 +1,6 @@
 <template>
   <div class="custom-node" @click="add">
-    <div>结束</div>
+    <div>自定义内容</div>
     <!-- style="top: 50px; left: 10px" -->
     <Handle
       id="source-a"
