@@ -50,15 +50,4 @@ export default {
   line-height: 50px;
   position: relative;
 }
-.normal-edge {
-  stroke: red;
-  path {
-    stroke: #d9d9d9;
-    stroke-width: 1px;
-  }
-}
-.vue-flow__arrowhead polyline {
-  stroke: #d9d9d9 !important;
-  stroke-width: 4px !important;
-}
 </style>

@@ -1,25 +1,6 @@
 <template>
   <div class="flow-container">
-    <VueFlow
-      :nodes="nodes"
-      :edges="edges"
-      default-marker-color="#fff"
-      :node-styles="{
-        // 节点样式选项
-        default: {
-          backgroundColor: '#ffffff',
-        },
-      }"
-      :line-styles="{
-        // 线条样式选项
-        default: {
-          curve: 'smooth',
-          stroke: '#000000',
-          strokeWidth: 2,
-          arrowheadStyle: 'arrow',
-        },
-      }"
-    >
+    <VueFlow :nodes="nodes" :edges="edges">
       <template #node-start="props">
         <startNode v-bind="props"></startNode>
       </template>
@@ -151,5 +132,15 @@ export default {
     top: 20px;
     left: 20px;
   }
+}
+.normal-edge {
+  path {
+    stroke: #d9d9d9;
+    stroke-width: 1px;
+  }
+}
+.vue-flow__arrowhead polyline {
+  stroke: #d9d9d9 !important;
+  stroke-width: 2px !important;
 }
 </style>
