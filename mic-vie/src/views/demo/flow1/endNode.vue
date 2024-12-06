@@ -27,7 +27,6 @@ export default {
     },
   },
   setup(props) {
-    console.log(props);
     const add = () => {
       console.log("add");
     };

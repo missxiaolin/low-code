@@ -1,12 +1,12 @@
 <template>
   <div class="custom-node">
-    <div>开始</div>
+    <div class="start">开始</div>
     <!-- style="top: 50px; left: 10px" -->
     <handle
       id="source-a"
       type="source"
       :position="Position.Left"
-      style="top: 50px; left: 10px; opacity: 0"
+      style="top: 40px; left: 30px; opacity: 0"
     ></handle>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
     },
   },
   setup(props) {
-    console.log(props);
+    // console.log(props);
 
     return {
       Position,
@@ -36,7 +36,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .custom-node {
   width: 200px;
   height: 50px;
@@ -45,5 +45,6 @@ export default {
   text-align: center;
   line-height: 50px;
   position: relative;
+  background: #fff;
 }
 </style>

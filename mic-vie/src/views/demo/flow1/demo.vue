@@ -1,6 +1,6 @@
 <template>
   <div class="flow-container">
-    <VueFlow :nodes="nodes" :edges="edges" :nodes-draggable="false">
+    <VueFlow :nodes="nodes" :edges="edges">
       <template #node-start="props">
         <startNode v-bind="props"></startNode>
       </template>
@@ -12,10 +12,12 @@
       </template>
 
       <template #edge-custom="props">
-        <customEdge v-bind="props" />
+        <div>props</div>
+        <!-- <CustomEdge v-bind="props" /> -->
       </template>
       <template #connection-line="props">
-        <customEdge v-bind="props" />
+        <div>props</div>
+        <!-- <CustomEdge v-bind="props" /> -->
       </template>
     </VueFlow>
   </div>
@@ -23,11 +25,12 @@
 
 <script lang="ts">
 import { ref } from "vue";
-import { VueFlow, MarkerType } from "@vue-flow/core";
+import { VueFlow, Handle, Position, MarkerType } from "@vue-flow/core";
 import startNode from "../flow1/startNode.vue";
 import endNode from "../flow1/endNode.vue";
 import customizeNode from "./customizeNode.vue";
-import customEdge from "./customEdge.vue";
+import customFlowLine from "./customFlowLine.vue";
+import customFlowEdge from "./customFlowEdge.vue";
 import "@vue-flow/core/dist/style.css";
 import "@vue-flow/core/dist/theme-default.css";
 // https://juejin.cn/post/7399678078357602319?searchId=20241205152138073B8BE74E8D091A8D87
@@ -38,7 +41,7 @@ export default {
     startNode,
     customizeNode,
     endNode,
-    customEdge,
+    customFlowLine,
   },
   setup(props) {
     const nodes = ref([
@@ -51,7 +54,7 @@ export default {
       {
         id: "1",
         type: "customize",
-        position: { x: 100, y: 110 },
+        position: { x: 100, y: 150 },
         data: { label: "Node 1" },
       },
       {
@@ -71,16 +74,16 @@ export default {
     const edges = ref([
       {
         id: "e1->2",
-        type: "custom",
+        type: "step",
         source: "start",
         target: "1",
         markerEnd: MarkerType.Arrow,
-        style: { stroke: "#d9d9d9", strokeWidth: 0.5 },
+        style: { stroke: "#d9d9d9", strokeWidth: 1 },
         class: "normal-edge",
       },
       {
         id: "e1->3",
-        type: "custom",
+        type: "step",
         source: "start",
         target: "2",
         markerEnd: MarkerType.Arrow,
@@ -89,7 +92,7 @@ export default {
       },
       {
         id: "e1->4",
-        type: "custom",
+        type: "step",
         source: "start",
         target: "end",
         markerEnd: MarkerType.Arrow,
@@ -98,7 +101,7 @@ export default {
       },
       {
         id: "e2->3",
-        type: "custom",
+        type: "step",
         source: "1",
         target: "2",
         style: { stroke: "#d9d9d9", strokeWidth: 1 },
@@ -107,7 +110,7 @@ export default {
       },
       {
         id: "e2->4",
-        type: "custom",
+        type: "step",
         source: "2",
         target: "end",
         style: { stroke: "#d9d9d9", strokeWidth: 1 },
@@ -115,6 +118,20 @@ export default {
         class: "normal-edge",
       },
     ]);
+
+    // setTimeout(() => {
+    //   nodes.value.push({
+    //     id: "3",
+    //     position: { x: 50, y: 250 },
+    //     data: { label: "Node 3" },
+    //   });
+    //   edges.value.push({
+    //     id: "e1->3",
+    //     type: "special",
+    //     source: "1",
+    //     target: "3",
+    //   });
+    // }, 3000);
     return {
       nodes,
       edges,
