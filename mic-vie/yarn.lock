@@ -941,6 +941,11 @@
   resolved "https://registry.npmmirror.com/@vitejs/plugin-vue/-/plugin-vue-5.1.4.tgz#72b8b705cfce36b00b59af196195146e356500c4"
   integrity sha512-N2XSI2n3sQqp5w7Y/AN/L2XDjBIRGqXko+eDp42sydYSBeJuSm5a1sLf8zakmo8u7tA8NmBgoDLA1HeOESjp9A==
 
+"@vue-flow/controls@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmmirror.com/@vue-flow/controls/-/controls-1.1.2.tgz#d71899ed793f741400d043efdd49765a3a94c75f"
+  integrity sha512-6dtl/JnwDBNau5h3pDBdOCK6tdxiVAOL3cyruRL61gItwq5E97Hmjmj2BIIqX2p7gU1ENg3z80Z4zlu58fGlsg==
+
 "@vue-flow/core@^1.41.5":
   version "1.41.5"
   resolved "https://registry.npmmirror.com/@vue-flow/core/-/core-1.41.5.tgz#c5313cf4fb4041e18d5a668ae4dab4b195aa70b0"

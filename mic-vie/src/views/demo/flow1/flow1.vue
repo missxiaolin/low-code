@@ -1,6 +1,17 @@
 <template>
   <div class="flow-container">
-    <VueFlow :nodes="nodes" :edges="edges" :nodes-draggable="false">
+    <a-button @click="zoomBtnClick(1)">放大</a-button>
+    <a-button @click="zoomBtnClick(2)">缩小</a-button>
+    <VueFlow
+      :nodes="nodes"
+      :edges="edges"
+      :nodes-draggable="false"
+      :default-viewport="defaultViewport"
+      :max-zoom="4"
+      :min-zoom="0.1"
+      ref="vueFlowRef"
+    >
+      <Controls />
       <template #node-start="props">
         <startNode v-bind="props"></startNode>
       </template>
@@ -22,14 +33,16 @@
 </template>
 
 <script lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { VueFlow, MarkerType } from "@vue-flow/core";
+import { Controls } from "@vue-flow/controls";
 import startNode from "../flow1/startNode.vue";
 import endNode from "../flow1/endNode.vue";
 import customizeNode from "./customizeNode.vue";
 import customEdge from "./customEdge.vue";
 import "@vue-flow/core/dist/style.css";
 import "@vue-flow/core/dist/theme-default.css";
+import "@vue-flow/controls/dist/style.css";
 // https://juejin.cn/post/7399678078357602319?searchId=20241205152138073B8BE74E8D091A8D87
 
 export default {
@@ -39,8 +52,13 @@ export default {
     customizeNode,
     endNode,
     customEdge,
+    Controls,
   },
   setup(props) {
+    const vueFlowRef = ref(null);
+    const defaultViewport = ref({
+      zoom: 1,
+    });
     const nodes = ref([
       {
         id: "start",
@@ -115,9 +133,26 @@ export default {
         class: "normal-edge",
       },
     ]);
+
+    onMounted(() => {
+      console.log(vueFlowRef.value);
+      vueFlowRef.value.setMinZoom(0.2);
+      console.log("mounted");
+    });
+
+    const zoomBtnClick = (type) => {
+      if (type == 1) {
+        vueFlowRef && vueFlowRef.value.zoomIn(0.2);
+      } else {
+        vueFlowRef && vueFlowRef.value.zoomOut(0.2);
+      }
+    };
     return {
+      zoomBtnClick,
+      vueFlowRef,
       nodes,
       edges,
+      defaultViewport,
     };
   },
 };
