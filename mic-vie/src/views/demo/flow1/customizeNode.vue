@@ -45,7 +45,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .custom-node {
   width: 200px;
   height: 50px;
@@ -54,5 +54,9 @@ export default {
   text-align: center;
   line-height: 50px;
   position: relative;
+  &:hover {
+    border: 1px solid #e26400;
+    background: #fff;
+  }
 }
 </style>
