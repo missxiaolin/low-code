@@ -29,7 +29,7 @@
                 v-model:value="item.value"
                 @blur="
                   (e) => {
-                    handleBlur(e, item.key);
+                    handleBlur(e.srcElement.value, item.key);
                   }
                 "
               ></a-input>
@@ -43,7 +43,7 @@
                 v-model:value="item.value"
                 @change="
                   (e) => {
-                    handleBlur({ srcElement: { value: e } }, item.key);
+                    handleBlur(e, item.key);
                   }
                 "
               >
@@ -103,7 +103,7 @@ export default {
     );
 
     const handleBlur = (e, key) => {
-      emit("childSave", key, `${e.srcElement.value}`);
+      emit("childSave", key, `${e}`);
     };
 
     return {
