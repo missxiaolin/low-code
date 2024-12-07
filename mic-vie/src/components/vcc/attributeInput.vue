@@ -8,7 +8,13 @@
     <template v-else>
       <a-tabs class="attribute-tabs" v-model:activeKey="activeName">
         <a-tab-pane tab="组件设置" key="component">
-          <a-empty description="请选择组件"></a-empty>
+          <comComponent
+            v-if="vueRawTag"
+            :localAttributes="localAttributes"
+            :vueRawTag="vueRawTag"
+            @childSave="childSave"
+          />
+          <a-empty v-else description="请选择组件"></a-empty>
         </a-tab-pane>
         <a-tab-pane tab="样式" key="style">
           <styleComponent
@@ -193,11 +199,13 @@ import { getRawComponentKey, getRawComponentContent } from "@/utils/common";
 import { brotherEleEnum, copyBroCode } from "@/libs/bro-ele-config";
 import keymaster from "keymaster";
 import styleComponent from "./vccComponents/style.vue";
+import comComponent from "./vccComponents/component.vue";
 import { store as _store } from "@/libs/store.js";
 
 export default {
   components: {
     styleComponent,
+    comComponent,
   },
   props: [
     "__rawVueInfo__",
@@ -209,7 +217,7 @@ export default {
   data: function () {
     return {
       vueRawTag: "",
-      activeName: "style",
+      activeName: "component",
       input: "",
       localAttributes: [],
       enable: true,

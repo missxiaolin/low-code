@@ -175,5 +175,19 @@
       "title": "其他",
       "children": []
     }
+  },
+  "component": {
+    "base": {
+      "title": "基础",
+      "children": []
+    },
+    "event": {
+      "title": "事件",
+      "children": []
+    },
+    "other": {
+      "title": "其他",
+      "children": []
+    }
   }
 }
