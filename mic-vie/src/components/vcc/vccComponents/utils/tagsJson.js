@@ -27,5 +27,6 @@ export default {
   },
   a: {
     style: style,
+    component: ["href", "target", "title"],
   },
 };

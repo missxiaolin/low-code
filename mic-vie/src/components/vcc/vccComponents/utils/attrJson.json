@@ -179,7 +179,45 @@
   "component": {
     "base": {
       "title": "基础",
-      "children": []
+      "children": [
+        {
+          "label": "指定链接",
+          "key": "href",
+          "settingType": "input",
+          "value": ""
+        },
+        {
+          "label": "如何打开",
+          "key": "target",
+          "options": [
+            {
+              "label": "新窗口打开",
+              "value": "_blank"
+            },
+            {
+              "label": "当前窗口打开",
+              "value": "_self"
+            },
+            {
+              "label": "父框架打开",
+              "value": "_parent"
+            },
+            {
+              "label": "_top",
+              "value": "在整个浏览器打开"
+            }
+          ],
+          "settingType": "select",
+          "value": ""
+        },
+        {
+          "label": "提示",
+          "key": "title",
+          "placeholder": "鼠标悬停时显示工具提示",
+          "settingType": "input",
+          "value": ""
+        }
+      ]
     },
     "event": {
       "title": "事件",
