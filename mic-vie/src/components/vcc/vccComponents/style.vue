@@ -6,7 +6,10 @@
         v-for="(v, key) in list"
         :key="key"
       >
-        <div class="attribute-seeting-content-title" v-if="v.title">
+        <div
+          class="attribute-seeting-content-title"
+          v-if="v.title && v.children && v.children.length > 0"
+        >
           {{ v.title }}
         </div>
         <template v-if="v.children && v.children.length > 0">

@@ -221,7 +221,14 @@
     },
     "event": {
       "title": "事件",
-      "children": []
+      "children": [
+        {
+          "label": "点击",
+          "key": "click",
+          "settingType": "setting",
+          "value": ""
+        }
+      ]
     },
     "other": {
       "title": "其他",

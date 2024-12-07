@@ -132,7 +132,8 @@ export default {
       flex: 1;
     }
     .label {
-      min-width: 60px;
+      min-width: 48px;
+      text-align: right;
     }
   }
 }

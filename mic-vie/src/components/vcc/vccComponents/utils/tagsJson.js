@@ -21,9 +21,11 @@ const style = [
 export default {
   div: {
     style: style,
+    component: ["click"],
   },
   span: {
     style: style,
+    component: ["click"],
   },
   a: {
     style: style,
