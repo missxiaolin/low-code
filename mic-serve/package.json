@@ -1,0 +1,48 @@
+{
+  "name": "micro-serve",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "build:serve": "npm run watch & npm run server",
+    "serve": "node-dev ./dist/app.js",
+    "watch": "babel src --copy-files --watch --out-dir dist  --ignore src/public --verbose --source-maps",
+    "build": "babel src --copy-files -d dist --verbose",
+    "command": "NODE_ENV=production node dist/command.js"
+  },
+  "dependencies": {
+    "@adonisjs/ace": "^5.0.8",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.0",
+    "@babel/polyfill": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
+    "amqplib": "^0.8.0",
+    "axios": "^0.24.0",
+    "babel-plugin-root-import": "^6.5.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^16.4.5",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "ioredis": "^4.28.0",
+    "ipip-datx": "^0.2.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.95.13",
+    "log4js": "^6.3.0",
+    "md5": "^2.3.0",
+    "moment": "^2.29.1",
+    "morgan": "~1.9.1",
+    "mysql": "^2.18.1",
+    "node-schedule": "^2.0.0",
+    "shelljs": "^0.8.4"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "node-dev": "^5.0.0"
+  }
+}
