@@ -29,9 +29,9 @@ export default class Page extends Base {
       const pageDetail = pageRouteModel.getPageDetail({
         projectId: data.project_id,
         id: data.id,
-      })
+      });
       if (pageDetail.status == 2) {
-        return this.send(res, result, false, '生成页面中不能编辑');
+        return this.send(res, result, false, "生成页面中不能编辑");
       }
       let param = {
         ...data,
@@ -88,23 +88,28 @@ export default class Page extends Base {
       result = {};
     let pageRes = await pageRouteModel.getPageDetail({
       projectId: data.projectId,
-      status: 2
-    })
+      status: 2,
+    });
     if (pageRes) {
-      return this.send(res, result, false, "待上一个页面生成完成，才能继续生成！");
+      return this.send(
+        res,
+        result,
+        false,
+        "待上一个页面生成完成，才能继续生成！"
+      );
     }
     let param = {
       status: 2,
       project_id: data.projectId,
-    }
-    await pageRouteModel.update(param, data.id)
-    
+    };
+    await pageRouteModel.update(param, data.id);
+
     exec(
       `npm run command Generate:Project ${data.projectId} ${data.id}`,
       async (error, stdout, stderr) => {
         console.log(stdout, stderr);
-        param.status = 3
-        await pageRouteModel.update(param, data.id)
+        param.status = 3;
+        await pageRouteModel.update(param, data.id);
       }
     );
     return this.send(res, result);
