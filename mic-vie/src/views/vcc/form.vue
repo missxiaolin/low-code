@@ -37,6 +37,7 @@ export default {
         JSCode: ``,
         mode: 1,
         css: "",
+        eventNode: {},
       },
     };
   },

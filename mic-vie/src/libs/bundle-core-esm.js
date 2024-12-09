@@ -817,7 +817,11 @@ class CodeGenerator {
 
     this.externalJS = {};
 
+    // css
     this.customCss = "";
+
+    // 事件流
+    this.eventNode = {};
   }
 
   clearDataSet() {
@@ -840,6 +844,14 @@ class CodeGenerator {
    */
   setExternalCss(cssCode) {
     this.customCss = cssCode;
+  }
+
+  /**
+   * 事件流
+   * @param {*} eventNode
+   */
+  setEventNode(eventNode) {
+    this.eventNode = eventNode;
   }
 
   /**
@@ -951,8 +963,9 @@ class CodeGenerator {
 
     const finalJSCode = `
 {
-setup(props) {
+setup(props, {emit}) {
   const $data = toRefs(${stringifyObject(toRefsData)});
+  const $events = ${stringifyObject(this.eventNode)};
   ${str}
   ${functionData}
   return {

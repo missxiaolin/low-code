@@ -298,6 +298,7 @@ export default {
             this.initCodeEntity.JSCode ? this.initCodeEntity.JSCode : ""
           )
         )
+        .saveEventNode(this.initCodeEntity.eventNode)
         .render(
           this.initCodeEntity.codeStructure
             ? this.initCodeEntity.codeStructure

@@ -45,6 +45,7 @@ export class MainPanelProvider {
 
     this.externalJS = {};
     this.customCss = "";
+    this.eventNode = {};
 
     this.componentOptions = {};
   }
@@ -180,6 +181,7 @@ export class MainPanelProvider {
     this.codeGenerator = createNewCodeGenerator();
     this.codeGenerator.setExternalJS(this.externalJS);
     this.codeGenerator.setExternalCss(this.customCss);
+    this.codeGenerator.setEventNode(this.eventNode);
   }
 
   getControlPanelRoot() {
@@ -194,6 +196,11 @@ export class MainPanelProvider {
 
   saveJSCodeOnly(code) {
     this.externalJS = code || "";
+    return this;
+  }
+
+  saveEventNode(obj) {
+    this.eventNode = obj;
     return this;
   }
 

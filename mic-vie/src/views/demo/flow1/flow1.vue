@@ -135,7 +135,6 @@ export default {
     ]);
 
     onMounted(() => {
-      console.log(vueFlowRef.value);
       vueFlowRef.value.setMinZoom(0.2);
       console.log("mounted");
     });
