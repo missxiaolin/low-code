@@ -20,7 +20,7 @@ const jsTem = `export default {
     let $data = toRefs({})
 
     return {
-      $data
+      ...$data
     }
   }
 }
