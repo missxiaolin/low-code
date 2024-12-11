@@ -26,11 +26,12 @@ export default {
     flowNode,
   },
   setup() {
-    const open = ref(true);
+    const open = ref(false);
     const flowNodeRef = ref(null);
     const flowData = ref(data);
 
     const instance = getCurrentInstance();
+    console.log(instance.proxy.$execEventFlow);
 
     const save = () => {
       flowNodeRef.value.flowSave();

@@ -6,6 +6,7 @@ import router from "@/router";
 import "@/utils/permission";
 import "@/assets/css/index.scss";
 import "normalize.css";
+import { execEventFlow } from "@/utils/action";
 import { isSubMicro, handleMicroData } from "@/utils/subMicro";
 import { loadPlugins } from "@/plugins";
 
@@ -17,6 +18,7 @@ import { loadPlugins } from "@/plugins";
  */
 function loadTemplate(renderComponent, loadFinished) {
   const app = createApp(renderComponent);
+
   /** 加载插件 */
   loadPlugins(app);
   loadFinished(app);
@@ -43,6 +45,7 @@ function createBaseAppAsync(renderComponent = {}) {
 function loadApp(app) {
   /** 加载插件 */
   loadPlugins(app);
+  app.config.globalProperties.$execEventFlow = execEventFlow;
 }
 
 let app = null;
@@ -54,6 +57,7 @@ function mount() {
   loadPlugins(app);
   window.createBaseAppAsync = createBaseAppAsync;
   window.loadApp = loadApp;
+  app.config.globalProperties.$execEventFlow = execEventFlow;
   if (isSubMicro) {
     // 微前端环境下， 处理路由下发跳转
     handleMicroData(router, app);
