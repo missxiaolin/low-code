@@ -39,10 +39,12 @@
       <attribute-input
         :isShowAttribute="isShowAttribute"
         :JSCode="JSCode"
+        :eventNode="eventNode"
         :enableRemoveButton="true"
         class="attribute"
         @save="onSaveAttr"
         @remove="onRemove"
+        @saveEventLogicCode="saveEventLogicCode"
         ref="attributeInput"
         shortcutInitMode="hand"
         :__rawVueInfo__="currentEditRawInfo"
@@ -132,6 +134,7 @@ export default {
   },
   data() {
     return {
+      eventNode: {},
       currentEditRawInfo: null,
       code: "",
       codeDialogVisible: false,
@@ -196,6 +199,7 @@ export default {
     this.onPreviewModeChange(this.initCodeEntity.mode == 1 ? false : true);
     Promise.all([import("../map/load")]).then((res) => {
       this.$emit("onLoadFinish");
+      this.eventNode = this.initCodeEntity.eventNode;
       this.init();
     });
     // splitInit();
@@ -312,6 +316,7 @@ export default {
         codeRawVueInfo: this.codeRawVueInfo,
         JSCode: this.JSCode,
         css: this.customCss,
+        eventNode: this.eventNode,
       });
     },
 
@@ -386,9 +391,8 @@ export default {
 
     // 保存js data fn
     viewSaveJs(d = {}, fn = []) {
-      console.log(d, fn);
+      // console.log(d, fn);
       // const temScript = getJsTemData(d, fn);
-
       // let jsCode = this.JSCode.trim();
       // const JSCodeInfo = eval(`(function(){return ${jsCode};})()`);
       // const newJsCode = replaceKeyInfo(temScript, JSCodeInfo);
@@ -409,6 +413,14 @@ export default {
     saveCssCode(code) {
       this.mainPanelProvider.saveCssCode(code);
       this.customCss = code;
+      this.notifyParent();
+    },
+
+    saveEventLogicCode(obj) {
+      if (!obj) return;
+      this.eventNode = obj;
+      this.mainPanelProvider.saveEventNode(obj);
+      this.mainPanelProvider.reRender();
       this.notifyParent();
     },
 

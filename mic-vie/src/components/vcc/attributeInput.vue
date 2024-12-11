@@ -12,6 +12,8 @@
             v-if="vueRawTag"
             :localAttributes="localAttributes"
             :vueRawTag="vueRawTag"
+            :eventNode="eventNode"
+            @saveEventLogicCode="saveEventLogicCode"
             @childSave="childSave"
           />
           <a-empty v-else description="请选择组件"></a-empty>
@@ -213,6 +215,7 @@ export default {
     "shortcutInitMode",
     "JSCode",
     "isShowAttribute",
+    "eventNode",
   ], // __rawVueInfo__为当前编辑的原始代码对象, shortcutInitMode快捷键的初始化方式
   data: function () {
     return {
@@ -294,6 +297,9 @@ export default {
 
     createNew() {
       this.localAttributes.push({ key: "", value: "" });
+    },
+    saveEventLogicCode(obj) {
+      this.$emit("saveEventLogicCode", obj);
     },
     childSave(key, value) {
       let check = false;

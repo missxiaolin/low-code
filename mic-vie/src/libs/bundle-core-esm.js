@@ -969,11 +969,11 @@ setup(props, {emit}) {
   const $events = ${stringifyObject(this.eventNode)};
 
   // 执行事件流
-  const eventFun = (eventKey, value = "") => {
+  const eventFun = (eventKey, e) => {
     if (!$events[eventKey]) {
       return;
     };
-    instance.proxy.$execEventFlow(instance, $events[eventKey], {value});
+    instance.proxy.$execEventFlow(instance, $events[eventKey], e);
   };
   
   ${str}

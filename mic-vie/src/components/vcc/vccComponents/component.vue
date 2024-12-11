@@ -60,7 +60,7 @@
               <SettingOutlined
                 class="setting-icon"
                 v-if="item.settingType == 'setting'"
-                @click="eventClick"
+                @click="eventClick(item.key)"
               />
             </div>
           </div>
@@ -90,6 +90,7 @@
 <script>
 import { ref, watch, getCurrentInstance } from "vue";
 import { getAttrJson, getAttrKeys, stringToObj } from "./utils/index";
+import { uuid } from "@/utils/utils";
 import flowNode from "../../../components/flow-node/flowNode.vue";
 import _ from "lodash";
 const { merge } = _;
@@ -99,13 +100,13 @@ export default {
   components: {
     flowNode,
   },
-  props: ["localAttributes", "vueRawTag"],
-  emits: ["childSave"],
+  props: ["localAttributes", "vueRawTag", "eventNode"],
+  emits: ["childSave", "saveEventLogicCode"],
   setup(props, { emit }) {
     let list = ref([]);
     let localAttr = ref(props.localAttributes);
     let vueRawTag = ref(props.vueRawTag);
-
+    let eventStr = ref("");
     const init = (localAttributes, vueRawTag) => {
       const attrObj = getAttrKeys(localAttributes);
       let obj = {};
@@ -142,11 +143,16 @@ export default {
     const instance = getCurrentInstance();
 
     const saveEvent = () => {
-      // flowNodeRef.value.flowSave();
-      console.log("保存", flowNodeRef.value.flowSave());
+      const id = uuid();
+      emit("childSave", `${eventStr.value}`, `(e) => {eventFun('${id}', e)}`);
+      emit("saveEventLogicCode", {
+        [id]: flowNodeRef.value.flowSave(),
+      });
+      open.value = false;
     };
 
-    const eventClick = () => {
+    const eventClick = (str) => {
+      eventStr.value = str;
       open.value = true;
     };
 

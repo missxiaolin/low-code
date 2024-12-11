@@ -6,6 +6,10 @@ export const defaultRoute = [
     component: () => import("@/views/vcc/form.vue"),
   },
   {
+    path: "/form/code",
+    component: () => import("@/views/index.vue"),
+  },
+  {
     path: "/flow/node",
     component: () => import("@/views/demo/flow.vue"),
   },
