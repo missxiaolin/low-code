@@ -15,6 +15,11 @@
   .label {
     color: #fff;
     line-height: 30px;
-    width: 48px;
+    min-width: 48px;
+    white-space: nowrap;
   }
+}
+
+body, a, span {
+  color: #fff;
 }

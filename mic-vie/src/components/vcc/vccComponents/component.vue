@@ -107,6 +107,7 @@ export default {
     let localAttr = ref(props.localAttributes);
     let vueRawTag = ref(props.vueRawTag);
     let eventStr = ref("");
+    let funId = ref("");
     const init = (localAttributes, vueRawTag) => {
       const attrObj = getAttrKeys(localAttributes);
       let obj = {};
@@ -143,7 +144,7 @@ export default {
     const instance = getCurrentInstance();
 
     const saveEvent = () => {
-      const id = uuid();
+      const id = funId.value || uuid();
       emit("childSave", `${eventStr.value}`, `(e) => {eventFun('${id}', e)}`);
       emit("saveEventLogicCode", {
         [id]: flowNodeRef.value.flowSave(),
@@ -152,6 +153,20 @@ export default {
     };
 
     const eventClick = (str) => {
+      let eNodeStr = "";
+      funId.value = "";
+      props.localAttributes.forEach((item) => {
+        if (item.key == str) {
+          eNodeStr = item.value;
+        }
+      });
+      if (eNodeStr) {
+        const regex = /eventFun\('([^']+)'/;
+        const matches = eNodeStr.match(regex);
+        if (matches && matches[1]) {
+          funId.value = matches[1];
+        }
+      }
       eventStr.value = str;
       open.value = true;
     };
