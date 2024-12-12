@@ -417,8 +417,10 @@ $layout-height: 50px;
     margin-bottom: 8px;
     overflow: hidden;
     position: relative;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     padding: 0 5px 0 5px;
+    text-align: center;
     &:nth-child(even) {
       margin-left: 8px;
     }

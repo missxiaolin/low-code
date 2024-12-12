@@ -23,24 +23,33 @@
 
 <script>
 import htmlRow from "../../rawComponents/html/index.vue";
+import aBase from "../../rawComponents/a-base/index.vue";
 import customRow from "../../rawComponents/custom/index.vue";
 
 export default {
   components: {
     htmlRow,
     customRow,
+    aBase,
   },
   computed: {},
   data() {
     return {
       isExpand: true,
-      activeNames: ["htmlRow", "customRow"],
+      activeNames: ["htmlRow", "aBase", "customRow"],
       iconArray: [
         {
           labelName: "html组件",
           className: "demonstration-raw",
           selectIndex: 0,
           componentName: "htmlRow",
+          titleArray: [],
+        },
+        {
+          labelName: "基础组件",
+          className: "demonstration-a-base",
+          selectIndex: 1,
+          componentName: "aBase",
           titleArray: [],
         },
         {

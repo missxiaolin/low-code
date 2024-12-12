@@ -1,0 +1,1 @@
+export default {"[div-lc-mark]":"border: 1px grey dashed; min-height: 1rem; border-radius: 5px;"}

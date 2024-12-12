@@ -322,7 +322,6 @@ export class MainPanelProvider {
 
       const data = event.dataTransfer.getData("text/plain");
       const [, , , , rawInfo] = data.split(getSplitTag());
-
       let newDropObj = JSON.parse(rawInfo);
       if (newDropObj.div && newDropObj.div.class == "column-li") {
         newDropObj = newDropObj.div.__children[2].div.__children[0];

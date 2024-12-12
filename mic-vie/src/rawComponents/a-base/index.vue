@@ -1,15 +1,16 @@
 <template>
-  <div class="l-custom">
-    <lRow></lRow>
+  <div class="a-base-class">
+    <aBase></aBase>
   </div>
 </template>
-
 <script>
-import lRow from "./row.vue";
+import { defineComponent, onMounted, ref } from "vue";
+import aBase from "./a-base.vue";
 import { deepLCEle } from "../../utils/initRawComponent";
+
 export default {
   components: {
-    lRow,
+    aBase,
   },
   data() {
     return {};
@@ -17,9 +18,7 @@ export default {
   mounted() {
     this.$emit("mounted");
     // 对所有拥有lc-mark的元素进行初始化
-    deepLCEle(document.querySelector(".l-custom"), () => {});
+    deepLCEle(document.querySelector(".a-base-class"), () => {});
   },
 };
 </script>
-
-<style scoped></style>
