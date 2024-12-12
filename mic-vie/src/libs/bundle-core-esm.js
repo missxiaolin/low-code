@@ -973,7 +973,7 @@ setup(props, {emit}) {
     if (!$events[eventKey]) {
       return;
     };
-    instance.proxy.$execEventFlow(instance, $events[eventKey], e);
+    instance.proxy.$execEventFlow(instance, $events[eventKey] ? $events[eventKey].children : [], e);
   };
   
   ${str}

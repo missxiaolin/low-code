@@ -259,6 +259,21 @@ export function execEventFlow(
       );
     } else if (item.type === "condition") {
       // TODO: 判断条件
+      // 如果是条件节点，执行条件脚本，把结果注入到子节点conditionResult属性中
+      // const conditionResult = (item.config || []).reduce(
+      //   (prev: any, cur: any) => {
+      //     const result = execScript(cur.condition, eventData, initEventData);
+      //     prev[cur.id] = result;
+      //     return prev;
+      //   },
+      //   {}
+      // );
+
+      // (item.children || []).forEach((c: any) => {
+      //   c.conditionResult = !!conditionResult[c.conditionId];
+      // });
+      // // 递归执行子节点事件流
+      // execEventFlow(item.children, null, initEventData);
       // 递归执行子节点事件流
       execEventFlow(instance, item.children, null, initEventData);
     } else if (item.type === "event") {
