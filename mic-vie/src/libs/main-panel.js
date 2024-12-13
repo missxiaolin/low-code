@@ -26,6 +26,7 @@ import {
 } from "@/utils/common";
 import { createNewCodeGenerator } from "@/libs/code-generator-factory";
 import EventEmitter from "eventemitter3";
+import { uuid } from "../utils/utils";
 import { cloneDeep } from "lodash-es";
 import scope from "css-scoped";
 
@@ -80,6 +81,7 @@ export class MainPanelProvider {
 
     // 生成展示代码
     let codeForShow = code.replace(/\s{1}lc_id=".+?"/g, "");
+    codeForShow = codeForShow.replace(/\s{1}lc_uuid=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}lc-mark/g, "");
     codeForShow = codeForShow.replace(/\s{1}div-lc-mark/g, "");
     // console.log("codeForShow", codeForShow);
@@ -330,6 +332,11 @@ export class MainPanelProvider {
         //   newDropObj.div.__children[1].div.__children[0]
         // );
         newDropObj = newDropObj.div.__children[1].div.__children[0];
+        Object.keys(newDropObj).forEach((item) => {
+          if (item !== "__key__" && !newDropObj[item].lc_uuid) {
+            newDropObj[item].lc_uuid = uuid();
+          }
+        });
       }
 
       if (isRawComponents(newDropObj)) {
@@ -476,6 +483,7 @@ export class MainPanelProvider {
         key != "__children" &&
         key != "lc-mark" &&
         key != "lc_id" &&
+        key != "lc_uuid" &&
         !isObject(
           object[
             key

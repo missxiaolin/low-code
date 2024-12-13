@@ -1,5 +1,5 @@
 import isEqual from "lodash-es/isEqual";
-import { customAlphabet, nanoid } from 'nanoid';
+import { customAlphabet, nanoid } from "nanoid";
 
 export function getRawComponentKey(__rawVueInfo__) {
   return Object.keys(__rawVueInfo__)[0];
@@ -11,8 +11,8 @@ export function getRawComponentContent(__rawVueInfo__) {
 
 /**
  * 获得一个数据节点的父节点
- * @param {*} __rawVueInfo__ 
- * @returns 
+ * @param {*} __rawVueInfo__
+ * @returns
  */
 export function findParentNode(__rawVueInfo__) {
   const targetDom = findTargetDom(__rawVueInfo__);
@@ -26,19 +26,19 @@ export function findParentNode(__rawVueInfo__) {
 
 /**
  * 将一个节点从其节点中移除
- * @param {*} __rawVueInfo__ 
+ * @param {*} __rawVueInfo__
  */
 export function deleteNodeFromParent(__rawVueInfo__) {
   const parentNode = findParentNode(__rawVueInfo__);
   const children = getRawComponentContent(parentNode).__children;
-  const index = children.findIndex(item => isEquals(item, __rawVueInfo__));
+  const index = children.findIndex((item) => isEquals(item, __rawVueInfo__));
   children.splice(index, 1);
 }
 
 /**
  * 获得一个节点对应的数据信息，这个函数不负责向上递归查找
- * @param {*} element 
- * @returns 
+ * @param {*} element
+ * @returns
  */
 export function findVueInfo(element) {
   if (element) {
@@ -58,8 +58,8 @@ export function findVueInfo(element) {
 
 /**
  * 是组件库的组件
- * @param {*} __rawVueInfo__ 
- * @returns 
+ * @param {*} __rawVueInfo__
+ * @returns
  */
 export function isRawComponents(__rawVueInfo__) {
   const lcid = getVueInfoLcid(__rawVueInfo__);
@@ -68,8 +68,8 @@ export function isRawComponents(__rawVueInfo__) {
 
 /**
  * 是已经被拖入面板的组件
- * @param {*} __rawVueInfo__ 
- * @returns 
+ * @param {*} __rawVueInfo__
+ * @returns
  */
 export function isActiveComponents(__rawVueInfo__) {
   const lcid = getVueInfoLcid(__rawVueInfo__);
@@ -78,8 +78,8 @@ export function isActiveComponents(__rawVueInfo__) {
 
 /**
  * 校验两个数据节点是否相等。由于vue代理的存在，用简单===相比的方式已经失效
- * @param {*} o1 
- * @param {*} o2 
+ * @param {*} o1
+ * @param {*} o2
  */
 export function isEquals(o1, o2) {
   if (o1 && o2) {
@@ -92,7 +92,7 @@ export function isEquals(o1, o2) {
 /**
  * 获得一个DOM节点的组件父DOM节点
  * @param {*} parentNode 要传入parentDom
- * @returns 
+ * @returns
  */
 export function findParentDom(parentNode) {
   if (parentNode.attributes && parentNode.attributes.lc_id) {
@@ -106,8 +106,8 @@ export function findParentDom(parentNode) {
 
 /**
  * 获得一个数据节点的lc_id属性值
- * @param {*} __rawVueInfo__ 
- * @returns 
+ * @param {*} __rawVueInfo__
+ * @returns
  */
 export function getVueInfoLcid(__rawVueInfo__) {
   const lcid = getRawComponentContent(__rawVueInfo__).lc_id;
@@ -116,11 +116,13 @@ export function getVueInfoLcid(__rawVueInfo__) {
 
 /**
  * 获得一个数据节点的DOM节点
- * @param {*} __rawVueInfo__ 
- * @returns 
+ * @param {*} __rawVueInfo__
+ * @returns
  */
 export function findTargetDom(__rawVueInfo__) {
-  const targetDom = document.querySelector(`[lc_id="${getVueInfoLcid(__rawVueInfo__)}"]`);
+  const targetDom = document.querySelector(
+    `[lc_id="${getVueInfoLcid(__rawVueInfo__)}"]`
+  );
   return targetDom;
 }
 
@@ -143,14 +145,14 @@ export function isObject(obj) {
  * @description 生成唯一ID
  */
 export function createUniqueId() {
-  const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10);
+  const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 10);
   return nanoid();
 }
 
 /**
-* 遍历对象，添加ID
-* @param {*} jsonObj
-*/
+ * 遍历对象，添加ID
+ * @param {*} jsonObj
+ */
 export function ergodic(jsonObj) {
   if (jsonObj) {
     for (const key in jsonObj) {
@@ -162,6 +164,7 @@ export function ergodic(jsonObj) {
             if (isObject(item)) {
               ergodic(item);
               delete item.lc_id;
+              delete item.lc_uuid;
             }
           });
         } else if (isObject(element)) {
@@ -174,6 +177,7 @@ export function ergodic(jsonObj) {
     // 添加ID
     if (!jsonObj["lc_id"]) {
       jsonObj["lc_id"] = createUniqueId();
+      jsonObj["lc_uuid"] = createUniqueId();
     }
   }
 }
@@ -181,10 +185,10 @@ export function ergodic(jsonObj) {
 /**
  * 从解析后的Vue结构中找到关键的根节点
  * 根节点分包是：template/script/style
- * 
- * @param {*} array 
- * @param {*} propertyName 
- * @returns 
+ *
+ * @param {*} array
+ * @param {*} propertyName
+ * @returns
  */
 export function findAObject(array, propertyName) {
   const module = array.find(function (ele) {

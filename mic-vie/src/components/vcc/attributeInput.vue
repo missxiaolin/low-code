@@ -401,7 +401,8 @@ export default {
               typeof element !== "object" &&
               key != "lc-mark" &&
               key != "lc_id" &&
-              key != "div-lc-mark"
+              key != "div-lc-mark" &&
+              key != "lc_uuid"
             ) {
               // 这两个是保留字段，不对外提供使用
               result.push({ key: key, value: element });

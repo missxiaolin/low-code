@@ -25,10 +25,7 @@
           </a-collapse>
         </a-tab-pane>
         <a-tab-pane tab="大纲" key="structure">
-          <row-nested :data="treeData"></row-nested>
-          <div class="current-edit-info">
-            {{ currentEditRawInfo }}
-          </div>
+          <row-nested :data="treeData" @onNodeClick="onNodeClick"></row-nested>
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -131,6 +128,32 @@ export default {
         this.treeData = children;
       }
     },
+    onNodeClick(currentEditComp) {
+      if (currentEditComp) {
+        const vccData = currentEditComp.vccData;
+        const info = window.tree[vccData.lc_id];
+        this.domSelect(info);
+        this.$emit("setCurrentEditRawInfo", info);
+        return info;
+      } else {
+        return null;
+      }
+    },
+    domSelect(info) {
+      const lc_uuid = info[Object.keys(info)[0]].lc_uuid;
+      const renderControlPanel = document.getElementById(
+        "render-control-panel"
+      );
+      const elements = renderControlPanel.querySelectorAll("[lc_uuid]");
+      elements.forEach((element) => {
+        if (element.getAttribute("lc_uuid") === lc_uuid) {
+          element.classList.add("mark-element");
+          element.setAttribute("lc-component-name", Object.keys(info)[0]);
+        } else {
+          element.classList.remove("mark-element");
+        }
+      });
+    },
   },
   watch: {
     initStructure: {
@@ -143,6 +166,11 @@ export default {
       // 这里利用了vuedraggable v-model的特性，它会更改对象本身的引用
       this.$emit("reRender", this._codeRawInfo);
     },
+    currentEditComp(newVal) {
+      if (newVal) {
+        this.onNodeClick(newVal);
+      }
+    },
   },
   computed: {
     renderCount() {
@@ -151,12 +179,9 @@ export default {
     canInitShortcut() {
       return this.currentEditRawInfo !== null && this.drawer;
     },
-    currentEditRawInfo() {
+    currentEditComp() {
       if (_store.state.currentEditComp) {
-        const vccData = _store.state.currentEditComp.vccData;
-        const info = window.tree[vccData.lc_id];
-        this.$emit("setCurrentEditRawInfo", info);
-        return info;
+        return _store.state.currentEditComp;
       } else {
         return null;
       }
