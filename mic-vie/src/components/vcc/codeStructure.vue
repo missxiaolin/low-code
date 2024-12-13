@@ -51,7 +51,6 @@ export default {
 
   data() {
     return {
-      a: true,
       // 在此自动生成
       treeData: [],
     };

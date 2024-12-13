@@ -20,11 +20,11 @@
           {{ editMode ? "视图" : "编辑" }}
         </a-button>
       </li>
-      <li>
+      <!-- <li>
         <a-button type="link" @click="$emit('structureVisible')">
           <ApartmentOutlined />结构树
         </a-button>
-      </li>
+      </li> -->
     </ul>
     <ul>
       <li>

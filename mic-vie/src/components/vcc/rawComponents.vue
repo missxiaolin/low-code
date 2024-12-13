@@ -1,22 +1,36 @@
 <template>
   <a-card class="row-container">
     <div class="row-container-scrollbar">
-      <a-collapse
-        v-model:activeKey="activeNames"
-        :bordered="false"
-        class="row-collapse"
-      >
-        <a-collapse-panel
-          v-for="item in iconArray"
-          :key="item.componentName"
-          :header="item.labelName"
-          :name="item.componentName"
-        >
-          <keep-alive>
-            <component :is="item.componentName" @mounted="onMouted"></component>
-          </keep-alive>
-        </a-collapse-panel>
-      </a-collapse>
+      <!-- :tab-position="'left'" -->
+      <a-tabs class="attribute-tabs" v-model:activeKey="tabActiveName">
+        <a-tab-pane tab="组件设置" key="component">
+          <a-collapse
+            v-model:activeKey="activeNames"
+            :bordered="false"
+            class="row-collapse"
+          >
+            <a-collapse-panel
+              v-for="item in iconArray"
+              :key="item.componentName"
+              :header="item.labelName"
+              :name="item.componentName"
+            >
+              <keep-alive>
+                <component
+                  :is="item.componentName"
+                  @mounted="onMouted"
+                ></component>
+              </keep-alive>
+            </a-collapse-panel>
+          </a-collapse>
+        </a-tab-pane>
+        <a-tab-pane tab="大纲" key="structure">
+          <row-nested :data="treeData"></row-nested>
+          <div class="current-edit-info">
+            {{ currentEditRawInfo }}
+          </div>
+        </a-tab-pane>
+      </a-tabs>
     </div>
   </a-card>
 </template>
@@ -26,17 +40,27 @@ import htmlRow from "../../rawComponents/html/index.vue";
 import aBase from "../../rawComponents/a-base/index.vue";
 import aForm from "../../rawComponents/a-form/index.vue";
 import customRow from "../../rawComponents/custom/index.vue";
+import rowNested from "./rowNested.vue";
+
+import { getRawComponentContent } from "@/utils/common";
+import { store as _store } from "@/libs/store.js";
 
 export default {
+  props: ["initStructure"],
+  emits: ["setCurrentEditRawInfo"],
   components: {
     htmlRow,
     customRow,
     aBase,
     aForm,
+    rowNested,
   },
   computed: {},
   data() {
     return {
+      _codeRawInfo: {},
+      treeData: [],
+      tabActiveName: "component",
       isExpand: true,
       activeNames: ["htmlRow", "aBase", "aForm", "customRow"],
       iconArray: [
@@ -74,6 +98,7 @@ export default {
   methods: {
     onMouted(index) {
       this.initOnly(this.iconArray[index || 0]);
+      this.updateCode(this.initStructure);
     },
     /**
      * 初始化组件导航栏，只有2个及以上的组件类才会出现
@@ -96,6 +121,45 @@ export default {
       //     element: titles[0],
       //   };
       // }
+    },
+    // 初始化拖拽导航
+    updateCode(codeRawInfo) {
+      if (codeRawInfo) {
+        this._codeRawInfo = codeRawInfo;
+        const content = getRawComponentContent(codeRawInfo);
+        const children = content.__children;
+        this.treeData = children;
+      }
+    },
+  },
+  watch: {
+    initStructure: {
+      handler(newVal) {
+        this.updateCode(newVal);
+      },
+      immediate: true,
+    },
+    renderCount() {
+      // 这里利用了vuedraggable v-model的特性，它会更改对象本身的引用
+      this.$emit("reRender", this._codeRawInfo);
+    },
+  },
+  computed: {
+    renderCount() {
+      return _store.state.renderCount;
+    },
+    canInitShortcut() {
+      return this.currentEditRawInfo !== null && this.drawer;
+    },
+    currentEditRawInfo() {
+      if (_store.state.currentEditComp) {
+        const vccData = _store.state.currentEditComp.vccData;
+        const info = window.tree[vccData.lc_id];
+        this.$emit("setCurrentEditRawInfo", info);
+        return info;
+      } else {
+        return null;
+      }
     },
   },
 };
@@ -139,5 +203,35 @@ export default {
     cursor: pointer;
     z-index: 10;
   }
+}
+.attribute-tabs {
+  height: 100%;
+  :deep(.ant-empty) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+  }
+  :deep(.ant-tabs-content-holder::-webkit-scrollbar) {
+    width: 0;
+    height: 0;
+  }
+  :deep(.ant-tabs-content) {
+    height: 100%;
+  }
+  :deep(.ant-tabs-tabpane) {
+    height: 100%;
+  }
+  :deep(.ant-tabs-content-holder) {
+    height: 100%;
+    overflow-y: scroll;
+  }
+}
+.current-edit-info {
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
 }
 </style>

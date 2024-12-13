@@ -2,7 +2,11 @@
   <div class="vcc-box">
     <div class="main-main">
       <nav class="base-component-container">
-        <raw-components></raw-components>
+        <raw-components
+          ref="rawComponents"
+          @setCurrentEditRawInfo="setCurrentEditRawInfo"
+          :initStructure="codeRawVueInfo"
+        ></raw-components>
       </nav>
       <div class="vcc-main-container">
         <!--顶部工具栏-->
@@ -55,7 +59,7 @@
     <div>
       <lc-code :rawCode="code" v-model:codeDialogVisible="codeDialogVisible">
       </lc-code>
-      <code-structure
+      <!-- <code-structure
         @save="onSaveAttr"
         @remove="onRemove"
         ref="codeStructure"
@@ -63,7 +67,7 @@
         @reRender="render"
         :initStructure="codeRawVueInfo"
       >
-      </code-structure>
+      </code-structure> -->
       <codeEditor
         v-model:codeDialogVisible="jsDialogVisible"
         @saveJSCode="saveJSCode"
@@ -97,7 +101,7 @@ import { defineAsyncComponent } from "vue";
 // // 这个文件不可以进行懒加载，它会导致运行时不可点击的行为，具体原因未知
 import { MainPanelProvider } from "../libs/main-panel";
 import { initContainerForLine } from "@/utils/lineHelper";
-import { replaceKeyInfo, getJsTemData } from "../utils/utils";
+// import { replaceKeyInfo, getJsTemData } from "../utils/utils";
 import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
 import cssCodeEditor from "../components/vcc/cssCodeEditorDialog.vue";
 import vueEditor from "../components/vcc/vueCodeParseDialog.vue";
@@ -124,9 +128,9 @@ export default {
       import("../components/vcc/attributeInput")
     ),
     "lc-code": defineAsyncComponent(() => import("../components/vcc/code")),
-    codeStructure: defineAsyncComponent(() =>
-      import("../components/vcc/codeStructure")
-    ),
+    // codeStructure: defineAsyncComponent(() =>
+    //   import("../components/vcc/codeStructure")
+    // ),
     codeEditor,
     cssCodeEditor,
     vueEditor,
@@ -234,6 +238,11 @@ export default {
       }
     },
 
+    setCurrentEditRawInfo(rawInfo) {
+      this.currentEditRawInfo = rawInfo;
+      this.isShowAttribute = true;
+    },
+
     // 保存css
     convertCssLogicCode(code) {
       this.$refs.cssCodeEditor.updateLogicCode(code);
@@ -276,8 +285,11 @@ export default {
           this.code = code;
         })
         .onCodeStructureUpdated((codeRawVueInfo) => {
-          if (this.$refs.codeStructure) {
-            this.$refs.codeStructure.updateCode(codeRawVueInfo);
+          // if (this.$refs.codeStructure) {
+          //   this.$refs.codeStructure.updateCode(codeRawVueInfo);
+          // }
+          if (this.$refs.rawComponents) {
+            this.$refs.rawComponents.updateCode(codeRawVueInfo);
           }
           if (this.$refs.vueRuleTool) {
             this.$refs.vueRuleTool.regenerateScale();
