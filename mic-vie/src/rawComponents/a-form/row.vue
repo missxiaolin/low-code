@@ -27,13 +27,13 @@
     <div class="column-li" lc-mark lc_id="Gqg9leSz4m">
       <div class="title" lc_id="jGKE3bIjSi">多选</div>
       <div class="li-mark-content" lc_id="md9Y83ZNo+">
-        <a-checkbox lc_id="P9QXzAyLc6">Checkbox</a-checkbox>
+        <a-checkbox-group div-lc-mark lc_id="02nJgjjJOS"></a-checkbox-group>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="gaSIj7Kfjt">
       <div class="title" lc_id="h3/kWbcIYi">日期</div>
       <div class="li-mark-content" lc_id="jc8TwEo3Ca">
-        <a-date-picker lc_id="Q56+S25CWJ"></a-date-picker>
+        <xl-date-picker lc_id="zdEQPflG+v"></xl-date-picker>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="bAPUtYC11L">
