@@ -24,6 +24,7 @@
 <script>
 import htmlRow from "../../rawComponents/html/index.vue";
 import aBase from "../../rawComponents/a-base/index.vue";
+import aForm from "../../rawComponents/a-form/index.vue";
 import customRow from "../../rawComponents/custom/index.vue";
 
 export default {
@@ -31,12 +32,13 @@ export default {
     htmlRow,
     customRow,
     aBase,
+    aForm,
   },
   computed: {},
   data() {
     return {
       isExpand: true,
-      activeNames: ["htmlRow", "aBase", "customRow"],
+      activeNames: ["htmlRow", "aBase", "aForm", "customRow"],
       iconArray: [
         {
           labelName: "html组件",
@@ -46,10 +48,17 @@ export default {
           titleArray: [],
         },
         {
-          labelName: "基础组件",
+          labelName: "Ant Design 基础组件",
           className: "demonstration-a-base",
           selectIndex: 1,
           componentName: "aBase",
+          titleArray: [],
+        },
+        {
+          labelName: "Ant Design 表单组件",
+          className: "demonstration-a-form",
+          selectIndex: 1,
+          componentName: "aForm",
           titleArray: [],
         },
         {

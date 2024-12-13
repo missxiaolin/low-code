@@ -1,19 +1,21 @@
 <template>
-  <a-drawer
-    v-model:open="open"
-    :contentWrapperStyle="{ transform: 'translateX(0)' }"
-    :mask="false"
-    title="事件流配置"
-    placement="right"
-    width="100%"
-  >
-    <template #extra>
-      <a-button type="primary" @click="save">保存</a-button>
-    </template>
-    <div class="node-viewer">
-      <flowNode :nodeData="flowData" ref="flowNodeRef"></flowNode>
-    </div>
-  </a-drawer>
+  <div>
+    <!-- <a-drawer
+      v-model:open="open"
+      :contentWrapperStyle="{ transform: 'translateX(0)' }"
+      :mask="false"
+      title="事件流配置"
+      placement="right"
+      width="100%"
+    >
+      <template #extra>
+        <a-button type="primary" @click="save">保存</a-button>
+      </template>
+      <div class="node-viewer">
+        <flowNode :nodeData="flowData" ref="flowNodeRef"></flowNode>
+      </div>
+    </a-drawer> -->
+  </div>
 </template>
 
 <script>
