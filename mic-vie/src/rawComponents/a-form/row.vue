@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="62O56zLSC1">
-      <div class="title" lc_id="Z9FaDtMcAN">单选按钮-group</div>
+      <div class="title" lc_id="Z9FaDtMcAN">单选按钮</div>
       <div class="li-mark-content" lc_id="gs0rysuDjb">
         <a-radio-group div-lc-mark lc_id="wnZwu2WFoq"></a-radio-group>
       </div>

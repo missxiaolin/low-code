@@ -81,6 +81,7 @@ export class MainPanelProvider {
     // 生成展示代码
     let codeForShow = code.replace(/\s{1}lc_id=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}lc-mark/g, "");
+    codeForShow = codeForShow.replace(/\s{1}div-lc-mark/g, "");
     // console.log("codeForShow", codeForShow);
 
     this.eventEmitter.emit("codeCreated", codeForShow);
