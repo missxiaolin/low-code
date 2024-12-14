@@ -12,7 +12,10 @@
   >
     <template #item="{ element }">
       <li class="itemArea">
-        <p>{{ getRawComponentKey(element) }}</p>
+        <div class="content">
+          <HolderOutlined class="icon" />
+          <span>{{ getRawComponentKey(element) }}</span>
+        </div>
         <nested-draggable :data="getChild(element)" />
       </li>
     </template>
@@ -25,11 +28,15 @@ import { getRawComponentKey, getRawComponentContent } from "@/utils/common";
 import { store as _store } from "@/libs/store.js";
 
 export default {
+  name: "nested-draggable",
   props: {
     data: {
       required: true,
       type: Array,
     },
+  },
+  components: {
+    draggable,
   },
   data() {
     return {};
@@ -79,18 +86,12 @@ export default {
       _store.commit("onDragEnd");
     },
   },
-
-  components: {
-    draggable,
-  },
-  name: "nested-draggable",
 };
 </script>
 <style scoped lang="scss">
 .dragArea {
-  min-height: 20px;
-  border: 1px dashed rgb(126, 126, 128);
-  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
   padding-inline-start: 30px;
   padding-right: 2px;
   padding-bottom: 2px;
@@ -98,7 +99,7 @@ export default {
 
 .ghost {
   opacity: 0.5;
-  background: #c8ebfb;
+  background: #1e2430;
 }
 
 p {
@@ -106,18 +107,20 @@ p {
 }
 
 .itemArea {
-  min-height: 20px;
-  border: 1px dashed rgb(126, 126, 128);
-  padding-right: 2px;
-  padding-bottom: 2px;
-  border-radius: 5px;
-  padding-inline-start: 10px;
-  margin: 10px 0 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  .content {
+    display: flex;
+    flex-direction: row;
+  }
+  .icon {
+    margin-right: 5px;
+  }
 }
 
 .is-dragging {
-  background-color: rgba(106, 127, 233, 0.274);
-  border: 1px dashed rgb(73, 100, 241);
+  background-color: #1e2430;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }

@@ -4,6 +4,7 @@
       <nav class="base-component-container">
         <raw-components
           ref="rawComponents"
+          @reRender="render"
           @setCurrentEditRawInfo="setCurrentEditRawInfo"
           :initStructure="codeRawVueInfo"
         ></raw-components>
