@@ -17,7 +17,6 @@
           @redo="redo"
           @undo="undo"
           @clear="clear"
-          @showCssDialogVisible="showCssDialogVisible"
           @showVueDialogVisible="showVueDialogVisible"
           @showCodeDialogVisible="showCodeDialogVisible"
           @save="save"
@@ -41,7 +40,6 @@
       <!-- 属性设置 -->
       <attribute-input
         :isShowAttribute="isShowAttribute"
-        :JSCode="JSCode"
         :eventNode="eventNode"
         :enableRemoveButton="true"
         class="attribute"
@@ -58,11 +56,6 @@
     <div>
       <lc-code :rawCode="code" v-model:codeDialogVisible="codeDialogVisible">
       </lc-code>
-      <cssCodeEditor
-        v-model:cssCodeDialogVisible="cssDialogVisible"
-        @saveCssCode="saveCssCode"
-        ref="cssCodeEditor"
-      ></cssCodeEditor>
       <vueCodeEditor
         ref="vueEditor"
         @codeParseSucess="codeParseSucess"
@@ -87,9 +80,7 @@ import { defineAsyncComponent } from "vue";
 // // 这个文件不可以进行懒加载，它会导致运行时不可点击的行为，具体原因未知
 import { MainPanelProvider } from "../libs/main-panel";
 import { initContainerForLine } from "@/utils/lineHelper";
-// import { replaceKeyInfo, getJsTemData } from "../utils/utils";
 import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
-import cssCodeEditor from "../components/vcc/cssCodeEditorDialog.vue";
 import vueCodeEditor from "../components/vcc/vueCodeEditorDialog.vue";
 import keymaster from "keymaster";
 
@@ -113,7 +104,6 @@ export default {
       import("../components/vcc/attributeInput")
     ),
     "lc-code": defineAsyncComponent(() => import("../components/vcc/code")),
-    cssCodeEditor,
     vueRuleTool,
     vueCodeEditor,
   },
@@ -124,7 +114,6 @@ export default {
       code: "",
       codeDialogVisible: false,
       jsDialogVisible: false,
-      cssDialogVisible: false,
       vueDialogVisible: false,
 
       editMode: true,
@@ -225,7 +214,7 @@ export default {
 
     // 保存css
     convertCssLogicCode(code) {
-      this.$refs.cssCodeEditor.updateLogicCode(code);
+      this.$refs.vueEditor.updateCssCode(code);
       this.customCss = code;
       return code;
     },
@@ -244,6 +233,7 @@ export default {
     },
 
     init() {
+      console.log(this.initCodeEntity);
       // 先订阅事件再渲染
       this.mainPanelProvider
         .onRootElementMounted((rootElement) => {
@@ -402,11 +392,15 @@ export default {
     /**
      * 二级编辑解析
      */
-    codeParseSucess(vueCodeEntity, { JSCodeInfo: code, JSCode }) {
+    codeParseSucess(vueCodeEntity, { JSCodeInfo: code, JSCode }, cssCode) {
       if (code) {
         this.mainPanelProvider.saveJSCode(code, false);
         // 保留JS代码
         this.JSCode = JSCode;
+      }
+      if (cssCode) {
+        this.mainPanelProvider.saveCssCode(cssCode, false);
+        this.customCss = cssCode;
       }
 
       if (vueCodeEntity) {
@@ -430,10 +424,6 @@ export default {
 
     showCodeDialogVisible() {
       this.codeDialogVisible = true;
-    },
-
-    showCssDialogVisible() {
-      this.cssDialogVisible = true;
     },
 
     help() {

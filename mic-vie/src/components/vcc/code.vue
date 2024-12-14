@@ -27,7 +27,6 @@
             style="display: flex; flex-direction: column"
           >
             <a-radio value="vue">Vue</a-radio>
-            <!-- <a-radio value="vue3">Vue3 setup模式</a-radio> -->
           </a-radio-group>
         </a-col>
         <a-col :span="10" style="display: flex; flex-direction: column">
@@ -70,6 +69,7 @@ import parserHtml from "prettier/parser-html";
 import copy from "copy-to-clipboard";
 import { saveAs } from "file-saver";
 import { toV3 } from "../../utils/toV3.js";
+import babel from "prettier/parser-babel";
 
 import codeEditor from "./codeEditor.vue";
 import singleIndexOutput from "../../libs/singleIndexOutput.js";
@@ -88,7 +88,7 @@ export default {
       loading: false,
       accessUrl: "",
       fileName: "",
-      checkList: ["ele"],
+      checkList: ["a"],
       vueVersion: "3",
     };
   },
@@ -100,22 +100,7 @@ export default {
   updated() {},
   destroyed() {},
   methods: {
-    release() {
-      // this.loading = true;
-      // axios
-      //   .post("https://xxxx.com", {
-      //     id: `index${this.fileName ? this.fileName : createUniqueId()}`,
-      //     content: this.singleIndex,
-      //   })
-      //   .then((res) => {
-      //     this.accessUrl = res.data.data;
-      //     this.loading = false;
-      //   })
-      //   .catch((err) => {
-      //     this.loading = false;
-      //     this.$message.error("发布失败，可能服务暂时不可用.");
-      //   });
-    },
+    release() {},
     handleClose() {
       this.$emit("update:codeDialogVisible", false);
     },
@@ -153,10 +138,14 @@ export default {
       return this.outputMode === "vue";
     },
     outputCode() {
-      if (this.outputMode == "vue3") {
-        return this.v2ToV3;
-      }
-      return this.isVueMode ? this.prettyCode : this.singleIndex;
+      let code = this.isVueMode ? this.prettyCode : this.singleIndex;
+      code = prettier.format(code, {
+        semi: false,
+        parser: "html",
+        plugins: [parserHtml],
+        vueIndentScriptAndStyle: true,
+      });
+      return code;
     },
 
     dialogVisible: {

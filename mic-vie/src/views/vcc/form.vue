@@ -36,7 +36,7 @@ export default {
         codeStructure: "",
         JSCode: ``,
         mode: 1,
-        css: "",
+        css: ``,
         eventNode: {},
       },
     };

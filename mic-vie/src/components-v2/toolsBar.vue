@@ -35,12 +35,6 @@
         </a-button>
       </li>
       <li>
-        <a-button type="link" @click="$emit('showCssDialogVisible')">
-          <FormOutlined />
-          编辑Css
-        </a-button>
-      </li>
-      <li>
         <a-button type="link" @click="$emit('showCodeDialogVisible')">
           <EyeOutlined />
           查看实时代码

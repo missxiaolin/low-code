@@ -28,7 +28,14 @@
           :value="`${jsCode}`"
         ></codeEditor>
       </a-tab-pane>
-      <a-tab-pane key="css" tab="css">Content of Tab Pane 1</a-tab-pane>
+      <a-tab-pane key="css" tab="css">
+        <codeEditor
+          :height="'65vh;'"
+          :language="'css'"
+          ref="cssCodeEditor"
+          :value="`${cssCode}`"
+        ></codeEditor>
+      </a-tab-pane>
     </a-tabs>
   </a-modal>
 </template>
@@ -67,6 +74,9 @@ export default {
     },
   },
   methods: {
+    async updateCssCode(code) {
+      this.cssCode = code || "";
+    },
     async updateJsCode(code) {
       if (code) {
         this.jsCode = prettier.format(code, {
@@ -136,7 +146,17 @@ export default {
         console.warn(error);
         this.error = error;
       }
-      this.$emit("codeParseSucess", html, js);
+
+      try {
+        const cssCode = this.$refs.cssCodeEditor.getEditorCode();
+        css = cssCode;
+        this.error = "";
+      } catch (error) {
+        console.warn(error);
+        this.error = error;
+      }
+
+      this.$emit("codeParseSucess", html, js, css);
       this.handleClose();
     },
     handleClose() {

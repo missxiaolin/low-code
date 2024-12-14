@@ -207,10 +207,10 @@ export class MainPanelProvider {
     return this;
   }
 
-  saveCssCode(code) {
+  saveCssCode(code, isExeRender = true) {
     this.saveCssCodeOnly(code);
     this.codeGenerator && this.codeGenerator.setExternalCss(code);
-    this.reRender();
+    if (isExeRender) this.reRender();
   }
 
   saveCssCodeOnly(code) {
