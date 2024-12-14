@@ -20,11 +20,6 @@
           {{ editMode ? "视图" : "编辑" }}
         </a-button>
       </li>
-      <!-- <li>
-        <a-button type="link" @click="$emit('structureVisible')">
-          <ApartmentOutlined />结构树
-        </a-button>
-      </li> -->
     </ul>
     <ul>
       <li>
@@ -36,19 +31,13 @@
       <li>
         <a-button type="link" @click="$emit('showVueDialogVisible')">
           <FormOutlined />
-          Vue 二次编辑
+          Vue 编辑
         </a-button>
       </li>
       <li>
         <a-button type="link" @click="$emit('showCssDialogVisible')">
           <FormOutlined />
           编辑Css
-        </a-button>
-      </li>
-      <li>
-        <a-button type="link" @click="$emit('showJsDialogVisible')">
-          <FormOutlined />
-          编辑JS逻辑
         </a-button>
       </li>
       <li>

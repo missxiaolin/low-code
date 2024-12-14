@@ -213,7 +213,6 @@ export default {
     "__rawVueInfo__",
     "enableRemoveButton",
     "shortcutInitMode",
-    "JSCode",
     "isShowAttribute",
     "eventNode",
   ], // __rawVueInfo__为当前编辑的原始代码对象, shortcutInitMode快捷键的初始化方式

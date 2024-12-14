@@ -13,7 +13,7 @@ import EditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import { uuid } from "../../utils/utils";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 
-let editor;
+let editor = {};
 
 export default {
   props: {
@@ -62,24 +62,26 @@ export default {
   methods: {
     editorInit() {
       this.$nextTick(() => {
-        editor = monaco.editor.create(document.getElementById(`${this.uuid}`), {
-          ...this.options,
-          value: this.text,
-          language: this.language,
-          formatOnType: true,
-          formatOnPaste: true,
-        });
+        editor[this.uuid] = monaco.editor.create(
+          document.getElementById(`${this.uuid}`),
+          {
+            ...this.options,
+            value: this.text,
+            language: this.language,
+            formatOnType: true,
+            formatOnPaste: true,
+          }
+        );
         // 监听值的变化
-        editor.onDidChangeModelContent((val) => {
-          // text.value = editor.getValue();
-          this.text = editor.getValue();
+        editor[this.uuid].onDidChangeModelContent((val) => {
+          this.text = editor[this.uuid].getValue();
+          // this.$emit("change", editor.getValue());
         });
       });
     },
     getEditorCode() {
-      let code = editor.getValue();
-      const excludeUnuseal = code.replace("export default ", "");
-      return excludeUnuseal;
+      let code = editor[this.uuid].getValue();
+      return code;
     },
   },
 };

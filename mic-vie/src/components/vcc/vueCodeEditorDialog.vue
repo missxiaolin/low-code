@@ -8,19 +8,26 @@
     :centered="true"
     @ok="handleOk"
   >
-    <a-tabs v-model:activeKey="activeKey">
+    <a-tabs
+      v-if="dialogVisible"
+      v-model:activeKey="activeKey"
+      :destroyInactiveTabPane="false"
+    >
       <a-tab-pane key="html" tab="html">
         <codeEditor
-          v-if="vueDialogVisible"
           :height="'65vh;'"
           :language="'html'"
           ref="htmlCodeEditor"
           :value="`${htmlCode}`"
         ></codeEditor>
       </a-tab-pane>
-      <a-tab-pane key="javascript" tab="javascript"
-        >Content of Tab Pane 1</a-tab-pane
-      >
+      <a-tab-pane key="javascript" tab="javascript">
+        <codeEditor
+          :height="'65vh;'"
+          ref="jsCodeEditor"
+          :value="`${jsCode}`"
+        ></codeEditor>
+      </a-tab-pane>
       <a-tab-pane key="css" tab="css">Content of Tab Pane 1</a-tab-pane>
     </a-tabs>
   </a-modal>
@@ -30,6 +37,7 @@
 import codeEditor from "../editor/index.vue";
 import prettier from "prettier/standalone.js";
 import htmlBabel from "prettier/parser-html";
+import babel from "prettier/parser-babel";
 import { html2Json } from "../../libs/bundle-html2json-esm";
 import { ergodic, findAObject } from "../../utils/common";
 
@@ -59,6 +67,13 @@ export default {
     },
   },
   methods: {
+    async updateJsCode(code) {
+      if (code) {
+        this.jsCode = prettier.format(code, {
+          plugins: [babel],
+        });
+      }
+    },
     async updateCode(code) {
       // html code
       // 创建DOMParser实例
@@ -74,21 +89,24 @@ export default {
         parser: "html",
         plugins: [htmlBabel],
       });
-      console.log(beautiful);
       this.htmlCode = `${beautiful}`;
     },
     async handleOk() {
+      let html = "",
+        js = {
+          JSCodeInfo: "",
+          JSCode: "",
+        },
+        css = "";
       try {
         const code = this.$refs.htmlCodeEditor.getEditorCode();
         // 去掉注释，注释的替换逻辑并不健壮，用的是贪心方式
         // const temp = code.replace(/.+\*\/\s*/gs, "");
         const temp = code;
-        console.log(temp);
 
         if (temp) {
           // 解析Vue
           const obj = await html2Json(temp);
-          console.log(obj);
           // 取出template结构
           const template = findAObject(obj.root.__children, "template");
 
@@ -96,8 +114,7 @@ export default {
             // 为每个节点增加lc_id
             ergodic(template);
             // 通知VCC渲染此结构
-            this.$emit("codeParseSucess", template);
-            this.handleClose();
+            html = template;
           } else {
             this.error = "Vue解析失败，请检查是不是完整的Vue结构";
           }
@@ -108,8 +125,22 @@ export default {
         console.warn(error);
         this.error = error;
       }
+      // 去掉注释
+      try {
+        const jsCode = this.$refs.jsCodeEditor.getEditorCode();
+        // 转换为对象
+        js.JSCodeInfo = jsCode;
+        js.JSCode = jsCode.replace("export default ", "");
+        this.error = "";
+      } catch (error) {
+        console.warn(error);
+        this.error = error;
+      }
+      this.$emit("codeParseSucess", html, js);
+      this.handleClose();
     },
     handleClose() {
+      this.activeKey = "html";
       this.dialogVisible = false;
     },
   },

@@ -191,10 +191,10 @@ export class MainPanelProvider {
     return document.getElementById("render-control-panel");
   }
 
-  saveJSCode(code) {
+  saveJSCode(code, isExeRender = true) {
     this.saveJSCodeOnly(code);
     this.codeGenerator && this.codeGenerator.setExternalJS(code);
-    this.reRender();
+    if (isExeRender) this.reRender();
   }
 
   saveJSCodeOnly(code) {

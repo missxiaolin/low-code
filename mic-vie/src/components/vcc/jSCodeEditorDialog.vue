@@ -71,15 +71,15 @@ export default {
     },
     onSave() {
       const code = this.$refs.codeEditor.getEditorCode();
-      console.log("code", code);
       // 去掉注释
       // const temp = code.replace(/.+\*\/\s*/gs, "").replace(/\s+/g, "");
       try {
         // 转换为对象
-        const JSCodeInfo = `export default ${code}`;
+        const JSCodeInfo = code;
+        const JSCode = code.replace("export default ", "");
         this.$emit("saveJSCode", {
           JSCodeInfo,
-          JSCode: code,
+          JSCode,
         });
         this.handleClose();
         this.error = "";

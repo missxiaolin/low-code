@@ -17,12 +17,10 @@
           @redo="redo"
           @undo="undo"
           @clear="clear"
-          @showJsDialogVisible="showJsDialogVisible"
           @showCssDialogVisible="showCssDialogVisible"
           @showVueDialogVisible="showVueDialogVisible"
           @showCodeDialogVisible="showCodeDialogVisible"
           @save="save"
-          @structureVisible="structureVisible = true"
         ></tools-bar>
         <vueRuleTool
           :is-scale-revise="true"
@@ -60,11 +58,6 @@
     <div>
       <lc-code :rawCode="code" v-model:codeDialogVisible="codeDialogVisible">
       </lc-code>
-      <codeEditor
-        v-model:codeDialogVisible="jsDialogVisible"
-        @saveJSCode="saveJSCode"
-        ref="codeEditor"
-      ></codeEditor>
       <cssCodeEditor
         v-model:cssCodeDialogVisible="cssDialogVisible"
         @saveCssCode="saveCssCode"
@@ -98,7 +91,6 @@ import { initContainerForLine } from "@/utils/lineHelper";
 import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
 import cssCodeEditor from "../components/vcc/cssCodeEditorDialog.vue";
 import vueCodeEditor from "../components/vcc/vueCodeEditorDialog.vue";
-import codeEditor from "../components/vcc/jSCodeEditorDialog.vue";
 import keymaster from "keymaster";
 
 export default {
@@ -121,10 +113,6 @@ export default {
       import("../components/vcc/attributeInput")
     ),
     "lc-code": defineAsyncComponent(() => import("../components/vcc/code")),
-    // codeStructure: defineAsyncComponent(() =>
-    //   import("../components/vcc/codeStructure")
-    // ),
-    codeEditor,
     cssCodeEditor,
     vueRuleTool,
     vueCodeEditor,
@@ -135,7 +123,6 @@ export default {
       currentEditRawInfo: null,
       code: "",
       codeDialogVisible: false,
-      structureVisible: false,
       jsDialogVisible: false,
       cssDialogVisible: false,
       vueDialogVisible: false,
@@ -212,13 +199,13 @@ export default {
         // 保留JS代码
         this.JSCode = JSCode;
         const fn = () => {
-          if (!this.$refs.codeEditor) {
+          if (!this.$refs.vueEditor) {
             setTimeout(() => {
               fn();
             }, 20);
             return;
           }
-          this.$refs.codeEditor.updateLogicCode(JSCode);
+          this.$refs.vueEditor.updateJsCode(JSCode);
         };
 
         fn();
@@ -278,9 +265,6 @@ export default {
           this.code = code;
         })
         .onCodeStructureUpdated((codeRawVueInfo) => {
-          // if (this.$refs.codeStructure) {
-          //   this.$refs.codeStructure.updateCode(codeRawVueInfo);
-          // }
           if (this.$refs.rawComponents) {
             this.$refs.rawComponents.updateCode(codeRawVueInfo);
           }
@@ -394,20 +378,6 @@ export default {
       this.mainPanelProvider.undo();
     },
 
-    // 保存js data fn
-    viewSaveJs(d = {}, fn = []) {
-      // console.log(d, fn);
-      // const temScript = getJsTemData(d, fn);
-      // let jsCode = this.JSCode.trim();
-      // const JSCodeInfo = eval(`(function(){return ${jsCode};})()`);
-      // const newJsCode = replaceKeyInfo(temScript, JSCodeInfo);
-      // this.saveJSCode({
-      //   JSCodeInfo: eval(`(function(){return ${newJsCode};})()`),
-      //   JSCode: newJsCode,
-      // });
-      // this.$refs.codeEditor.updateLogicCode(newJsCode);
-    },
-
     saveJSCode({ JSCodeInfo: code, JSCode }) {
       this.mainPanelProvider.saveJSCode(code);
       // 保留JS代码
@@ -432,8 +402,18 @@ export default {
     /**
      * 二级编辑解析
      */
-    codeParseSucess(vueCodeEntity) {
-      this.mainPanelProvider.render(vueCodeEntity);
+    codeParseSucess(vueCodeEntity, { JSCodeInfo: code, JSCode }) {
+      if (code) {
+        this.mainPanelProvider.saveJSCode(code, false);
+        // 保留JS代码
+        this.JSCode = JSCode;
+      }
+
+      if (vueCodeEntity) {
+        this.mainPanelProvider.render(vueCodeEntity);
+      }
+
+      this.notifyParent();
     },
 
     /**
@@ -446,10 +426,6 @@ export default {
     showVueDialogVisible() {
       this.$refs.vueEditor.updateCode(this.code);
       this.vueDialogVisible = true;
-    },
-
-    showJsDialogVisible() {
-      this.jsDialogVisible = true;
     },
 
     showCodeDialogVisible() {
