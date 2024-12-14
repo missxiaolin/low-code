@@ -60,15 +60,6 @@
     <div>
       <lc-code :rawCode="code" v-model:codeDialogVisible="codeDialogVisible">
       </lc-code>
-      <!-- <code-structure
-        @save="onSaveAttr"
-        @remove="onRemove"
-        ref="codeStructure"
-        v-model:visible="structureVisible"
-        @reRender="render"
-        :initStructure="codeRawVueInfo"
-      >
-      </code-structure> -->
       <codeEditor
         v-model:codeDialogVisible="jsDialogVisible"
         @saveJSCode="saveJSCode"
@@ -79,11 +70,12 @@
         @saveCssCode="saveCssCode"
         ref="cssCodeEditor"
       ></cssCodeEditor>
-      <vueEditor
+      <vueCodeEditor
         ref="vueEditor"
-        v-model:vueDialogVisible="vueDialogVisible"
         @codeParseSucess="codeParseSucess"
-      ></vueEditor>
+        v-model:vueDialogVisible="vueDialogVisible"
+      >
+      </vueCodeEditor>
     </div>
     <!-- 辅助定位线 -->
     <div class="cross-flag">
@@ -105,7 +97,7 @@ import { initContainerForLine } from "@/utils/lineHelper";
 // import { replaceKeyInfo, getJsTemData } from "../utils/utils";
 import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
 import cssCodeEditor from "../components/vcc/cssCodeEditorDialog.vue";
-import vueEditor from "../components/vcc/vueCodeParseDialog.vue";
+import vueCodeEditor from "../components/vcc/vueCodeEditorDialog.vue";
 import codeEditor from "../components/vcc/jSCodeEditorDialog.vue";
 import keymaster from "keymaster";
 
@@ -134,8 +126,8 @@ export default {
     // ),
     codeEditor,
     cssCodeEditor,
-    vueEditor,
     vueRuleTool,
+    vueCodeEditor,
   },
   data() {
     return {

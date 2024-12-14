@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <vueCode v-model:vueDialogVisible="open" /> -->
     <!-- <a-drawer
       v-model:open="open"
       :contentWrapperStyle="{ transform: 'translateX(0)' }"
@@ -20,12 +21,14 @@
 
 <script>
 import { getCurrentInstance, onMounted, ref } from "vue";
+import vueCode from "../../components/vcc/vueCodeEditorDialog.vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
 import data from "./flow.json";
 import { execEventFlow } from "../../utils/action";
 export default {
   components: {
     flowNode,
+    vueCode,
   },
   setup() {
     const open = ref(false);

@@ -5,11 +5,11 @@
 
 <script>
 import { loadScript } from "../../utils/loadScript";
-import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
-import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
-import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
-import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
+import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
+import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
+import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+import EditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import { uuid } from "../../utils/utils";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.main.js";
 
@@ -65,7 +65,9 @@ export default {
         editor = monaco.editor.create(document.getElementById(`${this.uuid}`), {
           ...this.options,
           value: this.text,
-          language: this.language
+          language: this.language,
+          formatOnType: true,
+          formatOnPaste: true,
         });
         // 监听值的变化
         editor.onDidChangeModelContent((val) => {
