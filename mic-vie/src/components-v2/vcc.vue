@@ -311,11 +311,13 @@ export default {
       return {
         template: {
           lc_id: "root",
+          lc_uuid: "root",
           __children: [
             {
               div: {
                 class: "container",
                 lc_id: "container",
+                lc_uuid: "container",
                 style: "min-height: 100%;",
               },
             },
@@ -416,18 +418,17 @@ export default {
       this.mainPanelProvider.render(codeEntity);
     },
 
+    // vue 二次编辑
     showVueDialogVisible() {
       this.$refs.vueEditor.updateCode(this.code);
       this.vueDialogVisible = true;
     },
 
+    // 显示实时代码
     showCodeDialogVisible() {
       this.codeDialogVisible = true;
     },
 
-    help() {
-      // window.open("");
-    },
     save() {
       this.$emit("save", this.code);
     },
