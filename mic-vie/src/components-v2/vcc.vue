@@ -233,7 +233,6 @@ export default {
     },
 
     init() {
-      console.log(this.initCodeEntity);
       // 先订阅事件再渲染
       this.mainPanelProvider
         .onRootElementMounted((rootElement) => {
@@ -392,11 +391,11 @@ export default {
     /**
      * 二级编辑解析
      */
-    codeParseSucess(vueCodeEntity, { JSCodeInfo: code, JSCode }, cssCode) {
-      if (code) {
-        this.mainPanelProvider.saveJSCode(code, false);
+    codeParseSucess(vueCodeEntity, JSCodeInfo, cssCode) {
+      if (JSCodeInfo) {
+        this.mainPanelProvider.saveJSCode(JSCodeInfo, false);
         // 保留JS代码
-        this.JSCode = JSCode;
+        this.JSCode = JSCodeInfo;
       }
       if (cssCode) {
         this.mainPanelProvider.saveCssCode(cssCode, false);

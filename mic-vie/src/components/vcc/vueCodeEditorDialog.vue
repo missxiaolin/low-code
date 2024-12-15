@@ -103,10 +103,7 @@ export default {
     },
     async handleOk() {
       let html = "",
-        js = {
-          JSCodeInfo: "",
-          JSCode: "",
-        },
+        js = "",
         css = "";
       try {
         const code = this.$refs.htmlCodeEditor.getEditorCode();
@@ -138,9 +135,7 @@ export default {
       // 去掉注释
       try {
         const jsCode = this.$refs.jsCodeEditor.getEditorCode();
-        // 转换为对象
-        js.JSCodeInfo = jsCode;
-        js.JSCode = jsCode.replace("export default ", "");
+        js = jsCode;
         this.error = "";
       } catch (error) {
         console.warn(error);
