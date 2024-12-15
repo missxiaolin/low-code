@@ -16,10 +16,10 @@ function vueTemplate() {
     <!--在此自动生成--> 
   </template>
   
-  <script>
-  import { // $vueExport } from "vue";
-  export default // $script
-  </script>
+<script>
+import { // $vueExport } from "vue";
+// $script
+</script>
   
   <style scoped>
   /** $stylesTemplate */
@@ -815,13 +815,17 @@ class CodeGenerator {
     // 数据引用放入其中
     this.dataSet = new Set();
 
+    // 外部JS
     this.externalJS = {};
 
-    // css
+    // 外部css
     this.customCss = "";
 
     // 事件流
     this.eventNode = {};
+
+    // 需要替换的变量
+    this.customData = {};
   }
 
   clearDataSet() {
@@ -852,6 +856,14 @@ class CodeGenerator {
    */
   setEventNode(eventNode) {
     this.eventNode = eventNode;
+  }
+
+  /**
+   * 外部 data 设置
+   * @param {*} customData
+   */
+  setCustomData(customData) {
+    this.customData = customData;
   }
 
   /**
@@ -932,7 +944,7 @@ class CodeGenerator {
     }
 
     // 生成新的data返回值
-    const newData = merge({}, JSCodeInfo.data(), externalData);
+    const newData = merge({}, JSCodeInfo.data(), externalData, this.customData);
 
     const dataFunction = new Function(`return ${stringifyObject(newData)}`);
 
@@ -997,7 +1009,7 @@ setup(props, {emit}) {
       plugins: [parserBabel],
     });
 
-    const excludeUnuseal = beautiful.replace("export default ", "");
+    const excludeUnuseal = beautiful;
 
     // 插入到最终模板
     const JSTemp = templateTemp.replace("// $script", excludeUnuseal);
@@ -1012,7 +1024,6 @@ setup(props, {emit}) {
     vueExport.push("toRefs", "getCurrentInstance");
     vueExport = Array.from(new Set(vueExport));
     const zTemp = styleTemp.replace("// $vueExport", vueExport.join(","));
-
     return zTemp;
   }
 

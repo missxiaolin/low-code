@@ -38,6 +38,7 @@ export default {
         mode: 1,
         css: ``,
         eventNode: {},
+        customData: {},
       },
     };
   },

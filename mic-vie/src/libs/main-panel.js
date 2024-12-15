@@ -47,6 +47,7 @@ export class MainPanelProvider {
     this.externalJS = {};
     this.customCss = "";
     this.eventNode = {};
+    this.customData = {};
 
     this.componentOptions = {};
   }
@@ -185,10 +186,16 @@ export class MainPanelProvider {
     this.codeGenerator.setExternalJS(this.externalJS);
     this.codeGenerator.setExternalCss(this.customCss);
     this.codeGenerator.setEventNode(this.eventNode);
+    this.codeGenerator.setCustomData(this.customData);
   }
 
   getControlPanelRoot() {
     return document.getElementById("render-control-panel");
+  }
+
+  saveJsData(data) {
+    this.customData = data;
+    return this;
   }
 
   saveJSCode(code, isExeRender = true) {

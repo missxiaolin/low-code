@@ -281,6 +281,7 @@ export default {
           )
         )
         .saveEventNode(this.initCodeEntity.eventNode)
+        .saveJsData(this.initCodeEntity.customData)
         .render(
           this.initCodeEntity.codeStructure
             ? this.initCodeEntity.codeStructure
