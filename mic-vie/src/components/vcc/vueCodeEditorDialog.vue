@@ -105,50 +105,35 @@ export default {
       let html = "",
         js = "",
         css = "";
+
       try {
-        const code = this.$refs.htmlCodeEditor.getEditorCode();
+        // 先处理html
+        const htmlCode = this.$refs.htmlCodeEditor.getEditorCode();
         // 去掉注释，注释的替换逻辑并不健壮，用的是贪心方式
         // const temp = code.replace(/.+\*\/\s*/gs, "");
-        const temp = code;
-
-        if (temp) {
-          // 解析Vue
-          const obj = await html2Json(temp);
-          // 取出template结构
-          const template = findAObject(obj.root.__children, "template");
-
-          if (template) {
-            // 为每个节点增加lc_id
-            ergodic(template);
-            // 通知VCC渲染此结构
-            html = template;
-          } else {
-            this.error = "Vue解析失败，请检查是不是完整的Vue结构";
-          }
-        } else {
+        const temp = htmlCode;
+        if (!temp) {
           this.error = "请输入Vue代码";
+          return;
         }
-      } catch (error) {
-        console.warn(error);
-        this.error = error;
-      }
-      // 去掉注释
-      try {
-        const jsCode = this.$refs.jsCodeEditor.getEditorCode();
+        // 解析Vue
+        const obj = await html2Json(temp);
+        // 取出template结构
+        const template = findAObject(obj.root.__children, "template");
+        if (!template) {
+          this.error = "Vue解析失败，请检查是不是完整的Vue结构";
+          return;
+        }
+        // 为每个节点增加lc_id
+        ergodic(template);
+        // 通知VCC渲染此结构
+        html = template;
+        const jsCode = this.$refs.jsCodeEditor.getEditorCode() || "";
         js = jsCode;
-        this.error = "";
-      } catch (error) {
-        console.warn(error);
-        this.error = error;
-      }
-
-      try {
         const cssCode = this.$refs.cssCodeEditor.getEditorCode();
         css = cssCode;
-        this.error = "";
-      } catch (error) {
-        console.warn(error);
-        this.error = error;
+      } catch (e) {
+        this.error = "解析错误，请检查是不是完整的Vue结构";
       }
 
       this.$emit("codeParseSucess", html, js, css);
