@@ -216,6 +216,82 @@
           "placeholder": "鼠标悬停时显示工具提示",
           "settingType": "input",
           "value": ""
+        },
+        {
+          "label": "大小",
+          "key": "size",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "middle"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "settingType": "select",
+          "value": ""
+        },
+        {
+          "label": "类型",
+          "key": "type",
+          "options": [
+            {
+              "label": "primary",
+              "value": "primary"
+            },
+            {
+              "label": "ghost",
+              "value": "ghost"
+            },
+            {
+              "label": "dashed",
+              "value": "dashed"
+            },
+            {
+              "label": "link",
+              "value": "link"
+            },
+            {
+              "label": "text",
+              "value": "text"
+            },
+            {
+              "label": "default",
+              "value": "default"
+            }
+          ],
+          "settingType": "select",
+          "value": ""
+        },
+        {
+          "label": "旋转角度",
+          "key": ":rotate",
+          "settingType": "input",
+          "value": ""
+        },
+        {
+          "label": "层级",
+          "key": ":zIndex",
+          "settingType": "input",
+          "value": ""
+        },
+        {
+          "label": "图片源",
+          "key": "image",
+          "settingType": "input",
+          "value": ""
+        },
+        {
+          "label": "内容",
+          "key": "content",
+          "settingType": "input",
+          "value": ""
         }
       ]
     },

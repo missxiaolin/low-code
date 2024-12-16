@@ -587,7 +587,7 @@ export default {
   position: relative;
 
   [div-lc-mark] {
-    min-width: 100%;
+    max-width: 100%;
     border: 1px grey dashed;
     min-height: 1rem;
     border-radius: 5px;

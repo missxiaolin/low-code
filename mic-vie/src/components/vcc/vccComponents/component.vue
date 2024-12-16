@@ -109,13 +109,7 @@ export default {
     let eventStr = ref("");
     const init = (localAttributes, vueRawTag) => {
       const attrObj = getAttrKeys(localAttributes);
-      let obj = {};
-      if (attrObj.style) {
-        obj = merge(obj, stringToObj(attrObj.style));
-      } else {
-        obj.style = {};
-      }
-      obj.class = attrObj.class || "";
+      let obj = attrObj;
       list.value = getAttrJson(obj, vueRawTag, "component") || [];
     };
 

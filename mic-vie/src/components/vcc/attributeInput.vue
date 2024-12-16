@@ -404,7 +404,7 @@ export default {
               key != "lc_uuid"
             ) {
               // 这两个是保留字段，不对外提供使用
-              result.push({ key: key, value: element });
+              if (key != "") result.push({ key: key, value: element });
             }
           }
         }
@@ -420,6 +420,7 @@ export default {
     attributeList: {
       handler: function () {
         const [result, tag] = this.attributeList;
+        console.log(result, tag);
         this.localAttributes = result;
         this.vueRawTag = tag;
       },

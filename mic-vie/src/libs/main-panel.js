@@ -491,6 +491,7 @@ export class MainPanelProvider {
         key != "lc-mark" &&
         key != "lc_id" &&
         key != "lc_uuid" &&
+        key != "div-lc-mark" &&
         !isObject(
           object[
             key
@@ -500,7 +501,6 @@ export class MainPanelProvider {
         delete object[key];
       }
     }
-
     param.forEach((element) => {
       object[element.key] = element.value;
     });
