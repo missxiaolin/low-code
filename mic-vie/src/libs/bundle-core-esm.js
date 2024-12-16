@@ -972,20 +972,18 @@ class CodeGenerator {
     Object.keys(mergedJSObject.methods).forEach((key) => {
       functionData += `const ${key} = ${mergedJSObject.methods[key]};\n`;
     });
-
+    // const $events = ${stringifyObject(this.eventNode)};
     const finalJSCode = `
 {
 setup(props, {emit}) {
   const instance = getCurrentInstance();
   const $data = toRefs(${stringifyObject(toRefsData)});
-  const $events = ${stringifyObject(this.eventNode)};
 
   // 执行事件流
-  const eventFun = (eventKey, e) => {
-    if (!$events[eventKey]) {
-      return;
-    };
-    instance.proxy.$execEventFlow(instance, $events[eventKey] ? $events[eventKey].children : [], e);
+  const eventFun = (eventStr, e) => {
+    if (!eventStr) return;
+    const eventObj = JSON.parse(eventStr);
+    instance.proxy.$execEventFlow(instance, eventObj, e);
   };
   
   ${str}

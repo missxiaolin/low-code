@@ -80,7 +80,7 @@
       <template #extra>
         <a-button type="primary" @click="saveEvent">保存</a-button>
       </template>
-      <div class="node-viewer">
+      <div class="node-viewer" v-if="open">
         <flowNode :nodeData="flowData" ref="flowNodeRef"></flowNode>
       </div>
     </a-drawer>
@@ -90,7 +90,7 @@
 <script>
 import { ref, watch, getCurrentInstance } from "vue";
 import { getAttrJson, getAttrKeys, stringToObj } from "./utils/index";
-import { uuid } from "@/utils/utils";
+// import { uuid } from "@/utils/utils";
 import flowNode from "../../../components/flow-node/flowNode.vue";
 import _ from "lodash";
 const { merge } = _;
@@ -107,7 +107,6 @@ export default {
     let localAttr = ref(props.localAttributes);
     let vueRawTag = ref(props.vueRawTag);
     let eventStr = ref("");
-    let funId = ref("");
     const init = (localAttributes, vueRawTag) => {
       const attrObj = getAttrKeys(localAttributes);
       let obj = {};
@@ -144,29 +143,35 @@ export default {
     const instance = getCurrentInstance();
 
     const saveEvent = () => {
-      const id = funId.value || uuid();
-      emit("childSave", `${eventStr.value}`, `(e) => {eventFun('${id}', e)}`);
-      emit("saveEventLogicCode", {
-        [id]: flowNodeRef.value.flowSave(),
-      });
+      let flNode = flowNodeRef.value.flowSave();
+      let eStr = `${JSON.stringify(flNode)}`;
+      eStr = eStr.replace(/"/g, "'");
+      let fnStr = `(e) => {eventFun(\`${eStr}\`, e)}`;
+      emit("childSave", `${eventStr.value}`, fnStr);
+      // emit("saveEventLogicCode", {
+      //   [id]: flNode,
+      // });
       open.value = false;
     };
 
     const eventClick = (str) => {
-      let eNodeStr = "";
-      funId.value = "";
+      let eNodeStr = "",
+        obj = {};
+
       props.localAttributes.forEach((item) => {
         if (item.key == str) {
           eNodeStr = item.value;
         }
       });
       if (eNodeStr) {
-        const regex = /eventFun\('([^']+)'/;
-        const matches = eNodeStr.match(regex);
-        if (matches && matches[1]) {
-          funId.value = matches[1];
+        const match = eNodeStr.match(/`([^`]+)`/);
+        if (match && match.length > 1) {
+          const jsonString = match[1].replace(/'/g, '"');
+          obj = JSON.parse(jsonString);
         }
       }
+
+      flowData.value = obj;
       eventStr.value = str;
       open.value = true;
     };
