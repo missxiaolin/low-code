@@ -420,7 +420,6 @@ export default {
     attributeList: {
       handler: function () {
         const [result, tag] = this.attributeList;
-        console.log(result, tag);
         this.localAttributes = result;
         this.vueRawTag = tag;
       },

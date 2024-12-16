@@ -21,7 +21,7 @@
     <div class="column-li" lc-mark lc_id="R3z7nrn1d4">
       <div class="title" lc_id="amYaMKeKwD">弹性布局</div>
       <div class="li-mark-content" lc_id="CxCYqp2ZMq">
-        <a-flex div-lc-mark lc_id="ZusoPoyXSp"></a-flex>
+        <xl-flex div-lc-mark lc_id="ZusoPoyXSp"></xl-flex>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="9QCMjR7fbz">

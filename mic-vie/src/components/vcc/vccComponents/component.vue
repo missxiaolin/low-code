@@ -57,6 +57,13 @@
                   >{{ v.label }}</a-select-option
                 >
               </a-select>
+              <a-radio-group
+                v-if="item.settingType == 'radio'"
+                v-model:value="item.value"
+                :option-type="item.radioType"
+                :options="item.options"
+                style="margin-top: 5px"
+              />
               <SettingOutlined
                 class="setting-icon"
                 v-if="item.settingType == 'setting'"

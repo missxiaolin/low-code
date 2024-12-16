@@ -39,28 +39,41 @@ export function getAttrKeys(tags) {
  * @returns
  */
 export function getAttrJson(oldAttr, tag, v) {
+  const aJson = JSON.parse(JSON.stringify(attrJson));
+
   let arr = [];
   let tagAttr = tagsJson[tag];
   let attrValKeys = tagAttr ? tagAttr[v] : null;
   if (!tagAttr || !attrValKeys) {
     return [];
   }
-  const att = attrJson[v];
+  const att = aJson[v];
   Object.keys(att).forEach((a) => {
     let obj = {
+      key: a,
       title: att[a].title,
       children: [],
     };
     if (att[a].children && att[a].children.length > 0) {
       att[a].children.forEach((item) => {
         if (attrValKeys.includes(item.key)) {
-          item.value = oldAttr[item.key] || "";
+          item.value = oldAttr[item.key] || item.value;
           obj.children.push(item);
         }
       });
       arr.push(obj);
     }
   });
+  const nV = v.charAt(0).toUpperCase() + v.slice(1);
+  if (tagAttr[`custom${nV}`]) {
+    let customObj = tagAttr[`custom${nV}`];
+    arr.forEach((item) => {
+      if (customObj[item.key]) {
+        item.children = item.children.concat(customObj[item.key].children);
+      }
+    });
+    console.log(arr);
+  }
 
   return arr;
 }

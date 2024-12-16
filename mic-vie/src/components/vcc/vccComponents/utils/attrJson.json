@@ -181,6 +181,12 @@
       "title": "基础",
       "children": [
         {
+          "label": "文本",
+          "key": "__text__",
+          "settingType": "input",
+          "value": ""
+        },
+        {
           "label": "指定链接",
           "key": "href",
           "settingType": "input",
@@ -210,13 +216,7 @@
           "settingType": "select",
           "value": ""
         },
-        {
-          "label": "提示",
-          "key": "title",
-          "placeholder": "鼠标悬停时显示工具提示",
-          "settingType": "input",
-          "value": ""
-        },
+
         {
           "label": "大小",
           "key": "size",
@@ -292,6 +292,136 @@
           "key": "content",
           "settingType": "input",
           "value": ""
+        },
+        {
+          "label": "是否虚线",
+          "key": "dashed",
+          "radioType": "button",
+          "options": [
+            {
+              "label": "是",
+              "value": true
+            },
+            {
+              "label": "否",
+              "value": false
+            }
+          ],
+          "settingType": "radio",
+          "value": false
+        },
+        {
+          "label": "标题位置",
+          "key": "orientation",
+          "radioType": "button",
+          "options": [
+            {
+              "label": "left",
+              "value": "left"
+            },
+            {
+              "label": "right",
+              "value": "right"
+            },
+            {
+              "label": "center",
+              "value": "center"
+            }
+          ],
+          "settingType": "radio",
+          "value": "center"
+        },
+        {
+          "label": "主轴的方向",
+          "key": "vertical",
+          "radioType": "button",
+          "options": [
+            {
+              "label": "垂直",
+              "value": true
+            },
+            {
+              "label": "横向",
+              "value": false
+            }
+          ],
+          "settingType": "radio",
+          "value": false
+        },
+        {
+          "label": "多行显示",
+          "key": "wrap",
+          "settingType": "input",
+          "value": "normal"
+        },
+        {
+          "label": "主轴对齐方式",
+          "tip": "设置元素在主轴方向上的对齐方式",
+          "key": "justify",
+          "settingType": "input",
+          "value": "normal"
+        },
+        {
+          "label": "交叉轴对齐方式",
+          "tip": "设置元素在交叉轴方向上的对齐方式",
+          "key": "align",
+          "settingType": "input",
+          "value": "normal"
+        },
+        {
+          "label": "简写属性",
+          "tip": "flex CSS 简写属性",
+          "key": "flex",
+          "settingType": "input",
+          "value": "normal"
+        },
+        {
+          "label": "简写属性",
+          "tip": "设置网格之间的间隙",
+          "key": "gap",
+          "settingType": "input",
+          "value": ""
+        },
+        {
+          "label": "容器的类名",
+          "key": "wrapperClass",
+          "settingType": "input",
+          "value": ""
+        },
+        {
+          "label": "数据绑定",
+          "key": ":items",
+          "settingType": "input",
+          "value": ""
+        },
+        {
+          "label": "导航方向",
+          "key": "direction",
+          "radioType": "button",
+          "options": [
+            {
+              "label": "vertical",
+              "value": "vertical"
+            },
+            {
+              "label": "horizontal",
+              "value": "horizontal"
+            }
+          ],
+          "settingType": "radio",
+          "value": "vertical"
+        },
+        {
+          "label": "标题",
+          "key": "title",
+          "settingType": "input",
+          "value": ""
+        },
+        {
+          "label": "副标题",
+          "key": "sub-title",
+          "settingType": "input",
+          "value": ""
         }
       ]
     },
@@ -301,6 +431,24 @@
         {
           "label": "点击",
           "key": "@click",
+          "settingType": "setting",
+          "value": ""
+        },
+        {
+          "label": "移除焦点",
+          "key": "@blur",
+          "settingType": "setting",
+          "value": ""
+        },
+        {
+          "label": "获取焦点",
+          "key": "@focus",
+          "settingType": "setting",
+          "value": ""
+        },
+        {
+          "label": "发生改变",
+          "key": "@change",
           "settingType": "setting",
           "value": ""
         }
