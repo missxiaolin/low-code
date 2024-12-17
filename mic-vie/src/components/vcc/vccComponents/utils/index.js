@@ -72,7 +72,6 @@ export function getAttrJson(oldAttr, tag, v) {
         item.children = item.children.concat(customObj[item.key].children);
       }
     });
-    console.log(arr);
   }
 
   return arr;

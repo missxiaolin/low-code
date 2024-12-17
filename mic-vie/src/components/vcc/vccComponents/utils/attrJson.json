@@ -187,39 +187,9 @@
           "value": ""
         },
         {
-          "label": "指定链接",
-          "key": "href",
-          "settingType": "input",
-          "value": ""
-        },
-        {
-          "label": "打开方式",
-          "key": "target",
-          "options": [
-            {
-              "label": "新窗口打开",
-              "value": "_blank"
-            },
-            {
-              "label": "当前窗口打开",
-              "value": "_self"
-            },
-            {
-              "label": "父框架打开",
-              "value": "_parent"
-            },
-            {
-              "label": "_top",
-              "value": "在整个浏览器打开"
-            }
-          ],
-          "settingType": "select",
-          "value": ""
-        },
-
-        {
           "label": "大小",
           "key": "size",
+          "radioType": "button",
           "options": [
             {
               "label": "大",
@@ -234,39 +204,7 @@
               "value": "small"
             }
           ],
-          "settingType": "select",
-          "value": ""
-        },
-        {
-          "label": "类型",
-          "key": "type",
-          "options": [
-            {
-              "label": "primary",
-              "value": "primary"
-            },
-            {
-              "label": "ghost",
-              "value": "ghost"
-            },
-            {
-              "label": "dashed",
-              "value": "dashed"
-            },
-            {
-              "label": "link",
-              "value": "link"
-            },
-            {
-              "label": "text",
-              "value": "text"
-            },
-            {
-              "label": "default",
-              "value": "default"
-            }
-          ],
-          "settingType": "select",
+          "settingType": "radio",
           "value": ""
         },
         {
@@ -282,7 +220,7 @@
           "value": ""
         },
         {
-          "label": "图片源",
+          "label": "图片",
           "key": "image",
           "settingType": "input",
           "value": ""
@@ -311,78 +249,6 @@
           "value": false
         },
         {
-          "label": "标题位置",
-          "key": "orientation",
-          "radioType": "button",
-          "options": [
-            {
-              "label": "left",
-              "value": "left"
-            },
-            {
-              "label": "right",
-              "value": "right"
-            },
-            {
-              "label": "center",
-              "value": "center"
-            }
-          ],
-          "settingType": "radio",
-          "value": "center"
-        },
-        {
-          "label": "主轴的方向",
-          "key": "vertical",
-          "radioType": "button",
-          "options": [
-            {
-              "label": "垂直",
-              "value": true
-            },
-            {
-              "label": "横向",
-              "value": false
-            }
-          ],
-          "settingType": "radio",
-          "value": false
-        },
-        {
-          "label": "多行显示",
-          "key": "wrap",
-          "settingType": "input",
-          "value": "normal"
-        },
-        {
-          "label": "主轴对齐方式",
-          "tip": "设置元素在主轴方向上的对齐方式",
-          "key": "justify",
-          "settingType": "input",
-          "value": "normal"
-        },
-        {
-          "label": "交叉轴对齐方式",
-          "tip": "设置元素在交叉轴方向上的对齐方式",
-          "key": "align",
-          "settingType": "input",
-          "value": "normal"
-        },
-        {
-          "label": "简写属性",
-          "tip": "flex CSS 简写属性",
-          "key": "flex",
-          "settingType": "input",
-          "value": "normal"
-        },
-        {
-          "label": "简写属性",
-          "tip": "设置网格之间的间隙",
-          "key": "gap",
-          "settingType": "input",
-          "value": ""
-        },
-        {
           "label": "容器的类名",
           "key": "wrapperClass",
           "settingType": "input",
@@ -392,24 +258,7 @@
           "label": "数据绑定",
           "key": ":items",
           "settingType": "input",
-          "value": ""
-        },
-        {
-          "label": "导航方向",
-          "key": "direction",
-          "radioType": "button",
-          "options": [
-            {
-              "label": "vertical",
-              "value": "vertical"
-            },
-            {
-              "label": "horizontal",
-              "value": "horizontal"
-            }
-          ],
-          "settingType": "radio",
-          "value": "vertical"
+          "value": []
         },
         {
           "label": "标题",
@@ -418,8 +267,8 @@
           "value": ""
         },
         {
-          "label": "副标题",
-          "key": "sub-title",
+          "label": "描述",
+          "key": "description",
           "settingType": "input",
           "value": ""
         }

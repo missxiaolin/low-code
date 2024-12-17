@@ -59,6 +59,7 @@
               </a-select>
               <a-radio-group
                 v-if="item.settingType == 'radio'"
+                @change="(e) => handleBlur(e.target.value, item.key)"
                 v-model:value="item.value"
                 :option-type="item.radioType"
                 :options="item.options"

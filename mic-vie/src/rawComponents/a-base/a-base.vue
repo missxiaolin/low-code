@@ -39,7 +39,15 @@
     <div class="column-li" lc-mark lc_id="Q8nE25d9dJ">
       <div class="title" lc_id="pXzSkJYG5b">步骤条</div>
       <div class="li-mark-content" lc_id="xSnYpzy4Tn">
-        <a-steps div-lc-mark lc_id="rTV5OdlAqX"></a-steps>
+        <a-steps
+          direction="horizontal"
+          initial="0"
+          percent="0"
+          size="default"
+          type="default"
+          div-lc-mark
+          lc_id="rTV5OdlAqX"
+        ></a-steps>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="iVdgBCl97C">
@@ -57,7 +65,7 @@
     <div class="column-li" lc-mark lc_id="dzPbnmB/nn">
       <div class="title" lc_id="L8mAwpQHoJ">图片</div>
       <div class="li-mark-content" lc_id="CgZGdeFjQC">
-        <a-image div-lc-mark lc_id="nFYjKLlfyN"></a-image>
+        <xl-image div-lc-mark lc_id="nFYjKLlfyN"></xl-image>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="6MI2TH0k5C">

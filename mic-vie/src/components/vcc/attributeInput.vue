@@ -203,6 +203,8 @@ import keymaster from "keymaster";
 import styleComponent from "./vccComponents/style.vue";
 import comComponent from "./vccComponents/component.vue";
 import { store as _store } from "@/libs/store.js";
+import { message } from "ant-design-vue";
+const [messageApi, contextHolder] = message.useMessage();
 
 export default {
   components: {
@@ -334,12 +336,7 @@ export default {
 
         this.$emit("save", { resultList, lc_id: this.rawInfoID });
         if (isShowNotify) {
-          this.$notify({
-            title: "提示",
-            message: "代码已更新",
-            position: "bottom-right",
-            type: "success",
-          });
+          messageApi.success("代码已更新");
         }
       } catch (error) {
         console.log(error);
