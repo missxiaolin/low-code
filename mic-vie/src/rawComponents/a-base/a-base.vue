@@ -71,7 +71,7 @@
     <div class="column-li" lc-mark lc_id="6MI2TH0k5C">
       <div class="title" lc_id="z8/PS9kuYQ">气泡提醒</div>
       <div class="li-mark-content" lc_id="5AG/WgzCrR">
-        <a-popconfirm div-lc-mark lc_id="SRTsMLx9ih"></a-popconfirm>
+        <xl-popconfirm div-lc-mark lc_id="SRTsMLx9ih"></xl-popconfirm>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="0JdPd5D0o+">
@@ -86,16 +86,16 @@
         <a-skeleton lc_id="YlJaNhAvZN"></a-skeleton>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="s7hRSE+WLw">
-      <div class="title" lc_id="nhbnoNnJt9">加载中</div>
-      <div class="li-mark-content" lc_id="OvIQ52mRO9">
+    <div class="column-li" lc-mark lc_id="fvIPQ20aH0">
+      <div class="title" lc_id="tMdNShvQYI">加载中</div>
+      <div class="li-mark-content" lc_id="2PzfsJnZpK">
         <a-spin lc_id="5fAczahz4b"></a-spin>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="s7hRSE+WLw">
-      <div class="title" lc_id="LOqhW4+CX3">文字提示</div>
-      <div class="li-mark-content" lc_id="cesoRNBktv">
-        <a-tooltip div-lc-mark lc_id="tsLc0EM+eA"></a-tooltip>
+    <div class="column-li" lc-mark lc_id="fdgiXoz4Tq">
+      <div class="title" lc_id="nvaj1nzom9">文字提示</div>
+      <div class="li-mark-content" lc_id="RL1Wybr8WB">
+        <xl-tooltip div-lc-mark lc_id="pfkrOzfb9Z"></xl-tooltip>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="s7hRSE+WLw">

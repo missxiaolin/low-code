@@ -481,12 +481,17 @@ $layout-height: 50px;
         flex: 1;
         width: 100%;
       }
+      :where(.css-dev-only-do-not-override-bmplwl).ant-radio-group {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+      }
     }
     .label {
       padding-right: 10px;
       box-sizing: border-box;
       text-align: right;
-      min-width: 100px;
+      min-width: 98px;
       line-height: 30px;
       margin-right: 5px;
     }

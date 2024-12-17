@@ -1,5 +1,12 @@
 <template>
-  <a-card class="attribute-container">
+  <a-card
+    class="attribute-container"
+    @click="
+      (e) => {
+        e.stopPropagation();
+      }
+    "
+  >
     <div v-if="!isShowAttribute" class="attribute-empty">
       <a-empty description="还没有数据哦">
         <template #default> 赶快拖拽组件来生成你的H5页面吧～ </template>

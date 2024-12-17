@@ -181,6 +181,12 @@
       "title": "基础",
       "children": [
         {
+          "label": "自定义类名",
+          "key": "wrapperClassName",
+          "settingType": "input",
+          "value": ""
+        },
+        {
           "label": "文本",
           "key": "__text__",
           "settingType": "input",

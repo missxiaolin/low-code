@@ -517,6 +517,7 @@ export default {
           {
             label: "是否可预览",
             key: ":preview",
+            radioType: "button",
             options: [
               {
                 label: "是",
@@ -529,6 +530,486 @@ export default {
             ],
             settingType: "radio",
             value: true,
+          },
+        ],
+      },
+    },
+  },
+  "xl-popconfirm": {
+    style: style,
+    component: ["title", "description"],
+    customComponent: {
+      base: {
+        title: "基础",
+        children: [
+          {
+            label: "取消按钮文字",
+            key: "cancelText",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "确认按钮文字",
+            key: "okText",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "确认按钮类型",
+            key: "okType",
+            options: [
+              {
+                label: "default",
+                value: "default",
+              },
+              {
+                label: "primary",
+                value: "primary",
+              },
+              {
+                label: "link",
+                value: "link",
+              },
+              {
+                label: "ghost",
+                value: "ghost",
+              },
+              {
+                label: "dashed",
+                value: "dashed",
+              },
+              {
+                label: "text",
+                value: "text",
+              },
+            ],
+            settingType: "select",
+            value: "primary",
+          },
+          {
+            label: "是否显示取消按钮",
+            key: ":showCancel",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+        ],
+      },
+      event: {
+        title: "事件",
+        children: [
+          {
+            label: "点击取消的回调",
+            key: "@cancel",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "点击确认的回调",
+            key: "@confirm",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "显示隐藏的回调",
+            key: "@openChange",
+            settingType: "setting",
+            value: "",
+          },
+        ],
+      },
+    },
+  },
+  "a-progress": {
+    style: style,
+    component: ["title"],
+    customComponent: {
+      base: {
+        title: "基础",
+        children: [
+          {
+            label: "未完成的分段的颜色",
+            key: "trailColor",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "进度条的色彩",
+            key: "strokeColor",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "百分比",
+            key: "percent",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "类型",
+            key: "type",
+            radioType: "button",
+            options: [
+              {
+                label: "line",
+                value: "line",
+              },
+              {
+                label: "circle",
+                value: "circle",
+              },
+              {
+                label: "dashboard",
+                value: "dashboard",
+              },
+            ],
+            settingType: "radio",
+            value: "line",
+          },
+          {
+            label: "进度条总共步数",
+            tip: "进度条总共步数,type为line生效",
+            key: "steps",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "条线的宽度",
+            tip: "圆形进度条线的宽度，单位是进度条画布宽度的百分比,type为circle｜dashboard生效",
+            key: "strokeWidth",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "缺口角度",
+            tip: "仪表盘进度条缺口角度，可取值 0 ~ 295,type为dashboard生效",
+            key: "gapDegree",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "缺口位置",
+            tip: "仪表盘进度条缺口位置,type为dashboard生效",
+            key: "gapPosition",
+            radioType: "button",
+            options: [
+              {
+                label: "top",
+                value: "top",
+              },
+              {
+                label: "bottom",
+                value: "bottom",
+              },
+              {
+                label: "left",
+                value: "left",
+              },
+              {
+                label: "right",
+                value: "right",
+              },
+            ],
+            settingType: "radio",
+            value: "bottom",
+          },
+        ],
+      },
+    },
+  },
+  "a-skeleton": {
+    style: style,
+    component: [],
+    customComponent: {
+      base: {
+        title: "基础",
+        children: [
+          {
+            label: "动画效果",
+            key: ":active",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "头像占位图",
+            key: ":avatar",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "标题占位图",
+            key: ":title",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+        ],
+      },
+    },
+  },
+  "a-spin": {
+    style: style,
+    component: ["wrapperClassName"],
+    customComponent: {
+      base: {
+        title: "基础",
+        children: [
+          {
+            label: "大小",
+            key: "size",
+            radioType: "button",
+            options: [
+              {
+                label: "small",
+                value: "small",
+              },
+              {
+                label: "default",
+                value: "default",
+              },
+              {
+                label: "large",
+                value: "large",
+              },
+            ],
+            settingType: "radio",
+            value: "default",
+          },
+          {
+            label: "是否为加载中",
+            key: ":spinning",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "自定义描述",
+            key: "tip",
+            settingType: "input",
+            value: "",
+          },
+        ],
+      },
+    },
+  },
+  "xl-tooltip": {
+    style: style,
+    component: ["__text__"],
+    customComponent: {
+      base: {
+        title: "基础",
+        children: [
+          {
+            label: "提示文字",
+            key: "title",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "气泡位置",
+            key: "placement",
+            options: [
+              {
+                label: "top",
+                value: "top",
+              },
+              {
+                label: "left",
+                value: "left",
+              },
+              {
+                label: "right",
+                value: "right",
+              },
+              {
+                label: "bottom",
+                value: "bottom",
+              },
+              {
+                label: "topLeft",
+                value: "topLeft",
+              },
+              {
+                label: "topRight",
+                value: "topRight",
+              },
+              {
+                label: "bottomLeft",
+                value: "bottomLeft",
+              },
+              {
+                label: "bottomRight",
+                value: "bottomRight",
+              },
+              {
+                label: "leftTop",
+                value: "leftTop",
+              },
+              {
+                label: "leftBottom",
+                value: "leftBottom",
+              },
+              {
+                label: "rightTop",
+                value: "rightTop",
+              },
+              {
+                label: "rightBottom",
+                value: "rightBottom",
+              },
+            ],
+            settingType: "select",
+            value: "top",
+          },
+          {
+            label: "出发行为",
+            key: "trigger",
+            options: [
+              {
+                label: "hover",
+                value: "hover",
+              },
+              {
+                label: "focus",
+                value: "focus",
+              },
+              {
+                label: "click",
+                value: "click",
+              },
+              {
+                label: "contextmenu",
+                value: "contextmenu",
+              },
+            ],
+            settingType: "select",
+            value: "hover",
+          },
+        ],
+      },
+      event: {
+        title: "事件",
+        children: [
+          {
+            label: "显示隐藏的回调",
+            key: "@openChange",
+            settingType: "setting",
+            value: "",
+          },
+        ],
+      },
+    },
+  },
+  "a-tag": {
+    style: style,
+    component: ["__text__"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [
+          {
+            label: "是否可关闭",
+            key: ":closable",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否有边框",
+            key: ":bordered",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+
+          {
+            label: "颜色",
+            key: "color",
+            settingType: "input",
+            value: "",
+          },
+        ],
+      },
+      event: {
+        title: "事件",
+        children: [
+          {
+            label: "关闭时的回调",
+            key: "@close",
+            settingType: "setting",
+            value: "",
           },
         ],
       },
