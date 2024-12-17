@@ -66,12 +66,6 @@
         <a-select lc_id="xrfY1DFIvV"></a-select>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="Q6q2U6fO3a">
-      <div class="title" lc_id="aIHUekQK1p">滑动输入条</div>
-      <div class="li-mark-content" lc_id="3D+IlqUpDU">
-        <a-slider lc_id="6AvAz5+QLs"></a-slider>
-      </div>
-    </div>
     <div class="column-li" lc-mark lc_id="zN8DUi8Kyb">
       <div class="title" lc_id="tVEmkQMDG9">开关</div>
       <div class="li-mark-content" lc_id="Vvqkx8p+ve">
@@ -81,13 +75,13 @@
     <div class="column-li" lc-mark lc_id="yVQ0BKfAK5">
       <div class="title" lc_id="OfrMBWKMVN">时间选择框</div>
       <div class="li-mark-content" lc_id="U6x526K65S">
-        <a-time-picker lc_id="mSViYkWNVF"></a-time-picker>
+        <xl-time-picker lc_id="mSViYkWNVF"></xl-time-picker>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="Lwk9fohcW0">
       <div class="title" lc_id="bITkdZCHcK">上传</div>
       <div class="li-mark-content" lc_id="mcE+RWzDKp">
-        <a-upload lc_id="MZSdyF6HeG"></a-upload>
+        <a-upload div-lc-mark lc_id="MZSdyF6HeG"></a-upload>
       </div>
     </div>
   </div>

@@ -591,6 +591,7 @@ export default {
     border: 1px grey dashed;
     min-height: 1rem;
     border-radius: 5px;
+    display: block;
   }
 
   [lc_id] {

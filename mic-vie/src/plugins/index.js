@@ -5,6 +5,7 @@ import xlFlex from "../components/ant-desine/a-flex.vue";
 import xlImage from "../components/ant-desine/a-image.vue";
 import xlTooltip from "../components/ant-desine/a-tooltip.vue";
 import xlPopconfirm from "../components/ant-desine/a-popconfirm.vue";
+import xlTimePicker from "../components/ant-desine/a-time-picker.vue";
 
 import "virtual:svg-icons-register";
 export function loadPlugins(app) {
@@ -17,5 +18,6 @@ export function loadPlugins(app) {
   app.component("xlImage", xlImage);
   app.component("xlTooltip", xlTooltip);
   app.component("xlPopconfirm", xlPopconfirm);
+  app.component("xlTimePicker", xlTimePicker);
   // app.component("svg-icon", SvgIcon);
 }

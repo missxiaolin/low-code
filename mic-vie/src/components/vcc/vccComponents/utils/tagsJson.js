@@ -993,7 +993,6 @@ export default {
             settingType: "radio",
             value: true,
           },
-
           {
             label: "颜色",
             key: "color",
@@ -1012,6 +1011,645 @@ export default {
             value: "",
           },
         ],
+      },
+    },
+  },
+  "a-form": {
+    style: style,
+    component: [":disabled"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [
+          {
+            label: "数据对象",
+            tip: "使用变量！",
+            key: ":model",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "验证规则",
+            tip: "使用变量！",
+            key: ":rules",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "表单名称",
+            tip: "表单名称，会作为表单字段 id 前缀使用",
+            key: "name",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "必选标记隐藏",
+            key: ":hideRequiredMark",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "必选标记隐藏",
+            key: "labelAlign",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: false,
+              },
+              {
+                label: "隐藏",
+                value: true,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "错误滚动",
+            tip: "提交失败自动滚动到第一个错误字段",
+            key: "scrollToFirstError",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: false,
+              },
+              {
+                label: "隐藏",
+                value: true,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+
+          {
+            label: "label是否换行",
+            key: "labelAlign",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "布局方式",
+            key: "layout",
+            radioType: "button",
+            options: [
+              {
+                label: "horizontal",
+                value: "horizontal",
+              },
+              {
+                label: "vertical",
+                value: "vertical",
+              },
+              {
+                label: "inline",
+                value: "inline",
+              },
+            ],
+            settingType: "select",
+            value: "horizontal",
+          },
+        ],
+      },
+      event: {
+        title: "事件",
+        children: [
+          {
+            label: "表单数据验证成功事件",
+            key: "@finish",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "表单数据验证失败事件",
+            key: "@finishFailed",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "数据验证成功后回调事件",
+            key: "@submit",
+            settingType: "setting",
+            value: "",
+          },
+        ],
+      },
+    },
+  },
+  "a-form-item": {
+    style: style,
+    component: [],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [
+          {
+            label: "标签的文本",
+            key: "label",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "文本对齐方式",
+            key: "labelAlign",
+            options: [
+              {
+                label: "left",
+                value: "left",
+              },
+              {
+                label: "right",
+                value: "right",
+              },
+            ],
+            settingType: "select",
+            value: "right",
+          },
+          {
+            label: "是否必填",
+            key: ":required",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "select",
+            value: false,
+          },
+
+          {
+            label: "表单名称",
+            tip: "表单名称，会作为表单字段 id 前缀使用",
+            key: "name",
+            settingType: "input",
+            value: "",
+          },
+
+          {
+            label: "是否显示冒号",
+            key: ":colon",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+        ],
+      },
+    },
+  },
+  "a-auto-complete": {
+    style: style,
+    component: [
+      "v-model:value",
+      "placeholder",
+      ":disabled",
+      "@blur",
+      "@change",
+      "@focus",
+    ],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [
+          {
+            label: "清除按钮",
+            tip: "支持清除, 单选模式有效",
+            key: ":allowClear",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: true,
+              },
+              {
+                label: "隐藏",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否有边框",
+            key: ":bordered",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "下拉菜单",
+            key: ":open",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+        ],
+      },
+      event: {
+        title: "事件",
+        children: [
+          {
+            label: "展开下拉菜单的回调",
+            key: "@dropdownVisibleChange",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "搜索补全项的时候调用",
+            key: "@search",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "被选中时调用",
+            key: "@select",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "清除内容时回调",
+            key: "@clear",
+            settingType: "setting",
+            value: "",
+          },
+        ],
+      },
+    },
+  },
+  "a-cascader": {
+    style: style,
+    component: [
+      "v-model:value",
+      "placeholder",
+      ":disabled",
+      "@blur",
+      "@change",
+      "@focus",
+    ],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [
+          {
+            label: "数据源",
+            tip: "绑定变量",
+            key: ":options",
+            settingType: "input",
+            value: "",
+          },
+
+          {
+            label: "清除按钮",
+            tip: "支持清除, 单选模式有效",
+            key: ":allowClear",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: true,
+              },
+              {
+                label: "隐藏",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否有边框",
+            key: ":bordered",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "支持多选节点",
+            key: ":multiple",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "展开方式",
+            key: ":expandTrigger",
+            radioType: "button",
+            options: [
+              {
+                label: "click",
+                value: "click",
+              },
+              {
+                label: "hover",
+                value: "hover",
+              },
+            ],
+            settingType: "radio",
+            value: "click",
+          },
+          {
+            label: "max展示",
+            tip: "最多显示多少个 tag，响应式模式会对性能产生损耗",
+            key: ":maxTagCount",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "大小",
+            key: "size",
+            options: [
+              {
+                label: "large",
+                value: "large",
+              },
+              {
+                label: "default",
+                value: "default",
+              },
+              {
+                label: "small",
+                value: "small",
+              },
+            ],
+            settingType: "select",
+            value: "default",
+          },
+        ],
+      },
+    },
+    event: {
+      title: "事件",
+      children: [],
+    },
+  },
+  "a-checkbox-group": {
+    style: style,
+    component: ["v-model:value", "disabled", "@change"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [
+          {
+            label: "name 属性",
+            tip: 'CheckboxGroup 下所有 input[type="checkbox"] 的 name 属性',
+            key: "name",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "数据源",
+            tip: "绑定变量",
+            key: ":options",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+        ],
+      },
+      event: {
+        title: "事件",
+        children: [],
+      },
+    },
+  },
+  "xl-date-picker": {
+    style: style,
+    component: ["v-model:value", ":disabled", "@change"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [],
+      },
+      event: {
+        title: "事件",
+        children: [],
+      },
+    },
+  },
+  "a-input": {
+    style: style,
+    component: ["v-model:value", ":disabled", "@change"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [],
+      },
+      event: {
+        title: "事件",
+        children: [],
+      },
+    },
+  },
+  "a-input-number": {
+    style: style,
+    component: ["v-model:value", ":disabled", "@change"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [],
+      },
+      event: {
+        title: "事件",
+        children: [],
+      },
+    },
+  },
+  "a-radio-group": {
+    style: style,
+    component: ["v-model:value", ":disabled", "@change"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [],
+      },
+      event: {
+        title: "事件",
+        children: [],
+      },
+    },
+  },
+
+  "xl-slider": {
+    style: style,
+    component: ["v-model:value", ":disabled", "@change"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [],
+      },
+      event: {
+        title: "事件",
+        children: [],
+      },
+    },
+  },
+  "a-switch": {
+    style: style,
+    component: ["v-model:value", ":disabled", "@change"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [],
+      },
+      event: {
+        title: "事件",
+        children: [],
+      },
+    },
+  },
+  "xl-time-picker": {
+    style: style,
+    component: ["v-model:value", ":disabled", "@change"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [],
+      },
+      event: {
+        title: "事件",
+        children: [],
+      },
+    },
+  },
+  "a-upload": {
+    style: style,
+    component: ["v-model:value", ":disabled", "@change"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [],
+      },
+      event: {
+        title: "事件",
+        children: [],
       },
     },
   },
