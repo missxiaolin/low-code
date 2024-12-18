@@ -181,6 +181,12 @@
       "title": "基础",
       "children": [
         {
+          "label": "文本",
+          "key": "__text__",
+          "settingType": "input",
+          "value": ""
+        },
+        {
           "label": "自定义类名",
           "key": "wrapperClassName",
           "settingType": "input",
@@ -291,12 +297,6 @@
           "value": ""
         },
         {
-          "label": "数据绑定",
-          "key": ":items",
-          "settingType": "input",
-          "value": []
-        },
-        {
           "label": "标题",
           "key": "title",
           "settingType": "input",
@@ -334,6 +334,24 @@
         {
           "label": "发生改变",
           "key": "@change",
+          "settingType": "setting",
+          "value": ""
+        },
+        {
+          "label": "按键回调",
+          "key": "@keydown",
+          "settingType": "setting",
+          "value": ""
+        },
+        {
+          "label": "鼠标移入时回调",
+          "key": "@mouseenter",
+          "settingType": "setting",
+          "value": ""
+        },
+        {
+          "label": "鼠标移出时回调",
+          "key": "@mouseleave",
           "settingType": "setting",
           "value": ""
         }

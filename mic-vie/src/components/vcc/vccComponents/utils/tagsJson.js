@@ -21,7 +21,7 @@ const style = [
 export default {
   div: {
     style: style,
-    component: ["__text__"],
+    component: ["__text__", "@click"],
   },
   span: {
     style: style,
@@ -218,11 +218,17 @@ export default {
   },
   "a-anchor": {
     style: style,
-    component: ["wrapperClass", ":items", "direction", "@change", "@click"],
+    component: ["wrapperClass", "direction", "@change", "@click"],
     customComponent: {
       base: {
         title: "基础",
         children: [
+          {
+            label: "数据源",
+            key: ":items",
+            settingType: "input",
+            value: [],
+          },
           {
             label: "导航方向",
             key: "direction",
@@ -274,11 +280,17 @@ export default {
   },
   "a-steps": {
     style: style,
-    component: [":items"],
+    component: [],
     customComponent: {
       base: {
         title: "基础",
         children: [
+          {
+            label: "数据源",
+            key: ":items",
+            settingType: "input",
+            value: [],
+          },
           {
             label: "当前步骤",
             tip: "指定当前步骤，从 0 开始记数。在子 Step 元素中",
@@ -1542,15 +1554,204 @@ export default {
   },
   "xl-date-picker": {
     style: style,
-    component: ["v-model:value", ":disabled", "@change"],
+    component: [
+      "v-model:value",
+      "placeholder",
+      ":disabled",
+      "@change",
+      "@blur",
+      "@focus",
+    ],
     customComponent: {
       base: {
         title: "基础属性",
-        children: [],
+        children: [
+          {
+            label: "日历class",
+            key: "popupClassName",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "清除按钮",
+            tip: "支持清除, 单选模式有效",
+            key: ":allowClear",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: true,
+              },
+              {
+                label: "隐藏",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否有边框",
+            key: ":bordered",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "日期格式",
+            key: "format",
+            options: [
+              {
+                label: "年-月-日",
+                value: "YYYY-MM-DD",
+              },
+              {
+                label: "年-月-日 时-分-秒",
+                value: "YYYY-MM-DD HH:mm:ss",
+              },
+            ],
+            settingType: "select",
+            value: "",
+          },
+          {
+            label: "日期面板的状态",
+            key: "mode",
+            options: [
+              {
+                label: "time",
+                value: "time",
+              },
+              {
+                label: "date",
+                value: "date",
+              },
+              {
+                label: "month",
+                value: "month",
+              },
+              {
+                label: "year",
+                value: "year",
+              },
+              {
+                label: "decade",
+                value: "decade",
+              },
+            ],
+            settingType: "select",
+            value: "",
+          },
+          {
+            label: "选择器类型",
+            key: "picker",
+            options: [
+              {
+                label: "date",
+                value: "date",
+              },
+              {
+                label: "week",
+                value: "week",
+              },
+              {
+                label: "month",
+                value: "month",
+              },
+              {
+                label: "quarter",
+                value: "quarter",
+              },
+              {
+                label: "year",
+                value: "year",
+              },
+            ],
+            settingType: "select",
+            value: "date",
+          },
+          {
+            label: "弹出的位置",
+            key: "placement",
+            options: [
+              {
+                label: "bottomLeft",
+                value: "bottomLeft",
+              },
+              {
+                label: "bottomRight",
+                value: "bottomRight",
+              },
+              {
+                label: "topLeft",
+                value: "topLeft",
+              },
+              {
+                label: "topRight",
+                value: "topRight",
+              },
+            ],
+            settingType: "select",
+            value: "bottomLeft",
+          },
+          {
+            label: "大小",
+            key: "size",
+            options: [
+              {
+                label: "large",
+                value: "large",
+              },
+              {
+                label: "middle",
+                value: "middle",
+              },
+              {
+                label: "small",
+                value: "small",
+              },
+            ],
+            settingType: "radio",
+            value: "",
+          },
+        ],
       },
       event: {
         title: "事件",
-        children: [],
+        children: [
+          {
+            label: "确定按钮的回调",
+            key: "@ok",
+            settingType: "setting",
+            value: "",
+          },
+        ],
       },
     },
   },
@@ -1560,11 +1761,66 @@ export default {
     customComponent: {
       base: {
         title: "基础属性",
-        children: [],
+        children: [
+          {
+            label: "清除按钮",
+            tip: "支持清除, 单选模式有效",
+            key: ":allowClear",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: true,
+              },
+              {
+                label: "隐藏",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否有边框",
+            key: ":bordered",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "最大长度",
+            key: ":maxlength",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "控件大小",
+            key: "size",
+            settingType: "input",
+            value: "",
+          },
+        ],
       },
       event: {
         title: "事件",
-        children: [],
+        children: [
+          {
+            label: "回车回调",
+            key: "@pressEnter",
+            settingType: "setting",
+            value: "",
+          },
+        ],
       },
     },
   },
@@ -1574,7 +1830,65 @@ export default {
     customComponent: {
       base: {
         title: "基础属性",
-        children: [],
+        children: [
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否有边框",
+            key: ":bordered",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "增减按钮",
+            key: ":controls",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: true,
+              },
+              {
+                label: "隐藏",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "小数点",
+            key: "decimalSeparator",
+            settingType: "input",
+            value: "",
+          },
+        ],
       },
       event: {
         title: "事件",
@@ -1588,7 +1902,77 @@ export default {
     customComponent: {
       base: {
         title: "基础属性",
-        children: [],
+        children: [
+          {
+            label: "数据源",
+            tip: "绑定变量",
+            key: ":options",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "name属性",
+            tip: 'RadioGroup 下所有 input[type="radio"] 的 name 属性',
+            key: "name",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "类型",
+            key: "optionType",
+            radioType: "button",
+            options: [
+              {
+                label: "default",
+                value: "default",
+              },
+              {
+                label: "button",
+                value: "button",
+              },
+            ],
+            settingType: "radio",
+            value: "default",
+          },
+          {
+            label: "大小",
+            key: "size",
+            radioType: "button",
+            options: [
+              {
+                label: "large",
+                value: "large",
+              },
+              {
+                label: "default",
+                value: "default",
+              },
+              {
+                label: "small",
+                value: "small",
+              },
+            ],
+            settingType: "radio",
+            value: "default",
+          },
+        ],
       },
       event: {
         title: "事件",
@@ -1597,17 +1981,416 @@ export default {
     },
   },
 
-  "xl-slider": {
+  "a-rate": {
     style: style,
-    component: ["v-model:value", ":disabled", "@change"],
+    component: [
+      "v-model:value",
+      ":disabled",
+      "@blur",
+      "@change",
+      "@focus",
+      "@keydown",
+    ],
     customComponent: {
       base: {
         title: "基础属性",
-        children: [],
+        children: [
+          {
+            label: "自定义字符",
+            key: "character",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "总数",
+            tip: "star 总数",
+            key: ":count",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "提示信息",
+            tip: "自定义每项的提示信息 string[]",
+            key: ":tooltips",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "清除按钮",
+            tip: "是否允许再次点击后清除",
+            key: ":allowClear",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: true,
+              },
+              {
+                label: "隐藏",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否半选",
+            tip: "是否允许半选",
+            key: ":allowHalf",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: true,
+              },
+              {
+                label: "隐藏",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+        ],
       },
       event: {
         title: "事件",
-        children: [],
+        children: [
+          {
+            label: "鼠标经过回调",
+            tip: "鼠标经过时数值变化的回调",
+            key: "@hoverChange",
+            settingType: "setting",
+            value: "",
+          },
+        ],
+      },
+    },
+  },
+  "a-select": {
+    style: style,
+    component: [
+      "v-model:value",
+      ":disabled",
+      "placeholder",
+      "@blur",
+      "@focus",
+      "@change",
+      "@mouseenter",
+      "@mouseleave",
+    ],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [
+          {
+            label: "class",
+            tip: "下拉菜单的 className 属性",
+            key: "popupClassName",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "数据源",
+            tip: "绑定变量",
+            key: ":options",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "弹窗高度",
+            tip: "设置弹窗滚动高度",
+            key: ":listHeight",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "max tag",
+            tip: "最多显示多少个 tag",
+            key: ":maxTagCount",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "tag 宽度",
+            tip: "最大显示的 tag 文本长度",
+            key: ":maxTagTextLength",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "模式",
+            key: "mode",
+            radioType: "button",
+            options: [
+              {
+                label: "multiple",
+                value: "multiple",
+              },
+              {
+                label: "tags",
+                value: "tags",
+              },
+              {
+                label: "combobox",
+                value: "combobox",
+              },
+            ],
+            settingType: "radio",
+            value: "",
+          },
+          {
+            label: "是否展开下拉菜单",
+            key: ":open",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "清除按钮",
+            key: ":allowClear",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: true,
+              },
+              {
+                label: "隐藏",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否有边框",
+            key: "bordered",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "高亮第一个选项",
+            tip: "是否默认高亮第一个选项。",
+            key: "defaultActiveFirstOption",
+            radioType: "button",
+            tip: "鼠标移过时可浮起",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "下拉菜单",
+            tip: "是否默认展开下拉菜单",
+            key: "defaultOpen",
+            radioType: "button",
+            tip: "鼠标移过时可浮起",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "选择框弹出的位置",
+            key: "placement",
+            tip: "鼠标移过时可浮起",
+            options: [
+              {
+                label: "bottomLeft",
+                value: "bottomLeft",
+              },
+              {
+                label: "bottomRight",
+                value: "bottomRight",
+              },
+              {
+                label: "topLeft",
+                value: "topLeft",
+              },
+              {
+                label: "topRight",
+                value: "topRight",
+              },
+            ],
+            settingType: "select",
+            value: "bottomLeft",
+          },
+          {
+            label: "搜索文本",
+            key: "searchValue",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "下拉小箭头",
+            tip: "单选为 true,多选为 false",
+            key: ":showArrow",
+            radioType: "button",
+            options: [
+              {
+                label: "单选",
+                value: true,
+              },
+              {
+                label: "多选",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否可搜索",
+            tip: "单选为 false,多选为 true",
+            key: ":showSearch",
+            radioType: "button",
+            options: [
+              {
+                label: "单选",
+                value: true,
+              },
+              {
+                label: "多选",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "虚拟滚动",
+            tip: "设置 false 时关闭虚拟滚动",
+            key: ":virtual",
+            radioType: "button",
+            options: [
+              {
+                label: "单选",
+                value: true,
+              },
+              {
+                label: "多选",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+        ],
+      },
+      event: {
+        title: "事件",
+        children: [
+          {
+            label: "取消选中时调用",
+            tip: "取消选中时调用，参数为选中项的 value (或 key) 值，仅在 multiple 或 tags 模式下生效",
+            key: "@deselect",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "展开下拉菜单的回调",
+            key: "@dropdownVisibleChange",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "键盘按下时回调",
+            key: "@inputKeyDown",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "下拉列表滚动回调",
+            key: "@popupScroll",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "文本框值变化时回调",
+            key: "@search",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "被选中时调用",
+            tip: "被选中时调用，参数为选中项的 value (或 key) 值",
+            key: "@select",
+            settingType: "setting",
+            value: "",
+          },
+        ],
       },
     },
   },

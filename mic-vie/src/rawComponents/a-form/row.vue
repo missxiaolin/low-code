@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="KUxNxhUfsu">
-      <div class="title" lc_id="DsTn8cUnwb">选择起</div>
+      <div class="title" lc_id="DsTn8cUnwb">选择器</div>
       <div class="li-mark-content" lc_id="sWlQ0EJ8Ny">
         <a-select lc_id="xrfY1DFIvV"></a-select>
       </div>
