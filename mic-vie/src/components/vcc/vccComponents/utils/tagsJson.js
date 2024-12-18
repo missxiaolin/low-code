@@ -471,7 +471,7 @@ export default {
           },
           {
             label: "是否有边框",
-            key: "bordered",
+            key: ":bordered",
             radioType: "button",
             tip: "鼠标移过时可浮起",
             options: [
@@ -2209,7 +2209,7 @@ export default {
           },
           {
             label: "是否有边框",
-            key: "bordered",
+            key: ":bordered",
             radioType: "button",
             options: [
               {
@@ -2396,11 +2396,52 @@ export default {
   },
   "a-switch": {
     style: style,
-    component: ["v-model:value", ":disabled", "@change"],
+    component: [":disabled", "@blur", "@focus", "@change", "@click"],
     customComponent: {
       base: {
         title: "基础属性",
-        children: [],
+        children: [
+          {
+            label: "数据绑定",
+            key: "v-model:checked",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "开关大小",
+            key: "size",
+            radioType: "button",
+            options: [
+              {
+                label: "default",
+                value: "default",
+              },
+              {
+                label: "small",
+                value: "small",
+              },
+            ],
+            settingType: "radio",
+            value: "default",
+          },
+        ],
       },
       event: {
         title: "事件",
@@ -2410,11 +2451,151 @@ export default {
   },
   "xl-time-picker": {
     style: style,
-    component: ["v-model:value", ":disabled", "@change"],
+    component: ["v-model:value", ":disabled", "@blur", "@focus", "@change"],
     customComponent: {
       base: {
         title: "基础属性",
-        children: [],
+        children: [
+          {
+            label: "小时选项间隔",
+            key: ":hourStep",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "分钟选项间隔",
+            key: ":minuteStep",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "分钟选项间隔",
+            key: ":secondStep",
+            settingType: "input",
+            value: "",
+          },
+
+          {
+            label: "弹出层类名",
+            key: "popupClassName",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "选择框弹出的位置",
+            key: "placement",
+            tip: "鼠标移过时可浮起",
+            options: [
+              {
+                label: "bottomLeft",
+                value: "bottomLeft",
+              },
+              {
+                label: "bottomRight",
+                value: "bottomRight",
+              },
+              {
+                label: "topLeft",
+                value: "topLeft",
+              },
+              {
+                label: "topRight",
+                value: "topRight",
+              },
+            ],
+            settingType: "select",
+            value: "bottomLeft",
+          },
+          {
+            label: "清除按钮",
+            key: ":allowClear",
+            radioType: "button",
+            options: [
+              {
+                label: "显示",
+                value: true,
+              },
+              {
+                label: "隐藏",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "自动获取焦点",
+            key: ":autofocus",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "是否有边框",
+            key: ":bordered",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "隐藏禁止选项",
+            key: ":hideDisabledOptions",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+
+          {
+            label: "日期格式",
+            key: "format",
+            options: [
+              {
+                label: "时",
+                value: "HH",
+              },
+              {
+                label: "分",
+                value: "HH:mm",
+              },
+              {
+                label: "时-分-秒",
+                value: "HH:mm:ss",
+              },
+            ],
+            settingType: "select",
+            value: "",
+          },
+        ],
       },
       event: {
         title: "事件",
@@ -2424,11 +2605,91 @@ export default {
   },
   "a-upload": {
     style: style,
-    component: ["v-model:value", ":disabled", "@change"],
+    component: [":disabled", "@change"],
     customComponent: {
       base: {
         title: "基础属性",
-        children: [],
+        children: [
+          {
+            label: "数据绑定",
+            key: "v-model:file-list",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "上传类型",
+            key: "accept",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "上传地址",
+            key: "action",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "上传数量",
+            tip: "限制上传数量。当为 1 时，始终用最新上传的文件代替当前文件",
+            key: ":maxCount",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "请求方式",
+            key: "method",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "参数名",
+            tip: "发到后台的文件参数名",
+            key: "name",
+            settingType: "input",
+            value: "",
+          },
+
+          {
+            label: "是否支持多选文件",
+            tip: "是否支持多选文件，ie10+ 支持。开启后按住 ctrl 可选择多个文件。",
+            key: ":multiple",
+            radioType: "button",
+            options: [
+              {
+                label: "单选",
+                value: true,
+              },
+              {
+                label: "多选",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+
+          {
+            label: "日期格式",
+            tip: "上传列表的内建样式，支持三种基本样式 text, picture 和 picture-card",
+            key: "listType",
+            options: [
+              {
+                label: "text",
+                value: "text",
+              },
+              {
+                label: "picture",
+                value: "picture",
+              },
+              {
+                label: "picture-card",
+                value: "picture-card",
+              },
+            ],
+            settingType: "select",
+            value: "text",
+          },
+        ],
       },
       event: {
         title: "事件",
