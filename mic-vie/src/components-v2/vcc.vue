@@ -109,7 +109,8 @@ export default {
   },
   data() {
     return {
-      eventNode: {},
+      eventNode: {}, // 自定义事件流
+      customData: [], // 自定义数据
       currentEditRawInfo: null,
       code: "",
       codeDialogVisible: false,
@@ -219,6 +220,16 @@ export default {
       return code;
     },
 
+    // 保存 data
+    convertDataLogic(arr) {
+      let obj = {};
+      this.customData = arr || [];
+      arr.forEach((item) => {
+        obj[item.key] = item.value;
+      });
+      return obj;
+    },
+
     initShortcut() {
       keymaster("⌘+z, ctrl+z", () => {
         this.undo();
@@ -281,12 +292,13 @@ export default {
           )
         )
         .saveEventNode(this.initCodeEntity.eventNode)
-        .saveJsData(this.initCodeEntity.customData)
+        .saveJsData(this.convertDataLogic(this.initCodeEntity.customData || []))
         .render(
           this.initCodeEntity.codeStructure
             ? this.initCodeEntity.codeStructure
             : this.getFakeData()
         );
+      this.eventNode = this.initCodeEntity.eventNode || {};
     },
 
     // 通知父组件

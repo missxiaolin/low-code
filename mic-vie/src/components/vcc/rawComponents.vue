@@ -27,8 +27,13 @@
         <a-tab-pane tab="大纲" key="structure">
           <row-nested :data="treeData" @onNodeClick="onNodeClick"></row-nested>
         </a-tab-pane>
+        <a-tab-pane tab="变量" key="data">
+          <a-button type="link" ghost @click="showFormData">+ 新增</a-button>
+          <a-divider />
+        </a-tab-pane>
       </a-tabs>
     </div>
+    <dataForm v-if="isShowFormData" @cancel="formCancel" />
   </a-card>
 </template>
 
@@ -38,6 +43,7 @@ import aBase from "../../rawComponents/a-base/index.vue";
 import aForm from "../../rawComponents/a-form/index.vue";
 import customRow from "../../rawComponents/custom/index.vue";
 import rowNested from "./rowNested.vue";
+import dataForm from "./dataForm.vue";
 
 import { getRawComponentContent } from "@/utils/common";
 import { store as _store } from "@/libs/store.js";
@@ -51,10 +57,12 @@ export default {
     aBase,
     aForm,
     rowNested,
+    dataForm,
   },
   computed: {},
   data() {
     return {
+      isShowFormData: false,
       _codeRawInfo: {},
       treeData: [],
       tabActiveName: "component",
@@ -153,6 +161,12 @@ export default {
           element.classList.remove("mark-element");
         }
       });
+    },
+    showFormData() {
+      this.isShowFormData = true;
+    },
+    formCancel() {
+      this.isShowFormData = false;
     },
   },
   watch: {
@@ -258,5 +272,8 @@ export default {
   width: 0px;
   height: 0px;
   overflow: hidden;
+}
+:deep(.ant-divider-horizontal) {
+  margin: 0;
 }
 </style>
