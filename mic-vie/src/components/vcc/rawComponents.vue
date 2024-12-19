@@ -32,13 +32,19 @@
           <a-divider />
           <ul class="data-ul">
             <li v-for="(item, index) in customData" :key="index">
-              <div class="data-key">{{ item.key }}</div>
+              <div class="data-key">
+                <div>{{ item.key }}</div>
+                <div>{{ item.keyDesc }}</div>
+              </div>
               <div class="data-right">
-                <EditOutlined />
-                <DeleteOutlined />
+                <EditOutlined @click="editFormData(item, index)" />
+                <DeleteOutlined @click="deleteFormData(item, index)" />
               </div>
             </li>
           </ul>
+        </a-tab-pane>
+        <a-tab-pane tab="模板" key="template">
+          <a-empty :description="'敬请期待'"></a-empty>
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -196,20 +202,35 @@ export default {
     formCancel() {
       this.isShowFormData = false;
     },
-    formSave(form) {
+    editFormData(item, id) {
+      this.formData = {
+        id: id,
+        key: item.key, // 变量名称
+        keyType: item.keyType, // 变量类型
+        value: ["array", "object"].includes(item.keyType)
+          ? JSON.stringify(item.value)
+          : item.value, // 变量默认值
+        keyDesc: item.keyDesc, // 变量描述
+      };
+      this.isShowFormData = true;
+    },
+    deleteFormData(item, index) {
       let data = JSON.parse(JSON.stringify(this.customData));
-      if (form.id == "") {
-        delete form.id;
-        data.push(form);
-      } else {
-        data.forEach((item, key) => {
-          if (key == form.id) {
-            delete form.id;
-            item = form;
-          }
-        });
+      data.splice(index, 1);
+      this.$emit("saveData", data);
+    },
+    formSave(form) {
+      let newForm = JSON.parse(JSON.stringify(form));
+      delete newForm.id;
+      if (["array", "object"].includes(form.keyType)) {
+        newForm.value = JSON.parse(form.value);
       }
-      // this.customData = data;
+      let data = JSON.parse(JSON.stringify(this.customData));
+      if (form.id === "") {
+        data.push(newForm);
+      } else {
+        data[form.id] = newForm;
+      }
       this.$emit("saveData", data);
       this.isShowFormData = false;
     },
@@ -328,6 +349,21 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 10px;
+    .data-key {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-right: 20px;
+      display: flex;
+      flex-direction: column;
+      div {
+        &:nth-child(2) {
+          color: #ccc;
+        }
+      }
+    }
     .data-right {
       width: 40px;
       display: flex;

@@ -76,6 +76,7 @@ export default {
         editor[this.uuid].onDidChangeModelContent((val) => {
           this.text = editor[this.uuid].getValue();
           this.$emit("change", editor[this.uuid].getValue());
+          this.$emit("update:value", editor[this.uuid].getValue());
         });
       });
     },

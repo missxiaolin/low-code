@@ -111,10 +111,20 @@ export default {
   },
   methods: {
     onFinish() {
-      this.$emit("save", this.formData);
+      let form = this.formData;
+      form.id = this.formData.id;
+      this.$emit("save", form);
     },
     onKeyTypeChange() {
-      this.formData.value = "";
+      if (this.formData.keyType === "boolean") {
+        this.formData.value = false;
+      } else if (this.formData.keyType === "array") {
+        this.formData.value = "[]";
+      } else if (this.formData.keyType === "object") {
+        this.formData.value = "{}";
+      } else {
+        this.formData.value = "";
+      }
     },
   },
 };
