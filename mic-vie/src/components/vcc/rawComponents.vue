@@ -1,5 +1,5 @@
 <template>
-  <a-card class="row-container">
+  <a-card class="row-container" @click="(e) => e.stopPropagation">
     <div class="row-container-scrollbar">
       <!-- :tab-position="'left'" -->
       <a-tabs class="attribute-tabs" v-model:activeKey="tabActiveName">
@@ -30,10 +30,24 @@
         <a-tab-pane tab="变量" key="data">
           <a-button type="link" @click="showFormData">+ 新增</a-button>
           <a-divider />
+          <ul class="data-ul">
+            <li v-for="(item, index) in customData" :key="index">
+              <div class="data-key">{{ item.key }}</div>
+              <div class="data-right">
+                <EditOutlined />
+                <DeleteOutlined />
+              </div>
+            </li>
+          </ul>
         </a-tab-pane>
       </a-tabs>
     </div>
-    <dataForm v-if="isShowFormData" @cancel="formCancel" />
+    <dataForm
+      v-if="isShowFormData"
+      :formData="formData"
+      @cancel="formCancel"
+      @save="formSave"
+    />
   </a-card>
 </template>
 
@@ -49,7 +63,7 @@ import { getRawComponentContent } from "@/utils/common";
 import { store as _store } from "@/libs/store.js";
 
 export default {
-  props: ["initStructure"],
+  props: ["customData", "initStructure"],
   emits: ["setCurrentEditRawInfo"],
   components: {
     htmlRow,
@@ -62,6 +76,13 @@ export default {
   computed: {},
   data() {
     return {
+      formData: {
+        index: "",
+        key: "", // 变量名称
+        keyType: "string", // 变量类型
+        value: "", // 变量默认值
+        keyDesc: "", // 变量描述
+      },
       isShowFormData: false,
       _codeRawInfo: {},
       treeData: [],
@@ -163,9 +184,33 @@ export default {
       });
     },
     showFormData() {
+      this.formData = {
+        id: "",
+        key: "", // 变量名称
+        keyType: "string", // 变量类型
+        value: "", // 变量默认值
+        keyDesc: "", // 变量描述
+      };
       this.isShowFormData = true;
     },
     formCancel() {
+      this.isShowFormData = false;
+    },
+    formSave(form) {
+      let data = JSON.parse(JSON.stringify(this.customData));
+      if (form.id == "") {
+        delete form.id;
+        data.push(form);
+      } else {
+        data.forEach((item, key) => {
+          if (key == form.id) {
+            delete form.id;
+            item = form;
+          }
+        });
+      }
+      // this.customData = data;
+      this.$emit("saveData", data);
       this.isShowFormData = false;
     },
   },
@@ -275,5 +320,20 @@ export default {
 }
 :deep(.ant-divider-horizontal) {
   margin: 0;
+}
+.data-ul {
+  padding: 0 10px 0 10px;
+  margin-top: 20px;
+  li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .data-right {
+      width: 40px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
 }
 </style>

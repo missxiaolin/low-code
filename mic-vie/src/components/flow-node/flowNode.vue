@@ -1,5 +1,5 @@
 <template>
-  <div style="flow-node-box">
+  <div style="flow-node-box" @click="(e) => e.stopPropagation()">
     <flowDropDown
       v-if="isShowDropDown"
       :curModel="curModel"
@@ -8,6 +8,7 @@
     />
     <a-drawer
       v-model:open="open"
+      @close="(e) => e.stopPropagation()"
       title="设置"
       width="30%"
       :key="2"
@@ -16,17 +17,25 @@
     >
       <settingPanel
         v-if="open"
+        @click="(e) => e.stopPropagation()"
         :graphRef="graphRef"
         :curModel="curModel"
         :popConfig="curModel"
-        @clock="
-          open = false;
-          curModel = null;
-          isShowDropDown = false;
+        @close="
+          (e) => {
+            open = false;
+            curModel = null;
+            isShowDropDown = false;
+            e.stopPropagation();
+          }
         "
       />
     </a-drawer>
-    <div id="mount-node" ref="nodeRef"></div>
+    <div
+      @click="(e) => e.stopPropagation()"
+      id="mount-node"
+      ref="nodeRef"
+    ></div>
   </div>
 </template>
 

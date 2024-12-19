@@ -1,5 +1,5 @@
 <template>
-  <div class="setting-panel">
+  <div class="setting-panel" @click="(e) => e.stopPropagation()">
     <div class="type">
       <div class="label">类型：</div>
       <a-select :options="options" v-model:value="config.type" />
@@ -60,7 +60,7 @@ export default {
       },
     },
   },
-  emits: ["clock"],
+  emits: ["close"],
   setup(props, { emit, expose }) {
     const config = ref({
       type: props.popConfig.config ? props.popConfig.config.type : "",
@@ -108,7 +108,7 @@ export default {
         label: item.label,
         menus,
       });
-      emit("clock");
+      emit("close");
     };
 
     return {

@@ -4,8 +4,14 @@
       <nav class="base-component-container">
         <raw-components
           ref="rawComponents"
+          :customData="customData"
           @reRender="render"
           @setCurrentEditRawInfo="setCurrentEditRawInfo"
+          @saveData="
+            (e) => {
+              convertDataLogic(e, true);
+            }
+          "
           :initStructure="codeRawVueInfo"
         ></raw-components>
       </nav>
@@ -221,12 +227,26 @@ export default {
     },
 
     // 保存 data
-    convertDataLogic(arr) {
+    convertDataLogic(arr, isRenderCode = false) {
       let obj = {};
       this.customData = arr || [];
       arr.forEach((item) => {
-        obj[item.key] = item.value;
+        if (["string", "array", "object"].includes(item.key)) {
+          obj[item.key] = item.value;
+        } else if (item.key === "number") {
+          obj[item.key] = Number(item.value);
+        } else if (item.key === "boolean") {
+          obj[item.key] =
+            item.value === "true" || item.value === true ? true : false;
+        } else {
+          obj[item.key] = item.value;
+        }
       });
+      if (isRenderCode) {
+        this.mainPanelProvider.saveJsData(obj);
+        this.renderCode();
+      }
+
       return obj;
     },
 

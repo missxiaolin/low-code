@@ -3,7 +3,6 @@
     :open="true"
     title="变量添加"
     :footer="null"
-    @ok="handleOk"
     @cancel="$emit('cancel')"
   >
     <a-form
@@ -13,7 +12,6 @@
       :wrapper-col="{ span: 16 }"
       autocomplete="off"
       @finish="onFinish"
-      @finishFailed="onFinishFailed"
     >
       <a-form-item
         label="变量名称"
@@ -43,20 +41,24 @@
         :rules="[{ required: true, message: '请输入变量默认值!' }]"
       >
         <a-input
-          v-if="['string', 'number', 'boolean'].includes(formData.keyType)"
+          v-if="['string', 'number'].includes(formData.keyType)"
           v-model:value="formData.value"
+        />
+        <a-switch
+          v-else-if="['boolean'].includes(formData.keyType)"
+          v-model:checked="formData.value"
         />
         <codeEditor
           v-else-if="['array'].includes(formData.keyType)"
           style="height: 200px"
           :language="'json'"
-          v-model:value="formData.keyDesc"
+          v-model:value="formData.value"
         />
         <codeEditor
           v-else
           style="height: 200px"
           :language="'json'"
-          v-model:value="formData.keyDesc"
+          v-model:value="formData.value"
         />
       </a-form-item>
       <a-form-item
@@ -77,17 +79,12 @@
 import codeEditor from "../editor/index.vue";
 
 export default {
+  props: ["formData"],
   components: {
     codeEditor,
   },
   data() {
     return {
-      formData: {
-        key: "", // 变量名称
-        keyType: "string", // 变量类型
-        value: "", // 变量默认值
-        keyDesc: "", // 变量描述
-      },
       keyTypeOptions: [
         {
           label: "字符串",
@@ -113,7 +110,9 @@ export default {
     };
   },
   methods: {
-    handleOk() {},
+    onFinish() {
+      this.$emit("save", this.formData);
+    },
     onKeyTypeChange() {
       this.formData.value = "";
     },
