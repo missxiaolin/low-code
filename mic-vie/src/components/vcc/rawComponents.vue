@@ -28,7 +28,7 @@
           <row-nested :data="treeData" @onNodeClick="onNodeClick"></row-nested>
         </a-tab-pane>
         <a-tab-pane tab="变量" key="data">
-          <a-button type="link" ghost @click="showFormData">+ 新增</a-button>
+          <a-button type="link" @click="showFormData">+ 新增</a-button>
           <a-divider />
         </a-tab-pane>
       </a-tabs>

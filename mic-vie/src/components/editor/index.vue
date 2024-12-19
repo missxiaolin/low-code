@@ -75,7 +75,7 @@ export default {
         // 监听值的变化
         editor[this.uuid].onDidChangeModelContent((val) => {
           this.text = editor[this.uuid].getValue();
-          // this.$emit("change", editor.getValue());
+          this.$emit("change", editor[this.uuid].getValue());
         });
       });
     },

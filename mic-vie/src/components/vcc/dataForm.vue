@@ -29,6 +29,7 @@
       >
         <a-radio-group
           v-model:value="formData.keyType"
+          @change="onKeyTypeChange"
           optionType="button"
           size="default"
           button-style="solid"
@@ -41,11 +42,26 @@
         name="value"
         :rules="[{ required: true, message: '请输入变量默认值!' }]"
       >
-        <a-input v-model:value="formData.value" />
+        <a-input
+          v-if="['string', 'number', 'boolean'].includes(formData.keyType)"
+          v-model:value="formData.value"
+        />
+        <codeEditor
+          v-else-if="['array'].includes(formData.keyType)"
+          style="height: 200px"
+          :language="'json'"
+          v-model:value="formData.keyDesc"
+        />
+        <codeEditor
+          v-else
+          style="height: 200px"
+          :language="'json'"
+          v-model:value="formData.keyDesc"
+        />
       </a-form-item>
       <a-form-item
         label="变量描述"
-        name="value"
+        name="keyDesc"
         :rules="[{ required: true, message: '请输入变量描述!' }]"
       >
         <a-input v-model:value="formData.keyDesc" />
@@ -58,7 +74,12 @@
 </template>
 
 <script>
+import codeEditor from "../editor/index.vue";
+
 export default {
+  components: {
+    codeEditor,
+  },
   data() {
     return {
       formData: {
@@ -93,6 +114,9 @@ export default {
   },
   methods: {
     handleOk() {},
+    onKeyTypeChange() {
+      this.formData.value = "";
+    },
   },
 };
 </script>

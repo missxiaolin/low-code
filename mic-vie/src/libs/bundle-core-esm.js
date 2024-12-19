@@ -978,6 +978,7 @@ class CodeGenerator {
 setup(props, {emit}) {
   const instance = getCurrentInstance();
   const $data = toRefs(${stringifyObject(toRefsData)});
+  const $events = ${stringifyObject(this.eventNode)};
 
   // 执行事件流
   const eventFun = (eventStr, e) => {
@@ -985,6 +986,16 @@ setup(props, {emit}) {
     const eventObj = JSON.parse(eventStr);
     instance.proxy.$execEventFlow(instance, eventObj, e);
   };
+
+  const pagesInit = (str) => {
+    if (!str || $events[str]) return;
+    const eventObj = $events[str];
+    eventFun(eventObj, null);
+  }
+
+  onMounted(() => {
+    pagesInit("init")
+  })
   
   ${str}
   ${functionData}
@@ -1019,7 +1030,7 @@ setup(props, {emit}) {
       this.customCss
     );
 
-    vueExport.push("toRefs", "getCurrentInstance");
+    vueExport.push("onMounted", "toRefs", "getCurrentInstance");
     vueExport = Array.from(new Set(vueExport));
     const zTemp = styleTemp.replace("// $vueExport", vueExport.join(","));
     return zTemp;

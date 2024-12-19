@@ -250,7 +250,7 @@ export default {
           document
             .getElementsByTagName("body")[0]
             .addEventListener("click", (e) => {
-              // this.mainPanelProvider.clearElementSelect();
+              this.mainPanelProvider.clearElementSelect();
             });
 
           // 只针对根div做事件监听
@@ -599,7 +599,7 @@ export default {
   position: relative;
 
   [div-lc-mark] {
-    max-width: 100%;
+    max-width: 50px;
     border: 1px grey dashed;
     min-height: 1rem;
     border-radius: 5px;
