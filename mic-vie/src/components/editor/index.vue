@@ -78,6 +78,9 @@ export default {
           this.$emit("change", editor[this.uuid].getValue());
           this.$emit("update:value", editor[this.uuid].getValue());
         });
+        setTimeout(() => {
+          editor[this.uuid].getAction("editor.action.formatDocument").run();
+        }, 200);
       });
     },
     getEditorCode() {

@@ -226,7 +226,7 @@ export default {
           {
             label: "数据源",
             key: ":items",
-            settingType: "input",
+            settingType: "dataSelect",
             value: [],
           },
           {
@@ -288,7 +288,7 @@ export default {
           {
             label: "数据源",
             key: ":items",
-            settingType: "input",
+            settingType: "dataSelect",
             value: [],
           },
           {
@@ -1381,7 +1381,7 @@ export default {
             label: "数据源",
             tip: "绑定变量",
             key: ":options",
-            settingType: "input",
+            settingType: "dataSelect",
             value: "",
           },
 
@@ -1524,7 +1524,7 @@ export default {
             label: "数据源",
             tip: "绑定变量",
             key: ":options",
-            settingType: "input",
+            settingType: "dataSelect",
             value: "",
           },
           {
@@ -1907,7 +1907,7 @@ export default {
             label: "数据源",
             tip: "绑定变量",
             key: ":options",
-            settingType: "input",
+            settingType: "dataSelect",
             value: "",
           },
           {
@@ -2111,7 +2111,7 @@ export default {
             label: "数据源",
             tip: "绑定变量",
             key: ":options",
-            settingType: "input",
+            settingType: "dataSelect",
             value: "",
           },
           {

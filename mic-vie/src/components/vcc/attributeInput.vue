@@ -18,6 +18,7 @@
           <comComponent
             v-if="vueRawTag"
             :localAttributes="localAttributes"
+            :customData="customData"
             :vueRawTag="vueRawTag"
             :eventNode="eventNode"
             @saveEventLogicCode="saveEventLogicCode"
@@ -224,6 +225,7 @@ export default {
     "shortcutInitMode",
     "isShowAttribute",
     "eventNode",
+    "customData",
   ], // __rawVueInfo__为当前编辑的原始代码对象, shortcutInitMode快捷键的初始化方式
   data: function () {
     return {

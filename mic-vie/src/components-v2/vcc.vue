@@ -47,6 +47,7 @@
       <attribute-input
         :isShowAttribute="isShowAttribute"
         :eventNode="eventNode"
+        :customData="customData"
         :enableRemoveButton="true"
         class="attribute"
         @save="onSaveAttr"
@@ -619,7 +620,7 @@ export default {
   position: relative;
 
   [div-lc-mark] {
-    max-width: 50px;
+    min-width: 50px;
     border: 1px grey dashed;
     min-height: 1rem;
     border-radius: 5px;

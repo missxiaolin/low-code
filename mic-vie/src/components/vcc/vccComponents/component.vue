@@ -65,6 +65,22 @@
                 :options="item.options"
                 style="margin-top: 5px"
               />
+              <a-select
+                v-if="item.settingType == 'dataSelect'"
+                v-model:value="item.value"
+                @change="
+                  (e) => {
+                    handleBlur(e, item.key);
+                  }
+                "
+              >
+                <a-select-option
+                  v-for="(v, key) in customData"
+                  :key="key"
+                  :value="v.key"
+                  >{{ v.keyDesc }}</a-select-option
+                >
+              </a-select>
               <SettingOutlined
                 class="setting-icon"
                 v-if="item.settingType == 'setting'"
@@ -108,7 +124,7 @@ export default {
   components: {
     flowNode,
   },
-  props: ["localAttributes", "vueRawTag", "eventNode"],
+  props: ["localAttributes", "vueRawTag", "eventNode", "customData"],
   emits: ["childSave", "saveEventLogicCode"],
   setup(props, { emit }) {
     let list = ref([]);
