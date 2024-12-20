@@ -8,6 +8,7 @@ import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import svgLoader from "vite-svg-loader";
 import externalGlobals from "rollup-plugin-external-globals";
 import monacoEditorPlugin from "vite-plugin-monaco-editor";
+import federation from "@originjs/vite-plugin-federation"; // 微前端
 import { viteMockServe } from "vite-plugin-mock";
 
 // 强制预构建插件包
@@ -56,6 +57,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
       ],
       extensions: [".vue", ".js"],
     },
+    cacheDir: "node_modules/.cacheDir",
     plugins: [
       vue(),
       monacoEditorPlugin.default({
@@ -84,6 +86,12 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
         // ignoreFiles?: string[];
         // configPath?: string; // 设置模拟读取的数据条目
         // logger?:boolean; // 是否在控制台显示请求日志
+      }),
+      federation({
+        name: "main",
+        filename: "remoteEntry.js",
+        remotes: {},
+        shared: ["vue", "ant-desine-vue"],
       }),
     ],
     build: {
