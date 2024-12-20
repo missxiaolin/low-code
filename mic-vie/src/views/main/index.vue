@@ -9,9 +9,11 @@ import {
   __federation_method_unwrapDefault,
 } from "virtual:__federation__";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 export default {
   setup(props) {
     const component = ref("");
+    const route = useRoute();
 
     // 第三种方案
     __federation_method_setRemote("lowCode", {
@@ -20,20 +22,28 @@ export default {
       from: "vite",
     });
 
-    const dynamicComponents = ["remoteButton"];
-    const res = [];
     const init = async () => {
-      for await (let value of dynamicComponents) {
+      try {
         const moduleWraped = await __federation_method_getRemote(
           "lowCode",
-          `./${value}`
+          `.${route.path}`
         );
-        res.push({
-          name: `lowCode${value.toLowerCase()}`,
-          component: __federation_method_unwrapDefault(moduleWraped),
-        });
+        component.value = __federation_method_unwrapDefault(moduleWraped);
+      } catch (error) {
+        // TODO: 找不到模块跳转到404
+        console.log(error);
       }
-      component.value = res[0].component;
+      // for await (let value of dynamicComponents) {
+      //   const moduleWraped = await __federation_method_getRemote(
+      //     "lowCode",
+      //     `./${value}`
+      //   );
+      //   res.push({
+      //     name: `lowCode${value.toLowerCase()}`,
+      //     component: __federation_method_unwrapDefault(moduleWraped),
+      //   });
+      // }
+      // component.value = res[0].component;
     };
 
     init();

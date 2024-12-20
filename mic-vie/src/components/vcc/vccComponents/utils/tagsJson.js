@@ -77,7 +77,7 @@ export default {
   },
   "a-button": {
     style: style,
-    component: ["href", "target", "size", "__text__"],
+    component: ["href", "target", "size", "__text__", "@click"],
     customComponent: {
       base: {
         title: "基础",

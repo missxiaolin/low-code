@@ -2,13 +2,14 @@ import { createRouter, createWebHistory } from "vue-router";
 
 export const defaultRoute = [
   {
-    path: "/", // 拖拽表单
+    path: "/form", // 拖拽表单
     component: () => import("@/views/vcc/form.vue"),
   },
   {
-    path: "/main", // 表单代码执行
+    path: "/:catchAll(.*)", // 表单代码执行
     component: () => import("@/views/main/index.vue"),
   },
+  // 下面都是测试代码
   {
     path: "/form/code",
     component: () => import("@/views/index.vue"),
