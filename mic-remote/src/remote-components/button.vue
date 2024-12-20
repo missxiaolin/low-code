@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-button>默认按钮</a-button>
+    <a-button>默认按钮{{ ceshi }}</a-button>
     <a-watermark
       content="xiaolin"
       style="width: 500px; height: 400px"
@@ -13,7 +13,9 @@ import { toRefs, onMounted, getCurrentInstance } from "vue";
 export default {
   setup(props, { emit }) {
     const instance = getCurrentInstance();
-    const $data = toRefs({});
+    const $data = toRefs({
+      ceshi: 1,
+    });
     const $events = {};
 
     // 执行事件流
@@ -24,6 +26,9 @@ export default {
     };
 
     const pagesInit = (str) => {
+      console.log("pagesInit", str);
+      console.log(instance);
+      console.log(instance.proxy.$execEventFlow);
       if (!str || $events[str]) return;
       const eventObj = $events[str];
       eventFun(eventObj, null);
