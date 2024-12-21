@@ -49,15 +49,15 @@ export default {
     this.codeInfoEntity.codeStructure = JSON.parse(initCodeStr);
   },
   methods: {
-    onCodeUpdate({ codeRawVueInfo, JSCode, css, eventNode }) {
+    onCodeUpdate({ codeRawVueInfo, JSCode, css, eventNode, customData }) {
       // 编辑后新的代码结构
       // codeRawVueInfo为template对象表示结构
       // JSCode为显式输入的JS逻辑
       // console.log("onCodeUpdate", codeRawVueInfo, JSCode, css, eventNode);
     },
     onLoadFinish() {},
-    async save(code) {
-      // console.log(code);
+    async save(Obj) {
+      console.log(Obj);
     },
   },
 };

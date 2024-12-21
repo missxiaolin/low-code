@@ -329,6 +329,7 @@ export default {
         JSCode: this.JSCode,
         css: this.customCss,
         eventNode: this.eventNode,
+        customData: this.customData,
       });
     },
 
@@ -464,7 +465,14 @@ export default {
     },
 
     save() {
-      this.$emit("save", this.code);
+      this.$emit("save", {
+        code: this.code,
+        codeRawVueInfo: this.codeRawVueInfo,
+        JSCode: this.JSCode,
+        css: this.customCss,
+        eventNode: this.eventNode,
+        customData: this.customData,
+      });
     },
   },
   fillter: {},
