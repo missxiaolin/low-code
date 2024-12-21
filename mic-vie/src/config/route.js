@@ -1,1 +1,1 @@
-export default ["/login", "/form"];
+export default ["/login", "/form", "/404"];

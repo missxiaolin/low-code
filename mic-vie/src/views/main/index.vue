@@ -9,11 +9,12 @@ import {
   __federation_method_unwrapDefault,
 } from "virtual:__federation__";
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default {
   setup(props) {
     const component = ref("");
     const route = useRoute();
+    const router = useRouter();
 
     // 第三种方案
     __federation_method_setRemote("lowCode", {
@@ -31,7 +32,13 @@ export default {
         component.value = __federation_method_unwrapDefault(moduleWraped);
       } catch (error) {
         // TODO: 找不到模块跳转到404
-        console.log("error", error);
+        if (
+          error.toString() &&
+          error.toString().indexOf("Can not find remote module") > -1
+        ) {
+          router.push("/404");
+          return;
+        }
       }
       // for await (let value of dynamicComponents) {
       //   const moduleWraped = await __federation_method_getRemote(

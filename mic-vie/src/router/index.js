@@ -26,6 +26,10 @@ export const defaultRoute = [
     component: () => import("@/views/dashboard/index.vue"),
   },
   {
+    path: "/404",
+    component: () => import("@/views/error-page/404.vue"),
+  },
+  {
     path: "/form", // 拖拽表单
     component: () => import("@/views/vcc/form.vue"),
   },
