@@ -372,6 +372,9 @@ $layout-height: 50px;
     padding: 15px 0 10px;
     position: relative;
     text-align: center;
+    & .ant-btn:nth-child(1) {
+      margin-right: 10px;
+    }
   }
 }
 

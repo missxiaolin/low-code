@@ -31,6 +31,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #2f2f2f !important;
   .trigger {
     font-size: 20px !important;
     margin-left: 20px;

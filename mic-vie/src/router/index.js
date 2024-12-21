@@ -30,6 +30,14 @@ export const defaultRoute = [
     component: () => import("@/views/user/login.vue"),
   },
   {
+    path: "/project/list",
+    component: () => import("@/views/project/list.vue"),
+  },
+  {
+    path: "/project/page",
+    component: () => import("@/views/project/page.vue"),
+  },
+  {
     path: "/404",
     component: () => import("@/views/error-page/404.vue"),
   },

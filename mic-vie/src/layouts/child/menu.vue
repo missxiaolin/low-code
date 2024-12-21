@@ -17,7 +17,7 @@
 
 <script>
 import { ref } from "vue";
-import { initRoute } from "./menu.js";
+import { initRoute } from "../../config/menu.js";
 import { useRouter, useRoute } from "vue-router";
 export default {
   setup() {
