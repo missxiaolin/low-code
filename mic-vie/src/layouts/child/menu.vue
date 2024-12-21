@@ -2,9 +2,10 @@
   <div class="menu-d">
     <!-- v-model:openKeys="state.openKeys"
     v-model:selectedKeys="state.selectedKeys" -->
+    <div class="menu-title">Low Code</div>
     <a-menu
       mode="inline"
-      theme="dark"
+      theme="light"
       @select="handleClick"
       :items="items"
       :open-keys="openKeys"
@@ -46,7 +47,7 @@ export default {
 
     const handleClick = (e) => {
       if (e.keyPath.length === 1) {
-        openKeys.value = [""];
+        openKeys.value = [];
         selectedKeys.value = [e.keyPath[0]];
       }
       if (e.keyPath.length === 2) {
@@ -75,8 +76,27 @@ export default {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  .menu-title {
+    height: 64px;
+    line-height: 64px;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    vertical-align: middle;
+    background: #141414;
+  }
   :deep(.ant-menu) {
-    min-height: 100%;
+    flex: 1;
+  }
+  :deep(.ant-menu-light .ant-menu-item-selected) {
+    background-color: var(--v3-menu-item-selected-bg-color) !important;
+  }
+  :deep(.ant-menu .ant-menu-submenu-arrow) {
+    color: var(--v3-menu-item-selected-icon-color);
   }
 }
 </style>

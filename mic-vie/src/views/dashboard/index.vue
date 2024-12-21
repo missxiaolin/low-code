@@ -39,7 +39,7 @@ export default defineComponent({
   &.markdown-body {
     padding: 20px;
     border-radius: 10px;
-    background-color: var(--search-bg-color);
+    background-color: var(--v3-body-bg-color);
     color: var(--el-text-color-primary);
   }
 }

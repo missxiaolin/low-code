@@ -1,15 +1,15 @@
 <template>
-  <div class="layouts">
-    <div class="menu">
+  <a-layout class="layouts">
+    <a-layout class="menu">
       <route-menu></route-menu>
-    </div>
+    </a-layout>
     <div class="layouts-right">
-      <header></header>
+      <route-header></route-header>
       <div class="layouts-main">
         <route-main></route-main>
       </div>
     </div>
-  </div>
+  </a-layout>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ import { defineAsyncComponent } from "vue";
 export default {
   components: {
     routeMenu: defineAsyncComponent(() => import("./child/menu.vue")),
-    header: defineAsyncComponent(() => import("./child/header.vue")),
+    routeHeader: defineAsyncComponent(() => import("./child/header.vue")),
     routeMain: defineAsyncComponent(() => import("./child/main.vue")),
   },
   setup() {},
@@ -31,6 +31,10 @@ export default {
   overflow: hidden;
   display: flex;
   flex-direction: row;
+  .menu {
+    height: 100%;
+    flex: none !important;
+  }
   .layouts-right {
     flex: 1;
     display: flex;

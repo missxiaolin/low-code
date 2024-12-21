@@ -7,4 +7,7 @@
 html.dark {
   /* search 全局 */
   --search-bg-color: #1d1e1f;
+  --v3-header-bg-color: #1f1f1f;
+  --v3-body-bg-color: #000;
+  --v3-menu-item-selected-bg-color: #1d1e1f;
 }
