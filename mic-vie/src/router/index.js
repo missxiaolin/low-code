@@ -26,6 +26,10 @@ export const defaultRoute = [
     component: () => import("@/views/dashboard/index.vue"),
   },
   {
+    path: "/login",
+    component: () => import("@/views/user/login.vue"),
+  },
+  {
     path: "/404",
     component: () => import("@/views/error-page/404.vue"),
   },

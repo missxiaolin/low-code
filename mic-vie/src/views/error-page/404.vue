@@ -6,7 +6,7 @@
       sub-title="Sorry, the page you visited does not exist."
     >
       <template #extra>
-        <a-button type="primary" @click="goHome">Back Home</a-button>
+        <a-button @click="goHome">Back Home</a-button>
       </template>
     </a-result>
   </div>

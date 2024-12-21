@@ -1,10 +1,12 @@
 import axios from "axios";
 import { get, merge } from "lodash-es";
+import router from "../router/index";
 import { getCookie, getToken } from "./cache/cookies";
 
 /** 退出登录并强制刷新页面（会重定向到登录页） */
 function logout() {
-  window.microApp.dispatch({ isPushLogin: true });
+  router.push("/login");
+  // window.microApp.dispatch({ isPushLogin: true });
 }
 
 /** 创建请求实例 */
@@ -82,7 +84,7 @@ let baseURL = "http://micro-serve.missxiaolin.com";
 const urls = ["127.0.0.1", "localhost"];
 
 if (urls.indexOf(window.location.hostname) > -1) {
-  baseURL = "";
+  baseURL = "http://127.0.0.1:9002";
 }
 
 export { baseURL };
