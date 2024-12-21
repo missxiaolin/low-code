@@ -31,7 +31,7 @@ export default {
         component.value = __federation_method_unwrapDefault(moduleWraped);
       } catch (error) {
         // TODO: 找不到模块跳转到404
-        console.log(error);
+        console.log("error", error);
       }
       // for await (let value of dynamicComponents) {
       //   const moduleWraped = await __federation_method_getRemote(

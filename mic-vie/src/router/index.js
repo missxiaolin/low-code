@@ -1,14 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-export const defaultRoute = [
-  {
-    path: "/form", // 拖拽表单
-    component: () => import("@/views/vcc/form.vue"),
-  },
-  {
-    path: "/:catchAll(.*)", // 表单代码执行
-    component: () => import("@/views/main/index.vue"),
-  },
+const demoRoute = [
   // 下面都是测试代码
   {
     path: "/form/code",
@@ -28,7 +20,22 @@ export const defaultRoute = [
   },
 ];
 
-let prdRoutesList = [...defaultRoute];
+export const defaultRoute = [
+  {
+    path: "/",
+    component: () => import("@/views/dashboard/index.vue"),
+  },
+  {
+    path: "/form", // 拖拽表单
+    component: () => import("@/views/vcc/form.vue"),
+  },
+  {
+    path: "/:catchAll(.*)", // 表单代码执行
+    component: () => import("@/views/main/index.vue"),
+  },
+];
+
+let prdRoutesList = [...defaultRoute, ...demoRoute];
 
 const router = createRouter({
   base: "/",
