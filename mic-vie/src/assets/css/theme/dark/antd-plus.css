@@ -11,4 +11,11 @@ html.dark {
   --v3-body-bg-color: #000;
   --v3-menu-item-selected-bg-color: #1d1e1f;
   --v3-menu-item-selected-icon-color: #fff;
+  --bgColor-muted: #1d1e1f;
+  --fgColor-default: #fff;
+}
+
+.markdown-body.dark {
+  --bgColor-muted: #1d1e1f;
+  --fgColor-default: #fff;
 }

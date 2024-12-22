@@ -1,14 +1,14 @@
 import { loadAnt } from "./ant/index.js";
 // import SvgIcon from "@/components/svgIcon/index.vue"; // svg组件
-import xlDatePicker from "../components/ant-desine/date-picker.vue";
-import xlFlex from "../components/ant-desine/a-flex.vue";
-import xlImage from "../components/ant-desine/a-image.vue";
-import xlTooltip from "../components/ant-desine/a-tooltip.vue";
-import xlPopconfirm from "../components/ant-desine/a-popconfirm.vue";
-import xlTimePicker from "../components/ant-desine/a-time-picker.vue";
-import searchLabel from "../components/search-label/index.vue";
-import xlPop from "../components/pop/index.vue";
-import xlTable from "../components/l-table/index.vue";
+import xlDatePicker from "../components/xl/ant-desine/date-picker.vue";
+import xlFlex from "../components/xl/ant-desine/a-flex.vue";
+import xlImage from "../components/xl/ant-desine/a-image.vue";
+import xlTooltip from "../components/xl/ant-desine/a-tooltip.vue";
+import xlPopconfirm from "../components/xl/ant-desine/a-popconfirm.vue";
+import xlTimePicker from "../components/xl/ant-desine/a-time-picker.vue";
+import searchLabel from "../components/xl/search-label/index.vue";
+import xlPop from "../components/xl/pop/index.vue";
+import xlSearchTable from "../components/xl/l-search-table/index.vue";
 
 import "virtual:svg-icons-register";
 export function loadPlugins(app) {
@@ -24,6 +24,6 @@ export function loadPlugins(app) {
   app.component("xlTimePicker", xlTimePicker);
   app.component("searchLabel", searchLabel);
   app.component("xlPop", xlPop);
-  app.component("xlTable", xlTable);
+  app.component("xlSearchTable", xlSearchTable);
   // app.component("svg-icon", SvgIcon);
 }

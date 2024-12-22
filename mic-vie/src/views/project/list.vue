@@ -41,6 +41,14 @@
         <a-button type="primary" @click="getProjectList">查询</a-button>
       </div>
     </div>
+
+    <div class="mu-handle-content flex-1">
+      <xl-search-table :data="table.data" :columns="table.columns">
+        <template #options="scope">
+          <a-button link size="small" @click="edit(scope.row)"> 编辑 </a-button>
+        </template>
+      </xl-search-table>
+    </div>
   </div>
 </template>
 
@@ -48,6 +56,47 @@
 import { reactive } from "vue";
 export default {
   setup(props) {
+    const table = reactive({
+      data: [],
+      columns: [
+        {
+          key: "name",
+          title: "项目名称",
+        },
+        {
+          key: "code",
+          title: "三字码",
+        },
+        {
+          key: "desc",
+          title: "项目描述",
+        },
+        {
+          key: "type_desc",
+          title: "项目类型",
+        },
+        {
+          key: "status_desc",
+          title: "项目状态",
+        },
+        {
+          key: "create_time",
+          title: "创建时间",
+        },
+        {
+          key: "update_time",
+          title: "修改时间",
+        },
+        {
+          key: "options",
+          prop: "options",
+          title: "操作",
+          width: "180px",
+          fixed: "right",
+          noEmptyValue: true,
+        },
+      ],
+    });
     const typeOptions = reactive([
       {
         value: "1",
@@ -90,6 +139,7 @@ export default {
     };
 
     return {
+      table,
       typeOptions,
       searchForm,
     };
@@ -100,7 +150,7 @@ export default {
 <style lang="scss" scoped>
 .vue-home-main {
   width: 100%;
-  max-height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

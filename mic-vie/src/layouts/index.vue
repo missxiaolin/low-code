@@ -41,6 +41,7 @@ export default {
     flex-direction: column;
     .layouts-main {
       flex: 1;
+      overflow-y: auto;
     }
   }
 }

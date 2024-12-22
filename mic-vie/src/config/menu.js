@@ -2,7 +2,7 @@ export const initRoute = [
   {
     key: "dashboard",
     path: "/",
-    label: "dashboard",
+    label: "首页",
   },
   {
     key: "project",
