@@ -11,13 +11,6 @@
       </template>
     </a-table>
     <div class="page-scroll mt20" v-if="isShowPagination">
-      <!-- <el-pagination
-        :page-size="pageSize"
-        background
-        layout="total, prev, pager, next"
-        @current-change="handleCurrentChange"
-        :total="total"
-      /> -->
       <a-pagination
         show-quick-jumper
         @change="onChange"
@@ -54,43 +47,16 @@ export default {
       default: 10,
     },
   },
-  setup(props) {},
+  emits: ["handleCurrentChange"],
+  setup(props, { emit }) {
+    const onChange = (page) => {
+      emit("handleCurrentChange", page);
+    };
+    return {
+      onChange,
+    };
+  },
 };
-// export default {
-//   props: {
-//     // 表格数据源
-//     data: {
-//       type: Array,
-//       default: () => [],
-//     },
-//     // 表头数据
-//     columns: {
-//       type: Array,
-//       default: () => [],
-//     },
-//     isShowPagination: {
-//       type: Boolean,
-//       default: true,
-//     },
-//     // pagination: {
-//     //   type: Object,
-//     //   default: () => {
-//     //     return {
-//     //       position: "bottomRight",
-//     //       current: 1,
-//     //       defaultPageSize: 10,
-//     //       total: 0,
-//     //     };
-//     //   },
-//     // },
-//   },
-//   methods: {
-//     handleCurrentChange(e) {
-//       console.log(e);
-//       this.$emit("handleCurrentChange", e);
-//     },
-//   },
-// };
 </script>
 
 <style lang="scss" scoped>

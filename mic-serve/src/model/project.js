@@ -35,6 +35,7 @@ export default class ProjectModel {
       "name",
       "desc",
       "status",
+      "version",
       "create_time",
       "update_time",
     ];
@@ -82,21 +83,21 @@ export default class ProjectModel {
    * @returns
    */
   async getPages(params) {
-    let { pageSize = 10, page = 1, name = '', type =  "", status = "", } = params;
+    let { pageSize = 10, page = 1, name = "", type = "", status = "" } = params;
     let tableName = getTableName();
 
     let res = Knex.select("*")
       .from(tableName)
-      .where('create_time', '>', '2023-05-02 21:19:50');
+      .where("create_time", ">", "2023-05-02 21:19:50");
 
     if (name) {
       res = res.andWhere("name", "like", `%${name}%`);
     }
     if (type) {
-      res = res.andWhere("type", type)
+      res = res.andWhere("type", type);
     }
     if (status) {
-      res = res.andWhere("status", status)
+      res = res.andWhere("status", status);
     }
     res = await res
       .orderBy("update_time", "desc")
@@ -127,23 +128,22 @@ export default class ProjectModel {
    * @returns
    */
   async getPagesCount(params) {
-    let { name = '', type =  "", status = "", } = params;
+    let { name = "", type = "", status = "" } = params;
     let tableName = getTableName();
     let res = Knex.from(tableName);
 
-    res = res.where('create_time', '>', '2023-05-02 21:19:50');
+    res = res.where("create_time", ">", "2023-05-02 21:19:50");
 
     if (name) {
       res = res.andWhere("name", "like", `%${name}%`);
     }
     if (type) {
-      res = res.andWhere("type", type)
+      res = res.andWhere("type", type);
     }
     if (status) {
-      res = res.andWhere("status", status)
+      res = res.andWhere("status", status);
     }
-    
-    
+
     res = await res.count("* as projectCount").catch((err) => {
       console.log(err);
       return 0;
@@ -154,36 +154,31 @@ export default class ProjectModel {
 
   async getTypeAll(data) {
     let tableName = getTableName();
-    let res = await Knex.select("*")
-      .where('type', data.type)
-      .from(tableName)
+    let res = await Knex.select("*").where("type", data.type).from(tableName);
 
-    return res
+    return res;
   }
 
   /**
    * 获取所有项目
-   * @returns 
+   * @returns
    */
   async getAll() {
     let tableName = getTableName();
-    let res = await Knex.select("*")
-      .from(tableName)
+    let res = await Knex.select("*").from(tableName);
 
-    return res
+    return res;
   }
 
   /**
    * 获取详情
-   * @param {*} params 
-   * @returns 
+   * @param {*} params
+   * @returns
    */
   async getPageDetail(params) {
-    console.log(params)
+    console.log(params);
     let tableName = getTableName();
-    let res = Knex.select("*")
-      .from(tableName)
-      .where("id", params.id);
+    let res = Knex.select("*").from(tableName).where("id", params.id);
 
     res = await res.first().catch((e) => {
       Logger.warn("查询失败, 错误原因 =>", e);

@@ -20,11 +20,14 @@ export default class Project extends Base {
       startAt = moment().format("YYYY-MM-DD HH:mm:ss"),
       result = {};
 
-    if (appConfig.IS_CREATE_PROJECT_OPEN == 0) {
-      return this.send(res, result, false, "暂时未开放创建项目");
-    }
+    // if (appConfig.IS_CREATE_PROJECT_OPEN == 0) {
+    //   return this.send(res, result, false, "暂时未开放创建项目");
+    // }
 
     if (data.id == 0 || !data.id) {
+      if (!data.version) {
+        data.version = "";
+      }
       result = await projectModel.save({
         ...data,
         create_time: startAt,

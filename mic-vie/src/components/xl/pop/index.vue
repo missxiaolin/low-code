@@ -1,97 +1,59 @@
 <template>
   <div class="pop-box">
-    <el-button type="primary" @click="showPop">{{ btnText }}</el-button>
-    <el-dialog
-      :model-value="dialogVisible"
+    <a-button type="primary" @click="showPop">{{ btnText }}</a-button>
+
+    <a-modal
       :title="title"
-      :modal-append-to-body="false"
-      :show-close="true"
-      :append-to-body="true"
-      :before-close="handleClose"
+      :footer="null"
+      @cancel="handleClose"
+      v-model:open="open"
     >
-      <el-form
-        ref="ruleFormRef"
+      <a-form
+        ref="formRef"
         :model="ruleForm"
         :rules="rules"
-        :label-width="labelWidth"
+        :label-col="{ span: 3 }"
         :disabled="disabled"
       >
         <template v-for="(item, index) in btnPopForm">
           <template v-if="item.type == 'input'">
-            <el-form-item
+            <a-form-item
               :key="index"
+              :ref="item.key"
               :label="item.label"
-              :prop="`${item.key}`"
+              :name="item.key"
             >
-              <el-input v-model="ruleForm[item.key]" />
-            </el-form-item>
+              <a-input v-model:value="ruleForm[item.key]" />
+            </a-form-item>
           </template>
           <template v-if="item.type == 'radio'">
-            <el-form-item
+            <a-form-item
               :key="index"
+              :ref="item.key"
               :label="item.label"
-              :prop="`${item.key}`"
+              :name="item.key"
             >
-              <el-radio-group v-model="ruleForm[item.key]">
-                <el-radio
-                  v-for="(v, i) in item.dataOptions"
-                  :key="i"
-                  :label="v.value"
-                  >{{ v.label }}</el-radio
-                >
-              </el-radio-group>
-            </el-form-item>
-          </template>
-          <template v-if="item.type == 'checkbox'">
-            <el-form-item
-              :key="index"
-              :label="item.label"
-              :prop="`${item.key}`"
-            >
-              <el-checkbox-group v-model="ruleForm[item.key]">
-                <el-checkbox
-                  :label="v.value"
-                  :value="v.value"
-                  v-for="(v, i) in item.dataOptions"
-                  :key="i"
-                />
-              </el-checkbox-group>
-            </el-form-item>
-          </template>
-          <template v-if="item.type == 'data'">
-            <el-form-item
-              :key="index"
-              :label="item.label"
-              :prop="`${item.key}`"
-            >
-              <el-date-picker
-                v-model="ruleForm[item.key]"
-                :type="item.dataType"
-                :teleported="true"
-                :editable="false"
-                :clearable="false"
-                :placeholder="`${item.placeholder}`"
-                :value-format="item.valueFormat || 'YYYY-MM-DD HH:mm:ss'"
-                :format="item.format || 'YYYY-MM-DD HH:mm:ss'"
+              <a-radio-group
+                :options="item.dataOptions"
+                v-model:value="ruleForm[item.key]"
               />
-            </el-form-item>
+            </a-form-item>
           </template>
         </template>
-
-        <el-form-item v-if="isShowBottomBtn">
-          <div class="form-bottom-box">
-            <el-button type="primary" @click="submitForm('ruleFormRef')">
-              {{ formSaveBtn }}
-            </el-button>
-            <el-button @click="resetForm('ruleFormRef')">重置</el-button>
-          </div>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
+        <a-form-item class="form-bottom-box" v-if="isShowBottomBtn">
+          <a-button type="primary" @click="onSubmit">{{
+            formSaveBtn
+          }}</a-button>
+          <a-button style="margin-left: 10px" @click="resetForm">重置</a-button>
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
 <script>
+import { onMounted, ref, toRaw, watch, toRefs } from "vue";
+
 export default {
   props: {
     btnText: {
@@ -106,10 +68,6 @@ export default {
     dialogVisible: {
       type: Boolean,
       default: false,
-    },
-    labelWidth: {
-      type: String,
-      default: "auto",
     },
     disabled: {
       type: Boolean,
@@ -136,56 +94,70 @@ export default {
       },
     },
   },
-  watch: {
-    btnPopForm(v) {
-      this.init(v);
-    },
-    detail(v) {
-      this.init(this.btnPopForm, v || {});
-    },
-  },
-  data() {
-    return {
-      ruleForm: {},
-      rules: {},
+  emits: ["popClick", "success"],
+  setup(props, { emit }) {
+    const formRef = ref(null);
+    let ruleForm = ref({});
+    let rules = ref([]);
+    let open = ref(props.dialogVisible);
+    const showPop = () => {
+      emit("popClick", true);
     };
-  },
-  mounted() {
-    this.init(this.btnPopForm, this.detail);
-  },
-  methods: {
-    init(popForm, detail) {
+
+    const handleClose = () => {
+      emit("popClick", false);
+    };
+
+    const init = (popForm, detail) => {
       let ruleFormObj = {};
       let rulesArr = {};
       popForm.forEach((item) => {
         ruleFormObj[item.key] = detail[item.key] || item.default || "";
         rulesArr[item.key] = item.rules;
       });
-      this.ruleForm = ruleFormObj;
-      this.rules = rulesArr;
-    },
-    showPop() {
-      this.$emit("popClick", true);
-    },
-    handleClose() {
-      this.$emit("popClick", false);
-    },
-    async submitForm(formEl) {
-      const el = this.$refs[formEl];
-      if (!el) return;
-      await el.validate((valid, fields) => {
-        if (valid) {
-          this.$emit("success", this.ruleForm);
-        } else {
-          //   console.log("error submit!", fields);
-        }
-      });
-    },
-    resetForm(formEl) {
-      const el = this.$refs[formEl];
-      if (!el) return;
-      el.resetFields();
-    },
+      ruleForm.value = ruleFormObj;
+      rules.value = rulesArr;
+    };
+
+    const onSubmit = () => {
+      formRef.value
+        .validate()
+        .then(() => {
+          // console.log("values", ruleForm, toRaw(ruleForm));
+          emit("success", ruleForm.value);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    };
+    const resetForm = () => {
+      formRef.value.resetFields();
+    };
+
+    onMounted(() => {
+      init(props.btnPopForm, props.detail);
+    });
+    watch(
+      props,
+      (newVal) => {
+        open.value = newVal.dialogVisible;
+        init(newVal.btnPopForm, newVal.detail);
+      },
+      {
+        immediate: true,
+      }
+    );
+
+    return {
+      open,
+      formRef,
+      onSubmit,
+      resetForm,
+      showPop,
+      handleClose,
+      ruleForm,
+      rules,
+    };
   },
 };
 </script>

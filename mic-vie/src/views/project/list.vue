@@ -25,13 +25,8 @@
             <a-select
               v-model:value="searchForm.status"
               placeholder="请选择分类"
+              :options="statusOptions"
             >
-              <a-option
-                v-for="item in statusOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
             </a-select>
           </search-label>
         </a-col>
@@ -42,10 +37,40 @@
       </div>
     </div>
 
-    <div class="mu-handle-content flex-1">
-      <xl-search-table :data="table.data" :columns="table.columns">
+    <div class="mu-handle-content flex flex-1 flex-column">
+      <div class="mb20">
+        <xl-pop
+          :btn-text="'创建项目'"
+          :title="'项目'"
+          :detail="projectDetail"
+          :form-save-btn="'保存'"
+          :btn-pop-form="popForm"
+          :dialog-visible="dialogVisible"
+          :disabled="formDisbled"
+          :is-show-bottom-btn="popShowBottomBtn"
+          @popClick="popClick"
+          @success="popSuccess"
+        ></xl-pop>
+      </div>
+      <xl-search-table
+        :data="table.data"
+        :columns="table.columns"
+        :total="table.total"
+        @handleCurrentChange="handleCurrentChange"
+      >
         <template #options="scope">
           <a-button link size="small" @click="edit(scope.row)"> 编辑 </a-button>
+          <a-button link size="small" @click="detail(scope.row)" class="ml10">
+            详情
+          </a-button>
+          <a-button
+            link
+            size="small"
+            @click="goRoutePage(scope.row)"
+            class="ml10"
+          >
+            路由配置
+          </a-button>
         </template>
       </xl-search-table>
     </div>
@@ -53,49 +78,23 @@
 </template>
 
 <script>
-import { reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import { projectSave, projectList } from "../../api/project";
+import { btnPopForm, tableColumns } from "./list.js";
+import { useRouter } from "vue-router";
+import { message } from "ant-design-vue";
+
 export default {
   setup(props) {
-    const table = reactive({
+    const router = useRouter();
+    let projectDetail = ref({});
+    let dialogVisible = ref(false);
+    let formDisbled = ref(false);
+    let popShowBottomBtn = ref(true);
+    const popForm = ref(btnPopForm);
+    const table = ref({
       data: [],
-      columns: [
-        {
-          key: "name",
-          title: "项目名称",
-        },
-        {
-          key: "code",
-          title: "三字码",
-        },
-        {
-          key: "desc",
-          title: "项目描述",
-        },
-        {
-          key: "type_desc",
-          title: "项目类型",
-        },
-        {
-          key: "status_desc",
-          title: "项目状态",
-        },
-        {
-          key: "create_time",
-          title: "创建时间",
-        },
-        {
-          key: "update_time",
-          title: "修改时间",
-        },
-        {
-          key: "options",
-          prop: "options",
-          title: "操作",
-          width: "180px",
-          fixed: "right",
-          noEmptyValue: true,
-        },
-      ],
+      columns: tableColumns,
     });
     const typeOptions = reactive([
       {
@@ -117,7 +116,7 @@ export default {
         label: "启用",
       },
     ]);
-    const searchForm = reactive({
+    const searchForm = ref({
       name: "",
       type: "",
       status: "",
@@ -125,10 +124,17 @@ export default {
       page: 1,
     });
 
-    const getProjectList = () => {};
+    const getProjectList = async () => {
+      let res = await projectList(searchForm.value);
+      if (!res.success) {
+        return;
+      }
+      table.value.data = res.model.list;
+      table.value.total = res.model.count;
+    };
 
     const resetForm = () => {
-      searchForm = {
+      searchForm.value = {
         name: "",
         type: "",
         status: "",
@@ -138,10 +144,79 @@ export default {
       getProjectList();
     };
 
+    const handleCurrentChange = (page) => {
+      searchForm.value.page = page + 1;
+      getProjectList();
+    };
+
+    const popClick = (e) => {
+      dialogVisible.value = e;
+      projectDetail.value = {};
+      formDisbled.value = false;
+      popShowBottomBtn.value = true;
+    };
+
+    const edit = (e) => {
+      projectDetail.value = e;
+      popShowBottomBtn.value = true;
+      dialogVisible.value = true;
+    };
+
+    const detail = (e) => {
+      projectDetail.value = e;
+      dialogVisible.value = true;
+      formDisbled.value = true;
+      popShowBottomBtn.value = false;
+    };
+
+    const popSuccess = async (e) => {
+      let data = JSON.parse(JSON.stringify(e));
+      if (projectDetail.value && projectDetail.value.id) {
+        data.id = projectDetail.value.id;
+      }
+      let res = await projectSave(data);
+      if (!res.success) {
+        message.error(res.errorMessage);
+        return;
+      }
+      message.success(data.id ? "修改成功" : "添加成功");
+      projectDetail.value = {};
+      dialogVisible.value = false;
+      getProjectList();
+    };
+
+    const goRoutePage = (item) => {
+      router.push({
+        path: "/project/page",
+        query: {
+          id: item.id,
+        },
+      });
+    };
+
+    onMounted(() => {
+      getProjectList();
+    });
+
     return {
+      goRoutePage,
+      popClick,
+      edit,
+      detail,
+      popShowBottomBtn,
+      projectDetail,
+      popForm,
       table,
       typeOptions,
+      statusOptions,
       searchForm,
+      resetForm,
+      formDisbled,
+      popClick,
+      dialogVisible,
+      popSuccess,
+      getProjectList,
+      handleCurrentChange,
     };
   },
 };
