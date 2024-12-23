@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { pageRouteSave } from "../../api/page";
+import { message } from "ant-design-vue";
 import { defineAsyncComponent } from "vue";
 // 以这样一段结构初始化VCC组件
 const initCodeStr =
@@ -56,8 +58,33 @@ export default {
       // console.log("onCodeUpdate", codeRawVueInfo, JSCode, css, eventNode);
     },
     onLoadFinish() {},
-    async save(Obj) {
-      console.log(Obj);
+    async save(obj) {
+      const data = {
+        project_id: this.$route.query.projectId,
+        route_name: "ceshi",
+        path: "/ceshi",
+        tem_json: JSON.stringify(obj.codeRawVueInfo),
+        script_json: obj.JSCode,
+        page_html: obj.code,
+        css: obj.css,
+        eventNode: JSON.stringify(obj.eventNode),
+        customData: JSON.stringify(obj.customData),
+      };
+      let res = await pageRouteSave(data);
+      if (!res.success) {
+        message.error(res.errorMessage);
+        return;
+      }
+      message.success("保存成功");
+      setTimeout(() => {
+        this.$router.push({
+          path: "/project/page",
+          query: {
+            projectId: this.$route.query.projectId,
+          },
+        });
+      }, 2000);
+      console.log(obj);
     },
   },
 };

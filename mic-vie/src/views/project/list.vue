@@ -189,7 +189,7 @@ export default {
       router.push({
         path: "/project/page",
         query: {
-          id: item.id,
+          projectId: item.id,
         },
       });
     };

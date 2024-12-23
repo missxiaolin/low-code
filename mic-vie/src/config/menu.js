@@ -6,8 +6,15 @@ export const initRoute = [
   },
   {
     key: "project",
-    path: "/project/list",
-    label: "项目列表",
+
+    label: "项目",
+    children: [
+      {
+        key: "projectList",
+        path: "/project/list",
+        label: "项目列表",
+      },
+    ],
   },
   // {
   //   key: "2",

@@ -12,7 +12,7 @@ const STATUS_ENUM = {
   1: "待发布",
   2: "发布中",
   3: "完成",
-  4: '草稿'
+  4: "草稿",
 };
 
 function getTableName() {
@@ -29,6 +29,8 @@ export default class PageRoute {
       "script_json",
       "page_html",
       "css",
+      "eventNode",
+      "customData",
       "create_time",
       "update_time",
     ];
@@ -182,8 +184,8 @@ export default class PageRoute {
 
   /**
    * 获取所有项目
-   * @param {*} params 
-   * @returns 
+   * @param {*} params
+   * @returns
    */
   async getAll(params) {
     let tableName = getTableName();
