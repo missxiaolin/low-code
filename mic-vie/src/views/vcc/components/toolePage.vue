@@ -13,10 +13,13 @@
         <a-form-item ref="route_name" label="路由名称" name="route_name">
           <a-input v-model:value="pageData.form.route_name" />
         </a-form-item>
-        <a-form-item ref="route_name" label="路由路径" name="route_name">
-          <a-input v-model:value="pageData.form.path" />
+        <a-form-item ref="path" label="路由路径" name="path">
+          <a-input
+            v-model:value="pageData.form.path"
+            :disabled="props.pageForm.id > 0"
+          />
         </a-form-item>
-        <a-form-item ref="route_name" label="路由路径" name="route_name">
+        <a-form-item ref="status" label="路由路径" name="status">
           <a-radio-group
             v-model:value="pageData.form.status"
             :options="statusOptions"
@@ -34,14 +37,15 @@
 
 <script>
 import { ref } from "vue";
-function startsWithSlash(rule, value, callback) {
+function startsWithSlash(rule, value) {
   const regex = /^\//;
   if (value === "") {
-    callback(new Error("请输入路由路径"));
+    return Promise.resolve();
   } else if (!regex.test(value)) {
-    callback(new Error("路由路径必须/开头"));
+    return Promise.reject("路由路径必须/开头");
   } else {
-    callback();
+    return Promise.resolve();
+    // callback();
   }
 }
 
@@ -80,7 +84,7 @@ export default {
             required: true,
             message: "请输入路由路径",
           },
-          { validator: startsWithSlash, trigger: "blur" },
+          { validator: startsWithSlash, trigger: "change" },
         ],
         status: [
           {
@@ -111,6 +115,7 @@ export default {
     };
 
     return {
+      props,
       open,
       showPagePop,
       formRef,
