@@ -12,8 +12,13 @@
   /** Sidebar 组件（左侧模式全部生效、顶部模式全部不生效、混合模式非颜色部分生效） */
   --v3-sidebar-width: 220px;
   --v3-sidebar-hide-width: 58px;
-  --v3-menu-item-selected-bg-color: #ffffff;
-  --v3-menu-item-selected-icon-color: #ffffff;
+
+  --v3-menu-bg: #fff;
+  --v3-menu-title: #000;
+  --ve-header-animat: #fff;
+  --v3-menu-item-selected-bg-color: #e6f4ff;
+  --v3-menu-item-selected-icon-color: #000;
+
   /** TagsView 组件 */
   --v3-tagsview-height: 34px;
   --v3-tagsview-tag-text-color: #495060;
@@ -24,7 +29,7 @@
   --v3-tagsview-tag-border-color: #d8dce5;
   --v3-tagsview-tag-active-border-color: var(--el-color-primary);
   --v3-tagsview-tag-active-before-color: #ffffff;
-  --v3-tagsview-tag-icon-hover-bg-color: #00000030;
+  --v3-tagsview-tag-icon-hover-bg-color: #000000;
   --v3-tagsview-tag-icon-hover-color: #ffffff;
   /** RightPanel 组件  */
   --v3-rightpanel-button-bg-color: #001428;

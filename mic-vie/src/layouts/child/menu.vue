@@ -5,7 +5,6 @@
     <div class="menu-title">Low Code</div>
     <a-menu
       mode="inline"
-      theme="light"
       @select="handleClick"
       :items="items"
       :open-keys="openKeys"
@@ -83,7 +82,7 @@ export default {
       if (!res.success) return;
       let arr = [
         {
-          key: "project",
+          key: "pages",
           label: "页面管理",
           children: [
             // {
@@ -133,21 +132,52 @@ export default {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  background-color: var(--v3-menu-bg);
   .menu-title {
     height: 64px;
     line-height: 64px;
     text-align: center;
-    color: #fff;
+    color: var(--v3-menu-title);
     font-size: 20px;
     font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
     font-weight: 600;
     vertical-align: middle;
-    background: #141414;
+    background: var(--v3-menu-bg);
   }
   :deep(.ant-menu) {
     flex: 1;
+    border: none;
+  }
+  :deep(:where(.css-dev-only-do-not-override-bmplwl).ant-menu-light) {
+    background: var(--v3-menu-bg) !important;
+  }
+  :deep(.ant-menu-item) {
+    width: 100%;
+    border-radius: 0;
+    margin: 0px;
+    background: var(--v3-menu-bg) !important;
+  }
+  :deep(.ant-menu-submenu-title) {
+    width: 100%;
+    border-radius: 0;
+    margin: 0px;
+  }
+  :deep(.ant-menu-submenu-active) {
+    width: 100%;
+    border-radius: 0;
+    margin: 0px;
+    background-color: var(--v3-menu-item-selected-bg-color) !important;
   }
   :deep(.ant-menu-light .ant-menu-item-selected) {
+    width: 100%;
+    border-radius: 0;
+    margin-left: 0;
+    background-color: var(--v3-menu-item-selected-bg-color) !important;
+  }
+  :deep(.ant-menu-light .ant-menu-item-active) {
+    width: 100%;
+    border-radius: 0;
+    margin-left: 0;
     background-color: var(--v3-menu-item-selected-bg-color) !important;
   }
   :deep(.ant-menu .ant-menu-submenu-arrow) {

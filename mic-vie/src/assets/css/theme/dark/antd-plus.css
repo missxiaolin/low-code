@@ -7,10 +7,15 @@
 html.dark {
   /* search 全局 */
   --search-bg-color: #1d1e1f;
-  --v3-header-bg-color: #1f1f1f;
+  --v3-header-bg-color: 0px 0px 6px rgba(0, 0, 0, 0.72);
   --v3-body-bg-color: #000;
-  --v3-menu-item-selected-bg-color: #000;
+
+  --v3-menu-bg: #1a1a1a;
+  --v3-menu-title: #fff;
+  --ve-header-animat: #2f2f2f;
+  --v3-menu-item-selected-bg-color: #242424;
   --v3-menu-item-selected-icon-color: #fff;
+
   --bgColor-muted: #1d1e1f;
   --fgColor-default: #fff;
 }
