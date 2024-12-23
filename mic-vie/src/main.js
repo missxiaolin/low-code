@@ -3,6 +3,7 @@ import { createApp } from "vue";
 import "./style.css";
 import App from "./App.vue";
 import router from "@/router";
+import { setupStore } from "./store";
 import "@/utils/permission";
 import "@/assets/css/index.scss";
 import "normalize.css";
@@ -52,6 +53,7 @@ let app = null;
 function mount() {
   app = createApp(App);
   app.use(router);
+  setupStore(app);
 
   /** 加载插件 */
   loadPlugins(app);

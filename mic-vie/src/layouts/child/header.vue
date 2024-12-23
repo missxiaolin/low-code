@@ -2,8 +2,16 @@
   <div class="header-animat">
     <div></div>
     <!-- <RedoOutlined class="trigger" /> -->
+
     <div class="header-animat-right">
       <!-- <QuestionCircleOutlined class="help" /> -->
+      <a-select
+        class="header-animat-select"
+        v-model:value="currentProjectId"
+        :options="projectList"
+        @change="handleProjectChange"
+      >
+      </a-select>
       <a-avatar class="header-animat-avatar" :size="22">
         <template #icon>
           <UserOutlined />
@@ -15,9 +23,43 @@
 </template>
 
 <script>
+import { ref, watch, computed, getCurrentInstance, nextTick } from "vue";
+import { useGeneralStore } from "../../store/modules/project";
+const generalStore = useGeneralStore();
+
 export default {
   name: "header-animat",
-  setup() {},
+  setup() {
+    const handleManualRefresh = () => {
+      generalStore.setManualRefresh();
+    };
+    const currentProjectId = ref(Number(generalStore.getCurrentProjectId));
+
+    const projectList = computed(() => {
+      const list = generalStore.getProjectList;
+      let arr = [];
+      list.forEach((item) => {
+        arr.push({
+          label: item.name,
+          value: item.id,
+        });
+      });
+      return arr;
+    });
+
+    const handleProjectChange = (value) => {
+      generalStore.setCurrentProject(value);
+      nextTick(() => {
+        handleManualRefresh();
+      });
+    };
+
+    return {
+      currentProjectId,
+      projectList,
+      handleProjectChange,
+    };
+  },
 };
 </script>
 
@@ -52,5 +94,9 @@ export default {
   .header-animat-username {
     margin-right: 30px;
   }
+}
+.header-animat-select {
+  min-width: 150px;
+  margin-right: 20px;
 }
 </style>

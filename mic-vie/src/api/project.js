@@ -40,7 +40,20 @@ export function projectDetail(data) {
 }
 
 /**
- * 详情
+ * 获取全部
+ * @param {*} data
+ * @returns
+ */
+export function getProjectAll(data) {
+  return request({
+    url: "/adm/project/all",
+    method: "post",
+    data,
+  });
+}
+
+/**
+ * 生成代码
  * @param {*} data
  * @returns
  */

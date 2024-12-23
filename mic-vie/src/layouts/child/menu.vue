@@ -19,14 +19,18 @@ import { onMounted, ref, watch } from "vue";
 import { initRoute } from "../../config/menu.js";
 import { useRouter, useRoute } from "vue-router";
 import { getpageRouteAll } from "../../api/page.js";
+import { useGeneralStore } from "../../store/modules/project";
+
 export default {
   setup() {
+    const generalStore = useGeneralStore();
     const router = useRouter();
     const route = useRoute();
     let path = route.path;
     let openKeys = ref([]);
     let selectedKeys = ref([]);
     let items = ref([]);
+    let projectId = generalStore.currentProjectId;
     items.value = items.value.concat(initRoute);
 
     const init = () => {
@@ -65,7 +69,6 @@ export default {
     watch(
       () => route.path,
       (newPath) => {
-        console.log(newPath);
         openKeys.value = [];
         selectedKeys.value = [];
         path = newPath;
@@ -74,9 +77,17 @@ export default {
       { immediate: true }
     );
 
-    onMounted(async () => {
+    generalStore.$subscribe((mutation, state) => {
+      if (state.currentProjectId == projectId || !state.currentProjectId)
+        return;
+      projectId = state.currentProjectId;
+      items.value = [].concat(initRoute);
+      getRoutes();
+    });
+
+    const getRoutes = async () => {
       let res = await getpageRouteAll({
-        projectId: 1,
+        projectId: projectId,
         status: [2],
       });
       if (!res.success) return;
@@ -111,6 +122,10 @@ export default {
         });
       });
       items.value = items.value.concat(arr);
+    };
+
+    onMounted(async () => {
+      await getRoutes();
       init();
     });
 

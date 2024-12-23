@@ -34,6 +34,16 @@ const projectDetail = RouterConfigBuilder.routerConfigBuilder(
   true
 );
 
+// 所有项目
+const projectAll = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/project/all",
+  RouterConfigBuilder.METHOD_TYPE_POST,
+  (req, res) => {
+    return projectController.getAll(req, res);
+  },
+  true
+);
+
 // 项目生成
 const generatePage = RouterConfigBuilder.routerConfigBuilder(
   "/adm/project/generate",
@@ -49,4 +59,5 @@ export default {
   ...projectList,
   ...projectDetail,
   ...generatePage,
+  ...projectAll,
 };

@@ -79,6 +79,20 @@ export default class Project extends Base {
   }
 
   /**
+   * 获取详情详情
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async getAll(req, res) {
+    let data = req.body || {},
+      result = {};
+    result = await projectModel.getAll(data);
+
+    return this.send(res, result);
+  }
+
+  /**
    * 生成项目
    * @param {*} req
    * @param {*} res

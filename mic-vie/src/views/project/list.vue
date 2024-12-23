@@ -93,11 +93,13 @@
 import { onMounted, reactive, ref } from "vue";
 import { projectSave, projectList, projectGenerate } from "../../api/project";
 import { btnPopForm, tableColumns } from "./list.js";
+import { useGeneralStore } from "../../store/modules/project.js";
 import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
 
 export default {
   setup(props) {
+    const generalStore = useGeneralStore();
     const router = useRouter();
     let projectDetail = ref({});
     let dialogVisible = ref(false);
@@ -192,6 +194,7 @@ export default {
         message.error(res.errorMessage);
         return;
       }
+      generalStore.getValidProject();
       message.success(data.id ? "修改成功" : "添加成功");
       projectDetail.value = {};
       dialogVisible.value = false;

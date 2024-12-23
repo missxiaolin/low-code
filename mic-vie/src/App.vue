@@ -6,6 +6,7 @@
     }"
   >
     <template v-if="routeWhite.indexOf(path) === -1">
+      <!-- v-if="!isManualRefresht" -->
       <layouts />
     </template>
     <template v-else>
@@ -18,9 +19,10 @@
 import zhCN from "ant-design-vue/locale/zh_CN";
 import { theme } from "ant-design-vue";
 import { useTheme } from "./hooks/useTheme";
-import { onMounted, ref, defineAsyncComponent, watch } from "vue";
+import { onMounted, ref, defineAsyncComponent, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import rWhite from "./config/route";
+import { useGeneralStore } from "./store/modules/project";
 
 const { darkAlgorithm, compactAlgorithm } = theme;
 
@@ -31,6 +33,7 @@ export default {
   setup() {
     const router = useRouter();
     const routeWhite = ref(rWhite);
+    const generalStore = useGeneralStore();
     let path = ref("");
 
     // 监听当前路由
@@ -46,12 +49,18 @@ export default {
       const { initTheme } = useTheme();
       initTheme();
     });
+
+    const isManualRefresht = computed(() => {
+      return generalStore.getManualRefresh;
+    });
+
     return {
       routeWhite,
       path,
       lang: zhCN,
       darkAlgorithm,
       compactAlgorithm,
+      isManualRefresht,
     };
   },
 };

@@ -64,10 +64,11 @@ import { Form } from "ant-design-vue";
 import { login } from "@/api/user";
 import { setToken } from "@/utils/cache/cookies";
 import { useRouter } from "vue-router";
+import { useGeneralStore } from "../../store/modules/project";
+const generalStore = useGeneralStore();
 
 export default {
   setup(props) {
-    const [messageApi, contextHolder] = message.useMessage();
     const useForm = Form.useForm;
     const router = useRouter();
 
@@ -86,15 +87,17 @@ export default {
     });
     const { validate, validateInfos } = useForm(formRef, rulesRef);
     const onFinish = () => {
-      console.log("finish");
       login(formRef).then((res) => {
-        console.log(res);
         if (!res.success) {
-          messageApi.error(res.errorMessage);
+          message.error(res.errorMessage);
           return;
         }
+        generalStore.getValidProject();
         setToken(res.model.token || "");
-        router.push("/");
+        message.success("登录成功");
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
       });
     };
 

@@ -186,4 +186,18 @@ export default class ProjectModel {
 
     return res;
   }
+
+  /**
+   * 获取项目列表
+   * @param {*} params
+   * @returns
+   */
+  async getAll(params) {
+    let tableName = getTableName();
+    let res = Knex.select("*")
+      .from(tableName)
+      .where("status", "in", params.status);
+
+    return res;
+  }
 }
