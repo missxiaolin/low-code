@@ -26,7 +26,9 @@
           @showVueDialogVisible="showVueDialogVisible"
           @showCodeDialogVisible="showCodeDialogVisible"
           @save="save"
-        ></tools-bar>
+        >
+          <slot name="toole"></slot>
+        </tools-bar>
         <vueRuleTool
           :is-scale-revise="true"
           :parent="true"

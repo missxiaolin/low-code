@@ -1,17 +1,22 @@
 <template>
-  <div>
+  <div class="vcc-detaiil-box" v-if="isShowVcc">
     <vcc
       :initCodeEntity="codeInfoEntity"
       @updateCodeEntity="onCodeUpdate"
       @onLoadFinish="onLoadFinish"
       @save="save"
-    ></vcc>
+    >
+      <template v-slot:toole>
+        <toolePage :pageForm="pageForm" @success="toolePageSuccess"></toolePage>
+      </template>
+    </vcc>
   </div>
 </template>
 
 <script>
-import { pageRouteSave } from "../../api/page";
+import { pageRouteSave, pageRouteDetail } from "../../api/page";
 import { message } from "ant-design-vue";
+import toolePage from "./components/toolePage.vue";
 import { defineAsyncComponent } from "vue";
 // 以这样一段结构初始化VCC组件
 const initCodeStr =
@@ -32,9 +37,18 @@ const jsTem = `export default {
 export default {
   components: {
     vcc: defineAsyncComponent(() => import("../../components-v2/vcc.vue")),
+    toolePage,
   },
   data() {
     return {
+      projectId: 0,
+      pageForm: {
+        id: 0,
+        route_name: "",
+        path: "",
+        status: 2,
+      },
+      isShowVcc: false,
       codeInfoEntity: {
         codeStructure: "",
         JSCode: ``,
@@ -46,11 +60,41 @@ export default {
     };
   },
   mounted() {
-    this.codeInfoEntity.JSCode = jsTem;
-    this.codeInfoEntity.css = "";
-    this.codeInfoEntity.codeStructure = JSON.parse(initCodeStr);
+    this.projectId = Number(this.$route.query.projectId) || 0;
+    this.pageForm.id = Number(this.$route.query.pageId) || 0;
+    this.init();
   },
   methods: {
+    async init() {
+      if (!this.pageForm.id || this.pageForm.id === 0) {
+        this.codeInfoEntity.JSCode = jsTem;
+        this.codeInfoEntity.css = "";
+        this.codeInfoEntity.codeStructure = JSON.parse(initCodeStr);
+        this.isShowVcc = true;
+        return;
+      }
+      let res = await pageRouteDetail({
+        id: this.pageForm.id,
+        projectId: this.projectId,
+      });
+      if (!res.success) {
+        message.error(res.errorMessage);
+        return;
+      }
+      const model = res.model;
+      this.pageForm = {
+        id: model.id,
+        route_name: model.route_name,
+        path: model.path,
+        status: model.status,
+      };
+      this.codeInfoEntity.JSCode = model.script_json;
+      this.codeInfoEntity.css = model.css;
+      this.codeInfoEntity.codeStructure = JSON.parse(model.tem_json);
+      this.codeInfoEntity.eventNode = JSON.parse(model.eventNode);
+      this.codeInfoEntity.customData = JSON.parse(model.customData);
+      this.isShowVcc = true;
+    },
     onCodeUpdate({ codeRawVueInfo, JSCode, css, eventNode, customData }) {
       // 编辑后新的代码结构
       // codeRawVueInfo为template对象表示结构
@@ -59,10 +103,15 @@ export default {
     },
     onLoadFinish() {},
     async save(obj) {
+      if (!this.pageForm.route_name || !this.pageForm.path) {
+        return message.error("请先设置页面信息！！！");
+      }
       const data = {
+        id: this.pageForm.id,
         project_id: this.$route.query.projectId,
-        route_name: "ceshi",
-        path: "/ceshi",
+        route_name: this.pageForm.route_name,
+        path: this.pageForm.path,
+        status: this.pageForm.status,
         tem_json: JSON.stringify(obj.codeRawVueInfo),
         script_json: obj.JSCode,
         page_html: obj.code,
@@ -84,9 +133,22 @@ export default {
           },
         });
       }, 2000);
-      console.log(obj);
+    },
+    toolePageSuccess(e) {
+      this.pageForm = {
+        route_name: e.route_name,
+        path: e.path,
+        status: e.status,
+      };
     },
   },
+  // watch: {
+  //   isShowVcc(val) {
+  //     if (val) {
+  //       this.codeInfoEntity.codeStructure = JSON.parse(initCodeStr);
+  //     }
+  //   },
+  // },
 };
 </script>
 

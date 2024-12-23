@@ -29,6 +29,7 @@ export default class PageRoute {
       "css",
       "eventNode",
       "customData",
+      "status",
       "create_time",
       "update_time",
     ];
@@ -159,6 +160,8 @@ export default class PageRoute {
       "css",
       "script_json",
       "page_html",
+      "eventNode",
+      "customData",
       "status"
     )
       .from(tableName)

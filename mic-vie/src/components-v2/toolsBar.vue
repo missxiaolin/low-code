@@ -22,6 +22,7 @@
       </li>
     </ul>
     <ul>
+      <slot></slot>
       <li>
         <a-button type="link" @click="$emit('clear')">
           <DeleteOutlined />

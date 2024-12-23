@@ -27,7 +27,7 @@
     </div>
     <div class="mu-handle-content flex flex-1 flex-column">
       <div class="mb20">
-        <a-button type="primary" @click="goVcc">创建路由</a-button>
+        <a-button type="primary" @click="goVcc(0)">创建路由</a-button>
       </div>
       <xl-search-table
         :data="table.data"
@@ -71,13 +71,14 @@ export default {
     onMounted(() => {});
 
     const goVcc = (id = 0) => {
-      router.push({
-        path: "/form",
-        query: {
-          projectId: route.query.projectId,
-          pageId: id,
-        },
-      });
+      window.open("/form?projectId=" + route.query.projectId + "&pageId=" + id);
+      // router.push({
+      //   path: "/form",
+      //   query: {
+      //     projectId: route.query.projectId,
+      //     pageId: id,
+      //   },
+      // });
     };
 
     const resetForm = () => {
