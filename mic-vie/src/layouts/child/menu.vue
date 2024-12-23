@@ -16,9 +16,10 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { initRoute } from "../../config/menu.js";
 import { useRouter, useRoute } from "vue-router";
+import { getpageRouteAll } from "../../api/page.js";
 export default {
   setup() {
     const router = useRouter();
@@ -73,6 +74,46 @@ export default {
       },
       { immediate: true }
     );
+
+    onMounted(async () => {
+      let res = await getpageRouteAll({
+        projectId: 1,
+        status: [2],
+      });
+      if (!res.success) return;
+      let arr = [
+        {
+          key: "project",
+          label: "页面管理",
+          children: [
+            // {
+            //   key: "projectList",
+            //   path: "/project/list",
+            //   label: "项目列表",
+            // },
+          ],
+        },
+        // {
+        //   key: "2",
+        //   label: "组件管理",
+        //   path: "/component",
+        // },
+        // {
+        //   key: "3",
+        //   label: "模板管理",
+        //   path: "/template",
+        // }
+      ];
+      res.model.forEach((item) => {
+        arr[0].children.push({
+          key: item.id,
+          label: item.route_name,
+          path: `${item.path}`,
+        });
+      });
+      items.value = items.value.concat(arr);
+      init();
+    });
 
     return {
       openKeys,

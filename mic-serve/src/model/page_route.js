@@ -192,8 +192,8 @@ export default class PageRoute {
     let tableName = getTableName();
     let res = await Knex.select("*")
       .from(tableName)
-      .where("project_id", params.projectId);
-    .andWhere("status", "in", params.status);
+      .where("project_id", params.projectId)
+      .andWhere("status", "in", params.status);
     return res;
   }
 }

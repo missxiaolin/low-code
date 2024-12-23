@@ -34,6 +34,16 @@ const pageList = RouterConfigBuilder.routerConfigBuilder(
   true
 );
 
+// 获取所有页面
+const pageAll = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/page/all",
+  RouterConfigBuilder.METHOD_TYPE_POST,
+  (req, res) => {
+    return pageController.pageAll(req, res);
+  },
+  true
+);
+
 // 页面生成
 // const generatePage = RouterConfigBuilder.routerConfigBuilder(
 //   "/adm/page/generate",
@@ -48,5 +58,6 @@ export default {
   ...pageSave,
   ...pageList,
   ...pageDetail,
+  ...pageAll,
   // ...generatePage
 };

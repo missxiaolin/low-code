@@ -78,6 +78,21 @@ export default class Page extends Base {
   }
 
   /**
+   * 获取所有页面
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async pageAll(req, res) {
+    let data = req.body || {},
+      result = [];
+    console.log(data);
+    result = await pageRouteModel.getAll(data);
+    console.log(result);
+    return this.send(res, result);
+  }
+
+  /**
    * 生成页面
    * @param {*} req
    * @param {*} res

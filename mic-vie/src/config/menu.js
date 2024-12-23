@@ -6,7 +6,6 @@ export const initRoute = [
   },
   {
     key: "project",
-
     label: "项目",
     children: [
       {
