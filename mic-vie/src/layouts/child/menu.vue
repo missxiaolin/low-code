@@ -16,34 +16,36 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { initRoute } from "../../config/menu.js";
 import { useRouter, useRoute } from "vue-router";
 export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const path = route.path;
+    let path = route.path;
     let openKeys = ref([]);
     let selectedKeys = ref([]);
     let items = ref([]);
     items.value = items.value.concat(initRoute);
 
-    items.value.forEach((item) => {
-      if (item.path === path) {
-        openKeys.value = [item.key];
-        selectedKeys.value = [item.key];
-        return;
-      }
-      if (item.children) {
-        item.children.forEach((child) => {
-          if (child.path === path) {
-            openKeys.value = [item.key];
-            selectedKeys.value = [child.key];
-          }
-        });
-      }
-    });
+    const init = () => {
+      items.value.forEach((item) => {
+        if (item.path === path) {
+          openKeys.value = [item.key];
+          selectedKeys.value = [item.key];
+          return;
+        }
+        if (item.children) {
+          item.children.forEach((child) => {
+            if (child.path === path) {
+              openKeys.value = [item.key];
+              selectedKeys.value = [child.key];
+            }
+          });
+        }
+      });
+    };
 
     const handleClick = (e) => {
       if (e.keyPath.length === 1) {
@@ -59,6 +61,18 @@ export default {
         router.push(item.path);
       }
     };
+
+    watch(
+      () => route.path,
+      (newPath) => {
+        console.log(newPath);
+        openKeys.value = [];
+        selectedKeys.value = [];
+        path = newPath;
+        init();
+      },
+      { immediate: true }
+    );
 
     return {
       openKeys,
