@@ -29,13 +29,43 @@ class GenerateProject extends Base {
       projectId: projectId,
       status: [2],
     });
+    // 创建打包json文件
+    const rJsonName = resolve(__dirname, "../../../../mic-remote/r.json");
+    if (!fs.existsSync(rJsonName)) {
+      try {
+        fs.writeFileSync(rJsonName, "");
+        console.log("文件已创建");
+      } catch (error) {
+        console.error("创建文件时发生错误：", error);
+      }
+    }
+    let r = fs.readFileSync(rJsonName, "utf8");
+    r = r ? JSON.parse(r) : {};
     const targetDirectory = resolve(__dirname, "../../../../mic-remote");
 
     // 切换到目标文件夹
     process.chdir(targetDirectory);
+
     pages.forEach((item) => {
       let pageName = this.generateCamelCaseString(item.path);
-      console.log(pageName);
+      const filename = resolve(
+        __dirname,
+        `../../../../mic-remote/src/remote-components/${pageName}.vue`
+      );
+      fs.writeFileSync(filename, item.page_html); // 写入文件
+      r[item.path] = `./src/remote-components/${pageName}.vue`;
+    });
+    fs.writeFileSync(
+      resolve(__dirname, `../../../../mic-remote/r.json`),
+      `${JSON.stringify(r)}`
+    );
+    exec("npm run build", (error, stdout, stderr) => {
+      if (error) {
+        console.error(`执行命令失败: ${error.message}`);
+        return;
+      }
+
+      console.log(`执行命令成功，输出结果: ${stdout}`);
     });
   }
 

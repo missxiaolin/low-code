@@ -58,6 +58,15 @@
         :total="table.total"
         @handleCurrentChange="handleCurrentChange"
       >
+        <template #status="scope">
+          {{
+            scope.row.status == 1
+              ? "禁用"
+              : scope.row.status == 2
+              ? "启用"
+              : "发布中"
+          }}
+        </template>
         <template #options="scope">
           <a-button link size="small" @click="edit(scope.row)"> 编辑 </a-button>
           <a-button link size="small" @click="detail(scope.row)" class="ml10">
@@ -202,6 +211,12 @@ export default {
       let res = await projectGenerate({
         id: item.id,
       });
+      if (!res.success) {
+        message.error(res.errorMessage);
+        return;
+      }
+      message.success("项目发布中");
+      getProjectList();
     };
 
     onMounted(() => {

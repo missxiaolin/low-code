@@ -12,6 +12,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+mic-remote/src/remote-components/*.vue
+mic-remote/r.json
 
 # Editor directories and files
 .idea

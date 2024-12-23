@@ -27,7 +27,7 @@ export default {
       try {
         const moduleWraped = await __federation_method_getRemote(
           "lowCode",
-          `.${route.path}`
+          `${route.path}`
         );
         component.value = __federation_method_unwrapDefault(moduleWraped);
       } catch (error) {

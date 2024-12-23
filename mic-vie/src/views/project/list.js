@@ -104,6 +104,11 @@ export const btnPopForm = [
 
 export const tableColumns = [
   {
+    key: "id",
+    title: "ID",
+    align: "center",
+  },
+  {
     key: "name",
     title: "项目名称",
     align: "center",
@@ -136,6 +141,12 @@ export const tableColumns = [
   {
     key: "update_time",
     title: "修改时间",
+    align: "center",
+  },
+  {
+    key: "status",
+    prop: "status",
+    title: "状态",
     align: "center",
   },
   {
