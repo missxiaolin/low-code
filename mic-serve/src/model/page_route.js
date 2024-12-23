@@ -9,10 +9,8 @@ const TABLE_COLUMN = [];
 
 const DISOLAYT_TABLE_COLUMN = [];
 const STATUS_ENUM = {
-  1: "待发布",
-  2: "发布中",
-  3: "完成",
-  4: "草稿",
+  1: "禁用",
+  2: "启用",
 };
 
 function getTableName() {

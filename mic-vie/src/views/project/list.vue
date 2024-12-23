@@ -92,9 +92,10 @@ export default {
     let formDisbled = ref(false);
     let popShowBottomBtn = ref(true);
     const popForm = ref(btnPopForm);
-    const table = ref({
+    let table = ref({
       data: [],
       columns: tableColumns,
+      total: 0,
     });
     const typeOptions = reactive([
       {

@@ -26,20 +26,20 @@ export default class Page extends Base {
         update_time: startAt,
       });
     } else {
-      const pageDetail = pageRouteModel.getPageDetail({
-        projectId: data.project_id,
-        id: data.id,
-      });
-      if (pageDetail.status == 2) {
-        return this.send(res, result, false, "生成页面中不能编辑");
-      }
+      // const pageDetail = pageRouteModel.getPageDetail({
+      //   projectId: data.project_id,
+      //   id: data.id,
+      // });
+      // if (pageDetail.status == 2) {
+      //   return this.send(res, result, false, "生成页面中不能编辑");
+      // }
       let param = {
         ...data,
         update_time: startAt,
       };
       delete param.project_id;
       delete param.path;
-      param.status = 4;
+      // param.status = 4;
       result = await pageRouteModel.update(param, param.id);
     }
     return this.send(res, result);

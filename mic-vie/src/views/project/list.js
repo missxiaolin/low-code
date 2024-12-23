@@ -106,34 +106,42 @@ export const tableColumns = [
   {
     key: "name",
     title: "项目名称",
+    align: "center",
   },
   {
     key: "code",
     title: "三字码",
+    align: "center",
   },
   {
     key: "desc",
     title: "项目描述",
+    align: "center",
   },
   {
     key: "type_desc",
     title: "项目类型",
+    align: "center",
   },
   {
     key: "status_desc",
     title: "项目状态",
+    align: "center",
   },
   {
     key: "create_time",
     title: "创建时间",
+    align: "center",
   },
   {
     key: "update_time",
     title: "修改时间",
+    align: "center",
   },
   {
     key: "options",
     prop: "options",
+    align: "center",
     title: "操作",
     width: "200px",
     fixed: "right",
