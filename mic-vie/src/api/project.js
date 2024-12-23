@@ -38,3 +38,16 @@ export function projectDetail(data) {
     data,
   });
 }
+
+/**
+ * 详情
+ * @param {*} data
+ * @returns
+ */
+export function projectGenerate(data) {
+  return request({
+    url: "/adm/project/generate",
+    method: "post",
+    data,
+  });
+}

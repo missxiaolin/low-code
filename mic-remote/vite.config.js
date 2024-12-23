@@ -11,6 +11,7 @@ import monacoEditorPlugin from "vite-plugin-monaco-editor";
 import federation from "@originjs/vite-plugin-federation";
 import topLevelAwait from "vite-plugin-top-level-await";
 import { viteMockServe } from "vite-plugin-mock";
+import rJson from "./r.json";
 
 // 强制预构建插件包
 //  optimizeDeps: {
@@ -90,9 +91,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
       federation({
         name: "lowCode",
         filename: "remoteEntry.js",
-        exposes: {
-          "./remoteButton": "./src/remote-components/button.vue",
-        },
+        exposes: rJson,
         shared: {
           vue: {
             generate: false,

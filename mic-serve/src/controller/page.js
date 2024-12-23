@@ -83,35 +83,35 @@ export default class Page extends Base {
    * @param {*} res
    * @returns
    */
-  async generatePage(req, res) {
-    let data = req.body || {},
-      result = {};
-    let pageRes = await pageRouteModel.getPageDetail({
-      projectId: data.projectId,
-      status: 2,
-    });
-    if (pageRes) {
-      return this.send(
-        res,
-        result,
-        false,
-        "待上一个页面生成完成，才能继续生成！"
-      );
-    }
-    let param = {
-      status: 2,
-      project_id: data.projectId,
-    };
-    await pageRouteModel.update(param, data.id);
+  // async generatePage(req, res) {
+  //   let data = req.body || {},
+  //     result = {};
+  //   let pageRes = await pageRouteModel.getPageDetail({
+  //     projectId: data.projectId,
+  //     status: 2,
+  //   });
+  //   if (pageRes) {
+  //     return this.send(
+  //       res,
+  //       result,
+  //       false,
+  //       "待上一个页面生成完成，才能继续生成！"
+  //     );
+  //   }
+  //   let param = {
+  //     status: 2,
+  //     project_id: data.projectId,
+  //   };
+  //   await pageRouteModel.update(param, data.id);
 
-    exec(
-      `npm run command Generate:Project ${data.projectId} ${data.id}`,
-      async (error, stdout, stderr) => {
-        console.log(stdout, stderr);
-        param.status = 3;
-        await pageRouteModel.update(param, data.id);
-      }
-    );
-    return this.send(res, result);
-  }
+  //   exec(
+  //     `npm run command Generate:Project ${data.projectId} ${data.id}`,
+  //     async (error, stdout, stderr) => {
+  //       console.log(stdout, stderr);
+  //       param.status = 3;
+  //       await pageRouteModel.update(param, data.id);
+  //     }
+  //   );
+  //   return this.send(res, result);
+  // }
 }

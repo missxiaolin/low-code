@@ -71,6 +71,9 @@
           >
             路由配置
           </a-button>
+          <a-button link size="small" @click="generate(scope.row)" class="ml10">
+            发布
+          </a-button>
         </template>
       </xl-search-table>
     </div>
@@ -79,7 +82,7 @@
 
 <script>
 import { onMounted, reactive, ref } from "vue";
-import { projectSave, projectList } from "../../api/project";
+import { projectSave, projectList, projectGenerate } from "../../api/project";
 import { btnPopForm, tableColumns } from "./list.js";
 import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
@@ -195,11 +198,18 @@ export default {
       });
     };
 
+    const generate = async (item) => {
+      let res = await projectGenerate({
+        id: item.id,
+      });
+    };
+
     onMounted(() => {
       getProjectList();
     });
 
     return {
+      generate,
       goRoutePage,
       popClick,
       edit,

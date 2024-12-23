@@ -176,7 +176,6 @@ export default class ProjectModel {
    * @returns
    */
   async getPageDetail(params) {
-    console.log(params);
     let tableName = getTableName();
     let res = Knex.select("*").from(tableName).where("id", params.id);
 

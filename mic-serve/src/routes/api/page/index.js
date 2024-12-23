@@ -35,18 +35,18 @@ const pageList = RouterConfigBuilder.routerConfigBuilder(
 );
 
 // 页面生成
-const generatePage = RouterConfigBuilder.routerConfigBuilder(
-  "/adm/page/generate",
-  RouterConfigBuilder.METHOD_TYPE_POST,
-  (req, res) => {
-    return pageController.generatePage(req, res);
-  },
-  true
-);
+// const generatePage = RouterConfigBuilder.routerConfigBuilder(
+//   "/adm/page/generate",
+//   RouterConfigBuilder.METHOD_TYPE_POST,
+//   (req, res) => {
+//     return pageController.generatePage(req, res);
+//   },
+//   true
+// );
 
 export default {
   ...pageSave,
   ...pageList,
   ...pageDetail,
-  ...generatePage
+  // ...generatePage
 };
