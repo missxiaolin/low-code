@@ -64,3 +64,11 @@ export function projectGenerate(data) {
     data,
   });
 }
+
+export function getRemoteEntry(data) {
+  return request({
+    url: "/adm/project/remote/entry",
+    method: "post",
+    data,
+  });
+}

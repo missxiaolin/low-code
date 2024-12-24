@@ -8,22 +8,37 @@ import {
   __federation_method_getRemote,
   __federation_method_unwrapDefault,
 } from "virtual:__federation__";
-import { ref } from "vue";
+import { getRemoteEntry } from "../../api/project";
+import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useGeneralStore } from "../../store/modules/project";
+
 export default {
   setup(props) {
+    const generalStore = useGeneralStore();
     const component = ref("");
     const route = useRoute();
     const router = useRouter();
+    let projectId = generalStore.currentProjectId;
+    const load = () => {
+      // 第三种方案
+      __federation_method_setRemote("lowCode", {
+        url: async () => {
+          let res = await getRemoteEntry({ id: projectId });
+          return Promise.resolve(res.model.url).catch((e) => {
+            console.log(e);
+          });
+        },
+        format: "esm",
+        from: "vite",
+      });
+    };
 
-    // 第三种方案
-    __federation_method_setRemote("lowCode", {
-      url: () =>
-        Promise.resolve(
-          "http://www.missxiaolin.com/lowcode/chr/1.0.0/remoteEntry.js"
-        ),
-      format: "esm",
-      from: "vite",
+    generalStore.$subscribe((mutation, state) => {
+      if (state.currentProjectId == projectId || !state.currentProjectId)
+        return;
+      projectId = state.currentProjectId;
+      load();
     });
 
     const init = async () => {
@@ -56,7 +71,14 @@ export default {
       // component.value = res[0].component;
     };
 
-    init();
+    watch(route, () => {
+      init();
+    });
+
+    onMounted(() => {
+      load();
+      init();
+    });
 
     return {
       component,

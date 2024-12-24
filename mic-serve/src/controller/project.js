@@ -71,9 +71,9 @@ export default class Project extends Base {
     let data = req.body || {},
       result = {};
     result = await projectModel.getPageDetail(data);
-    if (result.length == 0) {
-      return this.send(res, result, false, "未找到该项目");
-    }
+    // if (result.length == 0) {
+    //   return this.send(res, result, false, "未找到该项目");
+    // }
 
     return this.send(res, result);
   }
@@ -135,6 +135,25 @@ export default class Project extends Base {
     // });
 
     // console.log(pages);
+
+    return this.send(res, result);
+  }
+
+  /**
+   * 获取详情详情
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async getRemoteEntry(req, res) {
+    let data = req.body || {},
+      result = {};
+    result = await projectModel.getPageDetail(data);
+    // if (result.length == 0) {
+    //   return this.send(res, result, false, "未找到该项目");
+    // }
+
+    result.url = `http://www.missxiaolin.com/lowcode/${result.code}/1.0.0/remoteEntry.js`;
 
     return this.send(res, result);
   }
