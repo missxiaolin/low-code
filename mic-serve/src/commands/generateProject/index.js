@@ -1,11 +1,13 @@
 import Base from "../base";
 import PageRoute from "../../model/page_route";
+import ProjectModel from "../../model/project";
 import path, { resolve } from "path";
 import fs from "fs";
 import { uploadToken, uploadFile } from "../../library/qiniu/index";
 
 const { exec } = require("child_process");
 const pageRouteModel = new PageRoute();
+const projectModel = new ProjectModel();
 
 class GenerateProject extends Base {
   static get signature() {
@@ -29,6 +31,9 @@ class GenerateProject extends Base {
     let pages = await pageRouteModel.getAll({
       projectId: projectId,
       status: [2],
+    });
+    let projectDetail = await projectModel.getPageDetail({
+      id: projectId,
     });
     // 创建打包json文件
     const rJsonName = resolve(__dirname, "../../../../mic-remote/r.json");
@@ -61,21 +66,28 @@ class GenerateProject extends Base {
       `${JSON.stringify(r)}`
     );
 
-    // let file = resolve(
-    //   __dirname,
-    //   "../../../../mic-remote/dist/assets/remoteEntry.js"
-    // );
-    // console.log(uploadToken());
-    // console.log(file.split("assets/"));
-    // uploadFile(file, "lowcode/1.0.0/remoteEntry.js");
-    return projectId;
+    // 执行打包命令
     exec("npm run build", (error, stdout, stderr) => {
       if (error) {
         console.error(`执行命令失败: ${error.message}`);
         return;
       }
-
+      this.getBuildFiles(projectDetail.code);
       console.log(`执行命令成功，输出结果: ${stdout}`);
+    });
+  }
+
+  getBuildFiles(code) {
+    const path = "../../../../mic-remote/dist/assets/";
+    let fileDirectory = resolve(__dirname, path);
+    // 异步读取文件夹
+    fs.readdir(fileDirectory, (err, files) => {
+      files.forEach((file) => {
+        // 拼接完整的文件路径
+        const filePath = `${fileDirectory}/${file}`;
+        const fileName = `lowcode/${code}/1.0.0/${file}`;
+        uploadFile(filePath, fileName);
+      });
     });
   }
 

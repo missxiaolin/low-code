@@ -18,7 +18,10 @@ export default {
 
     // 第三种方案
     __federation_method_setRemote("lowCode", {
-      url: () => Promise.resolve("http://localhost:8092/assets/remoteEntry.js"),
+      url: () =>
+        Promise.resolve(
+          "http://www.missxiaolin.com/lowcode/chr/1.0.0/remoteEntry.js"
+        ),
       format: "esm",
       from: "vite",
     });
