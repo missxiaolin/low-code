@@ -23,7 +23,10 @@
               :label="item.label"
               :name="item.key"
             >
-              <a-input v-model:value="ruleForm[item.key]" />
+              <a-input
+                :disabled="disabled || item.disabled"
+                v-model:value="ruleForm[item.key]"
+              />
             </a-form-item>
           </template>
           <template v-if="item.type == 'radio'">
@@ -34,6 +37,7 @@
               :name="item.key"
             >
               <a-radio-group
+                :disabled="disabled || item.disabled"
                 :options="item.dataOptions"
                 v-model:value="ruleForm[item.key]"
               />

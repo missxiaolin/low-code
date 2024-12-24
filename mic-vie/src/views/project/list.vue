@@ -168,10 +168,12 @@ export default {
       dialogVisible.value = e;
       projectDetail.value = {};
       formDisbled.value = false;
+      popForm.value[1].disabled = false;
       popShowBottomBtn.value = true;
     };
 
     const edit = (e) => {
+      popForm.value[1].disabled = true;
       projectDetail.value = e;
       popShowBottomBtn.value = true;
       dialogVisible.value = true;

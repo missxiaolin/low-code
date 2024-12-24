@@ -4,6 +4,7 @@ export const btnPopForm = [
     default: 1,
     type: "radio",
     label: "项目类型",
+    disabled: false,
     dataOptions: [
       {
         label: "pc",
@@ -32,6 +33,7 @@ export const btnPopForm = [
     data: "",
     placeholder: "请输入项目三字码",
     value: "",
+    disabled: false,
     rules: [
       {
         required: true,
@@ -53,6 +55,7 @@ export const btnPopForm = [
     data: "",
     placeholder: "请输入项目名称",
     value: "",
+    disabled: false,
     rules: [
       {
         required: true,
@@ -69,6 +72,7 @@ export const btnPopForm = [
     data: "",
     placeholder: "请输入项目描述",
     value: "",
+    disabled: false,
     rules: [
       {
         required: true,
@@ -82,6 +86,7 @@ export const btnPopForm = [
     default: 2,
     type: "radio",
     label: "是否禁用",
+    disabled: false,
     dataOptions: [
       {
         label: "禁用",
