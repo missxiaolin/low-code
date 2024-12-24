@@ -2,6 +2,7 @@ import Base from "../base";
 import PageRoute from "../../model/page_route";
 import path, { resolve } from "path";
 import fs from "fs";
+import { uploadToken, uploadFile } from "../../library/qiniu/index";
 
 const { exec } = require("child_process");
 const pageRouteModel = new PageRoute();
@@ -59,6 +60,15 @@ class GenerateProject extends Base {
       resolve(__dirname, `../../../../mic-remote/r.json`),
       `${JSON.stringify(r)}`
     );
+
+    // let file = resolve(
+    //   __dirname,
+    //   "../../../../mic-remote/dist/assets/remoteEntry.js"
+    // );
+    // console.log(uploadToken());
+    // console.log(file.split("assets/"));
+    // uploadFile(file, "lowcode/1.0.0/remoteEntry.js");
+    return projectId;
     exec("npm run build", (error, stdout, stderr) => {
       if (error) {
         console.error(`执行命令失败: ${error.message}`);
@@ -69,6 +79,14 @@ class GenerateProject extends Base {
     });
   }
 
+  // 上传到七牛云
+  uploadQiNiuFile(file, fileName) {}
+
+  /**
+   * 生成名称
+   * @param {*} path
+   * @returns
+   */
   generateCamelCaseString(path) {
     const segments = path.split("/");
     let camelCaseStr = "";

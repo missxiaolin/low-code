@@ -26,6 +26,7 @@
     "dotenv": "^16.4.5",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "formidable": "^3.5.2",
     "http-errors": "~1.6.3",
     "ioredis": "^4.28.0",
     "ipip-datx": "^0.2.2",
@@ -37,6 +38,7 @@
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "node-schedule": "^2.0.0",
+    "qiniu": "^7.14.0",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {

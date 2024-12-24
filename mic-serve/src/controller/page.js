@@ -86,9 +86,7 @@ export default class Page extends Base {
   async pageAll(req, res) {
     let data = req.body || {},
       result = [];
-    console.log(data);
     result = await pageRouteModel.getAll(data);
-    console.log(result);
     return this.send(res, result);
   }
 
