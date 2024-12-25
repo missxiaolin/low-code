@@ -1,9 +1,8 @@
 import Base from "./base";
 import moment from "moment";
-import PageRouteModel from "../model/page_route";
-const { exec } = require("child_process");
+import MenuModel from "../model/menu";
 
-const pageRouteModel = new PageRouteModel();
+const menuModel = new MenuModel();
 
 /**
  * 项目controller
@@ -20,45 +19,19 @@ export default class Menu extends Base {
       result = {};
 
     if (data.id == 0 || !data.id) {
-      result = await pageRouteModel.save({
+      result = await menuModel.save({
         ...data,
         create_time: startAt,
         update_time: startAt,
       });
     } else {
-      // const pageDetail = pageRouteModel.getPageDetail({
-      //   projectId: data.project_id,
-      //   id: data.id,
-      // });
-      // if (pageDetail.status == 2) {
-      //   return this.send(res, result, false, "生成页面中不能编辑");
-      // }
       let param = {
         ...data,
         update_time: startAt,
       };
       delete param.project_id;
-      delete param.path;
-      // param.status = 4;
-      result = await pageRouteModel.update(param, param.id);
+      result = await menuModel.update(param, param.id);
     }
-    return this.send(res, result);
-  }
-
-  /**
-   * 获取详情
-   * @param {*} req
-   * @param {*} res
-   * @returns
-   */
-  async detail(req, res) {
-    let data = req.body || {},
-      result = {};
-    result = await pageRouteModel.getPageDetail(data);
-    if (result.length == 0) {
-      return this.send(res, result, false, "未找到该路由");
-    }
-
     return this.send(res, result);
   }
 
@@ -68,12 +41,47 @@ export default class Menu extends Base {
    * @param {*} res
    * @returns
    */
-  async pageList(req, res) {
+  async menuList(req, res) {
+    let data = req.body || {},
+      result = {};
+    result.list = await menuModel.getPages(data);
+    result.count = await menuModel.getPagesCount(data);
+    return this.send(res, result);
+  }
+
+  /**
+   * 获取所有
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async menuAll(req, res) {
     let data = req.body || {},
       result = {};
 
-    result.list = await pageRouteModel.getPages(data);
-    result.count = await pageRouteModel.getPagesCount(data);
+    result = await menuModel.getMenuAll(data);
+    return this.send(res, result);
+  }
+
+  /**
+   * 路由 list
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async menuRouteAll(req, res) {
+    let data = req.body || {},
+      result = {};
+
+    result = await menuModel.getMenuRouteAll(data);
+    for (let i = 0; i < result.length; i++) {
+      if (result[i].type == 1) {
+        result[i].children = await menuModel.getMenuRouteAll({
+          projectId: data.projectId,
+          menuId: result[i].id,
+        });
+      }
+    }
     return this.send(res, result);
   }
 }

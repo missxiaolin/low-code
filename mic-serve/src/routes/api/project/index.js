@@ -71,7 +71,7 @@ const menuList = RouterConfigBuilder.routerConfigBuilder(
   "/adm/project/menu/list",
   RouterConfigBuilder.METHOD_TYPE_POST,
   (req, res) => {
-    return menuController.getRemoteEntry(req, res);
+    return menuController.menuList(req, res);
   },
   false
 );
@@ -81,17 +81,27 @@ const menuSave = RouterConfigBuilder.routerConfigBuilder(
   "/adm/project/menu/save",
   RouterConfigBuilder.METHOD_TYPE_POST,
   (req, res) => {
-    return menuController.getRemoteEntry(req, res);
+    return menuController.save(req, res);
   },
   false
 );
 
 // 项目菜单获取
-const getProjectMenuList = RouterConfigBuilder.routerConfigBuilder(
+const getProjectMenuAll = RouterConfigBuilder.routerConfigBuilder(
   "/adm/project/menu/all",
-  RouterConfigBuilder.METHOD_TYPE_GET,
+  RouterConfigBuilder.METHOD_TYPE_POST,
   (req, res) => {
-    return projectController.getRemoteEntry(req, res);
+    return menuController.menuAll(req, res);
+  },
+  false
+);
+
+// 项目菜单获取
+const getProjectMenuRouteAll = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/project/menu/route/all",
+  RouterConfigBuilder.METHOD_TYPE_POST,
+  (req, res) => {
+    return menuController.menuRouteAll(req, res);
   },
   false
 );
@@ -105,5 +115,6 @@ export default {
   ...projectAll,
   ...menuList,
   ...menuSave,
-  ...getProjectMenuList,
+  ...getProjectMenuAll,
+  ...getProjectMenuRouteAll,
 };

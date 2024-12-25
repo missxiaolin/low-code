@@ -38,3 +38,16 @@ export function projectMenuAll(data) {
     data,
   });
 }
+
+/**
+ * 获取所有路由信息
+ * @param {*} data
+ * @returns
+ */
+export function projectMenuRouteAll(data) {
+  return request({
+    url: "/adm/project/menu/route/all",
+    method: "post",
+    data,
+  });
+}

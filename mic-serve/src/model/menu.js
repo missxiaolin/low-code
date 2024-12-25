@@ -22,6 +22,8 @@ export default class MenuModel {
       "name",
       "type",
       "status",
+      "create_time",
+      "update_time",
     ];
   }
 
@@ -67,7 +69,14 @@ export default class MenuModel {
    * @returns
    */
   async getPages(params) {
-    let { projectId = 0, pageSize = 10, page = 1, name = "" } = params;
+    let {
+      projectId = 0,
+      pageSize = 10,
+      page = 1,
+      name = "",
+      type = "",
+      status = "",
+    } = params;
     let tableName = getTableName();
 
     let res = Knex.select("*").from(tableName).where("project_id", projectId);
@@ -75,8 +84,12 @@ export default class MenuModel {
     if (name) {
       res = res.andWhere("name", "like", `%${name}%`);
     }
-    if (path) {
-      res = res.andWhere("path", path);
+    if (type) {
+      res = res.andWhere("type", type);
+    }
+
+    if (status) {
+      res = res.andWhere("status", status);
     }
 
     res = await res
@@ -89,7 +102,6 @@ export default class MenuModel {
       });
 
     res.forEach((item) => {
-      item.status_desc = STATUS_ENUM[item.status];
       item.create_time = moment(item.create_time).format(
         DATE_FORMAT.DISPLAY_BY_SECOND
       );
@@ -107,7 +119,7 @@ export default class MenuModel {
    * @returns
    */
   async getPagesCount(params) {
-    let { projectId = 0, name = "", path = "" } = params;
+    let { projectId = 0, name = "", type = "", status = "" } = params;
     let tableName = getTableName();
     let res = Knex.from(tableName);
 
@@ -116,8 +128,12 @@ export default class MenuModel {
     if (name) {
       res = res.andWhere("name", "like", `%${name}%`);
     }
-    if (path) {
-      res = res.andWhere("path", path);
+    if (type) {
+      res = res.andWhere("type", type);
+    }
+
+    if (status) {
+      res = res.andWhere("status", status);
     }
 
     res = await res.count("* as menuCount").catch((err) => {
@@ -126,5 +142,39 @@ export default class MenuModel {
     });
 
     return res[0].menuCount;
+  }
+
+  /**
+   * 获取所有菜单
+   * @param {*} params
+   */
+  async getMenuAll(params) {
+    let { projectId = 0, menuId = 0, type = 1, status = 1 } = params;
+    let tableName = getTableName();
+    let res = Knex.from(tableName);
+    res = await res
+      .where("project_id", projectId)
+      .andWhere("menu_id", menuId)
+      .andWhere("type", type)
+      .andWhere("status", status);
+
+    return res;
+  }
+
+  /**
+   * 获取所有左侧路由
+   * @param {*} params
+   * @returns
+   */
+  async getMenuRouteAll(params) {
+    let { projectId = 0, menuId = 0, status = 1 } = params;
+    let tableName = getTableName();
+    let res = Knex.from(tableName);
+    res = await res
+      .where("project_id", projectId)
+      .andWhere("menu_id", menuId)
+      .andWhere("status", status);
+
+    return res;
   }
 }

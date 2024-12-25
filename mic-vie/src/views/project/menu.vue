@@ -42,7 +42,17 @@
         :columns="table.columns"
         :total="table.total"
         @handleCurrentChange="handleCurrentChange"
-      ></xl-search-table>
+      >
+        <template #type="scope">
+          {{ scope.row.type == 1 ? "菜单" : "按钮" }}
+        </template>
+        <template #status="scope">
+          {{ scope.row.status == 1 ? "显示" : "隐藏" }}
+        </template>
+        <template #options="scope">
+          <a-button link size="small" @click="edit(scope.row)"> 编辑 </a-button>
+        </template>
+      </xl-search-table>
     </div>
     <a-modal :title="'创建'" :footer="null" v-model:open="open">
       <a-form
@@ -63,15 +73,32 @@
           label="菜单"
           name="menu_id"
         >
-          <a-select
-            :options="menuListOptions"
-            v-model:value="form.ruleForm.menu_id"
-          />
+          <a-select v-model:value="form.ruleForm.menu_id" allowClear>
+            <!-- :options="menuListOptions" -->
+            <a-select-option
+              v-for="item in menuListOptions"
+              :key="item.id"
+              :value="item.id"
+            >
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
         </a-form-item>
-        <a-form-item ref="name" label="名称" name="name">
+        <a-form-item
+          ref="name"
+          label="名称"
+          name="name"
+          :rules="[{ required: true, message: '请输入名称!' }]"
+        >
           <a-input v-model:value="form.ruleForm.name" />
         </a-form-item>
-        <a-form-item ref="path" label="路径" name="path">
+        <a-form-item
+          v-if="form.ruleForm.type == 2"
+          ref="path"
+          label="路径"
+          name="path"
+          :rules="[{ required: true, message: '请输入路径!' }]"
+        >
           <a-input v-model:value="form.ruleForm.path" />
         </a-form-item>
 
@@ -92,14 +119,24 @@
 
 <script>
 import { onMounted, reactive, ref } from "vue";
+import { message } from "ant-design-vue";
 import { tableColumns } from "./menu.js";
+import { useGeneralStore } from "../../store/modules/project";
+import {
+  projectMenuAll,
+  projectMenuList,
+  projectMenuSave,
+} from "../../api/menu.js";
 
 export default {
   setup() {
+    const generalStore = useGeneralStore();
+    const projectId = generalStore.currentProjectId;
     const formRef = ref(null);
     let menuListOptions = ref([]);
     let open = ref(false);
     let searchForm = ref({
+      projectId: Number(projectId),
       name: "",
       type: "",
       status: "",
@@ -134,6 +171,8 @@ export default {
 
     let form = ref({
       ruleForm: {
+        id: 0,
+        project_id: Number(projectId),
         menu_id: "",
         path: "",
         name: "",
@@ -143,7 +182,16 @@ export default {
       rules: [],
     });
 
-    const getMenuList = () => {};
+    const getMenuList = async () => {
+      let res = await projectMenuList({
+        ...searchForm.value,
+      });
+      if (!res.success) {
+        return;
+      }
+      table.value.data = res.model.list;
+      table.value.total = res.model.count;
+    };
 
     const resetSearchForm = () => {
       searchForm.value = {
@@ -162,14 +210,35 @@ export default {
     };
 
     const showPop = () => {
+      form.value.ruleForm = {
+        id: 0,
+        projectId: Number(projectId),
+        menu_id: "",
+        path: "",
+        name: "",
+        type: 1,
+        status: 1,
+      };
       open.value = true;
     };
 
     const onSubmit = () => {
       formRef.value
         .validate()
-        .then(() => {
-          console.log("values", ruleForm, toRaw(ruleForm));
+        .then(async () => {
+          let res = await projectMenuSave({
+            ...form.value.ruleForm,
+            project_id: Number(projectId),
+            menu_id:
+              form.value.ruleForm.menu_id === ""
+                ? 0
+                : form.value.ruleForm.menu_id,
+          });
+          if (!res.success) {
+            return;
+          }
+          open.value = false;
+          getMenuList();
         })
         .catch((error) => {
           console.log("error", error);
@@ -180,11 +249,41 @@ export default {
       formRef.value.resetFields();
     };
 
+    const edit = (item) => {
+      form.value.ruleForm = {
+        id: item.id,
+        menu_id: item.menu_id === 0 ? "" : item.menu_id,
+        path: item.path,
+        name: item.name,
+        type: item.type,
+        status: item.status,
+      };
+      open.value = true;
+    };
+
+    // 获取所有菜单
+    const getMenuAllList = async () => {
+      let res = await projectMenuAll({
+        projectId,
+      });
+      if (!res.success) {
+        return;
+      }
+
+      menuListOptions.value = res.model;
+    };
+
     onMounted(() => {
+      if (!projectId) {
+        message.info("请先选择项目！");
+        return;
+      }
+      getMenuAllList();
       getMenuList();
     });
 
     return {
+      edit,
       menuListOptions,
       typeOptions,
       statusOptions,
