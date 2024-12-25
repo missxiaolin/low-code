@@ -1,8 +1,10 @@
 import _ from "lodash";
 import Project from "../../../controller/project";
+import Menu from "../../../controller/menu";
 import RouterConfigBuilder from "../../../library/utils/router_config_builder";
 
 const projectController = new Project();
+const menuController = new Menu();
 
 // 项目保存/修改
 const projectSave = RouterConfigBuilder.routerConfigBuilder(
@@ -64,6 +66,36 @@ const getRemoteEntry = RouterConfigBuilder.routerConfigBuilder(
   false
 );
 
+// 菜单list
+const menuList = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/project/menu/list",
+  RouterConfigBuilder.METHOD_TYPE_POST,
+  (req, res) => {
+    return menuController.getRemoteEntry(req, res);
+  },
+  false
+);
+
+// 菜单保存
+const menuSave = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/project/menu/save",
+  RouterConfigBuilder.METHOD_TYPE_POST,
+  (req, res) => {
+    return menuController.getRemoteEntry(req, res);
+  },
+  false
+);
+
+// 项目菜单获取
+const getProjectMenuList = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/project/menu/all",
+  RouterConfigBuilder.METHOD_TYPE_GET,
+  (req, res) => {
+    return projectController.getRemoteEntry(req, res);
+  },
+  false
+);
+
 export default {
   ...projectSave,
   ...projectList,
@@ -71,4 +103,7 @@ export default {
   ...generatePage,
   ...getRemoteEntry,
   ...projectAll,
+  ...menuList,
+  ...menuSave,
+  ...getProjectMenuList,
 };

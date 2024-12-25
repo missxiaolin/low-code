@@ -177,12 +177,14 @@ export default {
     border-radius: 0;
     margin: 0px;
   }
+  /**
   :deep(.ant-menu-submenu-active) {
     width: 100%;
     border-radius: 0;
     margin: 0px;
     background-color: var(--v3-menu-item-selected-bg-color) !important;
   }
+  **/
   :deep(.ant-menu-light .ant-menu-item-selected) {
     width: 100%;
     border-radius: 0;

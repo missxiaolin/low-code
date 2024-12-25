@@ -18,6 +18,18 @@
         <a lc_id="CjKb5cqk6/">W3School</a>
       </div>
     </div>
+    <div class="column-li" lc-mark lc_id="+rMf1akKUN">
+      <div class="title" lc_id="V2LNXz4b8J">组件</div>
+      <div class="li-mark-content" lc_id="6drHNPzIoB">
+        <component div-lc-mark lc_id="X8clkKF9CC"></component>
+      </div>
+    </div>
+    <div class="column-li" lc-mark lc_id="YqlPR2DK3t">
+      <div class="title" lc_id="CObXWsLQKr">template</div>
+      <div class="li-mark-content" lc_id="tzPRmHcTxA">
+        <template div-lc-mark lc_id="NnncXl/vXr"></template>
+      </div>
+    </div>
   </div>
 </template>
 <script>

@@ -13,6 +13,11 @@ export const initRoute = [
         path: "/project/list",
         label: "项目列表",
       },
+      {
+        key: "menuList",
+        path: "/project/menu",
+        label: "菜单列表",
+      },
     ],
   },
   // {

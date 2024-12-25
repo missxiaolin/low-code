@@ -75,6 +75,23 @@ export default {
       },
     },
   },
+  component: {
+    style: style,
+    component: ["__text__"],
+    customComponent: {
+      base: {
+        title: "基础",
+        children: [
+          {
+            label: "组件",
+            key: "is",
+            settingType: "input",
+            value: "",
+          },
+        ],
+      },
+    },
+  },
   "a-button": {
     style: style,
     component: ["href", "target", "size", "__text__", "@click"],
