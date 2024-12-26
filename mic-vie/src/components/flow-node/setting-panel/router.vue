@@ -58,7 +58,6 @@ export default {
         props.config && props.config.routeData ? props.config.routeData : [],
     });
     const onFinish = () => {
-      console.log(form.value);
       emit("save", form.value);
     };
 

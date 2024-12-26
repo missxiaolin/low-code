@@ -21,6 +21,7 @@
         :graphRef="graphRef"
         :curModel="curModel"
         :popConfig="curModel"
+        :customData="customData"
         @close="
           () => {
             open = false;
@@ -61,6 +62,10 @@ export default {
     nodeData: {
       type: Object,
       default: () => ({}),
+    },
+    customData: {
+      type: Array,
+      default: () => [],
     },
   },
   components: {

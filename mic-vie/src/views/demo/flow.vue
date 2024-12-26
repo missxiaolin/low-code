@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ ceshi.ceshi }}
+    <!-- {{ ceshi }} -->
     <!-- <vueCode v-model:vueDialogVisible="open" /> -->
     <a-drawer
       v-model:open="open"
@@ -14,7 +14,11 @@
         <a-button type="primary" @click="save">保存</a-button>
       </template>
       <div class="node-viewer">
-        <flowNode :nodeData="flowData" ref="flowNodeRef"></flowNode>
+        <flowNode
+          :customData="customData"
+          :nodeData="flowData"
+          ref="flowNodeRef"
+        ></flowNode>
       </div>
     </a-drawer>
   </div>
@@ -32,10 +36,14 @@ export default {
     vueCode,
   },
   setup() {
-    let ceshi = ref({
-      ceshi: "111",
-    });
-    const open = ref(false);
+    let ceshi = ref("ceshi");
+    const customData = ref([
+      {
+        key: "ceshi",
+        keyDesc: "ceshi",
+      },
+    ]);
+    const open = ref(true);
     const flowNodeRef = ref(null);
     // data
     const flowData = ref({});
@@ -59,11 +67,9 @@ export default {
         // console.log(instance.proxy);
         // let a = instance.proxy;
         // let path = "ceshi.ceshi";
-
         // eval(`a.${path} = 2`);
-
         // console.log(a); // 输出: { ceshi: { ceshi: "2" } }
-        console.log(instance.proxy);
+        // console.log(instance.proxy);
       }, 3000);
       // instance.proxy
     });
@@ -74,6 +80,7 @@ export default {
       flowNodeRef,
       flowData,
       ceshi,
+      customData,
     };
   },
 };

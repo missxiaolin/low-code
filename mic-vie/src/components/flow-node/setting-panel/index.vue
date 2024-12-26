@@ -22,6 +22,7 @@
     <setupValue
       v-if="config.type === 'setupValue'"
       :config="config.config"
+      :customData="customData"
       @save="save"
     />
   </div>
@@ -58,6 +59,10 @@ export default {
       default: () => {
         return {};
       },
+    },
+    customData: {
+      type: Array,
+      default: () => [],
     },
   },
   emits: ["close"],
