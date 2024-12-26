@@ -24,12 +24,8 @@ const initCodeStr =
 
 const jsTem = `export default {
   setup() {
-    let $data = toRefs({
-    });
 
-    return {
-      ...$data,
-    };
+    return {};
   },
 };
 `;

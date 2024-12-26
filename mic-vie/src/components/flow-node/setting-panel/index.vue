@@ -19,11 +19,11 @@
       :config="config.config"
       @save="save"
     />
-    <!-- <setupValue
+    <setupValue
       v-if="config.type === 'setupValue'"
       :config="config.config"
       @save="save"
-    /> -->
+    />
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
     request: defineAsyncComponent(() => import("./request.vue")),
     function: defineAsyncComponent(() => import("./function.vue")),
     router: defineAsyncComponent(() => import("./router.vue")),
-    // setupValue: defineAsyncComponent(() => import("./setupValue.vue")),
+    setupValue: defineAsyncComponent(() => import("./setupValue.vue")),
   },
   props: {
     popConfig: {
@@ -69,7 +69,7 @@ export default {
 
     const options = ref([
       { label: "请求接口", value: "request" },
-      //   { label: "设置变量", value: "setupValue" },
+      { label: "设置变量", value: "setupValue" },
       { label: "执行脚本", value: "function" },
       { label: "路由跳转", value: "router" },
     ]);

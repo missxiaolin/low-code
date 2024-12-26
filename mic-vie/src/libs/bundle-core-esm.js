@@ -972,12 +972,17 @@ class CodeGenerator {
     Object.keys(mergedJSObject.methods).forEach((key) => {
       functionData += `const ${key} = ${mergedJSObject.methods[key]};\n`;
     });
+    let dataStr = ``,
+      dataKeys = Object.keys(toRefsData) || [];
+    Object.keys(toRefsData).forEach((key) => {
+      dataStr = `const ${key} = ref(${toRefsData[key]});\n`;
+    });
     // const $events = ${stringifyObject(this.eventNode)};
     const finalJSCode = `
 {
 setup(props, {emit}) {
   const instance = getCurrentInstance();
-  const $data = toRefs(${stringifyObject(toRefsData)});
+  ${dataStr}
   const $events = ${stringifyObject(this.eventNode)};
 
   // 执行事件流
@@ -1000,7 +1005,7 @@ setup(props, {emit}) {
   ${str}
   ${functionData}
   return {
-    ...$data,
+    ${dataKeys && dataKeys.length > 0 ? dataKeys.join(",") + "," : ""}
     eventFun,
     ${settingData && settingData.length > 0 ? settingData.join(",") + "," : ""}
     ${Object.keys(mergedJSObject.methods).join(",")}
@@ -1030,7 +1035,7 @@ setup(props, {emit}) {
       this.customCss
     );
 
-    vueExport.push("onMounted", "toRefs", "getCurrentInstance");
+    vueExport.push("onMounted", "ref", "getCurrentInstance");
     vueExport = Array.from(new Set(vueExport));
     const zTemp = styleTemp.replace("// $vueExport", vueExport.join(","));
     return zTemp;

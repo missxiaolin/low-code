@@ -5,7 +5,7 @@
       algorithm: [darkAlgorithm, compactAlgorithm],
     }"
   >
-    <template v-if="routeWhite.indexOf(path) === -1">
+    <template v-if="path && routeWhite.indexOf(path) === -1">
       <!-- v-if="!isManualRefresht" -->
       <layouts />
     </template>

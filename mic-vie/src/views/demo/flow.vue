@@ -1,7 +1,8 @@
 <template>
   <div>
+    {{ ceshi.ceshi }}
     <!-- <vueCode v-model:vueDialogVisible="open" /> -->
-    <!-- <a-drawer
+    <a-drawer
       v-model:open="open"
       :contentWrapperStyle="{ transform: 'translateX(0)' }"
       :mask="false"
@@ -15,12 +16,12 @@
       <div class="node-viewer">
         <flowNode :nodeData="flowData" ref="flowNodeRef"></flowNode>
       </div>
-    </a-drawer> -->
+    </a-drawer>
   </div>
 </template>
 
 <script>
-import { getCurrentInstance, onMounted, ref } from "vue";
+import { getCurrentInstance, onMounted, ref, toRefs, reactive } from "vue";
 import vueCode from "../../components/vcc/vueCodeEditorDialog.vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
 import data from "./flow.json";
@@ -31,12 +32,16 @@ export default {
     vueCode,
   },
   setup() {
+    let ceshi = ref({
+      ceshi: "111",
+    });
     const open = ref(false);
     const flowNodeRef = ref(null);
-    const flowData = ref(data);
+    // data
+    const flowData = ref({});
 
     const instance = getCurrentInstance();
-    console.log(instance.proxy.$execEventFlow);
+    // console.log(instance.proxy.$execEventFlow);
 
     const save = () => {
       flowNodeRef.value.flowSave();
@@ -44,10 +49,32 @@ export default {
     };
 
     onMounted(() => {
-      execEventFlow(instance, data.children);
+      // console.log((instance.proxy.ceshi.ceshi = 22));
+      // execEventFlow(instance, data.children);
+
+      setTimeout(() => {
+        // $data.value.ceshi = "ceshi2";
+        // console.log($data);
+        // instance.proxy.ceshi.ceshi = 2;
+        // console.log(instance.proxy);
+        // let a = instance.proxy;
+        // let path = "ceshi.ceshi";
+
+        // eval(`a.${path} = 2`);
+
+        // console.log(a); // 输出: { ceshi: { ceshi: "2" } }
+        console.log(instance.proxy);
+      }, 3000);
+      // instance.proxy
     });
 
-    return { open, save, flowNodeRef, flowData };
+    return {
+      open,
+      save,
+      flowNodeRef,
+      flowData,
+      ceshi,
+    };
   },
 };
 </script>

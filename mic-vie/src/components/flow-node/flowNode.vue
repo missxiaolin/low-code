@@ -22,11 +22,10 @@
         :curModel="curModel"
         :popConfig="curModel"
         @close="
-          (e) => {
+          () => {
             open = false;
             curModel = null;
             isShowDropDown = false;
-            e.stopPropagation();
           }
         "
       />
