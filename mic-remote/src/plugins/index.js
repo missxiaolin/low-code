@@ -1,11 +1,26 @@
 import { loadAnt } from "./ant/index.js";
 // import SvgIcon from "@/components/svgIcon/index.vue"; // svg组件
-import xlDatePicker from "../components/ant-desine/date-picker.vue";
-import xlFlex from "../components/ant-desine/a-flex.vue";
-import xlImage from "../components/ant-desine/a-image.vue";
-import xlTooltip from "../components/ant-desine/a-tooltip.vue";
-import xlPopconfirm from "../components/ant-desine/a-popconfirm.vue";
-import xlTimePicker from "../components/ant-desine/a-time-picker.vue";
+import micDatePicker from "../components/xl/ant-desine/date-picker.vue";
+import micFlex from "../components/xl/ant-desine/a-flex.vue";
+import micImage from "../components/xl/ant-desine/a-image.vue";
+import micTooltip from "../components/xl/ant-desine/a-tooltip.vue";
+import micPopconfirm from "../components/xl/ant-desine/a-popconfirm.vue";
+import micTimePicker from "../components/xl/ant-desine/a-time-picker.vue";
+import micSearchLabel from "../components/xl/search-label/index.vue";
+import micPop from "../components/xl/pop/index.vue";
+import micSearchTable from "../components/xl/l-search-table/index.vue";
+
+const components = [
+  micDatePicker,
+  micFlex,
+  micImage,
+  micTooltip,
+  micPopconfirm,
+  micTimePicker,
+  micSearchLabel,
+  micPop,
+  micSearchTable,
+];
 
 import "virtual:svg-icons-register";
 export function loadPlugins(app) {
@@ -13,11 +28,7 @@ export function loadPlugins(app) {
   // loadElementPlusIcon(app);
   loadAnt(app);
   // 注册到全局
-  app.component("xlDatePicker", xlDatePicker);
-  app.component("xlFlex", xlFlex);
-  app.component("xlImage", xlImage);
-  app.component("xlTooltip", xlTooltip);
-  app.component("xlPopconfirm", xlPopconfirm);
-  app.component("xlTimePicker", xlTimePicker);
-  // app.component("svg-icon", SvgIcon);
+  components.forEach((component) => {
+    app.component(component.name, component);
+  });
 }

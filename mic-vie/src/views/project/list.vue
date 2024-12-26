@@ -3,32 +3,32 @@
     <div class="mu-search-container pall10">
       <a-row>
         <a-col :span="8">
-          <search-label :labelName="'项目名称'">
+          <mic-search-label :labelName="'项目名称'">
             <a-input
               v-model:value="searchForm.name"
               placeholder="请输入项目名称"
             />
-          </search-label>
+          </mic-search-label>
         </a-col>
         <a-col :span="8">
-          <search-label :labelName="'分类'">
+          <mic-search-label :labelName="'分类'">
             <a-select
               v-model:value="searchForm.type"
               :options="typeOptions"
               placeholder="请选择分类"
             >
             </a-select>
-          </search-label>
+          </mic-search-label>
         </a-col>
         <a-col :span="8">
-          <search-label :labelName="'状态'">
+          <mic-search-label :labelName="'状态'">
             <a-select
               v-model:value="searchForm.status"
               placeholder="请选择分类"
               :options="statusOptions"
             >
             </a-select>
-          </search-label>
+          </mic-search-label>
         </a-col>
       </a-row>
       <div class="mu-search-form-button">
@@ -39,7 +39,7 @@
 
     <div class="mu-handle-content flex flex-1 flex-column">
       <div class="mb20">
-        <xl-pop
+        <mic-pop
           :btn-text="'创建项目'"
           :title="'项目'"
           :detail="projectDetail"
@@ -50,9 +50,9 @@
           :is-show-bottom-btn="popShowBottomBtn"
           @popClick="popClick"
           @success="popSuccess"
-        ></xl-pop>
+        ></mic-pop>
       </div>
-      <xl-search-table
+      <mic-search-table
         :data="table.data"
         :columns="table.columns"
         :total="table.total"
@@ -84,7 +84,7 @@
             发布
           </a-button>
         </template>
-      </xl-search-table>
+      </mic-search-table>
     </div>
   </div>
 </template>

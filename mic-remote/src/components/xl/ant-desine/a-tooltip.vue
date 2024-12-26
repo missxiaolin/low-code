@@ -9,6 +9,7 @@
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micTooltip",
   setup() {
     const attrs = useAttrs();
 

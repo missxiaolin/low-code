@@ -9,6 +9,7 @@
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micTimePicker",
   setup() {
     const attrs = useAttrs();
 

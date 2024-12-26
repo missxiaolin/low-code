@@ -1,12 +1,15 @@
 <template>
-  <span class="xl-data-picker-box">
-    <a-date-picker v-bind="attrs"></a-date-picker>
+  <span class="xl-a-image">
+    <a-image v-bind="attrs">
+      <slot></slot>
+    </a-image>
   </span>
 </template>
 
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micImage",
   setup() {
     const attrs = useAttrs();
 
@@ -18,7 +21,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.xl-data-picker-box {
+.xl-a-image {
   width: auto;
   display: block;
 }

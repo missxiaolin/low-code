@@ -3,20 +3,20 @@
     <div class="mu-search-container pall10">
       <a-row>
         <a-col :span="8">
-          <search-label :labelName="'路由名称'">
+          <mic-search-label :labelName="'路由名称'">
             <a-input
               v-model:value="searchForm.route_name"
               placeholder="请输入路由名称"
             />
-          </search-label>
+          </mic-search-label>
         </a-col>
         <a-col :span="8">
-          <search-label :labelName="'路由路径'">
+          <mic-search-label :labelName="'路由路径'">
             <a-input
               v-model:value="searchForm.path"
               placeholder="请输入路由路径"
             />
-          </search-label>
+          </mic-search-label>
         </a-col>
         <a-col :span="8"></a-col>
       </a-row>
@@ -29,7 +29,7 @@
       <div class="mb20">
         <a-button type="primary" @click="goVcc(0)">创建路由</a-button>
       </div>
-      <xl-search-table
+      <mic-search-table
         :data="table.data"
         :columns="table.columns"
         :total="table.total"
@@ -40,7 +40,7 @@
             编辑
           </a-button>
         </template>
-      </xl-search-table>
+      </mic-search-table>
     </div>
   </div>
 </template>

@@ -1,14 +1,15 @@
 <template>
-  <span class="xl-a-image">
-    <a-image v-bind="attrs">
+  <span class="xl-a-time-picker">
+    <a-time-picker v-bind="attrs">
       <slot></slot>
-    </a-image>
+    </a-time-picker>
   </span>
 </template>
 
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micTimePicker",
   setup() {
     const attrs = useAttrs();
 
@@ -20,7 +21,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.xl-a-image {
+.xl-a-time-picker {
   width: auto;
   display: block;
 }

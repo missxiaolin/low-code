@@ -9,6 +9,7 @@
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micPopconfirm",
   setup() {
     const attrs = useAttrs();
 

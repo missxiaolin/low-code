@@ -7,6 +7,7 @@
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micDatePicker",
   setup() {
     const attrs = useAttrs();
 

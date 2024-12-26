@@ -171,7 +171,7 @@ export default {
       },
     },
   },
-  "xl-flex": {
+  "mic-flex": {
     style: style,
     component: ["__text__"],
     customComponent: {
@@ -518,7 +518,7 @@ export default {
       },
     },
   },
-  "xl-image": {
+  "mic-image": {
     style: style,
     component: ["description", "image"],
     customComponent: {
@@ -564,7 +564,7 @@ export default {
       },
     },
   },
-  "xl-popconfirm": {
+  "mic-popconfirm": {
     style: style,
     component: ["title", "description"],
     customComponent: {
@@ -873,7 +873,7 @@ export default {
       },
     },
   },
-  "xl-tooltip": {
+  "mic-tooltip": {
     style: style,
     component: ["__text__"],
     customComponent: {
@@ -1569,7 +1569,7 @@ export default {
       },
     },
   },
-  "xl-date-picker": {
+  "mic-date-picker": {
     style: style,
     component: [
       "v-model:value",
@@ -2466,7 +2466,7 @@ export default {
       },
     },
   },
-  "xl-time-picker": {
+  "mic-time-picker": {
     style: style,
     component: ["v-model:value", ":disabled", "@blur", "@focus", "@change"],
     customComponent: {

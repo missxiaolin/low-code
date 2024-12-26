@@ -21,7 +21,7 @@
     <div class="column-li" lc-mark lc_id="R3z7nrn1d4">
       <div class="title" lc_id="amYaMKeKwD">弹性布局</div>
       <div class="li-mark-content" lc_id="CxCYqp2ZMq">
-        <xl-flex div-lc-mark lc_id="ZusoPoyXSp"></xl-flex>
+        <mic-flex div-lc-mark lc_id="ZusoPoyXSp"></mic-flex>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="9QCMjR7fbz">
@@ -65,13 +65,13 @@
     <div class="column-li" lc-mark lc_id="dzPbnmB/nn">
       <div class="title" lc_id="L8mAwpQHoJ">图片</div>
       <div class="li-mark-content" lc_id="CgZGdeFjQC">
-        <xl-image div-lc-mark lc_id="nFYjKLlfyN"></xl-image>
+        <mic-image div-lc-mark lc_id="nFYjKLlfyN"></mic-image>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="6MI2TH0k5C">
       <div class="title" lc_id="z8/PS9kuYQ">气泡提醒</div>
       <div class="li-mark-content" lc_id="5AG/WgzCrR">
-        <xl-popconfirm div-lc-mark lc_id="SRTsMLx9ih"></xl-popconfirm>
+        <mic-popconfirm div-lc-mark lc_id="SRTsMLx9ih"></mic-popconfirm>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="0JdPd5D0o+">
@@ -95,7 +95,7 @@
     <div class="column-li" lc-mark lc_id="fdgiXoz4Tq">
       <div class="title" lc_id="nvaj1nzom9">文字提示</div>
       <div class="li-mark-content" lc_id="RL1Wybr8WB">
-        <xl-tooltip div-lc-mark lc_id="pfkrOzfb9Z"></xl-tooltip>
+        <mic-tooltip div-lc-mark lc_id="pfkrOzfb9Z"></mic-tooltip>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="s7hRSE+WLw">

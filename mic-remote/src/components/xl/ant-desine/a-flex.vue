@@ -1,14 +1,15 @@
 <template>
-  <span class="xl-a-popconfirm">
-    <a-popconfirm v-bind="attrs">
+  <span class="xl-a-flex">
+    <a-flex v-bind="attrs">
       <slot></slot>
-    </a-popconfirm>
+    </a-flex>
   </span>
 </template>
 
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micFlex",
   setup() {
     const attrs = useAttrs();
 
@@ -20,7 +21,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.xl-a-popconfirm {
+.xl-a-flex {
   width: auto;
   display: block;
 }

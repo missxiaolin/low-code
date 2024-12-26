@@ -9,6 +9,7 @@
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micFlex",
   setup() {
     const attrs = useAttrs();
 

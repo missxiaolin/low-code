@@ -33,7 +33,7 @@
     <div class="column-li" lc-mark lc_id="gaSIj7Kfjt">
       <div class="title" lc_id="h3/kWbcIYi">日期</div>
       <div class="li-mark-content" lc_id="jc8TwEo3Ca">
-        <xl-date-picker lc_id="zdEQPflG+v"></xl-date-picker>
+        <mic-date-picker lc_id="zdEQPflG+v"></mic-date-picker>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="bAPUtYC11L">
@@ -75,7 +75,7 @@
     <div class="column-li" lc-mark lc_id="yVQ0BKfAK5">
       <div class="title" lc_id="OfrMBWKMVN">时间选择框</div>
       <div class="li-mark-content" lc_id="U6x526K65S">
-        <xl-time-picker lc_id="mSViYkWNVF"></xl-time-picker>
+        <mic-time-picker lc_id="mSViYkWNVF"></mic-time-picker>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="Lwk9fohcW0">

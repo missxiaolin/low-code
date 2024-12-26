@@ -3,29 +3,29 @@
     <div class="mu-search-container pall10">
       <a-row>
         <a-col :span="8">
-          <search-label :labelName="'名称'">
+          <mic-search-label :labelName="'名称'">
             <a-input v-model:value="searchForm.name" placeholder="请输入名称" />
-          </search-label>
+          </mic-search-label>
         </a-col>
         <a-col :span="8">
-          <search-label :labelName="'分类'">
+          <mic-search-label :labelName="'分类'">
             <a-select
               v-model:value="searchForm.type"
               :options="typeOptions"
               placeholder="请选择分类"
             >
             </a-select>
-          </search-label>
+          </mic-search-label>
         </a-col>
         <a-col :span="8">
-          <search-label :labelName="'状态'">
+          <mic-search-label :labelName="'状态'">
             <a-select
               v-model:value="searchForm.status"
               placeholder="请选择分类"
               :options="statusOptions"
             >
             </a-select>
-          </search-label>
+          </mic-search-label>
         </a-col>
       </a-row>
       <div class="mu-search-form-button">
@@ -37,7 +37,7 @@
       <div class="mb20">
         <a-button type="primary" @click="showPop">添加</a-button>
       </div>
-      <xl-search-table
+      <mic-search-table
         :data="table.data"
         :columns="table.columns"
         :total="table.total"
@@ -52,7 +52,7 @@
         <template #options="scope">
           <a-button link size="small" @click="edit(scope.row)"> 编辑 </a-button>
         </template>
-      </xl-search-table>
+      </mic-search-table>
     </div>
     <a-modal :title="'创建'" :footer="null" v-model:open="open">
       <a-form

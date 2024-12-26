@@ -9,6 +9,7 @@
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micImage",
   setup() {
     const attrs = useAttrs();
 

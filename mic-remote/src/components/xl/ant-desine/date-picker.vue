@@ -1,14 +1,13 @@
 <template>
-  <span class="xl-a-time-picker">
-    <a-time-picker v-bind="attrs">
-      <slot></slot>
-    </a-time-picker>
+  <span class="xl-data-picker-box">
+    <a-date-picker v-bind="attrs"></a-date-picker>
   </span>
 </template>
 
 <script>
 import { useAttrs } from "vue";
 export default {
+  name: "micDatePicker",
   setup() {
     const attrs = useAttrs();
 
@@ -20,7 +19,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.xl-a-time-picker {
+.xl-data-picker-box {
   width: auto;
   display: block;
 }
