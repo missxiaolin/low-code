@@ -1,5 +1,5 @@
 <template>
-  <a-form :model="form" ref="formRef">
+  <a-form :model="form" ref="formRef" :labelCol="{ style: { width: '55px' } }">
     <a-form-item name="functionScript" label="脚本">
       <a-textarea
         v-model:value="form.functionScript"

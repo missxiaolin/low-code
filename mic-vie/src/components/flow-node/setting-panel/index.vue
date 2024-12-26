@@ -25,6 +25,11 @@
       :customData="customData"
       @save="save"
     />
+    <message
+      v-if="config.type === 'message'"
+      :config="config.config"
+      @save="save"
+    />
   </div>
 </template>
 
@@ -37,6 +42,7 @@ export default {
     function: defineAsyncComponent(() => import("./function.vue")),
     router: defineAsyncComponent(() => import("./router.vue")),
     setupValue: defineAsyncComponent(() => import("./setupValue.vue")),
+    message: defineAsyncComponent(() => import("./message.vue")),
   },
   props: {
     popConfig: {
@@ -77,6 +83,7 @@ export default {
       { label: "设置变量", value: "setupValue" },
       { label: "执行脚本", value: "function" },
       { label: "路由跳转", value: "router" },
+      { label: "消息提示", value: "message" },
     ]);
 
     const save = (saveConfig) => {

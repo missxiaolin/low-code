@@ -1,5 +1,5 @@
 <template>
-  <a-form :model="form" ref="formRef">
+  <a-form :model="form" ref="formRef" :labelCol="{ style: { width: '55px' } }">
     <a-form-item name="routeType" label="跳转方式">
       <a-select :options="options" v-model:value="form.routeType" />
     </a-form-item>

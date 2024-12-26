@@ -1,5 +1,5 @@
 <template>
-  <a-form :model="form" ref="formRef">
+  <a-form :model="form" ref="formRef" :labelCol="{ style: { width: '55px' } }">
     <a-tabs v-model:activeKey="form.activeKey">
       <a-tab-pane key="select" tab="参数">
         <a-form-item name="key" label="变量">

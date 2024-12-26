@@ -1,5 +1,5 @@
 <template>
-  <a-form :model="form" ref="formRef">
+  <a-form :model="form" ref="formRef" :labelCol="{ style: { width: '55px' } }">
     <a-form-item name="url" label="请求url">
       <a-input v-model:value="form.requestUrl" />
     </a-form-item>
