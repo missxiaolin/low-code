@@ -7,7 +7,7 @@
 #
 # 主机: 127.0.0.1 (MySQL 5.7.44)
 # 数据库: micro_adm
-# 生成时间: 2024-12-24 08:21:33 +0000
+# 生成时间: 2024-12-26 01:18:28 +0000
 # ************************************************************
 
 
@@ -50,6 +50,7 @@ DROP TABLE IF EXISTS `menu`;
 
 CREATE TABLE `menu` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `menu_id` tinyint(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `path` varchar(100) NOT NULL COMMENT '路径',
   `name` varchar(30) NOT NULL COMMENT '名称',
@@ -60,6 +61,18 @@ CREATE TABLE `menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `menu` WRITE;
+/*!40000 ALTER TABLE `menu` DISABLE KEYS */;
+
+INSERT INTO `menu` (`id`, `menu_id`, `project_id`, `path`, `name`, `type`, `status`, `create_time`, `update_time`)
+VALUES
+	(1,0,1,'','测试选项',1,1,'2024-12-25 16:24:14','2024-12-25 17:02:06'),
+	(2,1,1,'/ceshi/index','测试',2,1,'2024-12-25 17:14:19','2024-12-25 17:19:37'),
+	(3,1,1,'/c/index','ceshi2',2,1,'2024-12-25 17:19:53','2024-12-25 17:19:53'),
+	(4,0,1,'/c/index','第一层',2,1,'2024-12-25 17:20:07','2024-12-25 17:44:29');
+
+/*!40000 ALTER TABLE `menu` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # 转储表 page_route
