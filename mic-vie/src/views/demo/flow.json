@@ -140,7 +140,7 @@
                 "config": {
                   "activeKey": "select",
                   "key": "ceshi",
-                  "value": "{{eventData[0].create_time}}"
+                  "value": "{{eventData.model[0].create_time}}"
                 }
               },
               "children": [

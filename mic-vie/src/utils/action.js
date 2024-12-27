@@ -90,9 +90,7 @@ export const requestHandle = async (
   const method = actionConfig.requestMethod || "";
   const params = actionConfig.requestParams || [];
   const route = urlTool.getQueryObject(window.location.href);
-  let res = {
-    model: {},
-  };
+  let res = {};
   try {
     let paramsValue = {};
     if (actionConfig.activeKey === "requestParams") {
@@ -133,7 +131,7 @@ export const requestHandle = async (
 
     // 执行成功后，执行后续成功success事件
     const nodes = item.children?.filter((o) => o.eventKey === "success");
-    nodes && execEventFlow(instance, nodes, res.model, initEventData);
+    nodes && execEventFlow(instance, nodes, res, initEventData);
   } catch (error) {
     // 执行失败后，执行后续失败error事件
     // console.log(error, "error");
@@ -142,7 +140,7 @@ export const requestHandle = async (
     nodes && execEventFlow(instance, nodes, error, initEventData);
   } finally {
     const nodes = item.children?.filter((o) => o.eventKey === "finally");
-    nodes && execEventFlow(instance, nodes, res.model, initEventData);
+    nodes && execEventFlow(instance, nodes, res, initEventData);
   }
 };
 
@@ -300,7 +298,6 @@ export function execEventFlow(
         return;
       }
       // 根据不同动作类型执行不同动作
-      console.log(item.config.type);
       await eventHandleMap[item.config.type](
         instance,
         item,
