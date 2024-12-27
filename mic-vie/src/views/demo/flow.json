@@ -56,13 +56,13 @@
       "config": {
         "type": "request",
         "config": {
-          "requestUrl": "/api/user/get",
-          "requestMethod": "get",
+          "requestUrl": "/adm/project/menu/route/all",
+          "requestMethod": "post",
           "activeKey": "requestParams",
           "requestParams": [
             {
-              "key": "a",
-              "value": "{{route.a}}"
+              "key": "projectId",
+              "value": "1"
             }
           ],
           "requestParamsScript": "(function (ctx) {\n  // TODO\n                    \n})(ctx)"
@@ -102,7 +102,7 @@
             {
               "type": "action",
               "id": "n-0.8794526240647318",
-              "label": "执行脚本",
+              "label": "设置变量",
               "key": "action",
               "menus": [
                 {
@@ -136,34 +136,36 @@
                 "selected": {}
               },
               "config": {
-                "type": "function",
+                "type": "setupValue",
                 "config": {
-                  "functionScript": "(function (ctx) {\n  // TODO\nconsole.log(ctx)\n                    \n})(ctx)"
+                  "activeKey": "select",
+                  "key": "ceshi",
+                  "value": "{{eventData[0].create_time}}"
                 }
               },
               "children": [
                 {
                   "type": "event",
-                  "id": "n-0.7764397035199453",
-                  "label": "成功",
-                  "key": "success",
+                  "id": "n-0.5628655707880945",
+                  "label": "成功或失败",
+                  "key": "finally",
                   "menus": [
                     {
                       "key": "action",
                       "label": "动作",
                       "nodeType": "action",
                       "nodeName": "动作",
-                      "eventKey": "success"
+                      "eventKey": "finally"
                     },
                     {
                       "key": "condition",
                       "label": "条件",
                       "nodeType": "condition",
                       "nodeName": "条件",
-                      "eventKey": "success"
+                      "eventKey": "finally"
                     }
                   ],
-                  "eventKey": "success",
+                  "eventKey": "finally",
                   "x": -148,
                   "y": 296,
                   "depth": 4,
@@ -174,15 +176,47 @@
                   "children": [
                     {
                       "type": "action",
-                      "id": "n-0.04909131607846251",
-                      "label": "动作",
+                      "id": "n-0.7135398144788976",
+                      "label": "消息提示",
                       "key": "action",
-                      "menus": [],
-                      "eventKey": "success",
+                      "menus": [
+                        {
+                          "label": "成功",
+                          "key": "success",
+                          "nodeType": "event",
+                          "nodeName": "成功",
+                          "eventKey": "success"
+                        },
+                        {
+                          "label": "失败",
+                          "key": "error",
+                          "nodeType": "event",
+                          "nodeName": "失败",
+                          "eventKey": "error"
+                        },
+                        {
+                          "label": "成功或失败",
+                          "key": "finally",
+                          "nodeType": "event",
+                          "nodeName": "成功或失败",
+                          "eventKey": "finally"
+                        }
+                      ],
+                      "eventKey": "finally",
                       "x": -148,
                       "y": 392,
                       "depth": 5,
-                      "style": {}
+                      "style": {
+                        "hover": {},
+                        "selected": {}
+                      },
+                      "config": {
+                        "type": "message",
+                        "config": {
+                          "type": "success",
+                          "content": "设置成功"
+                        }
+                      }
                     }
                   ]
                 }

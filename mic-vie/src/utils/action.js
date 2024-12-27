@@ -3,6 +3,7 @@ import router from "../router/index";
 import { request } from "./fetch";
 import { message } from "ant-design-vue";
 import urlUtils from "./url";
+import { setObjectValueByPath } from "./utils";
 const urlTool = new urlUtils();
 
 const [messageApi, contextHolder] = message.useMessage();
@@ -26,7 +27,50 @@ export function getData(instance, key) {
  * @param {*} value
  */
 export function setData(instance, key, value) {
-  instance.proxy[key] = value;
+  let setKeyObj = instance.proxy;
+  setObjectValueByPath(setKeyObj, key, value);
+}
+
+/**
+ * 设置变量
+ * @param {*} instance
+ * @param {*} item
+ * @param {*} actionConfig
+ * @param {*} eventData
+ * @param {*} initEventData
+ */
+export function setupValueHandle(
+  instance,
+  item,
+  actionConfig,
+  eventData,
+  initEventData
+) {
+  try {
+    const route = urlTool.getQueryObject(window.location.href);
+    let key = actionConfig.key,
+      value = actionConfig.value.replace(/\{{(.+)\}}/g, (_, $2) => {
+        return get(
+          {
+            eventData,
+            initEventData,
+            data: instance.proxy,
+            route: route.query || {},
+          },
+          $2
+        );
+      });
+    setData(instance, key, value);
+    // 执行成功后，执行后续成功success事件
+    const nodes = item.children?.filter((o) => o.eventKey === "success");
+    nodes && execEventFlow(instance, nodes, eventData, initEventData);
+  } catch (error) {
+    const nodes = item.children?.filter((o) => o.eventKey === "error");
+    nodes && execEventFlow(instance, nodes, eventData, initEventData);
+  } finally {
+    const nodes = item.children?.filter((o) => o.eventKey === "finally");
+    nodes && execEventFlow(instance, nodes, eventData, initEventData);
+  }
 }
 
 /**
@@ -46,6 +90,9 @@ export const requestHandle = async (
   const method = actionConfig.requestMethod || "";
   const params = actionConfig.requestParams || [];
   const route = urlTool.getQueryObject(window.location.href);
+  let res = {
+    model: {},
+  };
   try {
     let paramsValue = {};
     if (actionConfig.activeKey === "requestParams") {
@@ -82,20 +129,20 @@ export const requestHandle = async (
     } else if (method === "post") {
       param.data = paramsValue;
     }
-    const res = await request(param);
+    res = await request(param);
 
     // 执行成功后，执行后续成功success事件
     const nodes = item.children?.filter((o) => o.eventKey === "success");
-    nodes && execEventFlow(instance, nodes, res.data, initEventData);
+    nodes && execEventFlow(instance, nodes, res.model, initEventData);
   } catch (error) {
     // 执行失败后，执行后续失败error事件
     // console.log(error, "error");
 
     const nodes = item.children?.filter((o) => o.eventKey === "error");
-    nodes && execEventFlow(instance, nodes, error);
+    nodes && execEventFlow(instance, nodes, error, initEventData);
   } finally {
     const nodes = item.children?.filter((o) => o.eventKey === "finally");
-    nodes && execEventFlow(instance, nodes);
+    nodes && execEventFlow(instance, nodes, res.model, initEventData);
   }
 };
 
@@ -146,15 +193,15 @@ async function execScriptHandle(
 
       // 执行成功后，执行后续成功success事件
       const nodes = item.children?.filter((o) => o.eventKey === "success");
-      nodes && execEventFlow(instance, nodes);
-    } catch {
+      nodes && execEventFlow(instance, nodes, eventData, initEventData);
+    } catch (error) {
       // 执行失败后，执行后续error事件
       const nodes = item.children?.filter((o) => o.eventKey === "error");
-      nodes && execEventFlow(instance, nodes);
+      nodes && execEventFlow(instance, nodes, eventData, initEventData);
     } finally {
       // 执行后续成功或失败finally事件
       const nodes = item.children?.filter((o) => o.eventKey === "finally");
-      nodes && execEventFlow(instance, nodes);
+      nodes && execEventFlow(instance, nodes, eventData, initEventData);
     }
   }
 }
@@ -165,26 +212,28 @@ async function execScriptHandle(
  * @param {*} item
  * @param {*} actionConfig
  */
-function showMessageHandle(instance, item, actionConfig) {
-  if (actionConfig?.type && actionConfig?.text) {
+function showMessageHandle(
+  instance,
+  item,
+  actionConfig,
+  eventData,
+  initEventData
+) {
+  if (actionConfig?.type) {
     try {
-      if (actionConfig.type === "success") {
-        messageApi.success(actionConfig.text);
-      } else if (actionConfig.type === "error") {
-        messageApi.error(actionConfig.text);
-      }
+      message[actionConfig.type](actionConfig.content);
 
       // 执行成功后，执行后续成功success事件
       const nodes = item.children?.filter((o) => o.eventKey === "success");
-      nodes && execEventFlow(instance, nodes);
+      nodes && execEventFlow(instance, nodes, eventData, initEventData);
     } catch {
       // 执行失败后，执行后续error事件
       const nodes = item.children?.filter((o) => o.eventKey === "error");
-      nodes && execEventFlow(instance, nodes);
+      nodes && execEventFlow(instance, nodes, eventData, initEventData);
     } finally {
       // 执行后续成功或失败finally事件
       const nodes = item.children?.filter((o) => o.eventKey === "finally");
-      nodes && execEventFlow(instance, nodes);
+      nodes && execEventFlow(instance, nodes, eventData, initEventData);
     }
   }
 }
@@ -225,8 +274,9 @@ function routerHandle(instance, item, actionConfig, eventData, initEventData) {
 const eventHandleMap = {
   request: requestHandle,
   function: execScriptHandle,
-  showMessage: showMessageHandle,
+  message: showMessageHandle,
   router: routerHandle,
+  setupValue: setupValueHandle,
 };
 /**
  * 事件流
@@ -250,6 +300,7 @@ export function execEventFlow(
         return;
       }
       // 根据不同动作类型执行不同动作
+      console.log(item.config.type);
       await eventHandleMap[item.config.type](
         instance,
         item,
@@ -273,12 +324,12 @@ export function execEventFlow(
       //   c.conditionResult = !!conditionResult[c.conditionId];
       // });
       // // 递归执行子节点事件流
-      // execEventFlow(item.children, null, initEventData);
+      // execEventFlow(item.children, eventData, initEventData);
       // 递归执行子节点事件流
-      execEventFlow(instance, item.children, null, initEventData);
+      execEventFlow(instance, item.children, eventData, initEventData);
     } else if (item.type === "event") {
       // 如果是事件节点，执行事件子节点事件流
-      execEventFlow(instance, item.children, null, initEventData);
+      execEventFlow(instance, item.children, eventData, initEventData);
     }
   });
 }

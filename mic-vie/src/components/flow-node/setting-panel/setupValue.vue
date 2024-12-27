@@ -22,7 +22,7 @@
     <a-form-item name="value" label="值">
       <a-input v-model:value="form.value" />
     </a-form-item>
-    <a-form-item>
+    <a-form-item class="form-bottom-box">
       <a-button type="primary" @click="onFinish">保存</a-button>
     </a-form-item>
   </a-form>

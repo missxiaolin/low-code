@@ -7,7 +7,7 @@
         :auto-size="{ minRows: 2, maxRows: 5 }"
       />
     </a-form-item>
-    <a-form-item>
+    <a-form-item class="form-bottom-box">
       <a-button type="primary" @click="onFinish">保存</a-button>
     </a-form-item>
   </a-form>

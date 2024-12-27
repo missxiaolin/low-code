@@ -6,14 +6,13 @@
       :menuPosition="menuPosition"
       @onSelect="onSelect"
     />
-    <a-drawer
+    <a-modal
       v-model:open="open"
+      :footer="null"
       @close="(e) => e.stopPropagation()"
       title="设置"
-      width="30%"
+      width="50%"
       :key="2"
-      placement="right"
-      :push="true"
     >
       <settingPanel
         v-if="open"
@@ -30,7 +29,7 @@
           }
         "
       />
-    </a-drawer>
+    </a-modal>
     <div
       @click="(e) => e.stopPropagation()"
       id="mount-node"

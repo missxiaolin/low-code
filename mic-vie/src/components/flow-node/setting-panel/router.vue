@@ -24,7 +24,7 @@
         </a-form-item>
       </div>
     </div>
-    <a-form-item>
+    <a-form-item class="form-bottom-box">
       <a-button type="primary" @click="onFinish">保存</a-button>
     </a-form-item>
   </a-form>

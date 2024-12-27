@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- {{ ceshi }} -->
+    {{ ceshi }}
     <!-- <vueCode v-model:vueDialogVisible="open" /> -->
     <a-drawer
       v-model:open="open"
@@ -43,10 +43,10 @@ export default {
         keyDesc: "ceshi",
       },
     ]);
-    const open = ref(true);
+    const open = ref(false);
     const flowNodeRef = ref(null);
     // data
-    const flowData = ref({});
+    const flowData = ref(data);
 
     const instance = getCurrentInstance();
     // console.log(instance.proxy.$execEventFlow);
@@ -57,21 +57,7 @@ export default {
     };
 
     onMounted(() => {
-      // console.log((instance.proxy.ceshi.ceshi = 22));
-      // execEventFlow(instance, data.children);
-
-      setTimeout(() => {
-        // $data.value.ceshi = "ceshi2";
-        // console.log($data);
-        // instance.proxy.ceshi.ceshi = 2;
-        // console.log(instance.proxy);
-        // let a = instance.proxy;
-        // let path = "ceshi.ceshi";
-        // eval(`a.${path} = 2`);
-        // console.log(a); // 输出: { ceshi: { ceshi: "2" } }
-        // console.log(instance.proxy);
-      }, 3000);
-      // instance.proxy
+      execEventFlow(instance, data.children);
     });
 
     return {

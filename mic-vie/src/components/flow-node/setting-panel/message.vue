@@ -12,7 +12,7 @@
     <a-form-item name="value" label="内容">
       <a-input v-model:value="form.content" />
     </a-form-item>
-    <a-form-item>
+    <a-form-item class="form-bottom-box">
       <a-button type="primary" @click="onFinish">保存</a-button>
     </a-form-item>
   </a-form>

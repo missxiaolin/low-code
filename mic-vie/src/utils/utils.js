@@ -184,3 +184,34 @@ export function getTreeDepth(node) {
 
   return maxChildDepth + 1; // 当前节点的深度为子节点的最大深度加1
 }
+
+/**
+ * 获取某个对象的 key
+ * @param object
+ * @param path
+ * @returns
+ */
+export function getObjectValueByPath(object, path) {
+  return path.split(".").reduce((accumulator, currentKey) => {
+    return (accumulator || {})[currentKey];
+  }, object);
+}
+
+/**
+ * 设置某个对象的 key
+ * @param object
+ * @param path
+ * @param value
+ */
+export function setObjectValueByPath(object, path, value) {
+  const keys = path.split(".");
+  const lastKey = keys.pop(); // 获取最后一个键
+  const targetObject = keys.reduce((accumulator, currentKey) => {
+    // 确保每一层都有对象
+    if (!accumulator[currentKey]) {
+      accumulator[currentKey] = {};
+    }
+    return accumulator[currentKey];
+  }, object);
+  targetObject[lastKey] = value; // 设置新的值
+}
