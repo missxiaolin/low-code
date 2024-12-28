@@ -1,0 +1,149 @@
+<template>
+  <a-modal v-bind="attrs">
+    <div class="flex flex-column mt20">
+      <div class="formula-box flex flex-row">
+        <div
+          :class="{
+            'formula-left-box': true,
+          }"
+        >
+          <a-collapse ghost class="formula-collapse-box">
+            <a-collapse-panel
+              v-for="(item, index) in collapseList"
+              :key="index"
+              :header="item.title"
+            >
+              <template v-if="item.children.length > 0">
+                <div
+                  v-for="(v, i) in item.children"
+                  :key="i"
+                  class="formula-item"
+                  @mouseenter="(e) => handleMouseEnter(e, v)"
+                >
+                  {{ v.title }}
+                </div>
+              </template>
+              <template v-else>
+                <div>敬请期待</div>
+              </template>
+            </a-collapse-panel>
+          </a-collapse>
+          <div v-if="Object.keys(itemDetail).length > 0" class="tip-box">
+            <div class="title">{{ itemDetail.title }}</div>
+            <div class="doc">
+              <a-dropdown :placement="'top'" :trigger="['hover', 'click']">
+                <div>{{ itemDetail.doc }}</div>
+                <template #overlay>
+                  <a-table
+                    :columns="collapseColumns"
+                    :data-source="itemDetail.children"
+                    :pagination="false"
+                  >
+                  </a-table>
+                </template>
+              </a-dropdown>
+            </div>
+            <div class="desc">{{ itemDetail.desc }}</div>
+          </div>
+        </div>
+        <Formula style="height: 400px; padding-top: 10px" />
+        <div class="formula-right-box"></div>
+      </div>
+      <div class="form-bottom-box mt10">
+        <a-button type="primary" @click="handleOk">保存</a-button>
+      </div>
+    </div>
+  </a-modal>
+</template>
+
+<script>
+import { ref } from "vue";
+import Formula from "./index.vue";
+import { collapseList, collapseColumns } from "./config";
+import { useAttrs } from "vue";
+export default {
+  name: "micFormulaModal",
+  components: {
+    Formula,
+  },
+  setup() {
+    let itemDetail = ref({});
+    const attrs = useAttrs();
+
+    const handleOk = () => {
+      console.log("ok");
+    };
+
+    const handleMouseEnter = (e, v) => {
+      itemDetail.value = v;
+      document.querySelectorAll(".formula-item").forEach((item) => {
+        item.classList.remove("formula-item-active");
+      });
+      e.target.classList.add("formula-item-active");
+    };
+
+    return {
+      attrs,
+      handleOk,
+      collapseList,
+      handleMouseEnter,
+      itemDetail,
+      collapseColumns,
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.formula-box {
+  width: 100%;
+  height: 400px;
+  border: solid 1px var(--ve-header-animat);
+  border-radius: 10px;
+  padding: 10px 0 10 0px;
+}
+.formula-left-box {
+  width: 35%;
+  border-right: solid 1px var(--ve-header-animat);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(0);
+  .formula-collapse-box {
+    height: 300px;
+    overflow: auto;
+  }
+  .tip-box {
+    width: 100%;
+    height: 190px;
+    padding: 10px;
+    background-color: #303030;
+    .desc {
+      max-height: 80px;
+      overflow: auto;
+      margin-top: 10px;
+    }
+    .desc::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  }
+}
+.formula-right-box {
+  width: 35%;
+  border-left: solid 1px var(--ve-header-animat);
+  padding-left: 10px;
+  overflow: auto;
+}
+.formula-item {
+  width: 100%;
+  padding-left: 10px;
+  &:hover {
+    background-color: var(--ve-header-animat);
+  }
+  &.formula-item-active {
+    background-color: var(--ve-header-animat);
+  }
+}
+</style>

@@ -1,6 +1,12 @@
 <template>
   <div>
-    {{ ceshi }}
+    <formulaModal
+      v-model:open="modelOpen"
+      :title="'公式编辑'"
+      :footer="null"
+      width="80%"
+    />
+    <!-- {{ ceshi }} -->
     <!-- <vueCode v-model:vueDialogVisible="open" /> -->
     <a-drawer
       v-model:open="open"
@@ -30,6 +36,7 @@ import vueCode from "../../components/vcc/vueCodeEditorDialog.vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
 import data from "./flow.json";
 import { evaluate } from "../../utils/formula-main/index";
+import formulaModal from "../../components/formula/formula-modal.vue";
 const defaultContext = {
   a: 1,
   b: 2,
@@ -48,8 +55,10 @@ export default {
   components: {
     flowNode,
     vueCode,
+    formulaModal,
   },
   setup() {
+    const modelOpen = ref(true);
     console.log(evalFormual("IF(true, 2, 3)"));
     let ceshi = ref("ceshi");
     const customData = ref([
@@ -82,6 +91,7 @@ export default {
       flowData,
       ceshi,
       customData,
+      modelOpen,
     };
   },
 };
