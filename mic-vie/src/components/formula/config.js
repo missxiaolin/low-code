@@ -40,7 +40,7 @@ export const suggestionsFun = (monaco) => {
     {
       label: "IF",
       kind: monaco.languages.CompletionItemKind.Function,
-      insertText: "IF(${1:num1}, ${2:num2}, ${3:num3})",
+      insertText: "IF(${1:condition}, ${2:consequent}, ${3:alternate})",
       insertTextRules:
         monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
       detail: "IF function",
@@ -53,7 +53,7 @@ export const suggestionsFun = (monaco) => {
     {
       label: "AND",
       kind: monaco.languages.CompletionItemKind.Function,
-      insertText: "AND(${1:num1}, ${2:num2})",
+      insertText: "AND(${1:expression1}, ${2:expression1})",
       insertTextRules:
         monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
       detail: "AND function",
@@ -66,7 +66,7 @@ export const suggestionsFun = (monaco) => {
     {
       label: "OR",
       kind: monaco.languages.CompletionItemKind.Function,
-      insertText: "OR(${1:num1}, ${2:num2})",
+      insertText: "OR(${1:expression1}, ${2:expression1})",
       insertTextRules:
         monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
       detail: "OR function",
@@ -79,7 +79,7 @@ export const suggestionsFun = (monaco) => {
     {
       label: "XOR",
       kind: monaco.languages.CompletionItemKind.Function,
-      insertText: "XOR(${1:num1}, ${2:num2})",
+      insertText: "XOR(${1:condition1}, ${2:condition1})",
       insertTextRules:
         monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
       detail: "XOR function",
@@ -92,7 +92,7 @@ export const suggestionsFun = (monaco) => {
     {
       label: "IFS",
       kind: monaco.languages.CompletionItemKind.Function,
-      insertText: "IFS(${1:num1}, ${2:num2})",
+      insertText: "IFS()",
       insertTextRules:
         monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
       detail: "IFS function",

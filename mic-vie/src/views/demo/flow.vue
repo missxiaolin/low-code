@@ -2,6 +2,7 @@
   <div>
     <formulaModal
       v-model:open="modelOpen"
+      :customData="customData"
       :title="'公式编辑'"
       :footer="null"
       width="80%"
@@ -64,7 +65,13 @@ export default {
     const customData = ref([
       {
         key: "ceshi",
-        keyDesc: "ceshi",
+        value: "",
+        keyDesc: "ceshidesc",
+      },
+      {
+        key: "ceshi2",
+        value: "",
+        keyDesc: "ceshidesc2",
       },
     ]);
     const open = ref(false);

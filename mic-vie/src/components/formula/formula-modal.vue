@@ -47,7 +47,19 @@
           </div>
         </div>
         <Formula style="height: 400px; padding-top: 10px" />
-        <div class="formula-right-box"></div>
+        <div class="formula-right-box">
+          <ul class="data-ul" v-if="customData.length > 0">
+            <li v-for="(item, index) in customData" :key="index">
+              <div class="data-key">
+                <a-tooltip>
+                  <template #title>{{ item.keyDesc }}</template>
+                  <div>{{ item.key }}</div>
+                </a-tooltip>
+              </div>
+            </li>
+          </ul>
+          <div v-else>暂无变量</div>
+        </div>
       </div>
       <div class="form-bottom-box mt10">
         <a-button type="primary" @click="handleOk">保存</a-button>
@@ -65,6 +77,12 @@ export default {
   name: "micFormulaModal",
   components: {
     Formula,
+  },
+  props: {
+    customData: {
+      type: Array,
+      default: () => [],
+    },
   },
   setup() {
     let itemDetail = ref({});
@@ -144,6 +162,36 @@ export default {
   }
   &.formula-item-active {
     background-color: var(--ve-header-animat);
+  }
+}
+.data-ul {
+  padding: 0 10px 0 10px;
+  margin-top: 20px;
+  li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    .data-key {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-right: 20px;
+      display: flex;
+      flex-direction: column;
+      div {
+        &:nth-child(2) {
+          color: #ccc;
+        }
+      }
+    }
+    .data-right {
+      width: 40px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 }
 </style>
