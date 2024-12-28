@@ -29,6 +29,20 @@ import { getCurrentInstance, onMounted, ref, toRefs, reactive } from "vue";
 import vueCode from "../../components/vcc/vueCodeEditorDialog.vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
 import data from "./flow.json";
+import { evaluate } from "../../utils/formula-main/index";
+const defaultContext = {
+  a: 1,
+  b: 2,
+  c: 3,
+  d: 4,
+  e: 5,
+};
+
+function evalFormual(expression, data = defaultContext) {
+  return evaluate(expression, data, {
+    evalMode: true,
+  });
+}
 import { execEventFlow } from "../../utils/action";
 export default {
   components: {
@@ -36,6 +50,7 @@ export default {
     vueCode,
   },
   setup() {
+    console.log(evalFormual("IF(true, 2, 3)"));
     let ceshi = ref("ceshi");
     const customData = ref([
       {
