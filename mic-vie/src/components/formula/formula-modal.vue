@@ -19,6 +19,7 @@
                   :key="i"
                   class="formula-item"
                   @mouseenter="(e) => handleMouseEnter(e, v)"
+                  @dblclick="formulaItemClick(v)"
                 >
                   {{ v.title }}
                 </div>
@@ -46,19 +47,25 @@
             <div class="desc">{{ itemDetail.desc }}</div>
           </div>
         </div>
-        <Formula style="height: 400px; padding-top: 10px" />
+        <formula
+          v-model:value="editorValue"
+          ref="formulaEditorRef"
+          style="height: 400px; padding-top: 10px"
+        />
         <div class="formula-right-box">
           <ul class="data-ul" v-if="customData.length > 0">
             <li v-for="(item, index) in customData" :key="index">
               <div class="data-key">
                 <a-tooltip>
                   <template #title>{{ item.keyDesc }}</template>
-                  <div>{{ item.key }}</div>
+                  <div @dblclick="customDataLiClick(item.key)">
+                    {{ item.key }}
+                  </div>
                 </a-tooltip>
               </div>
             </li>
           </ul>
-          <div v-else>暂无变量</div>
+          <div class="mt10" v-else>暂无变量</div>
         </div>
       </div>
       <div class="form-bottom-box mt10">
@@ -85,11 +92,18 @@ export default {
     },
   },
   setup() {
+    let editorValue = ref("");
+    const formulaEditorRef = ref(null);
     let itemDetail = ref({});
     const attrs = useAttrs();
 
     const handleOk = () => {
-      console.log("ok");
+      //   console.log(formulaEditorRef.value);
+      console.log(editorValue.value);
+    };
+
+    const formulaItemClick = (item) => {
+      formulaEditorRef.value.setEditorCode(`${item.title}()`);
     };
 
     const handleMouseEnter = (e, v) => {
@@ -100,6 +114,10 @@ export default {
       e.target.classList.add("formula-item-active");
     };
 
+    const customDataLiClick = (key) => {
+      formulaEditorRef.value.setEditorCode(key);
+    };
+
     return {
       attrs,
       handleOk,
@@ -107,6 +125,10 @@ export default {
       handleMouseEnter,
       itemDetail,
       collapseColumns,
+      formulaEditorRef,
+      editorValue,
+      formulaItemClick,
+      customDataLiClick,
     };
   },
 };
@@ -119,6 +141,7 @@ export default {
   border: solid 1px var(--ve-header-animat);
   border-radius: 10px;
   padding: 10px 0 10 0px;
+  overflow: hidden;
 }
 .formula-left-box {
   width: 35%;

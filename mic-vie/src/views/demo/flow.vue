@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a-button type="primary" @click="modelOpen = true">打开</a-button>
     <formulaModal
       v-model:open="modelOpen"
       :customData="customData"
@@ -62,18 +63,7 @@ export default {
     const modelOpen = ref(true);
     console.log(evalFormual("IF(true, 2, 3)"));
     let ceshi = ref("ceshi");
-    const customData = ref([
-      {
-        key: "ceshi",
-        value: "",
-        keyDesc: "ceshidesc",
-      },
-      {
-        key: "ceshi2",
-        value: "",
-        keyDesc: "ceshidesc2",
-      },
-    ]);
+    const customData = ref([]);
     const open = ref(false);
     const flowNodeRef = ref(null);
     // data

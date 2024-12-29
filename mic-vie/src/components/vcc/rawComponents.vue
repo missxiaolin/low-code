@@ -33,8 +33,10 @@
           <ul class="data-ul">
             <li v-for="(item, index) in customData" :key="index">
               <div class="data-key">
-                <div>{{ item.key }}</div>
-                <div>{{ item.keyDesc }}</div>
+                <a-tooltip>
+                  <template #title>{{ item.keyDesc }}</template>
+                  <div>{{ item.key }}</div>
+                </a-tooltip>
               </div>
               <div class="data-right">
                 <EditOutlined @click="editFormData(item, index)" />
