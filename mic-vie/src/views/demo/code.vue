@@ -9,6 +9,13 @@ import { loadPlugins } from "../../plugins/index";
 // 假设有一个 Vue 文件的内容
 const config = {
   files: {
+    "/index.js": `
+      export default {
+        "name": "my-component",
+        "version": "1.0.0",
+        "description": "My Vue Component"
+      }
+    `,
     "/main.vue": `
         <template>
             <div class="content">
@@ -19,30 +26,64 @@ const config = {
         </template>
 
         <script>
-            import { ref, getCurrentInstance } from "vue";
+            import { ref, getCurrentInstance, watch } from "vue";
             export default {
                 setup() {
                     const message = ref("Hello, Vue 3!");
-                    console.log(getCurrentInstance())
+                    console.log(window.loadScript("/index.js"))
                     return {
                         message,
                     }
                 },
             };
         <\/script>
-        
+
         <style>
             .content {
                 color: red;
             }
         </style>
-        
+
         `,
   },
 };
 
+import * as Babel from "@babel/standalone";
 export default {
   setup() {
+    const init = async () => {
+      // console.log(Babel);
+      // let input = 'export default { name: "my-component" }';
+      // let output = Babel.transform(input, { presets: ["env"] }).code;
+      // console.log(output);
+      // const blob = new Blob([output], { type: "application/javascript" });
+      // const url = URL.createObjectURL(blob);
+      // try {
+      //   const module = await import(url);
+      //   console.log("模块：", module.default);
+      // } catch (error) {
+      //   console.error("模块加载失败:", error);
+      // }
+      // URL.revokeObjectURL(url);
+      //       const compileCode = `
+      //       import * as Babel from "@babel/standalone";
+      //       export default { name: "my-component", a: 1 };
+      // `;
+      //       let output = Babel.transform(compileCode, { presets: ["env"] }).code;
+      //       const compileCode = `
+      //       export default { name: "my-component", a: 1 };
+      // `;
+      //       const blob = new Blob([compileCode], { type: "application/javascript" });
+      //       const url = URL.createObjectURL(blob);
+      //       try {
+      //         const module = await import(url);
+      //         console.log("模块：", module.default);
+      //       } catch (error) {
+      //         console.error("模块加载失败:", error);
+      //       }
+      //       URL.revokeObjectURL(url);
+    };
+    // init();
     onMounted(() => {
       nextTick(() => {
         const options = {
