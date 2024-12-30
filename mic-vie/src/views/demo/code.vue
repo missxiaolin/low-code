@@ -10,8 +10,11 @@ import { loadPlugins } from "../../plugins/index";
 const config = {
   files: {
     "/index.js": `
+      const a = () => {
+        console.log(a)
+      }
       export default {
-        a: 1
+        a
       }
     `,
     "/main.vue": `
