@@ -17,6 +17,11 @@ const config = {
         a
       }
     `,
+    "/eventNode.json": `
+      {
+        "a": 1
+      }
+    `,
     "/main.vue": `
         <template>
             <div class="content">
@@ -28,14 +33,17 @@ const config = {
 
         <script>
             import { ref, getCurrentInstance, watch } from "vue";
-            import eventNode from "./index.js";
+            // import eventNode from "./index.js";
+
+            import eventNode from "./eventNode.json";
 
             export default {
                 setup() {
                     const message = ref("Hello, Vue 3!");
-                    window.babelTransform(eventNode).then((res) => {
-                        console.log("res", res);
-                    })
+                    // window.babelTransform(eventNode).then((res) => {
+                    //     console.log("res", res);
+                    // })
+                    console.log(JSON.parse(eventNode))
 
                     return {
                         message,
@@ -57,6 +65,10 @@ const config = {
 import * as Babel from "@babel/standalone";
 export default {
   setup() {
+    window.strJsonToObj = (str) => {
+      return JSON.parse(str);
+      // return eval(`const obj = ${str}`);
+    };
     window.babelTransform = async (str) => {
       let module = {};
       const blob = new Blob([str], { type: "application/javascript" });
