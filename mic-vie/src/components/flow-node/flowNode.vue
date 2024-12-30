@@ -30,6 +30,25 @@
         "
       />
     </a-modal>
+    <formulaModal
+      v-if="modelOpen"
+      v-model:open="modelOpen"
+      :graphRef="graphRef"
+      :curModel="curModel"
+      :popConfig="curModel"
+      :customData="customData"
+      @close="
+        (e) => {
+          e.stopPropagation();
+          modelOpen = false;
+          curModel = null;
+          isShowDropDown = false;
+        }
+      "
+      :title="'公式编辑'"
+      :footer="null"
+      width="50%"
+    />
     <div
       @click="(e) => e.stopPropagation()"
       id="mount-node"
@@ -42,6 +61,7 @@
 import G6 from "@antv/g6";
 import settingPanel from "./setting-panel/index.vue";
 import flowDropDown from "./flow-drop-down/index.vue";
+import formulaModal from "../formula/formula-modal.vue";
 import { ref } from "vue";
 import { registerNodes } from "./nodes";
 import { registerLines } from "./lines/index";
@@ -70,15 +90,17 @@ export default {
   components: {
     flowDropDown,
     settingPanel,
+    formulaModal,
   },
   setup(props, { emit, expose }) {
-    const nodeRef = ref(null);
-    const graphRef = ref(null);
+    let nodeRef = ref(null);
+    let graphRef = ref(null);
     // 菜单
-    const curModel = ref(null);
-    const menuPosition = ref({});
-    const open = ref(false);
-    const isShowDropDown = ref(false);
+    let curModel = ref(null);
+    let menuPosition = ref({});
+    let open = ref(false);
+    let modelOpen = ref(false);
+    let isShowDropDown = ref(false);
 
     // 添加新节点
     const onSelect = (key) => {
@@ -170,10 +192,7 @@ export default {
 
             // 如果是条件节点，则取条件名称
             if (sourceModel?.type === "condition") {
-              const { name } =
-                sourceModel?.config?.find(
-                  (o) => o.id === targetModel?.conditionId
-                ) || {};
+              const name = sourceModel.config.name || "";
               label = name;
             }
             return {
@@ -211,8 +230,15 @@ export default {
               ["action", "condition"].includes(model.type) &&
               targetType !== "marker"
             ) {
+              console.log();
               curModel.value = item.getModel();
-              open.value = true;
+              if (model.type === "action") {
+                open.value = true;
+              }
+              if (model.type === "condition") {
+                modelOpen.value = true;
+              }
+
               return;
             }
             // 点击加号
@@ -257,6 +283,7 @@ export default {
     });
 
     return {
+      modelOpen,
       nodeRef,
       graphRef,
       curModel,

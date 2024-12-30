@@ -79,6 +79,7 @@
 import { ref } from "vue";
 import Formula from "./index.vue";
 import { collapseList, collapseColumns } from "./config";
+import { data } from "../flow-node/flow-node-data/index";
 import { useAttrs } from "vue";
 export default {
   name: "micFormulaModal",
@@ -86,20 +87,66 @@ export default {
     Formula,
   },
   props: {
+    popConfig: {
+      type: Object,
+      default: () => {
+        return {
+          type: "",
+          config: {},
+        };
+      },
+    },
+    graphRef: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+    curModel: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
     customData: {
       type: Array,
       default: () => [],
     },
   },
-  setup() {
+  emits: ["close"],
+  setup(props, { emit }) {
     let editorValue = ref("");
     const formulaEditorRef = ref(null);
     let itemDetail = ref({});
     const attrs = useAttrs();
 
-    const handleOk = () => {
-      //   console.log(formulaEditorRef.value);
-      console.log(editorValue.value);
+    const handleOk = (e) => {
+      if (!editorValue.value) {
+        return;
+      }
+      let menus = [
+        {
+          key: "action",
+          label: "动作",
+          nodeType: "action",
+          nodeName: "动作",
+        },
+        {
+          key: "condition",
+          label: "条件",
+          nodeType: "condition",
+          nodeName: "条件",
+        },
+      ];
+      props.graphRef.updateItem(props.curModel.id, {
+        ...props.curModel.current,
+        config: {
+          name: "",
+          editorValue: editorValue.value,
+        },
+        menus,
+      });
+      emit("close", e);
     };
 
     const formulaItemClick = (item) => {

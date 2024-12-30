@@ -6,7 +6,7 @@
       :customData="customData"
       :title="'公式编辑'"
       :footer="null"
-      width="80%"
+      width="50%"
     />
     <!-- {{ ceshi }} -->
     <!-- <vueCode v-model:vueDialogVisible="open" /> -->
@@ -60,11 +60,11 @@ export default {
     formulaModal,
   },
   setup() {
-    const modelOpen = ref(true);
+    const modelOpen = ref(false);
     console.log(evalFormual("IF(true, 2, 3)"));
     let ceshi = ref("ceshi");
     const customData = ref([]);
-    const open = ref(false);
+    const open = ref(true);
     const flowNodeRef = ref(null);
     // data
     const flowData = ref(data);

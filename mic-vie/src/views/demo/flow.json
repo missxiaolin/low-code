@@ -100,35 +100,26 @@
           },
           "children": [
             {
-              "type": "action",
-              "id": "n-0.8794526240647318",
-              "label": "设置变量",
-              "key": "action",
+              "type": "condition",
+              "id": "n-0.31174882380509583",
+              "label": "条件",
+              "key": "condition",
               "menus": [
                 {
-                  "label": "成功",
-                  "key": "success",
-                  "nodeType": "event",
-                  "nodeName": "成功",
-                  "eventKey": "success"
+                  "key": "action",
+                  "label": "动作",
+                  "nodeType": "action",
+                  "nodeName": "动作"
                 },
                 {
-                  "label": "失败",
-                  "key": "error",
-                  "nodeType": "event",
-                  "nodeName": "失败",
-                  "eventKey": "error"
-                },
-                {
-                  "label": "成功或失败",
-                  "key": "finally",
-                  "nodeType": "event",
-                  "nodeName": "成功或失败",
-                  "eventKey": "finally"
+                  "key": "condition",
+                  "label": "条件",
+                  "nodeType": "condition",
+                  "nodeName": "条件"
                 }
               ],
               "eventKey": "success",
-              "x": -148,
+              "x": -226,
               "y": 200,
               "depth": 3,
               "style": {
@@ -136,91 +127,41 @@
                 "selected": {}
               },
               "config": {
-                "type": "setupValue",
-                "config": {
-                  "activeKey": "select",
-                  "key": "ceshi",
-                  "value": "{{eventData.model[0].create_time}}"
-                }
-              },
-              "children": [
+                "name": "",
+                "editorValue": "IF(eventData.success, true, false)"
+              }
+            },
+            {
+              "type": "condition",
+              "id": "n-0.3769275350007346",
+              "label": "条件",
+              "key": "condition",
+              "menus": [
                 {
-                  "type": "event",
-                  "id": "n-0.5628655707880945",
-                  "label": "成功或失败",
-                  "key": "finally",
-                  "menus": [
-                    {
-                      "key": "action",
-                      "label": "动作",
-                      "nodeType": "action",
-                      "nodeName": "动作",
-                      "eventKey": "finally"
-                    },
-                    {
-                      "key": "condition",
-                      "label": "条件",
-                      "nodeType": "condition",
-                      "nodeName": "条件",
-                      "eventKey": "finally"
-                    }
-                  ],
-                  "eventKey": "finally",
-                  "x": -148,
-                  "y": 296,
-                  "depth": 4,
-                  "style": {
-                    "hover": {},
-                    "selected": {}
-                  },
-                  "children": [
-                    {
-                      "type": "action",
-                      "id": "n-0.7135398144788976",
-                      "label": "消息提示",
-                      "key": "action",
-                      "menus": [
-                        {
-                          "label": "成功",
-                          "key": "success",
-                          "nodeType": "event",
-                          "nodeName": "成功",
-                          "eventKey": "success"
-                        },
-                        {
-                          "label": "失败",
-                          "key": "error",
-                          "nodeType": "event",
-                          "nodeName": "失败",
-                          "eventKey": "error"
-                        },
-                        {
-                          "label": "成功或失败",
-                          "key": "finally",
-                          "nodeType": "event",
-                          "nodeName": "成功或失败",
-                          "eventKey": "finally"
-                        }
-                      ],
-                      "eventKey": "finally",
-                      "x": -148,
-                      "y": 392,
-                      "depth": 5,
-                      "style": {
-                        "hover": {},
-                        "selected": {}
-                      },
-                      "config": {
-                        "type": "message",
-                        "config": {
-                          "type": "success",
-                          "content": "设置成功"
-                        }
-                      }
-                    }
-                  ]
+                  "key": "action",
+                  "label": "动作",
+                  "nodeType": "action",
+                  "nodeName": "动作"
+                },
+                {
+                  "key": "condition",
+                  "label": "条件",
+                  "nodeType": "condition",
+                  "nodeName": "条件"
                 }
-              ]
+              ],
+              "eventKey": "success",
+              "x": -70,
+              "y": 200,
+              "depth": 3,
+              "style": {
+                "hover": {},
+                "selected": {}
+              },
+              "config": {
+                "name": "",
+                "editorValue": "IF(eventData.success, false, true)"
+              }
             }
           ]
         }
