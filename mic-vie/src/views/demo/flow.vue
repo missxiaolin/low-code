@@ -64,7 +64,7 @@ export default {
     console.log(evalFormual("IF(true, 2, 3)"));
     let ceshi = ref("ceshi");
     const customData = ref([]);
-    const open = ref(true);
+    const open = ref(false);
     const flowNodeRef = ref(null);
     // data
     const flowData = ref(data);

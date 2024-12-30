@@ -129,7 +129,52 @@
               "config": {
                 "name": "",
                 "editorValue": "IF(eventData.success, true, false)"
-              }
+              },
+              "children": [
+                {
+                  "type": "action",
+                  "id": "n-0.29706420380230414",
+                  "label": "消息提示",
+                  "key": "action",
+                  "menus": [
+                    {
+                      "label": "成功",
+                      "key": "success",
+                      "nodeType": "event",
+                      "nodeName": "成功",
+                      "eventKey": "success"
+                    },
+                    {
+                      "label": "失败",
+                      "key": "error",
+                      "nodeType": "event",
+                      "nodeName": "失败",
+                      "eventKey": "error"
+                    },
+                    {
+                      "label": "成功或失败",
+                      "key": "finally",
+                      "nodeType": "event",
+                      "nodeName": "成功或失败",
+                      "eventKey": "finally"
+                    }
+                  ],
+                  "x": -226,
+                  "y": 296,
+                  "depth": 4,
+                  "style": {
+                    "hover": {},
+                    "selected": {}
+                  },
+                  "config": {
+                    "type": "message",
+                    "config": {
+                      "type": "success",
+                      "content": "请求成功"
+                    }
+                  }
+                }
+              ]
             },
             {
               "type": "condition",

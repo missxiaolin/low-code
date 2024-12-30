@@ -4,7 +4,39 @@ import { request } from "./fetch";
 import { message } from "ant-design-vue";
 import urlUtils from "./url";
 import { setObjectValueByPath } from "./utils";
+import { evaluate } from "./formula-main/index";
 const urlTool = new urlUtils();
+
+/**
+ * 规则引擎
+ * @param {*} expression
+ * @param {*} data
+ * @returns
+ */
+function evalFormual(expression, data = {}) {
+  return evaluate(expression, data, {
+    evalMode: true,
+  });
+}
+
+/**
+ * 执行规则引擎
+ * @param {*} instance
+ * @param {*} expression
+ * @param {*} eventData
+ * @param {*} initEventData
+ * @returns
+ */
+const conditionFun = (expression, instance, eventData, initEventData) => {
+  const route = urlTool.getQueryObject(window.location.href);
+  const obj = {
+    eventData,
+    initEventData,
+    data: instance.proxy, // 获取当前组件的data
+    route: route.query || {}, // 路由参数
+  };
+  return evalFormual(expression, obj);
+};
 
 const [messageApi, contextHolder] = message.useMessage();
 
@@ -308,6 +340,20 @@ export function execEventFlow(
     } else if (item.type === "condition") {
       // TODO: 判断条件
       // 如果是条件节点，执行条件脚本，把结果注入到子节点conditionResult属性中
+      try {
+        if (
+          conditionFun(
+            item.config.editorValue,
+            instance,
+            eventData,
+            initEventData
+          )
+        ) {
+          if (item.children && item.children.length > 0) {
+            execEventFlow(instance, item.children, eventData, initEventData);
+          }
+        }
+      } catch (e) {}
       // const conditionResult = (item.config || []).reduce(
       //   (prev: any, cur: any) => {
       //     const result = execScript(cur.condition, eventData, initEventData);
@@ -316,14 +362,13 @@ export function execEventFlow(
       //   },
       //   {}
       // );
-
       // (item.children || []).forEach((c: any) => {
       //   c.conditionResult = !!conditionResult[c.conditionId];
       // });
       // // 递归执行子节点事件流
       // execEventFlow(item.children, eventData, initEventData);
       // 递归执行子节点事件流
-      execEventFlow(instance, item.children, eventData, initEventData);
+      // execEventFlow(instance, item.children, eventData, initEventData);
     } else if (item.type === "event") {
       // 如果是事件节点，执行事件子节点事件流
       execEventFlow(instance, item.children, eventData, initEventData);
