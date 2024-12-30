@@ -11,9 +11,7 @@ const config = {
   files: {
     "/index.js": `
       export default {
-        "name": "my-component",
-        "version": "1.0.0",
-        "description": "My Vue Component"
+        a: 1
       }
     `,
     "/main.vue": `
@@ -27,10 +25,15 @@ const config = {
 
         <script>
             import { ref, getCurrentInstance, watch } from "vue";
+            import eventNode from "./index.js";
+
             export default {
                 setup() {
                     const message = ref("Hello, Vue 3!");
-                    console.log(window.loadScript("/index.js"))
+                    window.babelTransform(eventNode).then((res) => {
+                        console.log("res", res);
+                    })
+
                     return {
                         message,
                     }
@@ -51,19 +54,30 @@ const config = {
 import * as Babel from "@babel/standalone";
 export default {
   setup() {
+    window.babelTransform = async (str) => {
+      let module = {};
+      const blob = new Blob([str], { type: "application/javascript" });
+      const url = URL.createObjectURL(blob);
+      try {
+        module = await import(url);
+        console.log(module.default);
+      } catch (error) {}
+
+      return module.default;
+    };
     const init = async () => {
       // console.log(Babel);
-      // let input = 'export default { name: "my-component" }';
+      let input = 'export default { name: "my-component" }';
       // let output = Babel.transform(input, { presets: ["env"] }).code;
       // console.log(output);
-      // const blob = new Blob([output], { type: "application/javascript" });
-      // const url = URL.createObjectURL(blob);
-      // try {
-      //   const module = await import(url);
-      //   console.log("模块：", module.default);
-      // } catch (error) {
-      //   console.error("模块加载失败:", error);
-      // }
+      const blob = new Blob([input], { type: "application/javascript" });
+      const url = URL.createObjectURL(blob);
+      try {
+        const module = await import(url);
+        console.log("模块：", module.default);
+      } catch (error) {
+        console.error("模块加载失败:", error);
+      }
       // URL.revokeObjectURL(url);
       //       const compileCode = `
       //       import * as Babel from "@babel/standalone";
@@ -102,7 +116,9 @@ export default {
           },
           handleModule: async function (type, getContentData, path, options) {
             switch (type) {
-              case ".svg":
+              case ".json":
+                return getContentData(false);
+              case ".js":
                 return getContentData(false);
             }
           },
