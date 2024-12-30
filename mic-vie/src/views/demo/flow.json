@@ -128,7 +128,7 @@
               },
               "config": {
                 "name": "",
-                "editorValue": "IF(eventData.success, true, false)"
+                "editorValue": "AND(IF(eventData.success, true, false), IF(COUNT(eventData.model), true, false))"
               },
               "children": [
                 {
