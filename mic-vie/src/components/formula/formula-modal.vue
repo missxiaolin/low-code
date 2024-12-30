@@ -49,6 +49,7 @@
         </div>
         <formula
           v-model:value="editorValue"
+          :value="editorValue"
           ref="formulaEditorRef"
           style="height: 400px; padding-top: 10px"
         />
@@ -115,7 +116,13 @@ export default {
   },
   emits: ["close"],
   setup(props, { emit }) {
-    let editorValue = ref("");
+    const v =
+      props.curModel &&
+      props.curModel.config &&
+      props.curModel.config.editorValue
+        ? props.curModel.config.editorValue
+        : "";
+    let editorValue = ref(v || "");
     const formulaEditorRef = ref(null);
     let itemDetail = ref({});
     const attrs = useAttrs();
