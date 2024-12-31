@@ -1,5 +1,10 @@
 <template>
   <div>
+    <!-- <div class="ceshi" id="ceshi">
+      <a-modal v-model:open="ceshiOpen" :getContainer="getContainer">
+        <div>ceshi</div>
+      </a-modal>
+    </div> -->
     <a-button type="primary" @click="modelOpen = true">打开</a-button>
     <formulaModal
       v-model:open="modelOpen"
@@ -60,6 +65,7 @@ export default {
     formulaModal,
   },
   setup() {
+    const ceshiOpen = ref(true);
     const modelOpen = ref(false);
     console.log(evalFormual("IF(true, 2, 3)"));
     let ceshi = ref("ceshi");
@@ -78,10 +84,17 @@ export default {
     };
 
     onMounted(() => {
-      execEventFlow(instance, data.children);
+      // execEventFlow(instance, data.children);
     });
 
+    const getContainer = (e) => {
+      console.log(e);
+      return document.getElementById("ceshi");
+    };
+
     return {
+      getContainer,
+      ceshiOpen,
       open,
       save,
       flowNodeRef,
@@ -118,5 +131,12 @@ export default {
     padding: 20px 24px;
     border-radius: 10px;
   }
+}
+.ceshi {
+  width: 1000px;
+  height: 500px;
+  background: #d3adff;
+  position: relative;
+  transform: translate(50px, 50px);
 }
 </style>
