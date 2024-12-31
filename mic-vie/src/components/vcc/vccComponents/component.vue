@@ -125,7 +125,7 @@
                   {{ item.label }}
                 </div>
                 <div>
-                  <EditOutlined />
+                  <EditOutlined @click="editEventClick(item.key)" />
                   <DeleteOutlined
                     class="ml10"
                     @click="delEventClick(item.key)"
@@ -162,6 +162,8 @@ import { ref, watch, getCurrentInstance } from "vue";
 import { getAttrJson, getAttrKeys, stringToObj } from "./utils/index";
 import { uuid } from "@/utils/utils";
 import flowNode from "../../../components/flow-node/flowNode.vue";
+import { message } from "ant-design-vue";
+const [messageApi, contextHolder] = message.useMessage();
 import _ from "lodash";
 const { merge } = _;
 
@@ -224,13 +226,10 @@ export default {
 
     const saveEvent = () => {
       let flNode = flowNodeRef.value.flowSave();
-      let eStr = `${JSON.stringify(flNode)}`;
-      eStr = eStr.replace(/"/g, "'");
-      let fnStr = `(e) => {eventFun(\`${eStr}\`, e)}`;
-      emit("childSave", `${eventStr.value}`, fnStr);
-      // emit("saveEventLogicCode", {
-      //   [id]: flNode,
-      // });
+
+      emit("saveEventLogicCode", {
+        [selectUuid.value]: flNode,
+      });
       open.value = false;
     };
 
@@ -246,6 +245,7 @@ export default {
       }
     };
 
+    // del 事件
     const delEventClick = (key) => {
       if (!key) return;
       let value = "";
@@ -257,6 +257,7 @@ export default {
         }
       });
       let eventUuidValue = getUuid(value);
+      let eventNode = props.eventNode;
       if (eventNode[eventUuidValue]) {
         let newEventNode = JSON.parse(JSON.stringify(eventNode));
         delete newEventNode[eventUuidValue];
@@ -266,33 +267,31 @@ export default {
       emit("save", false);
     };
 
-    const editEvent = (e, str) => {
-      selectUuid.value = str;
+    // 显示逻辑编排
+    const editEventClick = (key) => {
+      if (!key) return;
+      let value = "";
+      const localAttrs = localAttr.value;
+      localAttrs.forEach((item, index) => {
+        if (item.key === key) {
+          value = item.value;
+        }
+      });
+      let eventUuidValue = getUuid(value);
+      if (!eventUuidValue) {
+        messageApi.error("该事件不支持逻辑编排！");
+        return;
+      }
+      selectUuid.value = eventUuidValue;
+      flowData.value = props.eventNode[eventUuidValue] || {};
+      open.value = true;
     };
 
+    // 添加事件
     const eventClick = (e, str) => {
       const id = uuid();
       let fnStr = `(e) => {eventFun(\`${id}\`, e)}`;
       emit("childSave", str, fnStr);
-      // let eNodeStr = "",
-      //   obj = {};
-
-      // props.localAttributes.forEach((item) => {
-      //   if (item.key == str) {
-      //     eNodeStr = item.value;
-      //   }
-      // });
-      // if (eNodeStr) {
-      //   const match = eNodeStr.match(/`([^`]+)`/);
-      //   if (match && match.length > 1) {
-      //     const jsonString = match[1].replace(/'/g, '"');
-      //     obj = JSON.parse(jsonString);
-      //   }
-      // }
-
-      // flowData.value = obj;
-      // eventStr.value = str;
-      // open.value = true;
     };
 
     return {
@@ -300,7 +299,7 @@ export default {
       eventObj,
       attrEvents,
       delEventClick,
-      editEvent,
+      editEventClick,
       handleBlur,
       eventClick,
       open,
