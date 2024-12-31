@@ -977,7 +977,10 @@ class CodeGenerator {
     let dataStr = ``,
       dataKeys = Object.keys(toRefsData) || [];
     Object.keys(toRefsData).forEach((key) => {
-      dataStr = `const ${key} = ref(${toRefsData[key]});\n`;
+      let v = toRefsData[key];
+      dataStr = `const ${key} = ref(${
+        typeof v === "string" ? `'${v}'` : v
+      });\n`;
     });
     const finalJSCode = `
 {

@@ -236,6 +236,8 @@ export default {
       arr.forEach((item) => {
         if (["string", "array", "object"].includes(item.key)) {
           obj[item.key] = item.value;
+        } else if (item.key === "string") {
+          obj[item.key] = item.value;
         } else if (item.key === "number") {
           obj[item.key] = Number(item.value);
         } else if (item.key === "boolean") {
