@@ -1,24 +1,20 @@
 <template>
   <div class="attribute-component-box">
-    <div class="attribute-seeting-content" v-if="list.length > 0">
-      <div
-        class="attribute-seeting-content-item"
-        v-for="(v, key) in list"
-        :key="key"
-      >
-        <div
-          class="attribute-seeting-content-title"
-          v-if="v.title && v.children && v.children.length > 0"
-        >
-          {{ v.title }}
+    <div
+      class="attribute-seeting-content"
+      v-if="Object.keys(baseObj).length > 0 || Object.keys(eventObj).length > 0"
+    >
+      <div class="attribute-seeting-content-item" v-if="baseObj">
+        <div class="attribute-seeting-content-title" v-if="baseObj.title">
+          {{ baseObj.title }}
         </div>
-        <template v-if="v.children && v.children.length > 0">
+        <template v-if="baseObj.children && baseObj.children.length > 0">
           <div
             class="attribute-seeting-content-content"
-            v-for="(item, index) in v.children"
+            v-for="(item, index) in baseObj.children"
             :key="index"
           >
-            <div class="label">
+            <div class="label" v-if="item.settingType !== 'setting'">
               {{ item.label }}：<a-tooltip placement="topLeft" v-if="item.tip">
                 <template #title>
                   <span>{{ item.tip }}</span>
@@ -81,14 +77,64 @@
                   >{{ v.keyDesc }}</a-select-option
                 >
               </a-select>
-              <SettingOutlined
+
+              <!-- <SettingOutlined
                 class="setting-icon"
                 v-if="item.settingType == 'setting'"
                 @click="eventClick(item.key)"
-              />
+              /> -->
             </div>
           </div>
         </template>
+      </div>
+      <div class="attribute-seeting-content-item" v-if="eventObj">
+        <div class="attribute-seeting-content-title" v-if="eventObj.title">
+          {{ eventObj.title }}
+        </div>
+        <div class="attribute-seeting-content-content event-content">
+          <a-dropdown
+            :placement="'bottom'"
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            :trigger="['click']"
+          >
+            <a-button type="dashed" block>添加事件</a-button>
+            <template #overlay>
+              <ul
+                class="event-ul"
+                v-if="eventObj.children && eventObj.children.length > 0"
+              >
+                <li v-for="(item, index) in eventObj.children" :key="index">
+                  <a-button
+                    type="text"
+                    block
+                    :disabled="attrEvents.includes(item.key) ? true : false"
+                    @click="(e) => eventClick(e, item.key)"
+                    >{{ item.label }}</a-button
+                  >
+                </li>
+              </ul>
+            </template>
+          </a-dropdown>
+          <ul
+            class="event-ul-box"
+            v-if="eventObj.children && eventObj.children.length > 0"
+          >
+            <template v-for="(item, index) in eventObj.children">
+              <li :key="index" v-if="attrEvents.includes(item.key)">
+                <div>
+                  {{ item.label }}
+                </div>
+                <div>
+                  <EditOutlined />
+                  <DeleteOutlined
+                    class="ml10"
+                    @click="delEventClick(item.key)"
+                  />
+                </div>
+              </li>
+            </template>
+          </ul>
+        </div>
       </div>
     </div>
     <a-empty v-else description="为匹配到组件设置"></a-empty>
@@ -114,7 +160,7 @@
 <script>
 import { ref, watch, getCurrentInstance } from "vue";
 import { getAttrJson, getAttrKeys, stringToObj } from "./utils/index";
-// import { uuid } from "@/utils/utils";
+import { uuid } from "@/utils/utils";
 import flowNode from "../../../components/flow-node/flowNode.vue";
 import _ from "lodash";
 const { merge } = _;
@@ -125,16 +171,32 @@ export default {
     flowNode,
   },
   props: ["localAttributes", "vueRawTag", "eventNode", "customData"],
-  emits: ["childSave", "saveEventLogicCode"],
+  emits: ["childSave", "saveEventLogicCode", "deleteItem", "save"],
   setup(props, { emit }) {
-    let list = ref([]);
+    let baseObj = ref({});
+    let eventObj = ref({});
     let localAttr = ref(props.localAttributes);
     let vueRawTag = ref(props.vueRawTag);
     let eventStr = ref("");
+    let attrEvents = ref([]);
+    let selectUuid = ref("");
     const init = (localAttributes, vueRawTag) => {
+      attrEvents.value = [];
       const attrObj = getAttrKeys(localAttributes);
+      Object.keys(attrObj).forEach((key) => {
+        if (key.indexOf("@") > -1) {
+          attrEvents.value.push(key);
+        }
+      });
       let obj = attrObj;
-      list.value = getAttrJson(obj, vueRawTag, "component") || [];
+      let attrs = getAttrJson(obj, vueRawTag, "component") || [];
+      attrs.forEach((item) => {
+        if (item.key === "base") {
+          baseObj.value = item;
+        } else if (item.key === "event") {
+          eventObj.value = item;
+        }
+      });
     };
 
     init(props.localAttributes, props.vueRawTag);
@@ -172,30 +234,73 @@ export default {
       open.value = false;
     };
 
-    const eventClick = (str) => {
-      let eNodeStr = "",
-        obj = {};
+    const getUuid = (str) => {
+      const regex = /eventFun\(`([^`]+)`,/;
+      const match = str.match(regex);
 
-      props.localAttributes.forEach((item) => {
-        if (item.key == str) {
-          eNodeStr = item.value;
+      if (match) {
+        const firstArgument = match[1];
+        return firstArgument;
+      } else {
+        return "";
+      }
+    };
+
+    const delEventClick = (key) => {
+      if (!key) return;
+      let value = "";
+      const localAttrs = localAttr.value;
+      localAttrs.forEach((item, index) => {
+        if (item.key === key) {
+          emit("deleteItem", index);
+          value = item.value;
         }
       });
-      if (eNodeStr) {
-        const match = eNodeStr.match(/`([^`]+)`/);
-        if (match && match.length > 1) {
-          const jsonString = match[1].replace(/'/g, '"');
-          obj = JSON.parse(jsonString);
-        }
+      let eventUuidValue = getUuid(value);
+      if (eventNode[eventUuidValue]) {
+        let newEventNode = JSON.parse(JSON.stringify(eventNode));
+        delete newEventNode[eventUuidValue];
+        emit("saveEventLogicCode", newEventNode);
       }
 
-      flowData.value = obj;
-      eventStr.value = str;
-      open.value = true;
+      emit("save", false);
+    };
+
+    const editEvent = (e, str) => {
+      selectUuid.value = str;
+    };
+
+    const eventClick = (e, str) => {
+      const id = uuid();
+      let fnStr = `(e) => {eventFun(\`${id}\`, e)}`;
+      emit("childSave", str, fnStr);
+      // let eNodeStr = "",
+      //   obj = {};
+
+      // props.localAttributes.forEach((item) => {
+      //   if (item.key == str) {
+      //     eNodeStr = item.value;
+      //   }
+      // });
+      // if (eNodeStr) {
+      //   const match = eNodeStr.match(/`([^`]+)`/);
+      //   if (match && match.length > 1) {
+      //     const jsonString = match[1].replace(/'/g, '"');
+      //     obj = JSON.parse(jsonString);
+      //   }
+      // }
+
+      // flowData.value = obj;
+      // eventStr.value = str;
+      // open.value = true;
     };
 
     return {
-      list,
+      baseObj,
+      eventObj,
+      attrEvents,
+      delEventClick,
+      editEvent,
       handleBlur,
       eventClick,
       open,
@@ -244,6 +349,30 @@ export default {
     border: solid 2px #d3adff;
     padding: 20px 24px;
     border-radius: 10px;
+  }
+}
+.event-ul {
+  background-color: var(--v3-menu-bg);
+  li {
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+.event-content {
+  display: flex;
+  flex-direction: column !important;
+}
+.event-ul-box {
+  background-color: var(--v3-menu-bg);
+  margin-top: 30px;
+  li {
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 </style>

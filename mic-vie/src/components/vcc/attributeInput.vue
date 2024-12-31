@@ -23,6 +23,8 @@
             :eventNode="eventNode"
             @saveEventLogicCode="saveEventLogicCode"
             @childSave="childSave"
+            @deleteItem="deleteItem"
+            @save="save"
           />
           <a-empty v-else description="请选择组件"></a-empty>
         </a-tab-pane>
