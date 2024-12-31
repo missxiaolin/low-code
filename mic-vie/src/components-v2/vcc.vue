@@ -393,8 +393,8 @@ export default {
       this.mainPanelProvider.render(this.getFakeData());
     },
 
-    onSaveAttr({ resultList, lc_id }) {
-      this.mainPanelProvider.saveAttribute(resultList, lc_id);
+    onSaveAttr({ resultList, lc_id, vueRawTag }) {
+      this.mainPanelProvider.saveAttribute(resultList, lc_id, vueRawTag);
     },
 
     onRemove({ lc_id }) {

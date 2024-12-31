@@ -23,6 +23,6 @@ export default {
 <style scoped lang="scss">
 .xl-a-image {
   width: auto;
-  display: block;
+  display: inline-block;
 }
 </style>

@@ -344,8 +344,11 @@ export default {
           });
           this.localAttributes = resultList;
         }
-
-        this.$emit("save", { resultList, lc_id: this.rawInfoID });
+        this.$emit("save", {
+          resultList,
+          lc_id: this.rawInfoID,
+          vueRawTag: this.vueRawTag,
+        });
         if (isShowNotify) {
           messageApi.success("代码已更新");
         }

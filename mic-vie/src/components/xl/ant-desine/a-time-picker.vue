@@ -23,6 +23,6 @@ export default {
 <style scoped lang="scss">
 .xl-a-time-picker {
   width: auto;
-  display: block;
+  display: inline-block;
 }
 </style>

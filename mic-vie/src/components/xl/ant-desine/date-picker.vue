@@ -21,6 +21,6 @@ export default {
 <style scoped lang="scss">
 .xl-data-picker-box {
   width: auto;
-  display: block;
+  display: inline-block;
 }
 </style>

@@ -989,21 +989,15 @@ setup(props, {emit}) {
   ${dataStr}
 
   // 执行事件流
-  const eventFun = (eventStr, e) => {
+  const eventFun = (eventStr, e = null) => {
     const eventObj = vccEvents[eventStr];
     if (!eventStr || !eventObj) return;
     
-    instance.proxy.$execEventFlow(instance, eventObj, e);
+    instance.proxy.$execEventFlow(instance, eventObj.children, e);
   };
 
-  const pagesInit = (str) => {
-    if (!str || vccEvents[str]) return;
-    const eventObj = vccEvents[str];
-    eventFun(eventObj, null);
-  }
-
   onMounted(() => {
-    pagesInit("init")
+    eventFun("init")
   })
   
   ${str}

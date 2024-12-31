@@ -36,6 +36,7 @@ import scope from "css-scoped";
  */
 export class MainPanelProvider {
   constructor() {
+    this.isCloneNode = false;
     // 开启编辑模式
     this.editMode = true;
     this.eventEmitter = new EventEmitter();
@@ -398,6 +399,7 @@ export class MainPanelProvider {
    * 开启编辑模式，并禁用默认的事件，添加编辑事件
    */
   enableEditMode() {
+    let elClone = "";
     const renderControlPanel = this.getControlPanelRoot();
     // 加一个延迟的作用是：给el-table这种绘制需要时间的组件留出充足的时间，否则会造成el-table渲染不到页面上
 
@@ -406,10 +408,13 @@ export class MainPanelProvider {
     }
 
     this.enableDelayTask = setTimeout(() => {
-      // 这种方式可以禁用原节点所有的事件
-      const elClone = renderControlPanel.cloneNode(true);
-      renderControlPanel.parentNode.replaceChild(elClone, renderControlPanel);
-      this.eventEmitter.emit("mounted", elClone);
+      if (this.isCloneNode) {
+        // 这种方式可以禁用原节点所有的事件
+        elClone = renderControlPanel.cloneNode(true);
+        renderControlPanel.parentNode.replaceChild(elClone, renderControlPanel);
+      }
+
+      this.eventEmitter.emit("mounted", elClone || renderControlPanel);
       // 事件初始化
       this.initComonentsEvent();
     }, 500);
@@ -489,7 +494,7 @@ export class MainPanelProvider {
    * @param {*} resultList
    * @param {*} rawInfo
    */
-  saveAttribute(resultList, lc_id) {
+  saveAttribute(resultList, lc_id, vueRawTag) {
     const param = resultList;
     const object = getRawComponentContent(window.tree[lc_id]);
 
@@ -515,9 +520,24 @@ export class MainPanelProvider {
     param.forEach((element) => {
       object[element.key] = element.value;
     });
+
     // 渲染当前的变更
     this.render(this._rawDataStructure);
+    if (object.lc_uuid) {
+      setTimeout(() => {
+        this.selectElement(object.lc_uuid, vueRawTag);
+      }, 0);
+    }
     return this;
+  }
+
+  selectElement(uuid, vueRawTag) {
+    const renderControlPanel = this.getControlPanelRoot();
+    const element = renderControlPanel.querySelector(`[lc_uuid="${uuid}"]`);
+
+    if (!element) return;
+    element.classList.add("mark-element");
+    element.setAttribute("lc-component-name", vueRawTag);
   }
 
   /**
