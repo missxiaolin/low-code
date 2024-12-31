@@ -1,7 +1,11 @@
 <template>
   <a-form :model="form" ref="formRef" :labelCol="{ style: { width: '55px' } }">
     <a-form-item name="routeType" label="跳转方式">
-      <a-select :options="options" v-model:value="form.routeType" />
+      <a-select
+        :options="options"
+        :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+        v-model:value="form.routeType"
+      />
     </a-form-item>
     <a-form-item name="routeUrl" label="跳转链接">
       <a-input v-model:value="form.routeUrl" />

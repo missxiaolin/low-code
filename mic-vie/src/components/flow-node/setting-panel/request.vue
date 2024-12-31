@@ -4,7 +4,11 @@
       <a-input v-model:value="form.requestUrl" />
     </a-form-item>
     <a-form-item name="method" label="请求方式">
-      <a-select :options="options" v-model:value="form.requestMethod" />
+      <a-select
+        :options="options"
+        :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+        v-model:value="form.requestMethod"
+      />
     </a-form-item>
     <a-tabs v-model:activeKey="form.activeKey">
       <a-tab-pane key="requestParams" tab="参数">

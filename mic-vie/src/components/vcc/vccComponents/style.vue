@@ -44,6 +44,7 @@
               <a-select
                 v-if="item.settingType == 'select'"
                 v-model:value="item.value"
+                :getPopupContainer="(triggerNode) => triggerNode.parentNode"
                 @change="
                   (e) => {
                     handleBlur(e, item.key);

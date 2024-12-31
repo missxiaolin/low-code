@@ -3,7 +3,10 @@
     <a-tabs v-model:activeKey="form.activeKey">
       <a-tab-pane key="select" tab="参数">
         <a-form-item name="key" label="变量">
-          <a-select v-model:value="form.key">
+          <a-select
+            v-model:value="form.key"
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+          >
             <a-select-option
               v-for="(v, key) in customData"
               :key="key"

@@ -7,9 +7,11 @@
       @onSelect="onSelect"
     />
     <a-modal
+      v-if="open"
       v-model:open="open"
       :footer="null"
-      @close="(e) => e.stopPropagation()"
+      :getContainer="getContainer"
+      @click="(e) => e.stopPropagation()"
       title="设置"
       width="50%"
       :key="2"
@@ -33,6 +35,7 @@
     <formulaModal
       v-if="modelOpen"
       v-model:open="modelOpen"
+      :getContainer="getContainer"
       :graphRef="graphRef"
       :curModel="curModel"
       :popConfig="curModel"
@@ -282,7 +285,12 @@ export default {
       flowSave,
     });
 
+    const getContainer = () => {
+      return document.getElementById("mount-node");
+    };
+
     return {
+      getContainer,
       modelOpen,
       nodeRef,
       graphRef,

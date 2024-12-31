@@ -2,7 +2,11 @@
   <div class="setting-panel" @click="(e) => e.stopPropagation()">
     <div class="type">
       <div class="label">类型：</div>
-      <a-select :options="options" v-model:value="config.type" />
+      <a-select
+        :options="options"
+        v-model:value="config.type"
+        :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+      />
     </div>
     <request
       v-if="config.type === 'request'"
