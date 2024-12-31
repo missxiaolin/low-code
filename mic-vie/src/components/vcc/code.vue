@@ -6,6 +6,7 @@
     top="10vh"
     :before-close="handleClose"
     :center="true"
+    @ok="handleClose"
   >
     <!-- 这里加v-if是因为CodeEditor内部不支持watch数据监测 -->
     <codeEditor
@@ -15,12 +16,9 @@
       :initCode="outputCode"
       mode="text/html"
     ></codeEditor>
-    <div style="color: #666; font-size: 12px; text-align: center; margin: 5px">
-      使用代码前请确认相应的组件库已集成至项目
-    </div>
     <div style="text-align: left">
       <a-row>
-        <a-col :span="5">
+        <!-- <a-col :span="5">
           输出形式：
           <a-radio-group
             v-model:value="outputMode"
@@ -28,8 +26,8 @@
           >
             <a-radio value="vue">Vue</a-radio>
           </a-radio-group>
-        </a-col>
-        <a-col :span="10" style="display: flex; flex-direction: column">
+        </a-col> -->
+        <!-- <a-col :span="10" style="display: flex; flex-direction: column">
           代码获取方式：
           <div style="margin-top: 10px; display: flex; flex-direction: row">
             <a-tooltip placement="left">
@@ -56,7 +54,7 @@
               </div>
             </a-tooltip>
           </div>
-        </a-col>
+        </a-col> -->
       </a-row>
     </div>
   </a-modal>

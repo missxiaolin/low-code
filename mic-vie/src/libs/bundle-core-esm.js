@@ -18,6 +18,8 @@ function vueTemplate() {
   
 <script>
 import { // $vueExport } from "vue";
+import events from "./events.json";
+const vccEvents = events;
 // $script
 </script>
   
@@ -555,7 +557,7 @@ const getOwnEnumPropSymbols = (object) =>
     Object.prototype.propertyIsEnumerable.call(object, keySymbol)
   );
 
-function stringifyObject(input, options, pad) {
+export function stringifyObject(input, options, pad) {
   const seen = [];
 
   return (function stringify(input, options = {}, pad = "") {
@@ -977,24 +979,23 @@ class CodeGenerator {
     Object.keys(toRefsData).forEach((key) => {
       dataStr = `const ${key} = ref(${toRefsData[key]});\n`;
     });
-    // const $events = ${stringifyObject(this.eventNode)};
     const finalJSCode = `
 {
 setup(props, {emit}) {
   const instance = getCurrentInstance();
   ${dataStr}
-  const $events = ${stringifyObject(this.eventNode)};
 
   // 执行事件流
   const eventFun = (eventStr, e) => {
-    if (!eventStr) return;
-    const eventObj = JSON.parse(eventStr);
+    const eventObj = vccEvents[eventStr];
+    if (!eventStr || !eventObj) return;
+    
     instance.proxy.$execEventFlow(instance, eventObj, e);
   };
 
   const pagesInit = (str) => {
-    if (!str || $events[str]) return;
-    const eventObj = $events[str];
+    if (!str || vccEvents[str]) return;
+    const eventObj = vccEvents[str];
     eventFun(eventObj, null);
   }
 

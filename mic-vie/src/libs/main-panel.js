@@ -6,6 +6,7 @@
  *
  */
 import * as Vue from "vue";
+import { stringifyObject } from "./bundle-core-esm";
 import {
   merge,
   insertPresetAttribute,
@@ -110,14 +111,22 @@ export class MainPanelProvider {
    * @param {*} code
    */
   appLoad(code, readyForMoutedElement) {
+    const codeString = code.replace(
+      "const vccEvents = events;",
+      "const vccEvents = JSON.parse(events);"
+    );
     // 渲染当前代码
+    const files = {
+      "/main.vue": codeString,
+      "/events.json": `${JSON.stringify(this.eventNode)}`,
+    };
 
     const options = {
       moduleCache: {
         vue: Vue,
       },
       getFile: (url) => {
-        return code;
+        return files[url];
       },
       addStyle(textContent) {
         const style = Object.assign(document.createElement("style"), {
@@ -128,7 +137,9 @@ export class MainPanelProvider {
       },
       handleModule: async function (type, getContentData, path, options) {
         switch (type) {
-          case ".svg":
+          case ".json":
+            return getContentData(false);
+          case ".js":
             return getContentData(false);
         }
       },
