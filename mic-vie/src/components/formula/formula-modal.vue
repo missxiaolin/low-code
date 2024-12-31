@@ -19,7 +19,7 @@
                   :key="i"
                   class="formula-item"
                   @mouseenter="(e) => handleMouseEnter(e, v)"
-                  @dblclick="formulaItemClick(v)"
+                  @click="formulaItemClick(v)"
                 >
                   {{ v.title }}
                 </div>
@@ -59,7 +59,7 @@
               <div class="data-key">
                 <a-tooltip>
                   <template #title>{{ item.keyDesc }}</template>
-                  <div @dblclick="customDataLiClick(item.key)">
+                  <div @click="customDataLiClick(item.key)">
                     {{ item.key }}
                   </div>
                 </a-tooltip>
