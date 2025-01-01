@@ -24,8 +24,15 @@ export default {
       // 第三种方案
       __federation_method_setRemote("lowCode", {
         url: async () => {
-          let res = await getRemoteEntry({ id: projectId });
-          return Promise.resolve(res.model.url).catch((e) => {
+          // let res = await getRemoteEntry({ id: projectId });
+          // console.log(res.model.url);
+          // res.model.url
+          // http://www.missxiaolin.com/lowcode/chr/1.0.0/assets/remoteEntry.js
+          // "http://localhost:8092/assets/remoteEntry.js"
+          // "http://www.missxiaolin.com/lowcode/chr/1.0.0/assets/remoteEntry.js"
+          return Promise.resolve(
+            "http://remote.missxiaolin.com/assets/remoteEntry.js"
+          ).catch((e) => {
             console.log(e);
           });
         },

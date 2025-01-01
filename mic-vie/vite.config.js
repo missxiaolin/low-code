@@ -10,6 +10,7 @@ import externalGlobals from "rollup-plugin-external-globals";
 import monacoEditorPlugin from "vite-plugin-monaco-editor";
 import federation from "@originjs/vite-plugin-federation"; // 微前端
 import { viteMockServe } from "vite-plugin-mock";
+import topLevelAwait from "vite-plugin-top-level-await";
 
 // 强制预构建插件包
 //  optimizeDeps: {
@@ -60,6 +61,10 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
     cacheDir: "node_modules/.cacheDir",
     plugins: [
       vue(),
+      topLevelAwait({
+        promiseExportName: "__tla",
+        promiseImportName: (i) => `__tla_${i}`,
+      }),
       monacoEditorPlugin.default({
         languageWorkers: [
           "editorWorkerService",
@@ -91,7 +96,7 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
         name: "main",
         filename: "remoteEntry.js",
         remotes: {},
-        shared: ["vue", "ant-desine-vue"],
+        shared: ["vue"],
       }),
     ],
     build: {

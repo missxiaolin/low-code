@@ -80,7 +80,7 @@ function createService() {
   return service;
 }
 
-let baseURL = "http://micro-serve.missxiaolin.com";
+let baseURL = "http://lowcodeapi.missxiaolin.com";
 const urls = ["127.0.0.1", "localhost"];
 
 if (urls.indexOf(window.location.hostname) > -1) {

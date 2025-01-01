@@ -40,6 +40,7 @@ export const uploadFile = (localFile, fileName) => {
     localFile,
     putExtra,
     function (respErr, respBody, respInfo) {
+      // console.log(respErr, respBody, respInfo);
       //   console.log(respErr, respBody, respInfo);
       //   if (respErr) {
       //     res.end(
