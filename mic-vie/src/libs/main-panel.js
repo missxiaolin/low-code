@@ -526,7 +526,7 @@ export class MainPanelProvider {
     if (object.lc_uuid) {
       setTimeout(() => {
         this.selectElement(object.lc_uuid, vueRawTag);
-      }, 0);
+      }, 10);
     }
     return this;
   }

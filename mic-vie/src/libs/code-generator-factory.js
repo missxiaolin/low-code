@@ -76,7 +76,7 @@ export function createNewCodeGenerator() {
       if (/^v-/g.test(key) || /^:+/g.test(key)) {
         console.warn(`可能遗漏了这些: ${key}: ${value}`);
       } else {
-        console.info(`unsupport key: ${key}: ${value}`);
+        // console.info(`unsupport key: ${key}: ${value}`);
       }
     },
   });
