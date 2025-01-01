@@ -76,6 +76,7 @@ import { getTreeDepth } from "../../utils/utils";
 registerNodes();
 registerLines();
 export default {
+  name: "flowNode",
   props: {
     pagePata: {
       type: Object,

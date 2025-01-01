@@ -9,6 +9,7 @@ import micTimePicker from "../components/xl/ant-desine/a-time-picker.vue";
 import micSearchLabel from "../components/xl/search-label/index.vue";
 import micPop from "../components/xl/pop/index.vue";
 import micSearchTable from "../components/xl/l-search-table/index.vue";
+import flowNode from "../components/flow-node/flowNode.vue";
 
 const components = [
   micDatePicker,
