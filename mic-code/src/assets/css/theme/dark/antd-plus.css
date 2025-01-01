@@ -1,0 +1,26 @@
+/**
+ * dark-blue 主题下的 Element Plus CSS 变量
+ * 在此查阅所有可自定义的变量：https://github.com/element-plus/element-plus/blob/dev/packages/theme-chalk/src/common/var.scss
+ * 也可以打开浏览器控制台选择元素，查看要覆盖的变量名
+ */
+
+html.dark {
+  /* search 全局 */
+  --search-bg-color: #1d1e1f;
+  --v3-header-bg-color: 0px 0px 6px rgba(0, 0, 0, 0.72);
+  --v3-body-bg-color: #000;
+
+  --v3-menu-bg: #1a1a1a;
+  --v3-menu-title: #fff;
+  --ve-header-animat: #2f2f2f;
+  --v3-menu-item-selected-bg-color: #242424;
+  --v3-menu-item-selected-icon-color: #fff;
+
+  --bgColor-muted: #1d1e1f;
+  --fgColor-default: #fff;
+}
+
+.markdown-body.dark {
+  --bgColor-muted: #1d1e1f;
+  --fgColor-default: #fff;
+}

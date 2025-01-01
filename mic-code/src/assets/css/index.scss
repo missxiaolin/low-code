@@ -1,0 +1,552 @@
+// 全局 CSS 变量
+@import "./variables.css";
+// Transition
+@import "./transition.scss";
+// Element Plus
+@import "./antd-plus.scss";
+// 注册多主题
+@import "./theme/register.scss";
+// mixin
+@import "./mixins.scss";
+
+// 业务页面几乎都应该在根元素上挂载 class="app-container"，以保持页面美观
+.app-container {
+  padding: 20px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  @include scrollbar();
+  background-color: var(--search-bg-color);
+}
+
+#app {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+a,
+a:focus,
+a:hover {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+/*css reset*/
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+html,
+body,
+form,
+fieldset,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  -webkit-text-size-adjust: none;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+  clear: both;
+}
+body {
+  font-family: "sans-serif", "PingFang SC", "Microsoft YaHei", "微软雅黑",
+    "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial;
+  font-size: 13px;
+  color: var(--e-text-color-primary);
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+i,
+span,
+em,
+cite,
+p,
+dl,
+dt,
+dd,
+span {
+  font-style: normal;
+  font-weight: normal;
+}
+// 此处移除 color: inherit; 合冲突 请不要添加
+input,
+button,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
+ul,
+ol,
+li {
+  list-style: none;
+}
+a {
+  color: var(--e-color-primary);
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(131, 192, 253);
+}
+//单行省略...
+.single-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+//2行省略号 ... 兼容问题比较严重
+.two-line-ellipsis {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.mr5 {
+  margin-right: 5px;
+}
+.ml5 {
+  margin-left: 5px;
+}
+.ml10 {
+  margin-left: 10px;
+}
+.mt5 {
+  margin-top: 5px;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.mt15 {
+  margin-top: 15px;
+}
+.mt20 {
+  margin-top: 20px;
+}
+.mb10 {
+  margin-bottom: 10px;
+}
+.mb20 {
+  margin-bottom: 20px;
+}
+.mlr10 {
+  margin: 0 10px;
+}
+.pad15 {
+  padding: 15px;
+}
+.pad20 {
+  padding: 20px;
+}
+.pr15 {
+  padding-right: 15px;
+}
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
+}
+.flex-2 {
+  flex: 2;
+}
+.flex-3 {
+  flex: 3;
+}
+.flex-4 {
+  flex: 4;
+}
+.text-center {
+  text-align: center;
+}
+/*      项目在 X  轴的【排列】方向    */
+.flex-row {
+  flex-direction: row; /* 主轴为水平方向，起点在左端   */
+}
+.flex-row-reverse {
+  flex-direction: row-reverse; /* 主轴为水平方向，起点在右端   */
+}
+
+/*     在 X 轴上的【对齐】方式        */
+.justify-start {
+  justify-content: flex-start; /*  默认：左对齐  */
+}
+.justify-center {
+  justify-content: center; /* 居中  */
+}
+.justify-between {
+  justify-content: space-between; /* 两端对齐，项目之间的间隔都相等    */
+}
+.justify-around {
+  justify-content: space-around; /*   每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍  */
+}
+.justify-end {
+  justify-content: flex-end; /*  右对齐 */
+}
+
+/*      在 X 轴 上 【项目换行】 方式      */
+.flex-nowrap {
+  flex-wrap: nowrap; /*  （默认）：不换行 */
+}
+.flex-wrap {
+  flex-wrap: wrap; /*  换行，第一行在上方 */
+}
+.flex-reverse {
+  flex-wrap: wrap-reverse; /*  换行，第一行在下方*/
+}
+
+/*      项目在 Y  轴的【排列】方向    -----------------------------------------------------                */
+.flex-column {
+  flex-direction: column; /* 主轴为垂直方向，起点在上沿   */
+}
+.flex-column-reverse {
+  flex-direction: column-reverse; /* 主轴为垂直方向，起点在下沿  */
+}
+/*    -----  属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性    -----     */
+.align-start {
+  align-self: flex-start; /* 主轴为垂直方向，起点在上沿   */
+}
+.align-end {
+  align-self: flex-end; /* 主轴为垂直方向，起点在下沿   */
+}
+
+/*      在 Y 轴 上 【对齐】 方式      */
+.align-items-start {
+  align-items: flex-start; /*   Y轴的起点对齐  */
+}
+.align-items-end {
+  align-items: flex-end; /*   Y轴的终点对齐  */
+}
+.align-items-center {
+  align-items: center; /*   Y轴的中点对齐  */
+}
+.align-items-baseline {
+  align-items: baseline; /*   Y轴的项目的第一行文字的基线对齐  */
+}
+.align-items-stretch {
+  align-items: stretch; /*   Y轴如果项目未设置高度或设为auto，将占满整个容器的高度 */
+}
+
+$public-radius: 10px;
+$layout-height: 50px;
+.bckground-white {
+  background-color: var(--e-color-white);
+}
+#app {
+  @extend .flex;
+  @extend .flex-1;
+  @extend .flex-column;
+  overflow: hidden;
+}
+
+// 文字长度超出部分用省略号表示
+.line-limit-length {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: rgba(245, 238, 238, 0.6);
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(212, 213, 224, 0);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba(88, 88, 88, 0.6);
+}
+
+::-webkit-scrollbar-button {
+  height: 0;
+  width: 0;
+  background-color: rgba(245, 238, 238, 0.6);
+}
+
+// 分页
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 15px;
+}
+
+// 表格顶部操作区域
+.custom-operate-content {
+  padding: 15px 0;
+  display: flex;
+}
+
+.tabel-link {
+  cursor: pointer;
+}
+
+@keyframes showup {
+  0% {
+    filter: blur(10px);
+  }
+  70% {
+    letter-spacing: 2px;
+    filter: blur(7px);
+  }
+  100% {
+    letter-spacing: 4px;
+    filter: blur(0px);
+  }
+}
+
+// 顶部
+.mu-search-container {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  background-color: var(--search-bg-color);
+  border: 1px solid var(--el-border-color-light);
+  overflow: hidden;
+  color: var(--el-text-color-primary);
+  border-radius: 8px;
+  padding: 15px;
+  .mu-search-form-button {
+    padding: 15px 0 10px;
+    position: relative;
+    text-align: center;
+    & .ant-btn:nth-child(1) {
+      margin-right: 10px;
+    }
+  }
+}
+
+// 内容区域
+.content-body {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  background-color: var(--search-bg-color);
+  border: 1px solid var(--el-border-color-light);
+  overflow: hidden;
+  color: var(--el-text-color-primary);
+  border-radius: 8px;
+  padding: 15px;
+}
+
+// 分页
+.page-scroll {
+  overflow-y: auto;
+}
+
+.mu-handle-content {
+  width: 100%;
+  padding: 20px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.vcc-column-ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  padding-top: 10px;
+  padding-left: 3px;
+  width: 100%;
+  .column-li {
+    width: 115px;
+    height: 35px;
+    border: 2px solid hsla(0,0%,62%,.24);
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px 0 5px;
+    text-align: center;
+    &:nth-child(even) {
+      margin-left: 8px;
+    }
+    .title {
+      line-height: 35px;
+      text-align: center;
+      background-color: var(--search-bg-color);
+      color: var(--el-text-color-primary);
+    }
+    .li-img {
+      width: 20px;
+      height: 20px;
+      margin-top: 5px;
+      &.max-img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .li-mark-content {
+      position: absolute;
+      left: 200px;
+      bottom: 200px;
+    }
+  }
+}
+
+.attribute-seeting-content {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  .attribute-seeting-content-item {
+    display: flex;
+    flex-direction: column;
+    
+    
+    .attribute-seeting-content-title {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 30px;
+      margin-bottom: 10px;
+      padding: 0 10px;
+      border-top: 1px solid #f0f0f0;
+      background: #f9f9f9;
+      color: #000;
+    }
+    .attribute-seeting-content-content {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 10px;
+      flex-wrap: nowrap;
+    }
+    .attribute-seeting-content-item-content {
+      max-width: 100%;
+      flex: 1;
+      .ant-select, .ant-input {
+        flex: 1;
+        width: 100%;
+      }
+      :where(.css-dev-only-do-not-override-bmplwl).ant-radio-group {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+      }
+    }
+    .label {
+      padding-right: 10px;
+      box-sizing: border-box;
+      text-align: right;
+      min-width: 98px;
+      line-height: 30px;
+      margin-right: 5px;
+    }
+  }
+}
+
+.scrollbar {
+  overflow-y: scroll;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  .label {
+    line-height: 35px;
+  }
+  .content {
+    flex: 1;
+  }
+}
+
+#render-control-panel {
+  > div {
+    min-height: 100%;
+  }
+}
+
+.color-input {
+  outline-style: none;
+  border: 0px;
+  border: 1px solid #ccc;
+  margin: 0;
+  padding: 0;
+}
+
+
+.home-main {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  flex: 1;
+}
+
+.form-bottom-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
