@@ -58,7 +58,16 @@ class GenerateProject extends Base {
         __dirname,
         `../../../../mic-remote/src/remote-components/${pageName}.vue`
       );
-      fs.writeFileSync(filename, item.page_html); // 写入文件
+      const jsonName = resolve(
+        __dirname,
+        `../../../../mic-remote/src/remote-components/${pageName}.json`
+      );
+      const html = item.page_html.replace(
+        `import events from "./events.json";`,
+        `import events from "./${pageName}.json";`
+      );
+      fs.writeFileSync(filename, html); // 写入文件
+      fs.writeFileSync(jsonName, item.eventNode); // 写入json文件
       r[item.path] = `./src/remote-components/${pageName}.vue`;
     });
     fs.writeFileSync(

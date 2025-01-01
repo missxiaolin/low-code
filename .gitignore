@@ -13,6 +13,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 mic-remote/src/remote-components/*.vue
+mic-remote/src/remote-components/*.json
 mic-remote/r.json
 
 # Editor directories and files
