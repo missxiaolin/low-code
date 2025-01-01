@@ -49,10 +49,10 @@ export const defaultRoute = [
     path: "/form", // 拖拽表单
     component: () => import("@/views/vcc/form.vue"),
   },
-  {
-    path: "/:catchAll(.*)", // 表单代码执行
-    component: () => import("@/views/main/index.vue"),
-  },
+  // {
+  //   path: "/:catchAll(.*)", // 表单代码执行
+  //   component: () => import("@/views/main/index.vue"),
+  // },
 ];
 
 let prdRoutesList = [...defaultRoute, ...demoRoute];

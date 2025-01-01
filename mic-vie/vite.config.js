@@ -92,12 +92,12 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
         // configPath?: string; // 设置模拟读取的数据条目
         // logger?:boolean; // 是否在控制台显示请求日志
       }),
-      federation({
-        name: "main",
-        filename: "remoteEntry.js",
-        remotes: {},
-        shared: ["vue"],
-      }),
+      // federation({
+      //   name: "main",
+      //   filename: "remoteEntry.js",
+      //   remotes: {},
+      //   shared: ["vue"],
+      // }),
     ],
     build: {
       target: "es2015",

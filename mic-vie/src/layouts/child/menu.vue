@@ -87,12 +87,12 @@ export default {
     });
 
     const getRoutes = async () => {
-      let res = await projectMenuRouteAll({
-        projectId: projectId,
-      });
-      if (!res.success) return;
-      let arr = routeFormat(res.model);
-      items.value = items.value.concat(arr);
+      // let res = await projectMenuRouteAll({
+      //   projectId: projectId,
+      // });
+      // if (!res.success) return;
+      // let arr = routeFormat(res.model);
+      // items.value = items.value.concat(arr);
     };
 
     onMounted(async () => {
