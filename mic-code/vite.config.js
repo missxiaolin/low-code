@@ -2,33 +2,13 @@ import { defineConfig } from "vite";
 import path, { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 import { VITE_PORT } from "./conifg/constant";
-import { configManualChunk } from "./conifg/vite/optimizer";
-import commonjs from "rollup-plugin-commonjs";
-import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
-import svgLoader from "vite-svg-loader";
-import externalGlobals from "rollup-plugin-external-globals";
-import monacoEditorPlugin from "vite-plugin-monaco-editor";
 import federation from "@originjs/vite-plugin-federation"; // 微前端
-import { viteMockServe } from "vite-plugin-mock";
 import topLevelAwait from "vite-plugin-top-level-await";
-
-// 强制预构建插件包
-//  optimizeDeps: {
-//   include: [
-//     `monaco-editor/esm/vs/language/json/json.worker`,
-//     `monaco-editor/esm/vs/language/css/css.worker`,
-//     `monaco-editor/esm/vs/language/html/html.worker`,
-//     `monaco-editor/esm/vs/language/typescript/ts.worker`,
-//     `monaco-editor/esm/vs/editor/editor.worker`
-//   ],
-// },
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   const isBuild = command === "build";
   return {
-    // 生产环境需要在域名基础上加上vie
-    base: "/",
     server: {
       // 服务配置
       port: VITE_PORT, // 类型： number 指定服务器端口;
@@ -57,81 +37,23 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
         promiseImportName: (i) => `__tla_${i}`,
       }),
       federation({
-        name: "main",
+        name: "layout",
         filename: "remoteEntry.js",
-        remotes: {},
+        remotes: {
+          lowcode: "http://localhost:8092/assets/remoteEntry.js",
+        },
         shared: ["vue"],
       }),
-      // monacoEditorPlugin.default({
-      //   languageWorkers: [
-      //     "editorWorkerService",
-      //     "typescript",
-      //     "json",
-      //     "html",
-      //     "css",
-      //   ],
-      // }),
-      /** 将 SVG 静态图转化为 Vue 组件 */
-      // svgLoader({ defaultImport: "url" }),
-      /** SVG */
-      // createSvgIconsPlugin({
-      //   iconDirs: [path.resolve(process.cwd(), "src/assets/icons")],
-      //   symbolId: "icon-[name]",
-      // }),
-      // viteMockServe({
-      // mockPath: "mock", // mock文件夹路径
-      // enable: true, // 只有开发环境才开启mock
-      // mockPath?: string; // mock文件夹路径
-      // ignore?: RegExp | ((fileName: string) => boolean); // 自动读取模拟.ts 文件时，请忽略指定格式的文件
-      // watchFiles?: boolean; // 设置是否监视mockPath对应的文件夹内文件中的更改
-      // enable?: boolean; // 是否启用 mock 功能
-      // ignoreFiles?: string[];
-      // configPath?: string; // 设置模拟读取的数据条目
-      // logger?:boolean; // 是否在控制台显示请求日志
-      // }),
     ],
     build: {
       target: "esnext",
-      minify: false,
       cssCodeSplit: true,
       rollupOptions: {
         output: {
+          format: "es",
           minifyInternalExports: false,
         },
       },
     },
-    // build: {
-    //   target: "es2015",
-    //   rollupOptions: {
-    //     plugins: [commonjs(), externalGlobals({})],
-    //     output: {
-    //       chunkFileNames: "static/js/[name]-[hash].js",
-    //       entryFileNames: "static/js/[name]-[hash].js",
-    //       assetFileNames: "static/[ext]/[name]-[hash].[ext]",
-    //       manualChunks: configManualChunk,
-    //     },
-    //   },
-    //   // Turning off brotliSize display can slightly reduce packaging time
-    //   // brotliSize: false,
-    //   chunkSizeWarningLimit: 2000,
-    //   minify: "terser",
-    //   terserOptions: {
-    //     compress: {
-    //       //生产环境时移除console
-    //       drop_console: true,
-    //       drop_debugger: true,
-    //     },
-    //   },
-    // },
   };
-  // if (command === 'serve') {
-  //   return {
-  //     // dev specific config
-  //   }
-  // } else {
-  //   // command === 'build'
-  //   return {
-  //     // build specific config
-  //   }
-  // }
 });

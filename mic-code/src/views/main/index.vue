@@ -24,7 +24,7 @@ export default {
       // 第三种方案
       __federation_method_setRemote("lowCode", {
         url: async () => {
-          // let res = await getRemoteEntry({ id: projectId });
+          let res = await getRemoteEntry({ id: projectId });
           // console.log(res.model.url);
           // res.model.url
           // http://www.missxiaolin.com/lowcode/chr/1.0.0/assets/remoteEntry.js
@@ -56,6 +56,7 @@ export default {
         );
         component.value = __federation_method_unwrapDefault(moduleWraped);
       } catch (error) {
+        console.log(error);
         // TODO: 找不到模块跳转到404
         if (
           error.toString() &&

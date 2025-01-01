@@ -1,5 +1,4 @@
 import { loadAnt } from "./ant/index.js";
-// import SvgIcon from "@/components/svgIcon/index.vue"; // svg组件
 import micDatePicker from "../components/xl/ant-desine/date-picker.vue";
 import micFlex from "../components/xl/ant-desine/a-flex.vue";
 import micImage from "../components/xl/ant-desine/a-image.vue";
@@ -22,10 +21,7 @@ const components = [
   micSearchTable,
 ];
 
-import "virtual:svg-icons-register";
 export function loadPlugins(app) {
-  // loadElementPlus(app);
-  // loadElementPlusIcon(app);
   loadAnt(app);
   // 注册到全局
   components.forEach((component) => {

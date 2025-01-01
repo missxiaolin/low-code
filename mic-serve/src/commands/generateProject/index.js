@@ -81,7 +81,7 @@ class GenerateProject extends Base {
         console.error(`执行命令失败: ${error.message}`);
         return;
       }
-      // this.getBuildFiles(projectDetail.code);
+      this.getBuildFiles(projectDetail.code);
       console.log(`执行命令成功，输出结果: ${stdout}`);
     });
   }
