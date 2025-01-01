@@ -40,7 +40,8 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
         name: "layout",
         filename: "remoteEntry.js",
         remotes: {
-          lowcode: "http://localhost:8092/assets/remoteEntry.js",
+          lowcode:
+            'fetch("http://127.0.0.1:9002/adm/project/remote/entry?id=1").then((response) => response.json()).then((data) => {Promise.resolve(data.model.url)});',
         },
         shared: ["vue"],
       }),

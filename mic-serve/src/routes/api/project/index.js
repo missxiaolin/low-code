@@ -59,7 +59,7 @@ const generatePage = RouterConfigBuilder.routerConfigBuilder(
 // 项目生成地址
 const getRemoteEntry = RouterConfigBuilder.routerConfigBuilder(
   "/adm/project/remote/entry",
-  RouterConfigBuilder.METHOD_TYPE_POST,
+  RouterConfigBuilder.METHOD_TYPE_GET,
   (req, res) => {
     return projectController.getRemoteEntry(req, res);
   },

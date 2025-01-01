@@ -146,14 +146,14 @@ export default class Project extends Base {
    * @returns
    */
   async getRemoteEntry(req, res) {
-    let data = req.body || {},
+    let data = req.query || {},
       result = {};
     result = await projectModel.getPageDetail(data);
     // if (result.length == 0) {
     //   return this.send(res, result, false, "未找到该项目");
     // }
 
-    result.url = `http://www.missxiaolin.com/lowcode/${result.code}/1.0.0/assets/remoteEntry.js`;
+    result.url = `http://www.missxiaolin.com/lowcode/${result.code}/${result.version}/assets/remoteEntry.js`;
 
     return this.send(res, result);
   }

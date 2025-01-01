@@ -12,6 +12,7 @@ import { getRemoteEntry } from "../../api/project";
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useGeneralStore } from "../../store/modules/project";
+import { data } from "../../../../mic-vie/src/components/flow-node/flow-node-data";
 
 export default {
   setup(props) {
@@ -20,19 +21,17 @@ export default {
     const route = useRoute();
     const router = useRouter();
     let projectId = generalStore.currentProjectId;
+
     const load = () => {
       // 第三种方案
       __federation_method_setRemote("lowCode", {
         url: async () => {
-          // let res = await getRemoteEntry({ id: projectId });
-          // console.log(res.model.url);
+          let res = await getRemoteEntry({ id: 1 });
           // res.model.url
           // http://www.missxiaolin.com/lowcode/chr/1.0.0/assets/remoteEntry.js
           // "http://localhost:8092/assets/remoteEntry.js"
           // "http://www.missxiaolin.com/lowcode/chr/1.0.0/assets/remoteEntry.js"
-          return Promise.resolve(
-            "http://remote.missxiaolin.com/assets/remoteEntry.js"
-          ).catch((e) => {
+          return Promise.resolve(`${res.model.url}`).catch((e) => {
             console.log(e);
           });
         },

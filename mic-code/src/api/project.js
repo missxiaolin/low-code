@@ -68,7 +68,7 @@ export function projectGenerate(data) {
 export function getRemoteEntry(data) {
   return request({
     url: "/adm/project/remote/entry",
-    method: "post",
-    data,
+    method: "get",
+    params: data,
   });
 }
