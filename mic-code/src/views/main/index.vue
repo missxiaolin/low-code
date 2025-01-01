@@ -24,7 +24,7 @@ export default {
       // 第三种方案
       __federation_method_setRemote("lowCode", {
         url: async () => {
-          let res = await getRemoteEntry({ id: projectId });
+          // let res = await getRemoteEntry({ id: projectId });
           // console.log(res.model.url);
           // res.model.url
           // http://www.missxiaolin.com/lowcode/chr/1.0.0/assets/remoteEntry.js
