@@ -80,7 +80,7 @@ function createService() {
   return service;
 }
 
-let baseURL = "http://lowcodeapi.missxiaolin.com";
+let baseURL = "http://127.0.0.1:9002";
 const urls = ["127.0.0.1", "localhost"];
 
 if (urls.indexOf(window.location.hostname) > -1) {

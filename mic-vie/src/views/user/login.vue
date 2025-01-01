@@ -92,12 +92,15 @@ export default {
           message.error(res.errorMessage);
           return;
         }
-        generalStore.getValidProject();
+
         setToken(res.model.token || "");
+        setTimeout(() => {
+          generalStore.getValidProject();
+        });
         message.success("登录成功");
         setTimeout(() => {
           router.push("/");
-        }, 2000);
+        }, 3000);
       });
     };
 
