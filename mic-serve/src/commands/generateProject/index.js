@@ -95,7 +95,7 @@ class GenerateProject extends Base {
     const filesList = this.getFile(dirPath);
     filesList.forEach((file) => {
       const fileName = `lowcode/${code}/${version}/${file.replace(
-        "/Users/xiaolin/web/miss/vue3-low-code/mic-remote/dist/",
+        `${dirPath}/`,
         ""
       )}`;
       uploadFile(file, fileName);
