@@ -134,6 +134,11 @@ export const tableColumns = [
     align: "center",
   },
   {
+    key: "version",
+    title: "当前版本",
+    align: "center",
+  },
+  {
     key: "status_desc",
     title: "项目状态",
     align: "center",

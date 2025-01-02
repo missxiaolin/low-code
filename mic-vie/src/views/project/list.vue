@@ -94,7 +94,21 @@
           >
             发布
           </a-button>
-          <a-button link size="small" class="ml10"> 版本设置 </a-button>
+          <a-button
+            link
+            size="small"
+            class="ml10"
+            @click="
+              (e) => {
+                versionVersionFormOpen = true;
+                versionVersionForm.version = scope.row.version || '';
+                versionVersionForm.id = scope.row.id;
+                getVersionAll(scope.row.id);
+              }
+            "
+          >
+            版本设置
+          </a-button>
           <a-button link size="small" class="ml10" @click="preview(scope.row)">
             预览
           </a-button>
@@ -112,12 +126,38 @@
         </a-form-item>
       </a-form>
     </a-modal>
+    <a-modal
+      v-model:open="versionVersionFormOpen"
+      @ok="setVersion"
+      title="版本设置"
+    >
+      <a-form :model="versionVersionForm">
+        <a-form-item label="版本号">
+          <a-select v-model:value="versionVersionForm.version">
+            <a-select-option
+              v-for="item in versionAll"
+              :key="item"
+              :value="item.version"
+            >
+              {{ item.version }}
+            </a-select-option>
+          </a-select>
+          <!-- <a-input v-model:value="versionVersionForm.version" /> -->
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
 <script>
 import { onMounted, reactive, ref } from "vue";
-import { projectSave, projectList, projectGenerate } from "../../api/project";
+import {
+  projectSave,
+  projectList,
+  projectGenerate,
+  updateVersion,
+  getAllVersions,
+} from "../../api/project";
 import { btnPopForm, tableColumns } from "./list.js";
 import { useGeneralStore } from "../../store/modules/project.js";
 import { useRouter } from "vue-router";
@@ -130,6 +170,12 @@ export default {
       id: "",
       version: "",
     });
+    let versionVersionFormOpen = ref(false);
+    let versionVersionForm = ref({
+      id: "",
+      version: "",
+    });
+    let versionAll = ref([]);
     const generalStore = useGeneralStore();
     const router = useRouter();
     let projectDetail = ref({});
@@ -262,6 +308,26 @@ export default {
       versionGenerateFormOpen.value = false;
     };
 
+    const getVersionAll = async (id) => {
+      versionAll.value = [];
+      let res = await getAllVersions({
+        projectId: id,
+      });
+      if (!res.success) return;
+      versionAll.value = res.model;
+    };
+
+    const setVersion = async () => {
+      let res = await updateVersion(versionVersionForm.value);
+      if (!res.success) {
+        message.error(res.errorMessage);
+        return;
+      }
+      message.success("设置成功！");
+      versionVersionFormOpen.value = false;
+      getProjectList();
+    };
+
     onMounted(() => {
       getProjectList();
     });
@@ -300,6 +366,11 @@ export default {
       handleCurrentChange,
       versionGenerateFormOpen,
       versionGenerateForm,
+      versionVersionFormOpen,
+      versionVersionForm,
+      versionAll,
+      getVersionAll,
+      setVersion,
     };
   },
 };
