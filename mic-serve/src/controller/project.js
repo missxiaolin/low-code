@@ -135,7 +135,7 @@ export default class Project extends Base {
       update_time: dataTime,
     });
     exec(
-      `npm run command Generate:Project ${result.id}`,
+      `npm run command Generate:Project ${result.id} ${data.version}`,
       async (error, stdout, stderr) => {
         console.log(stdout, stderr);
         await projectModel.update(

@@ -14,6 +14,7 @@ class GenerateProject extends Base {
     return `
             Generate:Project 
             {projectId:[必传]项目ID}
+            {version:[必传]版本号}
          `;
     // return `
 
@@ -26,7 +27,7 @@ class GenerateProject extends Base {
   }
 
   async execute(args, options) {
-    const { projectId } = args;
+    const { projectId, version } = args;
 
     let pages = await pageRouteModel.getAll({
       projectId: projectId,
@@ -81,23 +82,52 @@ class GenerateProject extends Base {
         console.error(`执行命令失败: ${error.message}`);
         return;
       }
-      this.getBuildFiles(projectDetail.code);
+      this.getBuildFiles(projectDetail.code, version);
       console.log(`执行命令成功，输出结果: ${stdout}`);
     });
+
+    // this.getBuildFiles(projectDetail.code, version);
   }
 
-  getBuildFiles(code) {
-    const path = "../../../../mic-remote/dist/assets/";
-    let fileDirectory = resolve(__dirname, path);
-    // 异步读取文件夹
-    fs.readdir(fileDirectory, (err, files) => {
-      files.forEach((file) => {
-        // 拼接完整的文件路径
-        const filePath = `${fileDirectory}/${file}`;
-        const fileName = `lowcode/${code}/1.0.0/${file}`;
-        uploadFile(filePath, fileName);
-      });
+  getBuildFiles(code, version) {
+    const path = "../../../../mic-remote/dist/";
+    let dirPath = resolve(__dirname, path); // 文件夹路径
+    const filesList = this.getFile(dirPath);
+    filesList.forEach((file) => {
+      const fileName = `lowcode/${code}/${version}/${file.replace(
+        "/Users/xiaolin/web/miss/vue3-low-code/mic-remote/dist/",
+        ""
+      )}`;
+      uploadFile(file, fileName);
     });
+    // 异步读取文件夹
+    // fs.readdir(fileDirectory, (err, files) => {
+    //   files.forEach((file) => {
+    //     // 拼接完整的文件路径
+    //     const filePath = `${fileDirectory}/${file}`;
+    //     const fileName = `lowcode/${code}/1.0.0/${file}`;
+    //     uploadFile(filePath, fileName);
+    //   });
+    // });
+  }
+
+  getFile(dirPath, filesList = []) {
+    // 异步读取文件夹
+    const files = fs.readdirSync(dirPath); // 获取文件夹中的所有文件和文件夹
+    files.forEach((file) => {
+      const filePath = path.join(dirPath, file);
+      const stats = fs.statSync(filePath);
+
+      if (stats.isFile()) {
+        filesList.push(filePath); // 将文件路径添加到列表中
+      } else if (stats.isDirectory()) {
+        this.getFile(filePath, filesList); // 递归获取文件夹内的文件
+      }
+    });
+    return filesList;
+    // fs.readdir(fileDirectory, (err, files) => {
+    //   console.log(files);
+    // });
   }
 
   // 上传到七牛云
