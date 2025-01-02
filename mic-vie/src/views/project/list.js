@@ -159,7 +159,7 @@ export const tableColumns = [
     prop: "options",
     align: "center",
     title: "操作",
-    width: "250px",
+    width: "380px",
     fixed: "right",
     noEmptyValue: true,
   },

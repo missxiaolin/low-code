@@ -80,12 +80,38 @@
           >
             路由配置
           </a-button>
-          <a-button link size="small" @click="generate(scope.row)" class="ml10">
+          <a-button
+            link
+            size="small"
+            @click="
+              (e) => {
+                versionGenerateFormOpen = true;
+                versionGenerateForm.version = '';
+                versionGenerateForm.id = scope.row.id;
+              }
+            "
+            class="ml10"
+          >
             发布
+          </a-button>
+          <a-button link size="small" class="ml10"> 版本设置 </a-button>
+          <a-button link size="small" class="ml10" @click="preview(scope.row)">
+            预览
           </a-button>
         </template>
       </mic-search-table>
     </div>
+    <a-modal
+      v-model:open="versionGenerateFormOpen"
+      @ok="generate"
+      title="版本发布"
+    >
+      <a-form :model="versionGenerateForm">
+        <a-form-item label="版本号">
+          <a-input v-model:value="versionGenerateForm.version" />
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
@@ -99,6 +125,11 @@ import { message } from "ant-design-vue";
 
 export default {
   setup(props) {
+    let versionGenerateFormOpen = ref(false);
+    let versionGenerateForm = ref({
+      id: "",
+      version: "",
+    });
     const generalStore = useGeneralStore();
     const router = useRouter();
     let projectDetail = ref({});
@@ -212,10 +243,16 @@ export default {
       });
     };
 
-    const generate = async (item) => {
-      let res = await projectGenerate({
-        id: item.id,
-      });
+    const generate = async () => {
+      if (!versionGenerateForm.value.version) {
+        message.error("请输入版本号");
+        return;
+      }
+      if (!versionGenerateForm.value.id) {
+        message.error("未找到项目");
+        return;
+      }
+      let res = await projectGenerate(versionGenerateForm.value);
       if (!res.success) {
         message.error(res.errorMessage);
         return;
@@ -228,7 +265,19 @@ export default {
       getProjectList();
     });
 
+    // 预览
+    const preview = (item) => {
+      let url = `http://code.missxiaolin.com`;
+      const urls = ["127.0.0.1", "localhost", "lcode.missxiaolin.com"];
+      if (urls.indexOf(window.location.hostname) > -1) {
+        url = "http://127.0.0.1:8093";
+      }
+
+      window.open(url, "_blank");
+    };
+
     return {
+      preview,
       generate,
       goRoutePage,
       popClick,
@@ -248,6 +297,8 @@ export default {
       popSuccess,
       getProjectList,
       handleCurrentChange,
+      versionGenerateFormOpen,
+      versionGenerateForm,
     };
   },
 };
