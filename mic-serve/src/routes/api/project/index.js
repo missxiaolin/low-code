@@ -56,6 +56,15 @@ const generatePage = RouterConfigBuilder.routerConfigBuilder(
   true
 );
 
+// 修改版本
+const updateVersion = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/project/version/update",
+  RouterConfigBuilder.METHOD_TYPE_POST,
+  (req, res) => {
+    return projectController.updateVersion(req, res);
+  }
+);
+
 // 项目生成地址
 const getRemoteEntry = RouterConfigBuilder.routerConfigBuilder(
   "/adm/project/remote/entry",
@@ -106,10 +115,19 @@ const getProjectMenuRouteAll = RouterConfigBuilder.routerConfigBuilder(
   false
 );
 
+const getAllVersions = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/project/version/all",
+  RouterConfigBuilder.METHOD_TYPE_POST,
+  (req, res) => {
+    return projectController.getAllVersions(req, res);
+  }
+);
+
 export default {
   ...projectSave,
   ...projectList,
   ...projectDetail,
+  ...updateVersion,
   ...generatePage,
   ...getRemoteEntry,
   ...projectAll,
@@ -117,4 +135,5 @@ export default {
   ...menuSave,
   ...getProjectMenuAll,
   ...getProjectMenuRouteAll,
+  ...getAllVersions,
 };

@@ -259,6 +259,7 @@ export default {
       }
       message.success("项目发布中");
       getProjectList();
+      versionGenerateFormOpen.value = false;
     };
 
     onMounted(() => {

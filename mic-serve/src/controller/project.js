@@ -2,12 +2,14 @@ import Base from "./base";
 import moment from "moment";
 import ProjectModel from "../model/project";
 import PageRouteModel from "../model/page_route";
+import VersionsModel from "../model/versions";
 const { exec } = require("child_process");
 import dotenv from "dotenv";
 
 const appConfig = dotenv.config().parsed;
 const projectModel = new ProjectModel();
 const pageRouteModel = new PageRouteModel();
+const versionsModel = new VersionsModel();
 
 /**
  * 项目controller
@@ -111,12 +113,27 @@ export default class Project extends Base {
     if (result.status == 3) {
       return this.send(res, result, false, "该项目正在发布");
     }
+
     await projectModel.update(
       {
         status: 3,
       },
       data.id
     );
+    const versionDetail = await versionsModel.getDetail({
+      projectId: data.id,
+      version: data.version,
+    });
+    if (versionDetail.length > 0) {
+      return this.send(res, result, false, "该版本已存在");
+    }
+    const dataTime = moment().format("YYYY-MM-DD HH:mm:ss");
+    await versionsModel.save({
+      project_id: data.id,
+      version: data.version,
+      create_time: dataTime,
+      update_time: dataTime,
+    });
     exec(
       `npm run command Generate:Project ${result.id}`,
       async (error, stdout, stderr) => {
@@ -129,18 +146,42 @@ export default class Project extends Base {
         );
       }
     );
-    // let pages = await pageRouteModel.getAll({
-    //   projectId: data.id,
-    //   status: [2],
-    // });
-
-    // console.log(pages);
 
     return this.send(res, result);
   }
 
   /**
-   * 获取详情详情
+   * 修改版本
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async updateVersion(req, res) {
+    let data = req.body || {},
+      result = {};
+    if (!data.version) {
+      return this.send(res, result, false, "版本号不能为空");
+    }
+    await projectModel.update(
+      {
+        version: data.version,
+      },
+      data.id
+    );
+
+    return this.send(res, result);
+  }
+
+  async getAllVersions(req, res) {
+    let data = req.body || {},
+      result = {};
+    result = await versionsModel.getVersionsAll(data);
+
+    return this.send(res, result);
+  }
+
+  /**
+   * 获取模块联邦详情
    * @param {*} req
    * @param {*} res
    * @returns
@@ -149,9 +190,6 @@ export default class Project extends Base {
     let data = req.query || {},
       result = {};
     result = await projectModel.getPageDetail(data);
-    // if (result.length == 0) {
-    //   return this.send(res, result, false, "未找到该项目");
-    // }
 
     result.url = `http://www.missxiaolin.com/lowcode/${result.code}/${result.version}/assets/remoteEntry.js`;
 

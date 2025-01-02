@@ -65,9 +65,40 @@ export function projectGenerate(data) {
   });
 }
 
+/**
+ * 获取js
+ * @param {*} data
+ * @returns
+ */
 export function getRemoteEntry(data) {
   return request({
     url: "/adm/project/remote/entry",
+    method: "post",
+    data,
+  });
+}
+
+/**
+ * 修改版本
+ * @param {*} data
+ * @returns
+ */
+export function updateVersion(data) {
+  return request({
+    url: "/adm/project/version/update",
+    method: "post",
+    data,
+  });
+}
+
+/**
+ * 获取所有版本
+ * @param {*} data
+ * @returns
+ */
+export function getAllVersions(data) {
+  return request({
+    url: "/adm/project/version/all",
     method: "post",
     data,
   });
