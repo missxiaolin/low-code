@@ -101,7 +101,7 @@
     <div class="column-li" lc-mark lc_id="s7hRSE+WLw">
       <div class="title" lc_id="ASw3ris7ai">标签</div>
       <div class="li-mark-content" lc_id="28ZL0+3TfD">
-        <a-tag div-lc-mark lc_id="664uCIct1C"></a-tag>
+        <a-tag lc_id="664uCIct1C">标签</a-tag>
       </div>
     </div>
   </div>
