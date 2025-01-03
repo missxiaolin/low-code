@@ -3,6 +3,10 @@ import { createRouter, createWebHistory } from "vue-router";
 export const defaultRoute = [
   {
     path: "/",
+    redirect: "/index",
+  },
+  {
+    path: "/index",
     component: () => import("@/views/main/index.vue"),
   },
   {
