@@ -25,9 +25,11 @@
 <script>
 import { ref, watch, computed, getCurrentInstance, nextTick } from "vue";
 import { useGeneralStore } from "../../../store/modules/project";
+import { UserOutlined } from "@ant-design/icons-vue";
 const generalStore = useGeneralStore();
 
 export default {
+  components: { UserOutlined },
   name: "header-animat",
   setup() {
     const handleManualRefresh = () => {
