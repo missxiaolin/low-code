@@ -72,7 +72,9 @@ export default class Menu extends Base {
   async menuRouteAll(req, res) {
     let data = req.body || {},
       result = {};
-
+    if (!data.projectId) {
+      return this.send(res, [], "projectId不能为空");
+    }
     result = await menuModel.getMenuRouteAll(data);
     for (let i = 0; i < result.length; i++) {
       if (result[i].type == 1) {

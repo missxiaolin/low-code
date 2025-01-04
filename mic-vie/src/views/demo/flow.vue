@@ -1,10 +1,18 @@
 <template>
   <div>
-    <!-- <div class="ceshi" id="ceshi">
-      <a-modal v-model:open="ceshiOpen" :getContainer="getContainer">
+    {{ ceshiOpen }}
+    <div class="ceshi" id="ceshi">
+      <a-modal
+        v-model:open="ceshiOpen"
+        :getContainer="getContainer"
+        ref="ceshiRef"
+      >
         <div>ceshi</div>
       </a-modal>
-    </div> -->
+      <!-- <a-modal v-model:open="ceshiOpen" :getContainer="getContainer">
+        <div>ceshi</div>
+      </a-modal> -->
+    </div>
     <a-button type="primary" @click="modelOpen = true">打开</a-button>
     <formulaModal
       v-model:open="modelOpen"
@@ -65,7 +73,10 @@ export default {
     formulaModal,
   },
   setup() {
-    const ceshiOpen = ref(true);
+    const ceshiRef = ref(null);
+    const ceshiOpen = ref({
+      a: 1,
+    });
     const modelOpen = ref(false);
     console.log(evalFormual("IF(true, 2, 3)"));
     let ceshi = ref("ceshi");
@@ -84,15 +95,21 @@ export default {
     };
 
     onMounted(() => {
+      console.log(ceshiRef.value);
+      console.log(ceshiRef.value.appContext);
+      // ceshiRef.value.appContext;
+      // console.log(instance.proxy);
+      // instance.proxy.ceshiOpen = true;
+      // ceshiRef.value.open = true;
       // execEventFlow(instance, data.children);
     });
 
     const getContainer = (e) => {
-      console.log(e);
       return document.getElementById("ceshi");
     };
 
     return {
+      ceshiRef,
       getContainer,
       ceshiOpen,
       open,

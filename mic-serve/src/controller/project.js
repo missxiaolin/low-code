@@ -189,6 +189,10 @@ export default class Project extends Base {
   async getRemoteEntry(req, res) {
     let data = req.query || {},
       result = {};
+
+    if (!data.id) {
+      return this.send(res, [], "id不能为空");
+    }
     result = await projectModel.getPageDetail(data);
 
     result.url = `http://www.missxiaolin.com/lowcode/${result.code}/${result.version}/assets/remoteEntry.js`;
