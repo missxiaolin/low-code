@@ -22,22 +22,32 @@ const config = {
         "a": 1
       }
     `,
+    "/ceshi.vue": `
+       <template>
+        <div>ceshi111</div>
+      </template>
+    `,
     "/main.vue": `
         <template>
             <div class="content">
                 <a-button type="primary">Primary Button</a-button>
                 <EyeOutlined />
+                <ceshi />
                 {{ message }}
             </div>
         </template>
 
         <script>
             import { ref, getCurrentInstance, watch } from "vue";
+            import ceshi from "./ceshi.vue";
             // import eventNode from "./index.js";
 
             import eventNode from "./eventNode.json";
 
             export default {
+                components: {
+                    ceshi,
+                },
                 setup() {
                     const message = ref("Hello, Vue 3!");
                     // window.babelTransform(eventNode).then((res) => {
