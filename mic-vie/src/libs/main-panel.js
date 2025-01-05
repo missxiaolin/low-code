@@ -6,7 +6,6 @@
  *
  */
 import * as Vue from "vue";
-import { stringifyObject } from "./bundle-core-esm";
 import {
   merge,
   insertPresetAttribute,
@@ -52,6 +51,7 @@ export class MainPanelProvider {
     this.customData = {};
 
     this.componentOptions = {};
+    this.dropIninFunction = null;
   }
 
   getComponentOptions() {
@@ -359,40 +359,60 @@ export class MainPanelProvider {
       }
 
       if (isRawComponents(newDropObj)) {
-        // 插入预设属性
-        insertPresetAttribute(newDropObj);
-
-        // 使新拖入的代码与原来的做脱离
-        replaceRowID(newDropObj, "");
-
-        // 更新到一个Map上面，维持引用，由于render中统一做了处理，所以这段代码是可以删除的 2021年02月04日11:59:10
-        updateLinkTree(newDropObj);
+        if (this.dropIninFunction) {
+          this.dropIninFunction(newDropObj, this);
+          return;
+        }
+        this.initDropCode(newDropObj);
       } else if (isActiveComponents(newDropObj)) {
         // 移动的情况
         deleteNodeFromParent(newDropObj);
       }
 
-      // 更新代码结构关系
-      const codeTargetElement = findCodeElemNode(
-        this.currentPointDropInfo.target
-      );
-      if (codeTargetElement) {
-        let temp = findRawVueInfo(codeTargetElement);
-
-        this.backup();
-        // 合并
-        merge(
-          getRawComponentContent(temp),
-          newDropObj,
-          this.currentPointDropInfo.index,
-          () => {
-            this.eventEmitter.emit("onMerged");
-          }
-        );
-
-        this.render(this._rawDataStructure);
-      }
+      this.updateCodeStructure(newDropObj);
     });
+  }
+
+  /**
+   * 插入
+   * @param {*} newDropObj
+   */
+  initDropCode(newDropObj) {
+    // 插入预设属性
+    insertPresetAttribute(newDropObj);
+
+    // 使新拖入的代码与原来的做脱离
+    replaceRowID(newDropObj, "");
+
+    // 更新到一个Map上面，维持引用，由于render中统一做了处理，所以这段代码是可以删除的 2021年02月04日11:59:10
+    updateLinkTree(newDropObj);
+  }
+
+  /**
+   * 更新
+   * @param {*} newDropObj
+   */
+  updateCodeStructure(newDropObj) {
+    // 更新代码结构关系
+    const codeTargetElement = findCodeElemNode(
+      this.currentPointDropInfo.target
+    );
+    if (codeTargetElement) {
+      let temp = findRawVueInfo(codeTargetElement);
+
+      this.backup();
+      // 合并
+      merge(
+        getRawComponentContent(temp),
+        newDropObj,
+        this.currentPointDropInfo.index,
+        () => {
+          this.eventEmitter.emit("onMerged");
+        }
+      );
+
+      this.render(this._rawDataStructure);
+    }
   }
 
   /**

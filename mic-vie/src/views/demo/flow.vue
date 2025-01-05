@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ ceshiOpen }}
     <div class="ceshi" id="ceshi">
       <a-modal
         v-model:open="ceshiOpen"

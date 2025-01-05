@@ -623,6 +623,8 @@ export default {
   border: 1px dashed rgb(126, 126, 128);
   border-radius: 10px;
   margin: 20px;
+  position: relative;
+  transform: translate(50px, 50px);
 }
 </style>
 
@@ -630,6 +632,9 @@ export default {
 <style lang="scss">
 #render-control-panel {
   position: relative;
+  transform: translate(50px, 50px);
+  left: -50px;
+  top: -50px;
 
   [div-lc-mark] {
     min-width: 50px;
