@@ -25,7 +25,12 @@
           </a-collapse>
         </a-tab-pane>
         <a-tab-pane tab="大纲" key="structure">
-          <row-nested :data="treeData" @onNodeClick="onNodeClick"></row-nested>
+          <span @click="(e) => e.stopPropagation()">
+            <row-nested
+              :data="treeData"
+              @onNodeClick="onNodeClick"
+            ></row-nested>
+          </span>
         </a-tab-pane>
         <a-tab-pane tab="变量" key="data">
           <a-button type="link" @click="showFormData">+ 新增</a-button>

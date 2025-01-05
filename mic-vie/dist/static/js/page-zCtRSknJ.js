@@ -1,1 +1,0 @@
-import{a5 as t}from"./index-DX8YZTmm.js";function e(a){return t({url:"/adm/page/save",method:"post",data:a})}function o(a){return t({url:"/adm/page/detail",method:"post",data:a})}function r(a){return t({url:"/adm/page/list",method:"post",data:a})}export{o as a,e as b,r as p};

@@ -1,7 +1,9 @@
 <template>
-  <a-drawer :getContainer="getContainer" v-bind="attrs">
-    <slot></slot>
-  </a-drawer>
+  <span>
+    <a-drawer :getContainer="getContainer" v-bind="attrs">
+      <slot></slot>
+    </a-drawer>
+  </span>
 </template>
 
 <script>

@@ -1,7 +1,9 @@
 <template>
-  <a-modal :getContainer="getContainer" v-bind="attrs">
-    <slot></slot>
-  </a-modal>
+  <span>
+    <a-modal :getContainer="getContainer" v-bind="attrs">
+      <slot></slot>
+    </a-modal>
+  </span>
 </template>
 
 <script>
