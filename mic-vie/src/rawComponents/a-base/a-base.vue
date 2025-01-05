@@ -107,13 +107,13 @@
     <div class="column-li" lc-mark lc_id="vFTpmG/9vZ">
       <div class="title" lc_id="v8P+YkWLIK">弹窗</div>
       <div class="li-mark-content" lc_id="Ygtyem9OUp">
-        <mic-modal lc_id="vTeRkRrsEe"></mic-modal>
+        <mic-modal div-lc-mark lc_id="vTeRkRrsEe"></mic-modal>
       </div>
     </div>
     <div class="column-li" lc-mark lc_id="iMzFO6A9aQ">
       <div class="title" lc_id="upf5hI6f/U">抽屉</div>
       <div class="li-mark-content" lc_id="sCzpNGwg54">
-        <mic-drawer lc_id="CSnyzYb0Em"></mic-drawer>
+        <mic-drawer div-lc-mark lc_id="CSnyzYb0Em"></mic-drawer>
       </div>
     </div>
   </div>

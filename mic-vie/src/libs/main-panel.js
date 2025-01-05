@@ -34,7 +34,7 @@ import scope from "css-scoped";
  * 主控制面板辅助类，用于代码的生成与绘制
  */
 export class MainPanelProvider {
-  constructor() {
+  constructor(options) {
     this.isCloneNode = false;
     // 开启编辑模式
     this.editMode = true;
@@ -51,7 +51,7 @@ export class MainPanelProvider {
     this.customData = {};
 
     this.componentOptions = {};
-    this.dropIninFunction = null;
+    this.dropIninFunction = options.dropIninFunction || "";
   }
 
   getComponentOptions() {
@@ -342,6 +342,17 @@ export class MainPanelProvider {
         return;
       }
 
+      // if (
+      //   this.currentPointDropInfo.target.className.indexOf("ant-modal-body") >
+      //   -1
+      // ) {
+      //   const renderControlPanel = this.getControlPanelRoot();
+      //   const element = renderControlPanel.querySelector(
+      //     `[lc_uuid="${"mic-modal"}"]`
+      //   );
+      //   this.currentPointDropInfo.target = element;
+      // }
+
       const data = event.dataTransfer.getData("text/plain");
       const [, , , , rawInfo] = data.split(getSplitTag());
       let newDropObj = JSON.parse(rawInfo);
@@ -353,6 +364,11 @@ export class MainPanelProvider {
         newDropObj = newDropObj.div.__children[1].div.__children[0];
         Object.keys(newDropObj).forEach((item) => {
           if (item !== "__key__" && !newDropObj[item].lc_uuid) {
+            // if (item == "mic-modal") {
+            //   newDropObj[item].lc_uuid = "mic-modal";
+            // } else {
+            //   newDropObj[item].lc_uuid = uuid();
+            // }
             newDropObj[item].lc_uuid = uuid();
           }
         });

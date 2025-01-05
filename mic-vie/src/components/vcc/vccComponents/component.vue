@@ -186,6 +186,8 @@ export default {
     let selectUuid = ref("");
     const init = (localAttributes, vueRawTag) => {
       attrEvents.value = [];
+      baseObj.value = {};
+      eventObj.value = {};
       const attrObj = getAttrKeys(localAttributes);
       Object.keys(attrObj).forEach((key) => {
         if (key.indexOf("@") > -1) {

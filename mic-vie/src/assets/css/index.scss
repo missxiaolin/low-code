@@ -521,8 +521,13 @@ $layout-height: 50px;
 }
 
 #render-control-panel {
+  /**
   > div {
     min-height: 100%;
+  }
+  **/
+  .ant-modal-body {
+    min-height: 100px;
   }
 }
 

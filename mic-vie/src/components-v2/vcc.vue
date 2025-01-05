@@ -175,7 +175,9 @@ export default {
     };
   },
   created() {
-    this.mainPanelProvider = new MainPanelProvider();
+    this.mainPanelProvider = new MainPanelProvider({
+      dropIninFunction: this.dropIninFunction,
+    });
   },
   beforeMount() {},
   mounted() {
@@ -192,6 +194,14 @@ export default {
   updated() {},
   destroyed() {},
   methods: {
+    dropIninFunction(newDropObj, mainPanelProvider) {
+      // const arr = Object.keys(newDropObj);
+      // if (["mic-modal", "mic-drawer"].includes(arr[0])) {
+      //   newDropObj[arr[0]]["v-model:open"] = "open";
+      // }
+      mainPanelProvider.initDropCode(newDropObj);
+      mainPanelProvider.updateCodeStructure(newDropObj);
+    },
     convertLogicCode(JSCode) {
       try {
         let JSCodeInfo = JSCode;
@@ -641,7 +651,7 @@ export default {
     border: 1px grey dashed;
     min-height: 1rem;
     border-radius: 5px;
-    display: block;
+    display: inline-block;
   }
 
   [lc_id] {
