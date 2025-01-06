@@ -2714,4 +2714,254 @@ export default {
       },
     },
   },
+  "mic-modal": {
+    style: ["class", "id", "width"],
+    component: [":zIndex"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [
+          {
+            label: "对话框是否可见",
+            key: "v-model:open",
+            settingType: "dataSelect",
+            value: [],
+          },
+          {
+            label: "标题",
+            key: "title",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "取消按钮文字",
+            key: "cancelText",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "确认按钮文字",
+            key: "okText",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "外层容器的类名",
+            key: "wrapClassName",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "是否垂直居中",
+            key: ":centered",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: false,
+          },
+          {
+            label: "右上角的关闭按钮",
+            key: ":closable",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "是否展示遮罩",
+            key: ":mask",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "点击蒙层是否关闭",
+            key: ":maskClosable",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+        ],
+      },
+      event: {
+        title: "事件",
+        children: [
+          {
+            label: "关闭回调",
+            key: "@cancel",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "确认按钮回调",
+            key: "@ok",
+            settingType: "setting",
+            value: "",
+          },
+        ],
+      },
+    },
+  },
+  "mic-drawer": {
+    style: ["class", "id", "width"],
+    component: [":zIndex"],
+    customComponent: {
+      base: {
+        title: "基础属性",
+        children: [
+          {
+            label: "抽屉是否可见",
+            key: "v-model:open",
+            settingType: "dataSelect",
+            value: [],
+          },
+          {
+            label: "标题",
+            key: "title",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "外层容器的类名",
+            key: "rootClassName",
+            settingType: "input",
+            value: "",
+          },
+          {
+            label: "是否展示遮罩",
+            key: ":mask",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "预设抽屉宽度",
+            tip: "预设抽屉宽度（或高度），default 378px 和 large 736px",
+            key: "size",
+            radioType: "button",
+            options: [
+              {
+                label: "default",
+                value: "default",
+              },
+              {
+                label: "large",
+                value: "large",
+              },
+            ],
+            settingType: "radio",
+            value: "default",
+          },
+
+          {
+            label: "右上角的关闭按钮",
+            key: ":closable",
+            radioType: "button",
+            options: [
+              {
+                label: "是",
+                value: true,
+              },
+              {
+                label: "否",
+                value: false,
+              },
+            ],
+            settingType: "radio",
+            value: true,
+          },
+          {
+            label: "弹出的位置",
+            key: "placement",
+            options: [
+              {
+                label: "right",
+                value: "right",
+              },
+              {
+                label: "top",
+                value: "top",
+              },
+
+              {
+                label: "bottom",
+                value: "bottom",
+              },
+              {
+                label: "left",
+                value: "left",
+              },
+            ],
+            settingType: "select",
+            value: "right",
+          },
+        ],
+      },
+      event: {
+        title: "事件",
+        children: [
+          {
+            label: "切换抽屉时动画结束后的回调",
+            key: "@afterOpenChange",
+            settingType: "setting",
+            value: "",
+          },
+          {
+            label: "关闭回调",
+            key: "@close",
+            settingType: "setting",
+            value: "",
+          },
+        ],
+      },
+    },
+  },
 };
