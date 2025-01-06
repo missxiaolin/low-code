@@ -8,6 +8,8 @@ import micTimePicker from "../components/xl/ant-desine/a-time-picker.vue";
 import micSearchLabel from "../components/xl/search-label/index.vue";
 import micPop from "../components/xl/pop/index.vue";
 import micSearchTable from "../components/xl/l-search-table/index.vue";
+import micDrawer from "../components/xl/ant-desine/a-drawer.vue";
+import micModal from "../components/xl/ant-desine/a-modal.vue";
 
 const components = [
   micDatePicker,
@@ -19,6 +21,8 @@ const components = [
   micSearchLabel,
   micPop,
   micSearchTable,
+  micDrawer,
+  micModal,
 ];
 
 export function loadPlugins(app) {
