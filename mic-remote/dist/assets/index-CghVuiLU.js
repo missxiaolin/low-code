@@ -1,0 +1,1 @@
+import{_export_sfc as e,importShared as t,__tla as __tla_0}from"./index-D6SDOxzd.js";let i;let __tla=Promise.all([(()=>{try{return __tla_0}catch{}})()]).then(async()=>{const c={},{openBlock:o,createElementBlock:n}=await t("vue");function r(_,a){return o(),n("div",null," remote ")}i=e(c,[["render",r]])});export{i as default,__tla};
