@@ -5,6 +5,7 @@ import PageRouteModel from "../model/page_route";
 import VersionsModel from "../model/versions";
 const { exec } = require("child_process");
 import dotenv from "dotenv";
+import path, { resolve } from "path";
 
 const appConfig = dotenv.config().parsed;
 const projectModel = new ProjectModel();
@@ -113,6 +114,7 @@ export default class Project extends Base {
     if (result.status == 3) {
       return this.send(res, result, false, "该项目正在发布");
     }
+    const targetDirectory = resolve(__dirname, "../../../mic-serve");
 
     await projectModel.update(
       {
@@ -134,10 +136,13 @@ export default class Project extends Base {
       create_time: dataTime,
       update_time: dataTime,
     });
+
+    // 切换到目标文件夹
+    process.chdir(targetDirectory);
     exec(
       `npm run command Generate:Project ${result.id} ${data.version}`,
       async (error, stdout, stderr) => {
-        console.log(stdout, stderr);
+        console.log(error, stdout, stderr);
         await projectModel.update(
           {
             status: 2,
