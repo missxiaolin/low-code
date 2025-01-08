@@ -116,12 +116,6 @@ export default class Project extends Base {
     }
     const targetDirectory = resolve(__dirname, "../../../mic-serve");
 
-    await projectModel.update(
-      {
-        status: 3,
-      },
-      data.id
-    );
     const versionDetail = await versionsModel.getDetail({
       projectId: data.id,
       version: data.version,
@@ -129,6 +123,12 @@ export default class Project extends Base {
     if (versionDetail.length > 0) {
       return this.send(res, result, false, "该版本已存在");
     }
+    await projectModel.update(
+      {
+        status: 3,
+      },
+      data.id
+    );
     const dataTime = moment().format("YYYY-MM-DD HH:mm:ss");
     await versionsModel.save({
       project_id: data.id,
