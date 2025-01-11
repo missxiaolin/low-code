@@ -7,7 +7,7 @@
 #
 # 主机: 127.0.0.1 (MySQL 5.7.44)
 # 数据库: micro_adm
-# 生成时间: 2025-01-08 10:03:41 +0000
+# 生成时间: 2025-01-11 08:19:14 +0000
 # ************************************************************
 
 
@@ -41,6 +41,23 @@ VALUES
 
 /*!40000 ALTER TABLE `adm_user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# 转储表 component
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `component`;
+
+CREATE TABLE `component` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL,
+  `component` text NOT NULL,
+  `version` varchar(30) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 # 转储表 menu
@@ -85,6 +102,15 @@ CREATE TABLE `page_route` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `page_route` WRITE;
+/*!40000 ALTER TABLE `page_route` DISABLE KEYS */;
+
+INSERT INTO `page_route` (`id`, `project_id`, `route_name`, `path`, `tem_json`, `script_json`, `page_html`, `css`, `eventNode`, `customData`, `status`, `create_time`, `update_time`)
+VALUES
+	(1,1,'首页','/index','{\"template\":{\"lc_id\":\"root\",\"lc_uuid\":\"root\",\"__children\":[{\"div\":{\"class\":\"container\",\"style\":\"min-height: 100%;\",\"lc_id\":\"container\",\"lc_uuid\":\"container\",\"__children\":[{\"span\":{\"lc_id\":\"uu78mobmhw\",\"__children\":[],\"__text__\":\"Span Element\",\"lc_uuid\":\"A5183393-3A82-4E74-94B6-0419F43C2238\"}}]}}]}}','export default {\n  setup() {\n\n    return {};\n  },\n};\n','\n  <template> \n      <div class=\"container\" style=\"min-height: 100%;\">\n      <span>Span Element</span>\n  </div>\n \n  </template>\n  \n<script>\nimport { onMounted,ref,getCurrentInstance } from \"vue\";\nimport events from \"./events.json\";\nconst vccEvents = events;\nexport default {\n  setup(props, { emit }) {\n    const instance = getCurrentInstance()\n\n    // 执行事件流\n    const eventFun = (eventStr, e = null) => {\n      const eventObj = vccEvents[eventStr]\n      if (!eventStr || !eventObj) return\n\n      instance.proxy.$execEventFlow(instance, eventObj.children, e)\n    }\n\n    onMounted(() => {\n      eventFun(\"init\")\n    })\n\n    return {\n      eventFun,\n    }\n  },\n}\n\n</script>\n  \n  <style scoped>\n  .container {}\n\n  </style>\n    ','','{}','[]',2,'2025-01-08 20:12:40','2025-01-08 20:12:40');
+
+/*!40000 ALTER TABLE `page_route` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # 转储表 project
@@ -123,6 +149,7 @@ DROP TABLE IF EXISTS `versions`;
 
 CREATE TABLE `versions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `tyoe` tinyint(4) NOT NULL COMMENT '1 项目 2 组件',
   `project_id` int(11) NOT NULL,
   `version` varchar(11) NOT NULL,
   `create_time` datetime NOT NULL,

@@ -352,7 +352,6 @@ export class MainPanelProvider {
       //   );
       //   this.currentPointDropInfo.target = element;
       // }
-
       const data = event.dataTransfer.getData("text/plain");
       const [, , , , rawInfo] = data.split(getSplitTag());
       let newDropObj = JSON.parse(rawInfo);
