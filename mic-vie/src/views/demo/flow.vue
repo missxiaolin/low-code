@@ -45,7 +45,14 @@
 </template>
 
 <script>
-import { getCurrentInstance, onMounted, ref, toRefs, reactive } from "vue";
+import {
+  getCurrentInstance,
+  onMounted,
+  ref,
+  toRefs,
+  reactive,
+  nextTick,
+} from "vue";
 import vueCode from "../../components/vcc/vueCodeEditorDialog.vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
 import data from "./flow.json";
@@ -73,11 +80,9 @@ export default {
   },
   setup() {
     const ceshiRef = ref(null);
-    const ceshiOpen = ref({
-      a: 1,
-    });
+    const ceshiOpen = ref(false);
     const modelOpen = ref(false);
-    console.log(evalFormual("IF(true, 2, 3)"));
+    // console.log(evalFormual("IF(true, 2, 3)"));
     let ceshi = ref("ceshi");
     const customData = ref([]);
     const open = ref(false);
@@ -93,14 +98,35 @@ export default {
       console.log("保存", flowNodeRef.value.flowSave());
     };
 
+    const delegateBehavior = (context) => {
+      // 在conetxt的Sel 上做_uid的赋值。
+      if (context.$el) {
+        context.$el.setAttribute("vueautoreport-uid", context._uid);
+      }
+      //在root 上做标记，不以次数订，可能页面存在多个vue实例。
+      if (context.$root.$el & !context.$root.$el._isBindDelegate) {
+        // (context.$root.$el & !context.$root.$el._isBindDelegate) { eventTypes. forEach((eventType) >= {}))
+      }
+    };
+
+    const handleClick = (e) => {
+      e.preventDefault(); // 阻止默认行为
+      e.stopPropagation(); // 阻止事件冒泡
+    };
+
+    // document.addEventListener("click", handleClick, true);
+
     onMounted(() => {
-      console.log(ceshiRef.value);
-      console.log(ceshiRef.value.appContext);
+      // console.log(ceshiRef.value);
+      // console.log(ceshiRef.value.appContext);
       // ceshiRef.value.appContext;
       // console.log(instance.proxy);
       // instance.proxy.ceshiOpen = true;
       // ceshiRef.value.open = true;
       // execEventFlow(instance, data.children);
+      nextTick(() => {
+        delegateBehavior(instance.proxy);
+      });
     });
 
     const getContainer = (e) => {
