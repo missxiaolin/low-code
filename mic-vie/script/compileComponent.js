@@ -55,9 +55,7 @@ function ergodic(jsonObj) {
     // 添加ID
     if (
       !jsonObj["lc_id"] &&
-      !["vcc-column-ul", "column-li", "title", "li-mark-content"].includes(
-        jsonObj.class
-      )
+      !["vcc-column-ul", "column-li", "title"].includes(jsonObj.class)
     ) {
       jsonObj["lc_id"] = cryptoRandomString({ length: 10, type: "base64" });
     }

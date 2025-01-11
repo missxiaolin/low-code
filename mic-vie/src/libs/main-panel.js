@@ -354,14 +354,13 @@ export class MainPanelProvider {
       // }
       const data = event.dataTransfer.getData("text/plain");
       const [, , , , rawInfo] = data.split(getSplitTag());
-      console.log("rawInfo", rawInfo);
       let newDropObj = JSON.parse(rawInfo);
-      if (newDropObj.div && newDropObj.div.class == "column-li") {
+      if (newDropObj) {
         // console.log(
         //   "newDropObj",
         //   newDropObj.div.__children[1].div.__children[0]
         // );
-        newDropObj = newDropObj.div.__children[1].div.__children[0];
+        newDropObj = newDropObj.div.__children[0];
         Object.keys(newDropObj).forEach((item) => {
           if (item !== "__key__" && !newDropObj[item].lc_uuid) {
             // if (item == "mic-modal") {
