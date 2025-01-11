@@ -1,86 +1,86 @@
 <template lc_id="BrpWZBLN0k">
-  <div class="vcc-column-ul" lc_id="X5xrgPxSZS">
-    <div class="column-li" lc-mark lc_id="depjJuYzBN">
-      <div class="title" lc_id="bnuW26JqD1">form</div>
-      <div class="li-mark-content" lc_id="K2g8c7Llux">
+  <div class="vcc-column-ul">
+    <div class="column-li" lc-mark>
+      <div class="title">form</div>
+      <div class="li-mark-content">
         <a-form div-lc-mark lc_id="/tmwvSooBs"></a-form>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="drAZBOiYfN">
-      <div class="title" lc_id="nYSbgh93H7">form-item</div>
-      <div class="li-mark-content" lc_id="ZMHqJQ3+/U">
-        <a-form-item div-lc-mark lc_id="mu8ZBRejjt"></a-form-item>
+    <div class="column-li" lc-mark>
+      <div class="title">form-item</div>
+      <div class="li-mark-content">
+        <a-form-item div-lc-mark lc_id="c58AZyX0Xs"></a-form-item>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="eTna9RejIq">
-      <div class="title" lc_id="cgdzG6vXTU">自动完成</div>
-      <div class="li-mark-content" lc_id="1prkohphqZ">
+    <div class="column-li" lc-mark>
+      <div class="title">自动完成</div>
+      <div class="li-mark-content">
         <a-auto-complete lc_id="Ur1upoumcR"></a-auto-complete>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="MI18E+ixvY">
-      <div class="title" lc_id="kKO25P4T20">级联选择</div>
-      <div class="li-mark-content" lc_id="0bsCrp5+P7">
+    <div class="column-li" lc-mark>
+      <div class="title">级联选择</div>
+      <div class="li-mark-content">
         <a-cascader lc_id="i/V3ON1yLd"></a-cascader>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="Gqg9leSz4m">
-      <div class="title" lc_id="jGKE3bIjSi">多选</div>
-      <div class="li-mark-content" lc_id="md9Y83ZNo+">
-        <a-checkbox-group div-lc-mark lc_id="02nJgjjJOS"></a-checkbox-group>
+    <div class="column-li" lc-mark>
+      <div class="title">多选</div>
+      <div class="li-mark-content">
+        <a-checkbox-group div-lc-mark lc_id="vLa0ld4IE+"></a-checkbox-group>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="gaSIj7Kfjt">
-      <div class="title" lc_id="h3/kWbcIYi">日期</div>
-      <div class="li-mark-content" lc_id="jc8TwEo3Ca">
+    <div class="column-li" lc-mark>
+      <div class="title">日期</div>
+      <div class="li-mark-content">
         <mic-date-picker lc_id="zdEQPflG+v"></mic-date-picker>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="bAPUtYC11L">
-      <div class="title" lc_id="lztfAeZDV+">输入框</div>
-      <div class="li-mark-content" lc_id="DnHm11lKMx">
+    <div class="column-li" lc-mark>
+      <div class="title">输入框</div>
+      <div class="li-mark-content">
         <a-input lc_id="PV5WJ8hzCn"></a-input>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="lkug45JDqm">
-      <div class="title" lc_id="oJoTxNc/p0">数字输入框</div>
-      <div class="li-mark-content" lc_id="slgv39mzP8">
+    <div class="column-li" lc-mark>
+      <div class="title">数字输入框</div>
+      <div class="li-mark-content">
         <a-input-number lc_id="FKPbAJWiUm"></a-input-number>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="62O56zLSC1">
-      <div class="title" lc_id="Z9FaDtMcAN">单选按钮</div>
-      <div class="li-mark-content" lc_id="gs0rysuDjb">
+    <div class="column-li" lc-mark>
+      <div class="title">单选按钮</div>
+      <div class="li-mark-content">
         <a-radio-group div-lc-mark lc_id="wnZwu2WFoq"></a-radio-group>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="MyEpDqting">
-      <div class="title" lc_id="UjEAJoM9xH">评分</div>
-      <div class="li-mark-content" lc_id="TXMxWXcVPW">
+    <div class="column-li" lc-mark>
+      <div class="title">评分</div>
+      <div class="li-mark-content">
         <a-rate lc_id="+NQ/PjaWf7"></a-rate>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="KUxNxhUfsu">
-      <div class="title" lc_id="DsTn8cUnwb">选择器</div>
-      <div class="li-mark-content" lc_id="sWlQ0EJ8Ny">
+    <div class="column-li" lc-mark>
+      <div class="title">选择器</div>
+      <div class="li-mark-content">
         <a-select lc_id="xrfY1DFIvV"></a-select>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="zN8DUi8Kyb">
-      <div class="title" lc_id="tVEmkQMDG9">开关</div>
-      <div class="li-mark-content" lc_id="Vvqkx8p+ve">
+    <div class="column-li" lc-mark>
+      <div class="title">开关</div>
+      <div class="li-mark-content">
         <a-switch lc_id="Qj3SEpvFPF"></a-switch>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="yVQ0BKfAK5">
-      <div class="title" lc_id="OfrMBWKMVN">时间选择框</div>
-      <div class="li-mark-content" lc_id="U6x526K65S">
+    <div class="column-li" lc-mark>
+      <div class="title">时间选择框</div>
+      <div class="li-mark-content">
         <mic-time-picker lc_id="mSViYkWNVF"></mic-time-picker>
       </div>
     </div>
-    <div class="column-li" lc-mark lc_id="Lwk9fohcW0">
-      <div class="title" lc_id="bITkdZCHcK">上传</div>
-      <div class="li-mark-content" lc_id="mcE+RWzDKp">
+    <div class="column-li" lc-mark>
+      <div class="title">上传</div>
+      <div class="li-mark-content">
         <a-upload div-lc-mark lc_id="MZSdyF6HeG"></a-upload>
       </div>
     </div>

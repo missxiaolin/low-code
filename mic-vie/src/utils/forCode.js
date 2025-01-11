@@ -140,6 +140,12 @@ export function removeAllID(codeObj) {
 }
 
 export function generateRawInfo(target) {
+  if (
+    target.querySelector(".li-mark-content") &&
+    target.querySelector(".li-mark-content").children.length > 0
+  ) {
+    target = target.querySelector(".li-mark-content").children[0];
+  }
   if (target.attributes.lc_id) {
     return findVueInfo(target);
   } else {

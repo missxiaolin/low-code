@@ -1,129 +1,120 @@
-<template lc_id="X6GLtOByrs">
-  <div class="vcc-column-ul" lc_id="jPRinaOzk3">
-    <div class="column-li" lc-mark lc_id="WaXV4d0lY5">
-      <div class="title" lc_id="ua3EC6Fccl">按钮组件</div>
-      <div class="li-mark-content" lc_id="jtSTl5612z">
-        <a-button lc_id="AayA35c+nE">默认按钮</a-button>
+  <template lc_id="X6GLtOByrs">
+      <div class="vcc-column-ul">
+          <div class="column-li" lc-mark>
+              <div class="title">按钮组件</div>
+              <div class="li-mark-content">
+                  <a-button lc_id="AayA35c+nE">默认按钮</a-button>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">水印</div>
+              <div class="li-mark-content">
+                  <a-watermark div-lc-mark lc_id="8gRufXycaV"></a-watermark>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">分割线</div>
+              <div class="li-mark-content">
+                  <a-divider lc_id="RTjGRjelPe"></a-divider>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">弹性布局</div>
+              <div class="li-mark-content">
+                  <mic-flex div-lc-mark lc_id="ZusoPoyXSp"></mic-flex>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">锚点</div>
+              <div class="li-mark-content">
+                  <a-anchor :items="[]" div-lc-mark lc_id="9oTue0yH1e"></a-anchor>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">页头</div>
+              <div class="li-mark-content">
+                  <a-page-header div-lc-mark lc_id="/i/3wWO8QQ"></a-page-header>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">步骤条</div>
+              <div class="li-mark-content">
+                  <a-steps direction="horizontal" initial="0" percent="0" size="default" type="default" div-lc-mark lc_id="rTV5OdlAqX"></a-steps>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">卡片</div>
+              <div class="li-mark-content">
+                  <a-card div-lc-mark lc_id="+hw4UXs4+E"></a-card>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">空状态</div>
+              <div class="li-mark-content">
+                  <a-empty lc_id="nOC+GA78Z+"></a-empty>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">图片</div>
+              <div class="li-mark-content">
+                  <mic-image div-lc-mark lc_id="ItYPOr7FWk"></mic-image>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">气泡提醒</div>
+              <div class="li-mark-content">
+                  <mic-popconfirm div-lc-mark lc_id="SRTsMLx9ih"></mic-popconfirm>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">进度条</div>
+              <div class="li-mark-content">
+                  <a-progress div-lc-mark lc_id="Li2X2slr8Z"></a-progress>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">骨架屏</div>
+              <div class="li-mark-content">
+                  <a-skeleton lc_id="YlJaNhAvZN"></a-skeleton>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">加载中</div>
+              <div class="li-mark-content">
+                  <a-spin lc_id="5fAczahz4b"></a-spin>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">文字提示</div>
+              <div class="li-mark-content">
+                  <mic-tooltip div-lc-mark lc_id="pfkrOzfb9Z"></mic-tooltip>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">标签</div>
+              <div class="li-mark-content">
+                  <a-tag lc_id="664uCIct1C">标签</a-tag>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">弹窗</div>
+              <div class="li-mark-content">
+                  <mic-modal div-lc-mark lc_id="vTeRkRrsEe"></mic-modal>
+              </div>
+          </div>
+          <div class="column-li" lc-mark>
+              <div class="title">抽屉</div>
+              <div class="li-mark-content">
+                  <mic-drawer div-lc-mark lc_id="CSnyzYb0Em"></mic-drawer>
+              </div>
+          </div>
       </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="6r9nZe5cfH">
-      <div class="title" lc_id="+/1CbGXI+w">水印</div>
-      <div class="li-mark-content" lc_id="fbanuVaejI">
-        <a-watermark div-lc-mark lc_id="8gRufXycaV"></a-watermark>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="XlrkUBtMQ5">
-      <div class="title" lc_id="hY2K6PO4hh">分割线</div>
-      <div class="li-mark-content" lc_id="+qNZh2zH0C">
-        <a-divider lc_id="RTjGRjelPe"></a-divider>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="R3z7nrn1d4">
-      <div class="title" lc_id="amYaMKeKwD">弹性布局</div>
-      <div class="li-mark-content" lc_id="CxCYqp2ZMq">
-        <mic-flex div-lc-mark lc_id="ZusoPoyXSp"></mic-flex>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="9QCMjR7fbz">
-      <div class="title" lc_id="NNZTDnTatK">锚点</div>
-      <div class="li-mark-content" lc_id="xjunnFCS0i">
-        <a-anchor :items="[]" div-lc-mark lc_id="9oTue0yH1e"></a-anchor>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="CWXNJqW2UG">
-      <div class="title" lc_id="ipkytcuTGy">页头</div>
-      <div class="li-mark-content" lc_id="Y4caHJTl4i">
-        <a-page-header div-lc-mark lc_id="/i/3wWO8QQ"></a-page-header>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="Q8nE25d9dJ">
-      <div class="title" lc_id="pXzSkJYG5b">步骤条</div>
-      <div class="li-mark-content" lc_id="xSnYpzy4Tn">
-        <a-steps
-          direction="horizontal"
-          initial="0"
-          percent="0"
-          size="default"
-          type="default"
-          div-lc-mark
-          lc_id="rTV5OdlAqX"
-        ></a-steps>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="iVdgBCl97C">
-      <div class="title" lc_id="ydVoprpc+b">卡片</div>
-      <div class="li-mark-content" lc_id="rRbFiiU6ll">
-        <a-card div-lc-mark lc_id="+hw4UXs4+E"></a-card>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="Kv+jhM0YFm">
-      <div class="title" lc_id="UP5SDDWdtl">空状态</div>
-      <div class="li-mark-content" lc_id="3mt5AX1QAj">
-        <a-empty lc_id="nOC+GA78Z+"></a-empty>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="dzPbnmB/nn">
-      <div class="title" lc_id="L8mAwpQHoJ">图片</div>
-      <div class="li-mark-content" lc_id="CgZGdeFjQC">
-        <mic-image div-lc-mark lc_id="nFYjKLlfyN"></mic-image>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="6MI2TH0k5C">
-      <div class="title" lc_id="z8/PS9kuYQ">气泡提醒</div>
-      <div class="li-mark-content" lc_id="5AG/WgzCrR">
-        <mic-popconfirm div-lc-mark lc_id="SRTsMLx9ih"></mic-popconfirm>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="0JdPd5D0o+">
-      <div class="title" lc_id="6+AY1IWQZ1">进度条</div>
-      <div class="li-mark-content" lc_id="sconwyUtFa">
-        <a-progress div-lc-mark lc_id="GwFqjWruij"></a-progress>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="KBi7dOhBx/">
-      <div class="title" lc_id="35dlUcJZtQ">骨架屏</div>
-      <div class="li-mark-content" lc_id="L0Ofo4zurE">
-        <a-skeleton lc_id="YlJaNhAvZN"></a-skeleton>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="fvIPQ20aH0">
-      <div class="title" lc_id="tMdNShvQYI">加载中</div>
-      <div class="li-mark-content" lc_id="2PzfsJnZpK">
-        <a-spin lc_id="5fAczahz4b"></a-spin>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="fdgiXoz4Tq">
-      <div class="title" lc_id="nvaj1nzom9">文字提示</div>
-      <div class="li-mark-content" lc_id="RL1Wybr8WB">
-        <mic-tooltip div-lc-mark lc_id="pfkrOzfb9Z"></mic-tooltip>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="s7hRSE+WLw">
-      <div class="title" lc_id="ASw3ris7ai">标签</div>
-      <div class="li-mark-content" lc_id="28ZL0+3TfD">
-        <a-tag lc_id="664uCIct1C">标签</a-tag>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="vFTpmG/9vZ">
-      <div class="title" lc_id="v8P+YkWLIK">弹窗</div>
-      <div class="li-mark-content" lc_id="Ygtyem9OUp">
-        <mic-modal div-lc-mark lc_id="vTeRkRrsEe"></mic-modal>
-      </div>
-    </div>
-    <div class="column-li" lc-mark lc_id="iMzFO6A9aQ">
-      <div class="title" lc_id="upf5hI6f/U">抽屉</div>
-      <div class="li-mark-content" lc_id="sCzpNGwg54">
-        <mic-drawer div-lc-mark lc_id="CSnyzYb0Em"></mic-drawer>
-      </div>
-    </div>
-  </div>
-</template>
-<script>
+  </template>
+  <script>
 export default {
   data() {
     return {};
   },
   methods: {},
-};
-</script>
-<style scoped></style>
+};  </script>
+  <style scoped></style>
