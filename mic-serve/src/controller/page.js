@@ -20,6 +20,13 @@ export default class Page extends Base {
       result = {};
 
     if (data.id == 0 || !data.id) {
+      const detail = await pageRouteModel.getPageDetail({
+        projectId: data.project_id,
+        path: data.path,
+      });
+      if (detail && detail.id) {
+        return this.send(res, result, false, "该路由已存在");
+      }
       result = await pageRouteModel.save({
         ...data,
         create_time: startAt,

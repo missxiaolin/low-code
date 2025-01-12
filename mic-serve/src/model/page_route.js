@@ -150,20 +150,9 @@ export default class PageRoute {
    * @returns
    */
   async getPageDetail(params) {
+    console.log(params);
     let tableName = getTableName();
-    let res = Knex.select(
-      "id",
-      "project_id",
-      "route_name",
-      "path",
-      "tem_json",
-      "css",
-      "script_json",
-      "page_html",
-      "eventNode",
-      "customData",
-      "status"
-    )
+    let res = Knex.select("*")
       .from(tableName)
       .where("project_id", params.projectId);
 
@@ -173,6 +162,9 @@ export default class PageRoute {
 
     if (params.status) {
       res = res.andWhere("status", params.status);
+    }
+    if (params.path) {
+      res = res.andWhere("path", params.path);
     }
 
     res = await res.first().catch((e) => {
