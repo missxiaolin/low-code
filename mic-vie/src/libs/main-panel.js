@@ -256,6 +256,7 @@ export class MainPanelProvider {
     const renderControlPanel = this.getControlPanelRoot();
     const elements = renderControlPanel.querySelectorAll("[lc_id]");
     elements.forEach((element) => {
+      console.log(element);
       element.addEventListener("click", (event) => {
         event.stopPropagation();
         this.markElement(element);

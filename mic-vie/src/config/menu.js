@@ -18,6 +18,11 @@ export const initRoute = [
         path: "/project/menu",
         label: "菜单列表",
       },
+      {
+        key: "componentList",
+        path: "/project/component/list",
+        label: "组件列表",
+      },
     ],
   },
   // {
