@@ -19,10 +19,11 @@ export default defineConfig({
       fileName: (format) => `my-button.${format}.js`,
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ["vue", "ant-design-vue"],
       output: {
         globals: {
           vue: "Vue",
+          "ant-design-vue": "Antd",
           // 'element-plus': 'ElementPlus', // import { ElRate } from 'element-plus' => const { ElRate } = ElementPlus
         },
       },
