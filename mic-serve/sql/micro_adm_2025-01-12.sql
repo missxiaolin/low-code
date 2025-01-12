@@ -7,7 +7,7 @@
 #
 # 主机: 127.0.0.1 (MySQL 5.7.44)
 # 数据库: micro_adm
-# 生成时间: 2025-01-11 08:19:14 +0000
+# 生成时间: 2025-01-12 04:17:13 +0000
 # ************************************************************
 
 
@@ -50,6 +50,7 @@ DROP TABLE IF EXISTS `component`;
 
 CREATE TABLE `component` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
   `project_id` int(11) NOT NULL,
   `component` text NOT NULL,
   `version` varchar(30) NOT NULL,
@@ -107,7 +108,7 @@ LOCK TABLES `page_route` WRITE;
 
 INSERT INTO `page_route` (`id`, `project_id`, `route_name`, `path`, `tem_json`, `script_json`, `page_html`, `css`, `eventNode`, `customData`, `status`, `create_time`, `update_time`)
 VALUES
-	(1,1,'首页','/index','{\"template\":{\"lc_id\":\"root\",\"lc_uuid\":\"root\",\"__children\":[{\"div\":{\"class\":\"container\",\"style\":\"min-height: 100%;\",\"lc_id\":\"container\",\"lc_uuid\":\"container\",\"__children\":[{\"span\":{\"lc_id\":\"uu78mobmhw\",\"__children\":[],\"__text__\":\"Span Element\",\"lc_uuid\":\"A5183393-3A82-4E74-94B6-0419F43C2238\"}}]}}]}}','export default {\n  setup() {\n\n    return {};\n  },\n};\n','\n  <template> \n      <div class=\"container\" style=\"min-height: 100%;\">\n      <span>Span Element</span>\n  </div>\n \n  </template>\n  \n<script>\nimport { onMounted,ref,getCurrentInstance } from \"vue\";\nimport events from \"./events.json\";\nconst vccEvents = events;\nexport default {\n  setup(props, { emit }) {\n    const instance = getCurrentInstance()\n\n    // 执行事件流\n    const eventFun = (eventStr, e = null) => {\n      const eventObj = vccEvents[eventStr]\n      if (!eventStr || !eventObj) return\n\n      instance.proxy.$execEventFlow(instance, eventObj.children, e)\n    }\n\n    onMounted(() => {\n      eventFun(\"init\")\n    })\n\n    return {\n      eventFun,\n    }\n  },\n}\n\n</script>\n  \n  <style scoped>\n  .container {}\n\n  </style>\n    ','','{}','[]',2,'2025-01-08 20:12:40','2025-01-08 20:12:40');
+	(1,1,'首页','/index','{\"template\":{\"lc_id\":\"root\",\"lc_uuid\":\"root\",\"__children\":[{\"div\":{\"class\":\"container\",\"style\":\"min-height: 100%;\",\"lc_id\":\"container\",\"lc_uuid\":\"container\",\"__children\":[{\"span\":{\"lc_id\":\"uu78mobmhw\",\"__children\":[],\"__text__\":\"Span Element\",\"lc_uuid\":\"A5183393-3A82-4E74-94B6-0419F43C2238\"}},{\"mic-date-picker\":{\"lc_id\":\"gqn9y7ncnh\",\"__children\":[],\"lc_uuid\":\"82969BD1-0FB8-46AD-891D-32539D6689EA\"}}]}}]}}','export default {\n  setup() {\n\n    return {};\n  },\n};\n','\n  <template> \n      <div class=\"container\" style=\"min-height: 100%;\">\n      <span>Span Element</span>\n      <mic-date-picker></mic-date-picker>\n  </div>\n \n  </template>\n  \n<script>\nimport { onMounted,ref,getCurrentInstance } from \"vue\";\nimport events from \"./events.json\";\nconst vccEvents = events;\nexport default {\n  setup(props, { emit }) {\n    const instance = getCurrentInstance()\n\n    // 执行事件流\n    const eventFun = (eventStr, e = null) => {\n      const eventObj = vccEvents[eventStr]\n      if (!eventStr || !eventObj) return\n\n      instance.proxy.$execEventFlow(instance, eventObj.children, e)\n    }\n\n    onMounted(() => {\n      eventFun(\"init\")\n    })\n\n    return {\n      eventFun,\n    }\n  },\n}\n\n</script>\n  \n  <style scoped>\n  .container {}\n\n  </style>\n    ','','{}','[]',2,'2025-01-08 20:12:40','2025-01-11 21:59:56');
 
 /*!40000 ALTER TABLE `page_route` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -157,6 +158,15 @@ CREATE TABLE `versions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+LOCK TABLES `versions` WRITE;
+/*!40000 ALTER TABLE `versions` DISABLE KEYS */;
+
+INSERT INTO `versions` (`id`, `type`, `project_id`, `version`, `create_time`, `update_time`)
+VALUES
+	(1,1,1,'1.0.0','2025-01-12 09:48:32','2025-01-12 09:48:32');
+
+/*!40000 ALTER TABLE `versions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 

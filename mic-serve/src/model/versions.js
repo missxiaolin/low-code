@@ -62,7 +62,7 @@ export default class VersionsModel {
     let res = Knex.from(tableName);
     res = await res
       .where("project_id", projectId)
-      .where("version", version)
+      .andWhere("version", version)
       .andWhere("type", type);
 
     return res;
