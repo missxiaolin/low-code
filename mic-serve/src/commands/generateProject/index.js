@@ -4,10 +4,12 @@ import ProjectModel from "../../model/project";
 import path, { resolve } from "path";
 import fs from "fs";
 import { uploadToken, uploadFile } from "../../library/qiniu/index";
+import dotenv from "dotenv";
 
 const { exec } = require("child_process");
 const pageRouteModel = new PageRoute();
 const projectModel = new ProjectModel();
+const appConfig = dotenv.config().parsed;
 
 class GenerateProject extends Base {
   static get signature() {
@@ -82,7 +84,9 @@ class GenerateProject extends Base {
         console.error(`执行命令失败: ${error.message}`);
         return;
       }
-      this.getBuildFiles(projectDetail.code, version);
+      if (appConfig.IS_UPDATE_AVATAR_OPEN != 0) {
+        this.getBuildFiles(projectDetail.code, version);
+      }
       console.log(`执行命令成功，输出结果: ${stdout}`);
     });
 

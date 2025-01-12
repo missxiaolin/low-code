@@ -20,6 +20,7 @@ export default class VersionsModel {
   constructor() {
     this.tableColumnArr = [
       "project_id",
+      "type",
       "version",
       "create_time",
       "update_time",
@@ -56,10 +57,13 @@ export default class VersionsModel {
    * @returns
    */
   async getDetail(data) {
-    let { projectId = 0, version } = data;
+    let { projectId = 0, version, type } = data;
     let tableName = getTableName();
     let res = Knex.from(tableName);
-    res = await res.where("project_id", projectId).where("version", version);
+    res = await res
+      .where("project_id", projectId)
+      .where("version", version)
+      .andWhere("type", type);
 
     return res;
   }
@@ -70,10 +74,10 @@ export default class VersionsModel {
    * @returns
    */
   async getVersionsAll(params) {
-    let { projectId = 0 } = params;
+    let { projectId = 0, type } = params;
     let tableName = getTableName();
     let res = Knex.from(tableName);
-    res = await res.where("project_id", projectId);
+    res = await res.where("project_id", projectId).andWhere("type", type);
 
     return res;
   }

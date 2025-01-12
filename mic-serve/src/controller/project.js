@@ -107,6 +107,13 @@ export default class Project extends Base {
   async generate(req, res) {
     let data = req.body || {},
       result = {};
+    if (data.type) {
+      return this.send(res, result, false, "版本类型错误");
+    }
+    if (!data.version) {
+      return this.send(res, result, false, "版本号不能为空");
+    }
+
     result = await projectModel.getPageDetail(data);
     if (result.length == 0) {
       return this.send(res, result, false, "未找到该项目");
