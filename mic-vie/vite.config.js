@@ -100,29 +100,29 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
       // }),
     ],
     build: {
-      // target: "es2015",
-      // rollupOptions: {
-      //   plugins: [commonjs(), externalGlobals({})],
-      //   output: {
-      //     chunkFileNames: "static/js/[name]-[hash].js",
-      //     entryFileNames: "static/js/[name]-[hash].js",
-      //     assetFileNames: "static/[ext]/[name]-[hash].[ext]",
-      //     manualChunks: configManualChunk,
-      //   },
-      // },
-      target: "esnext",
-      cssCodeSplit: true,
+      target: "es2015",
       rollupOptions: {
         plugins: [commonjs(), externalGlobals({})],
         output: {
-          format: "es",
-          minifyInternalExports: false,
           chunkFileNames: "static/js/[name]-[hash].js",
           entryFileNames: "static/js/[name]-[hash].js",
           assetFileNames: "static/[ext]/[name]-[hash].[ext]",
           manualChunks: configManualChunk,
         },
       },
+      // target: "esnext",
+      // cssCodeSplit: true,
+      // rollupOptions: {
+      //   plugins: [commonjs(), externalGlobals({})],
+      //   output: {
+      //     format: "es",
+      //     minifyInternalExports: false,
+      //     chunkFileNames: "static/js/[name]-[hash].js",
+      //     entryFileNames: "static/js/[name]-[hash].js",
+      //     assetFileNames: "static/[ext]/[name]-[hash].[ext]",
+      //     manualChunks: configManualChunk,
+      //   },
+      // },
       // Turning off brotliSize display can slightly reduce packaging time
       // brotliSize: false,
       chunkSizeWarningLimit: 2000,

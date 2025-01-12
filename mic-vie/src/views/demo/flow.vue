@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="ceshi" id="ceshi">
+    <component :is="dynamicComponent"></component>
+    <!-- <div class="ceshi" id="ceshi">
       <a-modal
         v-model:open="ceshiOpen"
         :getContainer="getContainer"
@@ -8,9 +9,9 @@
       >
         <div>ceshi</div>
       </a-modal>
-      <!-- <a-modal v-model:open="ceshiOpen" :getContainer="getContainer">
+      <a-modal v-model:open="ceshiOpen" :getContainer="getContainer">
         <div>ceshi</div>
-      </a-modal> -->
+      </a-modal>
     </div>
     <a-button type="primary" @click="modelOpen = true">打开</a-button>
     <formulaModal
@@ -19,10 +20,10 @@
       :title="'公式编辑'"
       :footer="null"
       width="50%"
-    />
+    /> -->
     <!-- {{ ceshi }} -->
     <!-- <vueCode v-model:vueDialogVisible="open" /> -->
-    <a-drawer
+    <!-- <a-drawer
       v-model:open="open"
       :contentWrapperStyle="{ transform: 'translateX(0)' }"
       :mask="false"
@@ -40,7 +41,7 @@
           ref="flowNodeRef"
         ></flowNode>
       </div>
-    </a-drawer>
+    </a-drawer> -->
   </div>
 </template>
 
@@ -52,6 +53,7 @@ import {
   toRefs,
   reactive,
   nextTick,
+  defineAsyncComponent,
 } from "vue";
 import vueCode from "../../components/vcc/vueCodeEditorDialog.vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
@@ -116,6 +118,27 @@ export default {
 
     // document.addEventListener("click", handleClick, true);
 
+    const getContainer = (e) => {
+      return document.getElementById("ceshi");
+    };
+
+    const dynamicComponent = ref(null);
+
+    const loadComponent = async () => {
+      try {
+        // const module = defineAsyncComponent(() =>
+        //   import("http://localhost:5010/my-button.es.js")
+        // );
+        // dynamicComponent.value = module;
+        const module = await import("http://localhost:5010/my-button.es.js");
+        // console.log(module);
+        // 假设模块导出的组件名为 `default`
+        dynamicComponent.value = module.default;
+      } catch (error) {
+        console.error("Failed to load component:", error);
+      }
+    };
+
     onMounted(() => {
       // console.log(ceshiRef.value);
       // console.log(ceshiRef.value.appContext);
@@ -125,15 +148,13 @@ export default {
       // ceshiRef.value.open = true;
       // execEventFlow(instance, data.children);
       nextTick(() => {
-        delegateBehavior(instance.proxy);
+        // delegateBehavior(instance.proxy);
+        loadComponent();
       });
     });
 
-    const getContainer = (e) => {
-      return document.getElementById("ceshi");
-    };
-
     return {
+      dynamicComponent,
       ceshiRef,
       getContainer,
       ceshiOpen,

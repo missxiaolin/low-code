@@ -1,4 +1,6 @@
 import { createApp } from "vue";
+import * as Vue from "vue";
+window.Vue = Vue;
 
 import "./style.css";
 import App from "./App.vue";
@@ -60,6 +62,7 @@ function mount() {
   window.createBaseAppAsync = createBaseAppAsync;
   window.loadApp = loadApp;
   app.config.globalProperties.$execEventFlow = execEventFlow;
+
   if (isSubMicro) {
     // 微前端环境下， 处理路由下发跳转
     handleMicroData(router, app);

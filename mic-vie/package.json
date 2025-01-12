@@ -56,6 +56,7 @@
     "pinia": "2.2.6",
     "postcss-js": "^4.0.1",
     "prettier": "^2.4.0",
+    "process": "^0.11.10",
     "screenfull": "^6.0.2",
     "split.js": "^1.6.2",
     "stringify-object": "4.0.0",

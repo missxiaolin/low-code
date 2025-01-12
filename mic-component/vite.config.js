@@ -1,47 +1,59 @@
 import { defineConfig } from "vite";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import vue from "@vitejs/plugin-vue";
-import federation from "@originjs/vite-plugin-federation";
-import topLevelAwait from "vite-plugin-top-level-await";
-// import autoprefixer from "autoprefixer";
+import importToConst from "./vite/importToConst";
+const banner = `/*!
+* xiaolin ${new Date()}
+* (c) 2021 @Energy Monster All Right Reserved..
+*/`;
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // css: {
-  // modules: {
-  //   scopeBehaviour: "local",
-  //   localsConvention: "camelCase",
-  // },
-  // postcss: { plugins: [autoprefixer()] },
-  // },
-  plugins: [
-    vue(),
-    federation({
-      name: "components",
-      filename: "remoteEntry.js",
-      exposes: {
-        "./Button": "./src/components/Button.vue",
-      },
-      shared: {
-        vue: {
-          generate: false,
+  plugins: [vue(), importToConst()],
+  build: {
+    outDir: "./dist",
+    lib: {
+      entry: "src/components/button.vue",
+      name: "MyButton",
+      fileName: (format) => `my-button.${format}.js`,
+    },
+    rollupOptions: {
+      external: ["vue"],
+      output: {
+        globals: {
+          vue: "Vue",
+          // 'element-plus': 'ElementPlus', // import { ElRate } from 'element-plus' => const { ElRate } = ElementPlus
         },
       },
-    }),
-    topLevelAwait({
-      // The export name of top-level await promise for each chunk module
-      promiseExportName: "__tla",
-      // The function to generate import names of top-level await promise in each chunk module
-      promiseImportName: (i) => `__tla_${i}`,
-    }),
-  ],
-  build: {
-    target: "esnext",
-    cssCodeSplit: true,
-    rollupOptions: {
-      output: {
-        format: "es",
-        minifyInternalExports: false,
-      },
     },
+    // outDir: "./dist",
+    // minify: true,
+    // terserOptions: {
+    //   compress: {
+    //     drop_console: true,
+    //     drop_debugger: true,
+    //   },
+    // },
+    // rollupOptions: {
+    //   plugins: [resolve(), commonjs()],
+    //   // 请确保外部化那些你的库中不需要的依赖
+    //   external: ["vue", "vue-router"],
+    //   output: {
+    //     banner,
+    //     // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+    //     globals: {
+    //       vue: "Vue",
+    //     },
+    //   },
+    // },
+    // lib: {
+    //   entry: "src/components/index.js",
+    //   name: "button",
+    //   fileName: "button",
+    //   // formats: ["umd"],
+    //   // formats: ["es"],
+    //   formats: ["es", "umd"],
+    // },
   },
 });
