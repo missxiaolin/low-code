@@ -149,7 +149,7 @@ DROP TABLE IF EXISTS `versions`;
 
 CREATE TABLE `versions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `tyoe` tinyint(4) NOT NULL COMMENT '1 项目 2 组件',
+  `type` tinyint(4) NOT NULL COMMENT '1 项目 2 组件',
   `project_id` int(11) NOT NULL,
   `version` varchar(11) NOT NULL,
   `create_time` datetime NOT NULL,

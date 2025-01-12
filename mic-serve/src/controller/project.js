@@ -107,7 +107,7 @@ export default class Project extends Base {
   async generate(req, res) {
     let data = req.body || {},
       result = {};
-    if (data.type) {
+    if (!data.type) {
       return this.send(res, result, false, "版本类型错误");
     }
     if (!data.version) {
@@ -129,6 +129,7 @@ export default class Project extends Base {
     const versionDetail = await versionsModel.getDetail({
       projectId: data.id,
       version: data.version,
+      type: 1,
     });
     if (versionDetail.length > 0) {
       return this.send(res, result, false, "该版本已存在");
@@ -145,6 +146,7 @@ export default class Project extends Base {
       version: data.version,
       create_time: dataTime,
       update_time: dataTime,
+      type: 1,
     });
 
     // 切换到目标文件夹
@@ -192,6 +194,14 @@ export default class Project extends Base {
   async getAllVersions(req, res) {
     let data = req.body || {},
       result = {};
+
+    if (!data.type) {
+      return this.send(res, result, false, "版本类型错误");
+    }
+    if (!data.projectId) {
+      return this.send(res, [], "projectId不能为空");
+    }
+
     result = await versionsModel.getVersionsAll(data);
 
     return this.send(res, result);
@@ -208,8 +218,9 @@ export default class Project extends Base {
       result = {};
 
     if (!data.id) {
-      return this.send(res, [], "id不能为空");
+      return this.send(res, result, false, "id不能为空");
     }
+
     result = await projectModel.getPageDetail(data);
 
     result.url = `http://www.missxiaolin.com/lowcode/${result.code}/${result.version}/assets/remoteEntry.js`;

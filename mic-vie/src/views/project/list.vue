@@ -169,6 +169,7 @@ export default {
     let versionGenerateForm = ref({
       id: "",
       version: "",
+      type: 1,
     });
     let versionVersionFormOpen = ref(false);
     let versionVersionForm = ref({
@@ -312,6 +313,7 @@ export default {
       versionAll.value = [];
       let res = await getAllVersions({
         projectId: id,
+        type: 1,
       });
       if (!res.success) return;
       versionAll.value = res.model;
