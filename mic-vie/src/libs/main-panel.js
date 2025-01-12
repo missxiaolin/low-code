@@ -85,6 +85,7 @@ export class MainPanelProvider {
     // 生成展示代码
     let codeForShow = code.replace(/\s{1}lc_id=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}lc_uuid=".+?"/g, "");
+    codeForShow = codeForShow.replace(/\s{1}vccName=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}lc-mark/g, "");
     codeForShow = codeForShow.replace(/\s{1}div-lc-mark/g, "");
     // console.log("codeForShow", codeForShow);
@@ -256,7 +257,6 @@ export class MainPanelProvider {
     const renderControlPanel = this.getControlPanelRoot();
     const elements = renderControlPanel.querySelectorAll("[lc_id]");
     elements.forEach((element) => {
-      console.log(element);
       element.addEventListener("click", (event) => {
         event.stopPropagation();
         this.markElement(element);
@@ -299,7 +299,11 @@ export class MainPanelProvider {
     realNode.classList.add("mark-element");
     const rawVueInfo = findRawVueInfo(realNode);
     // 显示当前组件的名称
-    realNode.setAttribute("lc-component-name", getRawComponentKey(rawVueInfo));
+    let vccName = getRawComponentKey(rawVueInfo);
+    if (rawVueInfo[Object.keys(rawVueInfo)[0]].vccName) {
+      vccName = rawVueInfo[Object.keys(rawVueInfo)[0]].vccName;
+    }
+    realNode.setAttribute("lc-component-name", vccName);
     return rawVueInfo;
   }
 
@@ -343,33 +347,21 @@ export class MainPanelProvider {
         return;
       }
 
-      // if (
-      //   this.currentPointDropInfo.target.className.indexOf("ant-modal-body") >
-      //   -1
-      // ) {
-      //   const renderControlPanel = this.getControlPanelRoot();
-      //   const element = renderControlPanel.querySelector(
-      //     `[lc_uuid="${"mic-modal"}"]`
-      //   );
-      //   this.currentPointDropInfo.target = element;
-      // }
       const data = event.dataTransfer.getData("text/plain");
-      const [, , , , rawInfo] = data.split(getSplitTag());
+      let newData = data.split(getSplitTag());
+      const rawInfo = newData[4];
+      const vccName = newData[5];
       let newDropObj = JSON.parse(rawInfo);
+
       if (newDropObj) {
-        // console.log(
-        //   "newDropObj",
-        //   newDropObj.div.__children[1].div.__children[0]
-        // );
         newDropObj = newDropObj.div.__children[0];
+
         Object.keys(newDropObj).forEach((item) => {
           if (item !== "__key__" && !newDropObj[item].lc_uuid) {
-            // if (item == "mic-modal") {
-            //   newDropObj[item].lc_uuid = "mic-modal";
-            // } else {
-            //   newDropObj[item].lc_uuid = uuid();
-            // }
             newDropObj[item].lc_uuid = uuid();
+          }
+          if (item !== "__key__" && !newDropObj[item].vccName) {
+            newDropObj[item].vccName = vccName;
           }
         });
       }
@@ -543,6 +535,7 @@ export class MainPanelProvider {
         key != "lc-mark" &&
         key != "lc_id" &&
         key != "lc_uuid" &&
+        key != "vccName" &&
         key != "div-lc-mark" &&
         !isObject(
           object[
@@ -561,7 +554,7 @@ export class MainPanelProvider {
     this.render(this._rawDataStructure);
     if (object.lc_uuid) {
       setTimeout(() => {
-        this.selectElement(object.lc_uuid, vueRawTag);
+        this.selectElement(object.lc_uuid, object.vccName || vueRawTag);
       }, 10);
     }
     return this;

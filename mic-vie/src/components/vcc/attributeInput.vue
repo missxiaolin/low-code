@@ -412,7 +412,8 @@ export default {
               key != "lc-mark" &&
               key != "lc_id" &&
               key != "div-lc-mark" &&
-              key != "lc_uuid"
+              key != "lc_uuid" &&
+              key != "vccName"
             ) {
               // 这两个是保留字段，不对外提供使用
               if (key != "") result.push({ key: key, value: element });

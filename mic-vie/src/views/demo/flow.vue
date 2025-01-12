@@ -130,6 +130,7 @@ export default {
         //   import("http://localhost:5010/my-button.es.js")
         // );
         // dynamicComponent.value = module;
+        // 加载可以使用vue3 Suspense做组件 loading
         const module = await import("http://localhost:5010/my-button.es.js");
         // console.log(module);
         // 假设模块导出的组件名为 `default`

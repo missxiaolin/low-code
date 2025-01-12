@@ -28,11 +28,12 @@ export function initElement(element) {
   element.addEventListener("dragstart", function (event) {
     event.dataTransfer.effectAllowed = "copy";
     const raw = generateRawInfo(element);
+    const title = element.querySelector(".title").innerText;
     const str = `${element.localName}${getSplitTag()}${
       element.innerText
     }${getSplitTag()}${0}${getSplitTag()}${
       element.style.cssText
-    }${getSplitTag()}${JSON.stringify(raw)}`;
+    }${getSplitTag()}${JSON.stringify(raw)}${getSplitTag()}${title}`;
     event.dataTransfer.setData("text/plain", str);
 
     event.stopPropagation();
