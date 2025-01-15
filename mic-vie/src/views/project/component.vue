@@ -8,7 +8,7 @@
           </mic-search-label>
         </a-col>
         <a-col :span="8"> </a-col>
-        <a-col :span="8"> < </a-col>
+        <a-col :span="8"> </a-col>
       </a-row>
       <div class="mu-search-form-button">
         <a-button @click="resetSearchForm">重置</a-button>
@@ -36,26 +36,102 @@
         </template>
       </mic-search-table>
     </div>
+    <!-- 组件添加 -->
+    <a-modal
+      v-model:open="componentFormOpen"
+      @ok="saveComponent"
+      title="组件"
+      v-if="componentFormOpen"
+    >
+      <a-form
+        :model="componentFormForm"
+        :label-col="{ span: 4 }"
+        ref="componentFormRef"
+      >
+        <a-form-item
+          label="名称"
+          name="name"
+          :rules="[{ required: true, message: '名称必填!' }]"
+        >
+          <a-input v-model:value="componentFormForm.name" />
+        </a-form-item>
+        <a-form-item
+          label="组件name"
+          name="componentName"
+          :rules="[{ required: true, message: '组件名称必填!' }]"
+        >
+          <a-input v-model:value="componentFormForm.componentName" />
+        </a-form-item>
+        <a-form-item
+          label="组件内容"
+          name="component"
+          :rules="[{ required: true, message: '组件内容必填!' }]"
+        >
+          <a-textarea v-model:value="componentFormForm.component" />
+        </a-form-item>
+        <a-form-item
+          label="组件属性"
+          name="attribute"
+          :rules="[{ required: true, message: '组件属性必填!' }]"
+        >
+          <!-- <a-textarea v-model:value="componentFormForm.attribute" /> -->
+          <codeEditor
+            style="height: 200px"
+            :language="'json'"
+            v-model:value="componentFormForm.attribute"
+          />
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import {
+  componentList,
+  componentSave,
+  componentDetail,
+} from "../../api/component";
+import codeEditor from "../../components/editor/index.vue";
+import { ref, onMounted } from "vue";
 import { tableColumns } from "./component.js";
+import { useGeneralStore } from "../../store/modules/project";
 export default {
+  components: {
+    codeEditor,
+  },
   setup(props) {
-    const searchForm = {
+    const generalStore = useGeneralStore();
+    const componentFormOpen = ref(false);
+    const componentFormRef = ref(null);
+    const projectId = generalStore.currentProjectId;
+    const componentFormForm = ref({
+      id: 0,
+      project_id: Number(projectId),
+      name: "",
+      componentName: "",
+      component: "",
+      attribute: "{}",
+      version: "",
+    });
+    const searchForm = ref({
       name: "",
       pageSize: 10,
+      projectId: Number(projectId),
       page: 1,
-    };
+    });
     let table = ref({
       data: [],
       columns: tableColumns,
       total: 0,
     });
 
-    const getComponentList = () => {};
+    const getComponentList = async () => {
+      let res = await componentList(searchForm.value);
+      if (!res.success) return;
+      table.value.data = res.model.list || [];
+      table.value.total = res.model.count;
+    };
     const resetSearchForm = () => {
       searchForm.value = {
         name: "",
@@ -65,20 +141,67 @@ export default {
       getComponentList();
     };
 
-    const showPop = () => {};
+    const showPop = () => {
+      componentFormForm.value = {
+        id: 0,
+        project_id: Number(projectId),
+        name: "",
+        componentName: "",
+        component: "",
+        attribute: `{"component": [], "style": [], "customComponent": {"base": {"title": "基础", "children": []}},"event": {"title": "基础", "children": []}}`,
+        version: "",
+      };
+      componentFormOpen.value = true;
+    };
+
+    const edit = async (row) => {
+      componentFormForm.value = {
+        id: row.id,
+        project_id: row.project_id,
+        name: row.name,
+        componentName: row.componentName,
+        component: row.component,
+        attribute: row.attribute,
+        version: "",
+      };
+      componentFormOpen.value = true;
+    };
+
+    const saveComponent = () => {
+      componentFormRef.value
+        .validate()
+        .then(async () => {
+          let res = await componentSave(componentFormForm.value);
+          if (!res.success) return;
+          componentFormOpen.value = false;
+          getComponentList();
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    };
 
     const handleCurrentChange = (page) => {
       searchForm.value.page = page + 1;
       getMenuList();
     };
 
+    onMounted(() => {
+      getComponentList();
+    });
+
     return {
       searchForm,
       resetSearchForm,
       table,
       showPop,
+      edit,
       getComponentList,
       handleCurrentChange,
+      componentFormOpen,
+      componentFormRef,
+      componentFormForm,
+      saveComponent,
     };
   },
 };

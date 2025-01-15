@@ -54,6 +54,7 @@ import {
   reactive,
   nextTick,
   defineAsyncComponent,
+  markRaw,
 } from "vue";
 import vueCode from "../../components/vcc/vueCodeEditorDialog.vue";
 import flowNode from "../../components/flow-node/flowNode.vue";
@@ -131,10 +132,10 @@ export default {
         // );
         // dynamicComponent.value = module;
         // 加载可以使用vue3 Suspense做组件 loading
-        const module = await import("http://localhost:5010/my-button.es.js");
+        const module = await import("http://localhost:5010/button.mjs");
         // console.log(module);
         // 假设模块导出的组件名为 `default`
-        dynamicComponent.value = module.default;
+        dynamicComponent.value = markRaw(module.default);
       } catch (error) {
         console.error("Failed to load component:", error);
       }

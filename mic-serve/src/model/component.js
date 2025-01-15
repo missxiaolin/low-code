@@ -21,7 +21,9 @@ export default class ComponentModel {
     this.tableColumnArr = [
       "project_id",
       "name",
+      "componentName",
       "component",
+      "attribute",
       "version",
       "create_time",
       "update_time",

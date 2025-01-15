@@ -1,7 +1,7 @@
 <template>
   <div class="powderblue">
     ceshi
-    <a-button>sss</a-button>
+    <a-button>sssa</a-button>
   </div>
 </template>
 
@@ -14,3 +14,9 @@ export default {
   setup(props) {},
 };
 </script>
+
+<style lang="scss" scoped>
+.powderblue {
+  color: red;
+}
+</style>
