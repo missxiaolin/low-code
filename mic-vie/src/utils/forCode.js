@@ -140,9 +140,7 @@ export function removeAllID(codeObj) {
 }
 
 export function generateRawInfo(target) {
-  if (target.querySelector(".li-mark-content")) {
-    target = target.querySelector(".li-mark-content");
-  }
+  target = target.querySelector(".title");
   if (target.attributes.lc_id) {
     return findVueInfo(target);
   } else {

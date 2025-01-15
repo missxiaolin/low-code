@@ -647,7 +647,7 @@ export default {
   top: -50px;
 
   [div-lc-mark] {
-    min-width: 50px;
+    min-width: 80px;
     border: 1px grey dashed;
     min-height: 1rem;
     border-radius: 5px;

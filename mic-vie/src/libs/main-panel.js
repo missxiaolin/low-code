@@ -354,8 +354,6 @@ export class MainPanelProvider {
       let newDropObj = JSON.parse(rawInfo);
 
       if (newDropObj) {
-        newDropObj = newDropObj.div.__children[0];
-
         Object.keys(newDropObj).forEach((item) => {
           if (item !== "__key__" && !newDropObj[item].lc_uuid) {
             newDropObj[item].lc_uuid = uuid();
