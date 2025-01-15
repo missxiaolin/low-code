@@ -360,13 +360,11 @@ export default {
       return {
         template: {
           lc_id: "root",
-          lc_uuid: "root",
           __children: [
             {
               div: {
                 class: "container",
                 lc_id: "container",
-                lc_uuid: "container",
                 style: "min-height: 100%;",
               },
             },

@@ -174,7 +174,13 @@ export default {
   components: {
     flowNode,
   },
-  props: ["localAttributes", "vueRawTag", "eventNode", "customData"],
+  props: [
+    "localAttributes",
+    "vueRawTag",
+    "eventNode",
+    "customData",
+    "__rawVueInfo__",
+  ],
   emits: ["childSave", "saveEventLogicCode", "deleteItem", "save"],
   setup(props, { emit }) {
     let baseObj = ref({});

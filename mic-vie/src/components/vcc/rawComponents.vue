@@ -186,13 +186,13 @@ export default {
       try {
         name = info[Object.keys(info)[0]].vccName;
       } catch (error) {}
-      const lc_uuid = info[Object.keys(info)[0]].lc_uuid;
+      const lc_uuid = info[Object.keys(info)[0]].lc_id;
       const renderControlPanel = document.getElementById(
         "render-control-panel"
       );
-      const elements = renderControlPanel.querySelectorAll("[lc_uuid]");
+      const elements = renderControlPanel.querySelectorAll("[lc_id]");
       elements.forEach((element) => {
-        if (element.getAttribute("lc_uuid") === lc_uuid) {
+        if (element.getAttribute("lc_id") === lc_uuid) {
           element.classList.add("mark-element");
 
           element.setAttribute(

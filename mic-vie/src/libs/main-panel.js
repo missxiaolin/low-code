@@ -84,7 +84,6 @@ export class MainPanelProvider {
 
     // 生成展示代码
     let codeForShow = code.replace(/\s{1}lc_id=".+?"/g, "");
-    codeForShow = codeForShow.replace(/\s{1}lc_uuid=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}vccName=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}lc-mark/g, "");
     codeForShow = codeForShow.replace(/\s{1}div-lc-mark/g, "");
@@ -355,9 +354,6 @@ export class MainPanelProvider {
 
       if (newDropObj) {
         Object.keys(newDropObj).forEach((item) => {
-          if (item !== "__key__" && !newDropObj[item].lc_uuid) {
-            newDropObj[item].lc_uuid = uuid();
-          }
           if (item !== "__key__" && !newDropObj[item].vccName) {
             newDropObj[item].vccName = vccName;
           }
@@ -532,7 +528,6 @@ export class MainPanelProvider {
         key != "__children" &&
         key != "lc-mark" &&
         key != "lc_id" &&
-        key != "lc_uuid" &&
         key != "vccName" &&
         key != "div-lc-mark" &&
         !isObject(
@@ -550,9 +545,9 @@ export class MainPanelProvider {
 
     // 渲染当前的变更
     this.render(this._rawDataStructure);
-    if (object.lc_uuid) {
+    if (object.lc_id) {
       setTimeout(() => {
-        this.selectElement(object.lc_uuid, object.vccName || vueRawTag);
+        this.selectElement(object.lc_id, object.vccName || vueRawTag);
       }, 10);
     }
     return this;
@@ -560,7 +555,7 @@ export class MainPanelProvider {
 
   selectElement(uuid, vueRawTag) {
     const renderControlPanel = this.getControlPanelRoot();
-    const element = renderControlPanel.querySelector(`[lc_uuid="${uuid}"]`);
+    const element = renderControlPanel.querySelector(`[lc_id="${uuid}"]`);
 
     if (!element) return;
     element.classList.add("mark-element");

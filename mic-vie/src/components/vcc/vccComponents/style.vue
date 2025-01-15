@@ -73,7 +73,7 @@ import { getAttrJson, getAttrKeys, stringToObj } from "./utils/index";
 import _ from "lodash";
 const { merge } = _;
 export default {
-  props: ["localAttributes", "vueRawTag"],
+  props: ["localAttributes", "vueRawTag", "__rawVueInfo__"],
   emits: ["childSave"],
   setup(props, { emit }) {
     let list = ref([]);

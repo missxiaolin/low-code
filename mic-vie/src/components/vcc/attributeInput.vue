@@ -18,6 +18,7 @@
           <comComponent
             v-if="vueRawTag"
             :localAttributes="localAttributes"
+            :__rawVueInfo__="__rawVueInfo__"
             :customData="customData"
             :vueRawTag="vueRawTag"
             :eventNode="eventNode"
@@ -32,6 +33,7 @@
           <styleComponent
             v-if="vueRawTag"
             :localAttributes="localAttributes"
+            :__rawVueInfo__="__rawVueInfo__"
             :vueRawTag="vueRawTag"
             @childSave="childSave"
           />
@@ -412,7 +414,6 @@ export default {
               key != "lc-mark" &&
               key != "lc_id" &&
               key != "div-lc-mark" &&
-              key != "lc_uuid" &&
               key != "vccName"
             ) {
               // 这两个是保留字段，不对外提供使用
