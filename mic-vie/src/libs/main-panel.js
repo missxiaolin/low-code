@@ -275,6 +275,11 @@ export class MainPanelProvider {
     if (this.currentEditElement) {
       this.currentEditElement.classList.remove("mark-element");
     }
+    const renderControlPanel = this.getControlPanelRoot();
+    const elements = renderControlPanel.querySelectorAll("[lc_id]");
+    elements.forEach((element) => {
+      element.classList.remove("mark-element");
+    });
 
     if (realNode) {
       this.currentEditElement = realNode;
