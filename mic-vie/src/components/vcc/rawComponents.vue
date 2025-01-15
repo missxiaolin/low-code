@@ -182,6 +182,10 @@ export default {
       }
     },
     domSelect(info) {
+      let name = "";
+      try {
+        name = info[Object.keys(info)[0]].vccName;
+      } catch (error) {}
       const lc_uuid = info[Object.keys(info)[0]].lc_uuid;
       const renderControlPanel = document.getElementById(
         "render-control-panel"
@@ -190,7 +194,11 @@ export default {
       elements.forEach((element) => {
         if (element.getAttribute("lc_uuid") === lc_uuid) {
           element.classList.add("mark-element");
-          element.setAttribute("lc-component-name", Object.keys(info)[0]);
+
+          element.setAttribute(
+            "lc-component-name",
+            name || Object.keys(info)[0]
+          );
         } else {
           element.classList.remove("mark-element");
         }
