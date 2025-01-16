@@ -1,1 +1,0 @@
-import{request as t}from"./index-CR_1l9OE.js";function a(a){return t({url:"/adm/page/save",method:"post",data:a})}function e(a){return t({url:"/adm/page/detail",method:"post",data:a})}function o(a){return t({url:"/adm/page/list",method:"post",data:a})}export{e as pageRouteDetail,o as pageRouteList,a as pageRouteSave};

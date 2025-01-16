@@ -102,7 +102,7 @@ export default {
     };
 
     const handleCurrentChange = (page) => {
-      searchForm.value.page = page + 1;
+      searchForm.value.page = page;
       getProjectList();
     };
 

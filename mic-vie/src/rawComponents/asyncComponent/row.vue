@@ -9,7 +9,7 @@
       <div
         class="title"
         lc_id="MZSdyF6HeN"
-        :component_url="`http://lcode.missxiaolin.com/${item.componentName}.es.js`"
+        :component_url="`http://component.missxiaolin.com/${item.componentName}.es.js`"
         :component_name="item.componentName"
       >
         {{ item.name }}

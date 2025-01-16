@@ -44,7 +44,7 @@
         @handleCurrentChange="handleCurrentChange"
       >
         <template #type="scope">
-          {{ scope.row.type == 1 ? "菜单" : "按钮" }}
+          {{ scope.row.type == 1 ? "菜单" : "页面" }}
         </template>
         <template #status="scope">
           {{ scope.row.status == 1 ? "显示" : "隐藏" }}
@@ -205,7 +205,7 @@ export default {
     };
 
     const handleCurrentChange = (page) => {
-      searchForm.value.page = page + 1;
+      searchForm.value.page = page;
       getMenuList();
     };
 
