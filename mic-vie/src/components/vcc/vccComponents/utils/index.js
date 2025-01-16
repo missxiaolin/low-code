@@ -38,11 +38,24 @@ export function getAttrKeys(tags) {
  * @param {*} v
  * @returns
  */
-export function getAttrJson(oldAttr, tag, v) {
+export function getAttrJson(oldAttr, tag, v, component_name = "") {
   const aJson = JSON.parse(JSON.stringify(attrJson));
 
   let arr = [];
   let tagAttr = tagsJson[tag];
+  // 远程组件
+  if (!tagAttr && tag === "mic-async-component") {
+    const vccAsyncComponents = window.vccAsyncComponents;
+    let obj = {};
+    vccAsyncComponents.forEach((item) => {
+      if (item.componentName == component_name) {
+        try {
+          obj = item.attribute ? JSON.parse(item.attribute) : {};
+        } catch (error) {}
+      }
+    });
+    tagAttr = obj;
+  }
   let attrValKeys = tagAttr ? tagAttr[v] : null;
   if (!tagAttr || !attrValKeys) {
     return [];

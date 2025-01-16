@@ -89,7 +89,12 @@ export default {
         obj.style = {};
       }
       obj.class = attrObj.class || "";
-      list.value = getAttrJson(obj, vueRawTag, "style");
+      list.value = getAttrJson(
+        obj,
+        vueRawTag,
+        "style",
+        attrObj.component_name || ""
+      );
     };
 
     init(props.localAttributes, props.vueRawTag);

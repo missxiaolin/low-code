@@ -1,9 +1,9 @@
 <template>
-  <component :is="dynamicComponent"></component>
+  <component :is="dynamicComponent" v-bind="attrs"></component>
 </template>
 
 <script>
-import { ref, nextTick, onMounted, markRaw } from "vue";
+import { ref, nextTick, onMounted, markRaw, useAttrs } from "vue";
 export default {
   name: "micAsyncComponent",
   props: {
@@ -13,11 +13,11 @@ export default {
     },
   },
   setup(props) {
+    const attrs = useAttrs();
     const dynamicComponent = ref(null);
 
     const loadComponent = async () => {
       const module = await import(props.componentUrl);
-      console.log(module.default.components);
       dynamicComponent.value = markRaw(module.default);
     };
 
@@ -29,6 +29,7 @@ export default {
 
     return {
       dynamicComponent,
+      attrs,
     };
   },
 };

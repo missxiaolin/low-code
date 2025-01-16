@@ -43,7 +43,7 @@
           <a-empty description="该组件不支持设定"></a-empty>
         </a-tab-pane>
         <a-tab-pane tab="高级" key="senior">
-          <div style="text-align: center">
+          <!-- <div style="text-align: center">
             <a-switch
               v-model:checked="editMode"
               active-text="自由编辑"
@@ -52,7 +52,7 @@
               inactive-color="#13ce66"
             >
             </a-switch>
-          </div>
+          </div> -->
 
           <div style="margin-top: 20px">
             <div name="1" v-show="!editMode">
@@ -62,26 +62,32 @@
                   v-for="(item, index) in localAttributes"
                   :key="index"
                 >
-                  <a-input
-                    v-model:value="item.key"
-                    :placeholder="'key' + index"
-                    class="half-width"
-                    type="textarea"
-                    :autosize="{ minRows: 2, maxRows: 4 }"
-                  ></a-input>
-                  <div class="split">:</div>
-                  <a-input
-                    v-model:value="item.value"
-                    type="textarea"
-                    :placeholder="'value' + index"
-                    class="half-width"
-                    style="flex-grow: 4"
-                    :autosize="{ minRows: 2, maxRows: 4 }"
-                  ></a-input>
-                  <MinusCircleOutlined
-                    style="margin-left: 5px"
-                    @click="deleteItem(index)"
-                  />
+                  <template
+                    v-if="
+                      !['component_name', 'componentUrl'].includes(item.key)
+                    "
+                  >
+                    <a-input
+                      v-model:value="item.key"
+                      :placeholder="'key' + index"
+                      class="half-width"
+                      type="textarea"
+                      :autosize="{ minRows: 2, maxRows: 4 }"
+                    ></a-input>
+                    <div class="split">:</div>
+                    <a-input
+                      v-model:value="item.value"
+                      type="textarea"
+                      :placeholder="'value' + index"
+                      class="half-width"
+                      style="flex-grow: 4"
+                      :autosize="{ minRows: 2, maxRows: 4 }"
+                    ></a-input>
+                    <MinusCircleOutlined
+                      style="margin-left: 5px"
+                      @click="deleteItem(index)"
+                    />
+                  </template>
                 </div>
 
                 <div class="quick-add-root">

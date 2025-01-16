@@ -71,6 +71,7 @@ export default {
       if (!res.success) return;
       if (res.model && res.model.length > 0) {
         this.asyncComponents = res.model;
+        window.vccAsyncComponents = res.model;
       }
     },
     async init() {

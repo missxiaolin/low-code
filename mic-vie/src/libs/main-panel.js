@@ -85,6 +85,7 @@ export class MainPanelProvider {
     // 生成展示代码
     let codeForShow = code.replace(/\s{1}lc_id=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}vccName=".+?"/g, "");
+    codeForShow = codeForShow.replace(/\s{1}component_name=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}lc-mark/g, "");
     codeForShow = codeForShow.replace(/\s{1}div-lc-mark/g, "");
     // console.log("codeForShow", codeForShow);
@@ -353,7 +354,6 @@ export class MainPanelProvider {
 
       const data = event.dataTransfer.getData("text/plain");
       let newData = data.split(getSplitTag());
-      console.log(newData);
       const rawInfo = newData[4];
       const vccName = newData[5];
       let newDropObj = JSON.parse(rawInfo);

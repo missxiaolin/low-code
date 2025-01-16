@@ -201,7 +201,15 @@ export default {
         }
       });
       let obj = attrObj;
-      let attrs = getAttrJson(obj, vueRawTag, "component") || [];
+      let attrs =
+        getAttrJson(
+          obj,
+          vueRawTag,
+          "component",
+          attrObj.component_name || ""
+        ) || [];
+
+      console.log("attrs", attrs);
       attrs.forEach((item) => {
         if (item.key === "base") {
           baseObj.value = item;

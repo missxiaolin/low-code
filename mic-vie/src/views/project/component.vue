@@ -152,7 +152,7 @@ export default {
         name: "",
         componentName: "",
         component: "",
-        attribute: `{"component": [], "style": [], "customComponent": {"base": {"title": "基础", "children": []}},"event": {"title": "事件", "children": []}}`,
+        attribute: `{"component":[],"style":["width","height"],"customComponent":{"base":{"title":"基础","children":[]},"event":{"title":"事件","children":[]}}}`,
         version: "",
       };
       componentFormOpen.value = true;

@@ -1,34 +1,35 @@
 const { Button: p } = Antd;
-const { resolveComponent: u, openBlock: _, createElementBlock: a, createTextVNode: r, createVNode: l, withCtx: d } = Vue;
+const { resolveComponent: a, openBlock: l, createElementBlock: _, createTextVNode: r, toDisplayString: i, createVNode: u, withCtx: d } = Vue;
 /*!
-* xiaolin Thu Jan 16 2025 10:19:13 GMT+0800 (中国标准时间)
+* xiaolin Thu Jan 16 2025 15:44:21 GMT+0800 (中国标准时间)
 * (c) 2021 @Energy Monster All Right Reserved..
 */
-const i = (o, t) => {
-  const e = o.__vccOpts || o;
-  for (const [n, s] of t)
+const m = (t, o) => {
+  const e = t.__vccOpts || t;
+  for (const [n, s] of o)
     e[n] = s;
   return e;
-}, m = {
+}, f = {
+  props: ["title"],
   components: {
     Button: p
   },
-  setup(o) {
+  setup(t) {
   }
-}, f = { class: "powderblue" };
-function x(o, t, e, n, s, v) {
-  const c = u("a-button");
-  return _(), a("div", f, [
-    t[1] || (t[1] = r(" ceshi ")),
-    l(c, null, {
-      default: d(() => t[0] || (t[0] = [
+}, x = { class: "powderblue" };
+function v(t, o, e, n, s, B) {
+  const c = a("a-button");
+  return l(), _("div", x, [
+    r(i(e.title) + " ", 1),
+    u(c, null, {
+      default: d(() => o[0] || (o[0] = [
         r("sss")
       ])),
       _: 1
     })
   ]);
 }
-const b = /* @__PURE__ */ i(m, [["render", x]]);
+const $ = /* @__PURE__ */ m(f, [["render", v]]);
 export {
-  b as default
+  $ as default
 };
