@@ -38,7 +38,7 @@ export function getAttrKeys(tags) {
  * @param {*} v
  * @returns
  */
-export function getAttrJson(oldAttr, tag, v, component_name = "") {
+export function getAttrJson(oldAttr, tag, v, attrObj = {}) {
   const aJson = JSON.parse(JSON.stringify(attrJson));
 
   let arr = [];
@@ -48,7 +48,10 @@ export function getAttrJson(oldAttr, tag, v, component_name = "") {
     const vccAsyncComponents = window.vccAsyncComponents;
     let obj = {};
     vccAsyncComponents.forEach((item) => {
-      if (item.componentName == component_name) {
+      if (
+        attrObj.component_name &&
+        item.componentName == attrObj.component_name
+      ) {
         try {
           obj = item.attribute ? JSON.parse(item.attribute) : {};
         } catch (error) {}
@@ -77,11 +80,21 @@ export function getAttrJson(oldAttr, tag, v, component_name = "") {
       arr.push(obj);
     }
   });
+
   const nV = v.charAt(0).toUpperCase() + v.slice(1);
   if (tagAttr[`custom${nV}`]) {
     let customObj = tagAttr[`custom${nV}`];
     arr.forEach((item) => {
       if (customObj[item.key]) {
+        let c = customObj[item.key].children;
+        c.forEach((item) => {
+          if (
+            Object.keys(attrObj).length > 0 &&
+            Object.keys(attrObj).includes(item.key)
+          ) {
+            item.value = attrObj[item.key];
+          }
+        });
         item.children = item.children.concat(customObj[item.key].children);
       }
     });
