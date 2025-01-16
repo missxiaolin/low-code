@@ -140,7 +140,9 @@ export function removeAllID(codeObj) {
 }
 
 export function generateRawInfo(target) {
-  target = target.querySelector(".title");
+  if (target.querySelector(".title")) {
+    target = target.querySelector(".title");
+  }
   if (target.attributes.lc_id) {
     return findVueInfo(target);
   } else {

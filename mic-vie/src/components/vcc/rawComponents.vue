@@ -18,6 +18,7 @@
               <keep-alive>
                 <component
                   :is="item.componentName"
+                  :asyncComponents="asyncComponents"
                   @mounted="onMouted"
                 ></component>
               </keep-alive>
@@ -70,13 +71,14 @@ import aBase from "../../rawComponents/a-base/index.vue";
 import aForm from "../../rawComponents/a-form/index.vue";
 import customRow from "../../rawComponents/custom/index.vue";
 import rowNested from "./rowNested.vue";
+import asyncRow from "../../rawComponents/asyncComponent/index.vue";
 import dataForm from "./dataForm.vue";
 
 import { getRawComponentContent } from "@/utils/common";
 import { store as _store } from "@/libs/store.js";
 
 export default {
-  props: ["customData", "initStructure"],
+  props: ["customData", "initStructure", "asyncComponents"],
   emits: ["setCurrentEditRawInfo"],
   components: {
     htmlRow,
@@ -85,6 +87,7 @@ export default {
     aForm,
     rowNested,
     dataForm,
+    asyncRow,
   },
   computed: {},
   data() {
@@ -101,7 +104,7 @@ export default {
       treeData: [],
       tabActiveName: "component",
       isExpand: true,
-      activeNames: ["htmlRow", "aBase", "aForm", "customRow"],
+      activeNames: ["htmlRow", "aBase", "aForm", "asyncRow", "customRow"],
       iconArray: [
         {
           labelName: "html组件",
@@ -122,6 +125,13 @@ export default {
           className: "demonstration-a-form",
           selectIndex: 1,
           componentName: "aForm",
+          titleArray: [],
+        },
+        {
+          labelName: "远程组件",
+          className: "demonstration-async-component",
+          selectIndex: 3,
+          componentName: "asyncRow",
           titleArray: [],
         },
         {

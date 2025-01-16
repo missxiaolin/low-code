@@ -29,11 +29,17 @@ export function initElement(element) {
     event.dataTransfer.effectAllowed = "copy";
     const raw = generateRawInfo(element);
     const title = element.querySelector(".title").innerText;
+    const asyncUrl =
+      element.querySelector(".title").getAttribute("component_url") || "";
+    const component_name =
+      element.querySelector(".title").getAttribute("component_name") || "";
     const str = `${element.localName}${getSplitTag()}${
       element.innerText
     }${getSplitTag()}${0}${getSplitTag()}${
       element.style.cssText
-    }${getSplitTag()}${JSON.stringify(raw)}${getSplitTag()}${title}`;
+    }${getSplitTag()}${JSON.stringify(
+      raw
+    )}${getSplitTag()}${title}${getSplitTag()}${asyncUrl}${getSplitTag()}${component_name}`;
     event.dataTransfer.setData("text/plain", str);
 
     event.stopPropagation();

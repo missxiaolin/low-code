@@ -353,6 +353,7 @@ export class MainPanelProvider {
 
       const data = event.dataTransfer.getData("text/plain");
       let newData = data.split(getSplitTag());
+      console.log(newData);
       const rawInfo = newData[4];
       const vccName = newData[5];
       let newDropObj = JSON.parse(rawInfo);
@@ -361,6 +362,20 @@ export class MainPanelProvider {
         Object.keys(newDropObj).forEach((item) => {
           if (item !== "__key__" && !newDropObj[item].vccName) {
             newDropObj[item].vccName = vccName;
+          }
+          if (
+            item !== "__key__" &&
+            newData[6] &&
+            !newDropObj[item].componentUrl
+          ) {
+            newDropObj[item].componentUrl = newData[6];
+          }
+          if (
+            item !== "__key__" &&
+            newData[7] &&
+            !newDropObj[item].component_name
+          ) {
+            newDropObj[item].component_name = newData[7];
           }
         });
       }

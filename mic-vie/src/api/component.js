@@ -51,3 +51,16 @@ export function componentGenerate(data) {
     data,
   });
 }
+
+/**
+ * 获取所有远程组件
+ * @param {*} data
+ * @returns
+ */
+export function componentAll(data) {
+  return request({
+    url: "/adm/component/all",
+    method: "post",
+    data,
+  });
+}

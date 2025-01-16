@@ -5,6 +5,7 @@
         <raw-components
           ref="rawComponents"
           :customData="customData"
+          :asyncComponents="asyncComponents"
           @reRender="render"
           @setCurrentEditRawInfo="setCurrentEditRawInfo"
           @saveData="
@@ -100,6 +101,12 @@ export default {
       type: Object,
       default: () => {
         return {};
+      },
+    },
+    asyncComponents: {
+      type: Array,
+      default: () => {
+        return [];
       },
     },
   },

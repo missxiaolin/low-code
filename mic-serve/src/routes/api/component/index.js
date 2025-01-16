@@ -35,7 +35,6 @@ const comDetail = RouterConfigBuilder.routerConfigBuilder(
 );
 
 // 发布
-
 const comGenerate = RouterConfigBuilder.routerConfigBuilder(
   "/adm/component/generate",
   RouterConfigBuilder.METHOD_TYPE_POST,
@@ -45,9 +44,19 @@ const comGenerate = RouterConfigBuilder.routerConfigBuilder(
   true
 );
 
+const comAll = RouterConfigBuilder.routerConfigBuilder(
+  "/adm/component/all",
+  RouterConfigBuilder.METHOD_TYPE_POST,
+  (req, res) => {
+    return componentController.comAll(req, res);
+  },
+  true
+);
+
 export default {
   ...getComList,
   ...comSave,
   ...comDetail,
   ...comGenerate,
+  ...comAll,
 };

@@ -1,6 +1,7 @@
 <template>
   <div class="vcc-detaiil-box" v-if="isShowVcc">
     <vcc
+      :asyncComponents="asyncComponents"
       :initCodeEntity="codeInfoEntity"
       @updateCodeEntity="onCodeUpdate"
       @onLoadFinish="onLoadFinish"
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+import { componentAll } from "../../api/component";
 import { pageRouteSave, pageRouteDetail } from "../../api/page";
 import { message } from "ant-design-vue";
 import toolePage from "./components/toolePage.vue";
@@ -37,6 +39,7 @@ export default {
   },
   data() {
     return {
+      asyncComponents: [],
       projectId: 0,
       pageForm: {
         id: 0,
@@ -61,7 +64,17 @@ export default {
     this.init();
   },
   methods: {
+    async getComponentAll() {
+      let res = await componentAll({
+        projectId: this.projectId,
+      });
+      if (!res.success) return;
+      if (res.model && res.model.length > 0) {
+        this.asyncComponents = res.model;
+      }
+    },
     async init() {
+      await this.getComponentAll();
       if (!this.pageForm.id || this.pageForm.id === 0) {
         this.codeInfoEntity.JSCode = jsTem;
         this.codeInfoEntity.css = "";

@@ -106,4 +106,7 @@ export default {
   MZSdyF6HeG: {
     "a-upload": { "div-lc-mark": "", lc_id: "MZSdyF6HeG", __children: [] },
   },
+  MZSdyF6HeN: {
+    "mic-async-component": { lc_id: "MZSdyF6HeN", __children: [] },
+  },
 };

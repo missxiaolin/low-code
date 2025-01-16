@@ -1,6 +1,9 @@
 <template>
   <div>
-    <component :is="dynamicComponent"></component>
+    <micAsyncComponent
+      componentUrl="http://lcode.missxiaolin.com/micButton.es.js"
+    />
+    <!-- <component :is="dynamicComponent"></component> -->
     <!-- <div class="ceshi" id="ceshi">
       <a-modal
         v-model:open="ceshiOpen"

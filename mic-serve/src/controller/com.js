@@ -71,6 +71,20 @@ export default class Component extends Base {
   }
 
   /**
+   * 获取所有组件
+   * @param {*} req
+   * @param {*} res
+   * @returns
+   */
+  async comAll(req, res) {
+    let data = req.body || {},
+      result = {};
+
+    result = await componentModel.getAllComponent(data);
+    return this.send(res, result);
+  }
+
+  /**
    * 发布
    * @param {*} req
    * @param {*} res

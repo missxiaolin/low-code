@@ -12,6 +12,7 @@ import micSearchTable from "../components/xl/l-search-table/index.vue";
 import micDrawer from "../components/xl/ant-desine/a-drawer.vue";
 import micModal from "../components/xl/ant-desine/a-modal.vue";
 import flowNode from "../components/flow-node/flowNode.vue";
+import micAsyncComponent from "../components/xl/asyncComponent/index.vue";
 
 const components = [
   micDatePicker,
@@ -25,6 +26,7 @@ const components = [
   micSearchTable,
   micDrawer,
   micModal,
+  micAsyncComponent,
 ];
 
 import "virtual:svg-icons-register";

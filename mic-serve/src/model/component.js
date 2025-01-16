@@ -151,4 +151,14 @@ export default class ComponentModel {
 
     return res[0].componentCount;
   }
+
+  async getAllComponent(params) {
+    let { projectId } = params;
+    let tableName = getTableName();
+    let res = Knex.from(tableName);
+
+    res = await res.where("project_id", projectId);
+
+    return res;
+  }
 }
