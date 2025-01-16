@@ -33,6 +33,9 @@
         </template>
         <template #options="scope">
           <a-button link size="small" @click="edit(scope.row)"> 编辑 </a-button>
+          <a-button link size="small" @click="generate(scope.row)" class="ml10">
+            发布
+          </a-button>
         </template>
       </mic-search-table>
     </div>
@@ -91,6 +94,7 @@ import {
   componentList,
   componentSave,
   componentDetail,
+  componentGenerate,
 } from "../../api/component";
 import codeEditor from "../../components/editor/index.vue";
 import { ref, onMounted } from "vue";
@@ -148,7 +152,7 @@ export default {
         name: "",
         componentName: "",
         component: "",
-        attribute: `{"component": [], "style": [], "customComponent": {"base": {"title": "基础", "children": []}},"event": {"title": "基础", "children": []}}`,
+        attribute: `{"component": [], "style": [], "customComponent": {"base": {"title": "基础", "children": []}},"event": {"title": "事件", "children": []}}`,
         version: "",
       };
       componentFormOpen.value = true;
@@ -186,6 +190,15 @@ export default {
       getMenuList();
     };
 
+    const generate = async (row) => {
+      let res = await componentGenerate({
+        projectId: projectId,
+        id: row.id,
+      });
+      if (!res.success) return;
+      getComponentList();
+    };
+
     onMounted(() => {
       getComponentList();
     });
@@ -202,6 +215,7 @@ export default {
       componentFormRef,
       componentFormForm,
       saveComponent,
+      generate,
     };
   },
 };

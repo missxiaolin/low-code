@@ -14,6 +14,7 @@ pnpm-debug.log*
 mic-remote/src/remote-components/*.vue
 mic-remote/src/remote-components/*.json
 mic-remote/r.json
+mic-component/src/components/*.vue
 
 # Editor directories and files
 .idea

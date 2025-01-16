@@ -1,9 +1,13 @@
 import { defineConfig } from "vite";
+import r from "./r.json";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import vue from "@vitejs/plugin-vue";
 import importToConst from "./vite/importToConst";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+
+let libJson = r;
+libJson.fileName = (format) => `${r.name}.${format}.js`;
 
 const banner = `/*!
 * xiaolin ${new Date()}
@@ -23,7 +27,6 @@ export default defineConfig({
       },
     },
     rollupOptions: {
-      plugins: [resolve(), commonjs()],
       // 请确保外部化那些你的库中不需要的依赖
       external: ["vue", "vue-router", "ant-design-vue"],
       output: {
@@ -35,13 +38,18 @@ export default defineConfig({
         },
       },
     },
-    lib: {
-      entry: "src/components/button.vue",
-      name: "button",
-      fileName: "button",
-      // formats: ["umd"],
-      formats: ["es"],
-      // formats: ["es", "umd"],
-    },
+    lib: r,
+    // {
+    //   entry: "src/components/micButton.vue",
+    //   name: "micButton",
+    //   fileName: (format) => `micButton.${format}.js`,
+    //   formats: ["es"],
+    // },
+    // {
+    //   entry: "src/components/button.vue",
+    //   name: "button",
+    //   fileName: "button",
+    //   formats: ["es"],
+    // },
   },
 });

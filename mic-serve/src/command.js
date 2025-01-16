@@ -1,4 +1,4 @@
-import '@babel/polyfill'
+import "@babel/polyfill";
 /*
 |--------------------------------------------------------------------------
 | Ace Setup
@@ -8,20 +8,19 @@ import '@babel/polyfill'
 | Here we setup the environment and register ace commands.
 |
 */
-import ace from '@adonisjs/ace'
+import ace from "@adonisjs/ace";
 
 const registedCommandList = [
-    './commands/demo', // 命令demo测试
-    './commands/generateProject/index.js', // 项目生成
-]
-
+  "./commands/demo", // 命令demo测试
+  "./commands/generateProject/index.js", // 项目生成
+  "./commands/generateComponent/index.js", // 组件生成
+];
 
 // register commands
 for (let command of registedCommandList) {
-    ace.addCommand(require(command)['default'])
+  ace.addCommand(require(command)["default"]);
 }
 
 // Boot ace to execute commands
-ace.wireUpWithCommander()
-ace.invoke()
-
+ace.wireUpWithCommander();
+ace.invoke();

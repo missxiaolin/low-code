@@ -38,3 +38,16 @@ export function componentDetail(data) {
     data,
   });
 }
+
+/**
+ * 发布
+ * @param {*} data
+ * @returns
+ */
+export function componentGenerate(data) {
+  return request({
+    url: "/adm/component/generate",
+    method: "post",
+    data,
+  });
+}
