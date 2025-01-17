@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import * as Vue from "vue";
 import "./style.css";
 import App from "./App.vue";
 import router from "@/router";
@@ -7,7 +8,7 @@ import "./assets/css/index.scss";
 import "normalize.css";
 import { execEventFlow } from "./utils/action";
 import { loadPlugins } from "./plugins";
-
+window.Vue = Vue;
 let app = null;
 
 app = createApp(App);
