@@ -87,6 +87,7 @@ class GenerateProject extends Base {
       if (appConfig.IS_UPDATE_AVATAR_OPEN != 0) {
         this.getBuildFiles(projectDetail.code, version);
       }
+
       console.log(`执行命令成功，输出结果: ${stdout}`);
     });
 

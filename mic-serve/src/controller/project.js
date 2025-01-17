@@ -154,6 +154,7 @@ export default class Project extends Base {
     exec(
       `npm run command Generate:Project ${result.id} ${data.version}`,
       async (error, stdout, stderr) => {
+        console.log(error, stderr, stdout);
         if (error) {
           logger.error(error);
         }

@@ -17,7 +17,7 @@ export default {
     const dynamicComponent = ref(null);
 
     const loadComponent = async () => {
-      const module = await import(props.componentUrl);
+      const module = await import(/* @vite-ignore */ props.componentUrl);
       dynamicComponent.value = markRaw(module.default);
     };
 

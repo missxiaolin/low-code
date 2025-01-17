@@ -23,7 +23,7 @@ class GenerateComponent extends Base {
   }
 
   static get description() {
-    return "项目页面生成";
+    return "项目组件页面生成";
   }
 
   async execute(args, options) {
