@@ -202,7 +202,7 @@ export default {
   destroyed() {},
   methods: {
     dropIninFunction(newDropObj, mainPanelProvider) {
-      // const arr = Object.keys(newDropObj);
+      const arr = Object.keys(newDropObj);
       // if (["mic-modal", "mic-drawer"].includes(arr[0])) {
       //   newDropObj[arr[0]]["v-model:open"] = "open";
       // }

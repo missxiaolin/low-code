@@ -28,11 +28,20 @@ export function initElement(element) {
   element.addEventListener("dragstart", function (event) {
     event.dataTransfer.effectAllowed = "copy";
     const raw = generateRawInfo(element);
-    const title = element.querySelector(".title").innerText;
-    const asyncUrl =
-      element.querySelector(".title").getAttribute("component_url") || "";
-    const component_name =
-      element.querySelector(".title").getAttribute("component_name") || "";
+    let title = element.innerText;
+    if (element.querySelector(".title")) {
+      title = element.querySelector(".title").innerText;
+    }
+    let asyncUrl = "";
+    if (element.querySelector(".title")) {
+      asyncUrl =
+        element.querySelector(".title").getAttribute("component_url") || "";
+    }
+    let component_name = "";
+    if (element.querySelector(".title")) {
+      component_name =
+        element.querySelector(".title").getAttribute("component_name") || "";
+    }
     const str = `${element.localName}${getSplitTag()}${
       element.innerText
     }${getSplitTag()}${0}${getSplitTag()}${

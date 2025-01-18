@@ -24,6 +24,24 @@ export function findParentNode(__rawVueInfo__) {
   }
 }
 
+// 递归函数来删除匹配的项
+function removeMatchingItems(arr, targetLcId) {
+  arr.forEach((item, index) => {
+    if (item[Object.keys(item)[0]].lc_id === targetLcId) {
+      arr.splice(index, 1);
+    }
+    if (
+      item[Object.keys(item)[0]].__children &&
+      Array.isArray(item[Object.keys(item)[0]].__children) &&
+      item[Object.keys(item)[0]].__children.length > 0
+    ) {
+      removeMatchingItems(item[Object.keys(item)[0]].__children, targetLcId);
+    }
+  });
+}
+
+var a = false;
+
 /**
  * 将一个节点从其节点中移除
  * @param {*} __rawVueInfo__
@@ -31,8 +49,15 @@ export function findParentNode(__rawVueInfo__) {
 export function deleteNodeFromParent(__rawVueInfo__) {
   const parentNode = findParentNode(__rawVueInfo__);
   const children = getRawComponentContent(parentNode).__children;
-  const index = children.findIndex((item) => isEquals(item, __rawVueInfo__));
-  children.splice(index, 1);
+  // const index = children.findIndex((item) => isEquals(item, __rawVueInfo__));
+  // children.splice(index, 1);
+
+  if (__rawVueInfo__ && Object.keys(__rawVueInfo__).length > 0) {
+    removeMatchingItems(
+      children,
+      __rawVueInfo__[Object.keys(__rawVueInfo__)[0]].lc_id
+    );
+  }
 }
 
 /**

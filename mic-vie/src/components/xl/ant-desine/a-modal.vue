@@ -1,9 +1,14 @@
 <template>
-  <span id="vcc-modal-wrapper">
-    <a-modal :getContainer="getContainer" v-bind="attrs">
+  <div id="vcc-modal-wrapper">
+    <a-modal
+      :getContainer="false"
+      :maskClosable="false"
+      :footer="false"
+      v-bind="attrs"
+    >
       <slot></slot>
     </a-modal>
-  </span>
+  </div>
 </template>
 
 <script>
@@ -14,13 +19,7 @@ export default {
   setup(props) {
     const attrs = useAttrs();
 
-    const getContainer = () => {
-      return document.getElementById("vcc-modal-wrapper");
-      // return document.body();
-    };
-
     return {
-      getContainer,
       attrs,
     };
   },

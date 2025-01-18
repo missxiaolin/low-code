@@ -22,7 +22,7 @@ import toolePage from "./components/toolePage.vue";
 import { defineAsyncComponent } from "vue";
 // 以这样一段结构初始化VCC组件
 const initCodeStr =
-  '{"template":{"lc_id":"root","lc_uuid":"root","__children":[{"div":{"class":"container","style": "min-height: 100%;","lc_id":"container","lc_uuid":"container","__children":[]}}]}}';
+  '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","id": "vcc-container","style": "min-height: 100%;","lc_id":"container","__children":[]}}]}}';
 
 const jsTem = `export default {
   setup() {

@@ -76,7 +76,6 @@ export class MainPanelProvider {
     let code = await this.codeGenerator.outputVueCodeWithJsonObj(
       rawDataStructure
     );
-    // console.log('code', code)
 
     // 将xxx: () => {} 转换为xxx(){}
     // code = code.replace(/:\s*\(([\w\s]*)\)\s*=>/g, "($1)");
@@ -88,7 +87,6 @@ export class MainPanelProvider {
     codeForShow = codeForShow.replace(/\s{1}component_name=".+?"/g, "");
     codeForShow = codeForShow.replace(/\s{1}lc-mark/g, "");
     codeForShow = codeForShow.replace(/\s{1}div-lc-mark/g, "");
-    // console.log("codeForShow", codeForShow);
 
     this.eventEmitter.emit("codeCreated", codeForShow);
 
@@ -358,6 +356,18 @@ export class MainPanelProvider {
       const vccName = newData[5];
       let newDropObj = JSON.parse(rawInfo);
 
+      // TODO:功能待完善
+      // if (
+      //   this.currentPointDropInfo.target.classList.value.indexOf(
+      //     "ant-modal-body"
+      //   ) > -1
+      // ) {
+      //   const renderControlPanel = this.getControlPanelRoot();
+      //   const uuid = "nam6njcn2r";
+      //   const element = renderControlPanel.querySelector(`[lc_id="${uuid}"]`);
+      //   this.currentPointDropInfo.target = element;
+      // }
+
       if (newDropObj) {
         Object.keys(newDropObj).forEach((item) => {
           if (item !== "__key__" && !newDropObj[item].vccName) {
@@ -423,6 +433,7 @@ export class MainPanelProvider {
       let temp = findRawVueInfo(codeTargetElement);
 
       this.backup();
+
       // 合并
       merge(
         getRawComponentContent(temp),
