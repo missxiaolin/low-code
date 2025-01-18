@@ -1,9 +1,9 @@
 <template>
-  <span id="vcc-drawer-wrapper">
-    <a-drawer :getContainer="getContainer" v-bind="attrs">
+  <div id="vcc-drawer-wrapper">
+    <a-drawer v-bind="attrs" :getContainer="getContainer" :maskClosable="false">
       <slot></slot>
     </a-drawer>
-  </span>
+  </div>
 </template>
 
 <script>
@@ -16,7 +16,6 @@ export default {
 
     const getContainer = () => {
       return document.getElementById("vcc-drawer-wrapper");
-      // return document.body();
     };
     return {
       getContainer,

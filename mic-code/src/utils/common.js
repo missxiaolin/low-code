@@ -164,7 +164,6 @@ export function ergodic(jsonObj) {
             if (isObject(item)) {
               ergodic(item);
               delete item.lc_id;
-              delete item.lc_uuid;
             }
           });
         } else if (isObject(element)) {
@@ -177,7 +176,6 @@ export function ergodic(jsonObj) {
     // 添加ID
     if (!jsonObj["lc_id"]) {
       jsonObj["lc_id"] = createUniqueId();
-      jsonObj["lc_uuid"] = createUniqueId();
     }
   }
 }
