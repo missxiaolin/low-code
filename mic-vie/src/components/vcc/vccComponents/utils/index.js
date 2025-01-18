@@ -73,7 +73,9 @@ export function getAttrJson(oldAttr, tag, v, attrObj = {}) {
     if (att[a].children && att[a].children.length > 0) {
       att[a].children.forEach((item) => {
         if (attrValKeys.includes(item.key)) {
-          item.value = oldAttr[item.key] || item.value;
+          item.value = oldAttr[item.key] ? oldAttr[item.key] : item.value;
+          item.value = item.value == "false" ? false : item.value;
+          item.value = item.value == "true" ? true : item.value;
           obj.children.push(item);
         }
       });
@@ -93,6 +95,8 @@ export function getAttrJson(oldAttr, tag, v, attrObj = {}) {
             Object.keys(attrObj).includes(item.key)
           ) {
             item.value = attrObj[item.key];
+            item.value = item.value == "false" ? false : item.value;
+            item.value = item.value == "true" ? true : item.value;
           }
         });
         item.children = item.children.concat(customObj[item.key].children);

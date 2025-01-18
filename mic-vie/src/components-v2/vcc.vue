@@ -248,7 +248,6 @@ export default {
 
     // 保存 data
     convertDataLogic(arr, isRenderCode = false) {
-      console.log(arr);
       let obj = {};
       this.customData = arr || [];
       arr.forEach((item) => {
@@ -265,7 +264,6 @@ export default {
           obj[item.key] = item.value;
         }
       });
-      console.log("obj", obj);
       if (isRenderCode) {
         this.mainPanelProvider.saveJsData(obj);
         this.renderCode();

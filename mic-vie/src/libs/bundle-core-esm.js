@@ -974,10 +974,8 @@ class CodeGenerator {
     Object.keys(mergedJSObject.methods).forEach((key) => {
       functionData += `const ${key} = ${mergedJSObject.methods[key]};\n`;
     });
-    console.log(toRefsData);
     let dataStr = ``,
       dataKeys = Object.keys(toRefsData) || [];
-    console.log(dataKeys);
     Object.keys(toRefsData).forEach((key) => {
       let v = toRefsData[key];
       dataStr = `${dataStr}const ${key} = ref(${
