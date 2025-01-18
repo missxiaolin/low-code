@@ -4,19 +4,19 @@
       componentUrl="http://lcode.missxiaolin.com/micButton.es.js"
     />
     <!-- <component :is="dynamicComponent"></component> -->
-    <!-- <div class="ceshi" id="ceshi">
-      <a-modal
+    <div class="ceshi" id="ceshi">
+      <mic-modal
         v-model:open="ceshiOpen"
         :getContainer="getContainer"
         ref="ceshiRef"
       >
         <div>ceshi</div>
-      </a-modal>
-      <a-modal v-model:open="ceshiOpen" :getContainer="getContainer">
+      </mic-modal>
+      <!-- <a-modal v-model:open="ceshiOpen" :getContainer="getContainer">
         <div>ceshi</div>
-      </a-modal>
+      </a-modal> -->
     </div>
-    <a-button type="primary" @click="modelOpen = true">打开</a-button>
+    <!-- <a-button type="primary" @click="modelOpen = true">打开</a-button>
     <formulaModal
       v-model:open="modelOpen"
       :customData="customData"
@@ -86,7 +86,7 @@ export default {
   },
   setup() {
     const ceshiRef = ref(null);
-    const ceshiOpen = ref(false);
+    const ceshiOpen = ref(true);
     const modelOpen = ref(false);
     // console.log(evalFormual("IF(true, 2, 3)"));
     let ceshi = ref("ceshi");

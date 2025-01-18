@@ -1,10 +1,10 @@
 <template>
   <div id="vcc-modal-wrapper">
     <a-modal
+      v-bind="attrs"
       :getContainer="false"
       :maskClosable="false"
       :footer="false"
-      v-bind="attrs"
     >
       <slot></slot>
     </a-modal>
