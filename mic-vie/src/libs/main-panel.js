@@ -6,7 +6,7 @@
  *
  */
 import * as Vue from "vue";
-import { getMtTem } from "./mt";
+import { getMtTem, editTem, getEditOptions } from "./mt";
 import {
   merge,
   insertPresetAttribute,
@@ -115,25 +115,7 @@ export class MainPanelProvider {
    * @param {*} code
    */
   appLoad(code, readyForMoutedElement) {
-    let codeString = code.replace(
-      "const vccEvents = events;",
-      `const vccEvents = JSON.parse(events);
-import mTSetting from "./mt.vue";
-      `
-    );
-    codeString = codeString.replace(
-      "setup(props, { emit }) {",
-      `components: {
-        mTSetting,
-    },
-    setup(props, { emit }) {;
-          `
-    );
-    const newLine = `<mTSetting :rawDataStructure="${stringifyObject(
-      this._rawDataStructure
-    )}" />`;
-    const index = codeString.lastIndexOf("</div>");
-    codeString = codeString.slice(0, index) + newLine + codeString.slice(index);
+    const codeString = editTem(code, this._rawDataStructure);
     // 渲染当前代码
     const files = {
       "/mt.vue": getMtTem(),
@@ -141,32 +123,7 @@ import mTSetting from "./mt.vue";
       "/events.json": `${JSON.stringify(this.eventNode)}`,
     };
 
-    const options = {
-      moduleCache: {
-        vue: Vue,
-      },
-      getFile: (url) => {
-        return files[url];
-      },
-      addStyle(textContent) {
-        const style = Object.assign(document.createElement("style"), {
-          textContent,
-        });
-        const ref = document.head.getElementsByTagName("style")[0] || null;
-        document.head.insertBefore(style, ref);
-      },
-      handleModule: async function (type, getContentData, path, options) {
-        switch (type) {
-          case ".json":
-            return getContentData(false);
-          case ".js":
-            return getContentData(false);
-        }
-      },
-      log(type, ...args) {
-        console[type](...args);
-      },
-    };
+    const options = getEditOptions(files);
     const app = Vue.createApp(
       Vue.defineAsyncComponent(() =>
         window["vue3-sfc-loader"].loadModule("/main.vue", options)

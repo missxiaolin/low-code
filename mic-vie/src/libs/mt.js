@@ -1,3 +1,56 @@
+import { stringifyObject } from "./bundle-core-esm";
+
+export function getEditOptions(files) {
+  return {
+    moduleCache: {
+      vue: Vue,
+    },
+    getFile: (url) => {
+      return files[url];
+    },
+    addStyle(textContent) {
+      const style = Object.assign(document.createElement("style"), {
+        textContent,
+      });
+      const ref = document.head.getElementsByTagName("style")[0] || null;
+      document.head.insertBefore(style, ref);
+    },
+    handleModule: async function (type, getContentData, path, options) {
+      switch (type) {
+        case ".json":
+          return getContentData(false);
+        case ".js":
+          return getContentData(false);
+      }
+    },
+    log(type, ...args) {
+      console[type](...args);
+    },
+  };
+}
+
+export function editTem(code, _rawDataStructure) {
+  let codeString = code.replace(
+    "const vccEvents = events;",
+    `const vccEvents = JSON.parse(events);
+import mTSetting from "./mt.vue";
+    `
+  );
+  codeString = codeString.replace(
+    "setup(props, { emit }) {",
+    `components: {
+      mTSetting,
+  },
+  setup(props, { emit }) {;
+        `
+  );
+  const newLine = `<mTSetting :rawDataStructure="${stringifyObject(
+    _rawDataStructure
+  )}" />`;
+  const index = codeString.lastIndexOf("</div>");
+  codeString = codeString.slice(0, index) + newLine + codeString.slice(index);
+  return codeString;
+}
 export function getMtTem() {
   return `
         <template>
