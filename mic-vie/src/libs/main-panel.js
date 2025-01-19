@@ -6,6 +6,7 @@
  *
  */
 import * as Vue from "vue";
+import { getMtTem } from "./mt";
 import {
   merge,
   insertPresetAttribute,
@@ -15,6 +16,7 @@ import {
   findCodeElemNode,
   findRawVueInfo,
 } from "@/utils/forCode";
+import { stringifyObject } from "./bundle-core-esm";
 import { initElement } from "../utils/initRawComponent";
 import {
   getRawComponentContent,
@@ -35,6 +37,7 @@ import scope from "css-scoped";
  */
 export class MainPanelProvider {
   constructor(options) {
+    window.$mt = "";
     this.isCloneNode = false;
     // 开启编辑模式
     this.editMode = true;
@@ -63,6 +66,7 @@ export class MainPanelProvider {
    * @param {*} rawDataStructure
    */
   async _render(rawDataStructure) {
+    // console.log("rawDataStructure----->", rawDataStructure);
     this._rawDataStructure = rawDataStructure;
     // 对外只提供副本，防止外面污染内部
     const codeStructureCopy = cloneDeep(rawDataStructure);
@@ -111,12 +115,28 @@ export class MainPanelProvider {
    * @param {*} code
    */
   appLoad(code, readyForMoutedElement) {
-    const codeString = code.replace(
+    let codeString = code.replace(
       "const vccEvents = events;",
-      "const vccEvents = JSON.parse(events);"
+      `const vccEvents = JSON.parse(events);
+import mTSetting from "./mt.vue";
+      `
     );
+    codeString = codeString.replace(
+      "setup(props, { emit }) {",
+      `components: {
+        mTSetting,
+    },
+    setup(props, { emit }) {;
+          `
+    );
+    const newLine = `<mTSetting :rawDataStructure="${stringifyObject(
+      this._rawDataStructure
+    )}" />`;
+    const index = codeString.lastIndexOf("</div>");
+    codeString = codeString.slice(0, index) + newLine + codeString.slice(index);
     // 渲染当前代码
     const files = {
+      "/mt.vue": getMtTem(),
       "/main.vue": codeString,
       "/events.json": `${JSON.stringify(this.eventNode)}`,
     };

@@ -999,6 +999,8 @@ setup(props, {emit}) {
   onMounted(() => {
     eventFun("init")
   })
+
+  provide('main', instance);
   
   ${str}
   ${functionData}
@@ -1033,7 +1035,7 @@ setup(props, {emit}) {
       this.customCss
     );
 
-    vueExport.push("onMounted", "ref", "getCurrentInstance");
+    vueExport.push("onMounted", "ref", "getCurrentInstance", "provide");
     vueExport = Array.from(new Set(vueExport));
     const zTemp = styleTemp.replace("// $vueExport", vueExport.join(","));
     return zTemp;

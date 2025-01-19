@@ -5,6 +5,7 @@
       :getContainer="false"
       :maskClosable="false"
       :footer="false"
+      @cancel="onCancel"
     >
       <slot></slot>
     </a-modal>
@@ -19,8 +20,13 @@ export default {
   setup(props) {
     const attrs = useAttrs();
 
+    const onCancel = (e) => {
+      window.$mt = "";
+    };
+
     return {
       attrs,
+      onCancel,
     };
   },
 };

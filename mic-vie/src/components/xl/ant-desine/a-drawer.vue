@@ -1,6 +1,11 @@
 <template>
   <div id="vcc-drawer-wrapper">
-    <a-drawer v-bind="attrs" :getContainer="getContainer" :maskClosable="false">
+    <a-drawer
+      v-bind="attrs"
+      :getContainer="getContainer"
+      :maskClosable="false"
+      @cancel="onCancel"
+    >
       <slot></slot>
     </a-drawer>
   </div>
@@ -17,8 +22,13 @@ export default {
     const getContainer = () => {
       return document.getElementById("vcc-drawer-wrapper");
     };
+    const onCancel = (e) => {
+      window.$mt = "";
+    };
+
     return {
       getContainer,
+      onCancel,
       attrs,
     };
   },

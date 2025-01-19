@@ -40,6 +40,7 @@
         >
           <!-- 内容区域 -->
           <div class="preview-container">
+            <!-- <mTSetting :rawDataStructure="initCodeEntity.codeStructure" /> -->
             <div id="render-control-panel">
               <!--这里不能放任何东西，执行时会被清空-->
             </div>
@@ -92,6 +93,7 @@ import { MainPanelProvider } from "../libs/main-panel";
 import { initContainerForLine } from "@/utils/lineHelper";
 import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
 import vueCodeEditor from "../components/vcc/vueCodeEditorDialog.vue";
+// import mTSetting from "../components/vcc/mTSetting.vue";
 import keymaster from "keymaster";
 
 export default {
@@ -122,6 +124,7 @@ export default {
     "lc-code": defineAsyncComponent(() => import("../components/vcc/code")),
     vueRuleTool,
     vueCodeEditor,
+    // mTSetting,
   },
   data() {
     return {
@@ -567,6 +570,7 @@ export default {
     radial-gradient(#faf9f8 6%, transparent 0);
   background-size: 10px 10px;
   border: 1px solid var(--el-border-color-light);
+  position: relative;
 }
 
 .round-icon {
