@@ -73,10 +73,10 @@ export default {
     "a-tag": { lc_id: "664uCIct1C", __children: [], __text__: "标签" },
   },
   vTeRkRrsEe: {
-    "mic-modal": { "div-lc-mark": "", lc_id: "vTeRkRrsEe", __children: [] },
+    "mic-modal": { lc_id: "vTeRkRrsEe", __children: [] },
   },
   CSnyzYb0Em: {
-    "mic-drawer": { "div-lc-mark": "", lc_id: "CSnyzYb0Em", __children: [] },
+    "mic-drawer": { lc_id: "CSnyzYb0Em", __children: [] },
   },
   "/tmwvSooBs": {
     "a-form": { "div-lc-mark": "", lc_id: "/tmwvSooBs", __children: [] },

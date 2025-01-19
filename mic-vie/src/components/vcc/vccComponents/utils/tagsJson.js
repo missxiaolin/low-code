@@ -2830,12 +2830,6 @@ export default {
             settingType: "setting",
             value: "",
           },
-          {
-            label: "确认按钮回调",
-            key: "@ok",
-            settingType: "setting",
-            value: "",
-          },
         ],
       },
     },
