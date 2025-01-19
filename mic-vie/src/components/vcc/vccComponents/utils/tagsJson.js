@@ -2733,18 +2733,18 @@ export default {
             settingType: "input",
             value: "",
           },
-          {
-            label: "取消按钮文字",
-            key: "cancelText",
-            settingType: "input",
-            value: "",
-          },
-          {
-            label: "确认按钮文字",
-            key: "okText",
-            settingType: "input",
-            value: "",
-          },
+          // {
+          //   label: "取消按钮文字",
+          //   key: "cancelText",
+          //   settingType: "input",
+          //   value: "",
+          // },
+          // {
+          //   label: "确认按钮文字",
+          //   key: "okText",
+          //   settingType: "input",
+          //   value: "",
+          // },
           {
             label: "外层容器的类名",
             key: "wrapClassName",

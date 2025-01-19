@@ -1,1 +1,0 @@
-import{importShared as e}from"./__federation_fn_import-jSWYn6ox.js";import{_export_sfc as o}from"./_plugin-vue_export-helper-DKHDPhbE.js";let i;let __tla=(async()=>{const t={},{openBlock:r,createElementBlock:c}=await e("vue");function n(_,a){return r(),c("div",null," remote ")}i=o(t,[["render",n]])})();export{i as default,__tla};

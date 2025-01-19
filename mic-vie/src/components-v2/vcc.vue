@@ -83,6 +83,20 @@
       <div style="margin: 20px; font-weight: bold">按下ESC退出预览模式</div>
       <div id="mountedEle"></div>
     </div>
+    <a-modal title="请绑定变量" v-model:open="modelOpen" @ok="setDropObj">
+      <a-form>
+        <a-form-item label="变量">
+          <a-select v-model:value="modelValue">
+            <a-select-option
+              v-for="item in customData"
+              :key="item.key"
+              :value="item.key"
+              >{{ item.keyDesc }}</a-select-option
+            >
+          </a-select>
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
@@ -94,6 +108,7 @@ import { initContainerForLine } from "@/utils/lineHelper";
 import vueRuleTool from "../components/vue-ruler-tool/vue-ruler-tool.vue";
 import vueCodeEditor from "../components/vcc/vueCodeEditorDialog.vue";
 // import mTSetting from "../components/vcc/mTSetting.vue";
+import { message } from "ant-design-vue";
 import keymaster from "keymaster";
 
 export default {
@@ -128,6 +143,9 @@ export default {
   },
   data() {
     return {
+      modelOpen: false,
+      modelValue: "",
+      newDropObj: {},
       eventNode: {}, // 自定义事件流
       customData: [], // 自定义数据
       currentEditRawInfo: null,
@@ -206,11 +224,26 @@ export default {
   methods: {
     dropIninFunction(newDropObj, mainPanelProvider) {
       const arr = Object.keys(newDropObj);
-      // if (["mic-modal", "mic-drawer"].includes(arr[0])) {
-      //   newDropObj[arr[0]]["v-model:open"] = "open";
-      // }
+      if (["mic-modal", "mic-drawer"].includes(arr[0])) {
+        this.modelValue = "";
+        this.newDropObj = newDropObj;
+        this.modelOpen = true;
+        return;
+      }
       mainPanelProvider.initDropCode(newDropObj);
       mainPanelProvider.updateCodeStructure(newDropObj);
+    },
+    setDropObj() {
+      if (!this.modelValue) {
+        message.error("请选择绑定的变量");
+        return;
+      }
+      const newDropObj = this.newDropObj;
+      const arr = Object.keys(newDropObj);
+      newDropObj[arr[0]]["v-model:open"] = this.modelValue;
+      this.mainPanelProvider.initDropCode(newDropObj);
+      this.mainPanelProvider.updateCodeStructure(newDropObj);
+      this.modelOpen = false;
     },
     convertLogicCode(JSCode) {
       try {
