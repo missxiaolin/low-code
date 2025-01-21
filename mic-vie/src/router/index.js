@@ -19,8 +19,8 @@ const demoRoute = [
     component: () => import("@/views/demo/code.vue"),
   },
   {
-    path: "/v3/dnd",
-    component: () => import("@/views/demo/v3-dnd.vue"),
+    path: "/v3/dp",
+    component: () => import("@/views/demo/v3-dp.vue"),
   },
 ];
 
