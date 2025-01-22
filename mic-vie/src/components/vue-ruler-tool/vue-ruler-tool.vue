@@ -59,7 +59,7 @@
 <script>
 import { on, off } from "./event.js";
 export default {
-  name: "VRuler",
+  name: "editRule",
   components: {},
   props: {
     width: {
@@ -220,6 +220,7 @@ export default {
         this.$refs.verticalRuler.style.height = "100%";
         this.getCalc(this.xScale, content.scrollWidth);
         this.getCalc(this.yScale, content.scrollHeight);
+        this.$refs.horizontalRuler.style.width = content.scrollWidth + "px";
         this.$refs.verticalRuler.style.height = content.scrollHeight + "px";
       }, 200);
     },
