@@ -1,8 +1,9 @@
 <template>
-  <div class="editor-box">
+  <div class="editor-box vcc-main">
+    <div class="vcc-component"></div>
     <div id="editor" class="editor" ref="editorRef">
       <!-- 拖拽 -->
-      <shape>
+      <shape :defaultStyle="defaultStyle" @change="change">
         <div class="component div">1111</div>
       </shape>
     </div>
@@ -17,10 +18,24 @@ export default {
     shape,
   },
   setup(props) {
+    let defaultStyle = ref({
+      top: 20,
+      left: 20,
+      height: 300,
+      width: 300,
+    });
     const editorRef = ref(null);
+
+    const change = (data) => {
+      if (!data) return;
+      console.log(data);
+      defaultStyle.value = data;
+    };
 
     return {
       editorRef,
+      defaultStyle,
+      change,
     };
   },
 };
@@ -35,14 +50,18 @@ export default {
     height: 100%;
   }
 }
+.vcc-main {
+  padding: 10px;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
 .editor .component {
-  position: absolute;
-  left: 0;
-  top: 0;
+  position: static !important;
 }
 .div {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   border: solid 1px #fff;
 }
 </style>
