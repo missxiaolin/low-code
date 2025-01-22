@@ -1,60 +1,47 @@
 <template>
-  <div>
-    <div class="l-echarts-c" :id="uuid" @click="init">1</div>
-  </div>
+  <e-charts class="chart" :option="option" />
 </template>
 
 <script>
+import { nextTick, onMounted, ref, watch } from "vue";
 import { uuid } from "../../utils/utils";
 import * as echarts from "echarts";
-
 export default {
-  data() {
-    return {
-      uuid: uuid(10),
-      myChart: null,
+  setup(props) {
+    const option = {
+      title: {
+        text: "柱状图",
+      },
+      tooltip: {},
+      xAxis: {
+        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+      },
+      yAxis: {},
+      series: [
+        {
+          name: "销量",
+          type: "bar",
+          data: [5, 20, 36, 10, 10, 20],
+        },
+      ],
     };
-  },
-  mounted() {
-    this.init();
-  },
-  methods: {
-    init() {
-      setTimeout(() => {
-        // 基于准备好的dom，初始化echarts实例
 
-        let myChart = echarts.init(
-          document.getElementById(`${this.uuid}`),
-          "dark",
-          {
-            width: 600,
-            height: 400,
-          }
-        );
-        // 绘制图表
-        myChart.setOption(
-          {
-            title: {
-              text: uuid(10),
-            },
-            tooltip: {},
-            xAxis: {
-              data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
-            },
-            yAxis: {},
-            series: [
-              {
-                name: "销量",
-                type: "bar",
-                data: [5, 20, 36, 10, 10, 20],
-              },
-            ],
-          },
-          true
-        );
-        this.myChart = myChart;
-      }, 100);
-    },
+    onMounted(() => {
+      nextTick(() => {
+        // init();
+      });
+    });
+
+    return {
+      option,
+    };
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.mic-echarts-c {
+  width: 100%;
+  height: 100%;
+}
+</style>

@@ -14,6 +14,10 @@ import micModal from "../components/xl/ant-desine/a-modal.vue";
 import flowNode from "../components/flow-node/flowNode.vue";
 import micAsyncComponent from "../components/xl/asyncComponent/index.vue";
 
+// 引入echarts
+import Echarts from "vue-echarts";
+import * as echarts from "echarts";
+
 const components = [
   micDatePicker,
   micFlex,
@@ -36,4 +40,9 @@ export function loadPlugins(app) {
   components.forEach((component) => {
     app.component(component.name, component);
   });
+  app.component("e-charts", Echarts);
+
+  echarts.registerTheme("dark");
+
+  app.config.globalProperties.$echarts = echarts; // 全局挂载echarts
 }

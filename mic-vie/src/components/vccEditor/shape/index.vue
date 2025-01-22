@@ -1,7 +1,7 @@
 <template>
   <div
     class="shape"
-    ref="shape"
+    ref="shapeRef"
     :style="{
       top: `${defaultStyle.top}px`,
       left: `${defaultStyle.left}px`,
@@ -12,28 +12,26 @@
     @click="(event) => selectCurComponent(event)"
     @mousedown="(event) => handleDragendShape(event)"
   >
-    <template v-for="item in pointRenderData">
-      <div
-        v-if="canvasState"
-        :key="item.direction"
-        :class="{
-          'shape-point': true,
-          [item.direction]: true,
-        }"
-        :style="{
-          top: item.top,
-          left: item.left,
-        }"
-        @mousedown="(event) => handleStretchedShape(item.direction, event)"
-      ></div>
-    </template>
+    <div
+      v-for="item in pointRenderData"
+      :key="item.direction"
+      :class="{
+        'shape-point': true,
+        [item.direction]: true,
+      }"
+      :style="{
+        top: item.top,
+        left: item.left,
+      }"
+      @mousedown="(event) => handleStretchedShape(item.direction, event)"
+    ></div>
 
-    <slot></slot>
+    <slot :value="componentProps"></slot>
   </div>
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { throttle } from "lodash";
 import { pointRenderData } from "./config";
 import { stretchedComponents } from "../utils/component";
@@ -49,8 +47,19 @@ export default {
   emits: ["change"],
   setup(props, { emit }) {
     let canvasState = ref("");
-    const shape = ref(null);
+    const shapeRef = ref(null);
     let locked = false;
+    let componentProps = ref({
+      width: props.defaultStyle.width,
+      height: props.defaultStyle.height,
+    });
+
+    watch(props, (newProps) => {
+      componentProps.value = {
+        width: newProps.defaultStyle.width,
+        height: newProps.defaultStyle.height,
+      };
+    });
 
     let { top = 0, left = 0, height = 0, width = 0 } = props.defaultStyle;
 
@@ -59,17 +68,24 @@ export default {
       event.preventDefault();
     };
 
+    const handleSelectShape = (dom) => {
+      if (!dom) return "";
+      if (dom.classList.toString().indexOf("shape") > -1) {
+        return dom;
+      }
+      return handleSelectShape(dom.parentNode);
+    };
+
     // 单击事件
     const selectCurComponent = (event) => {
       event.preventDefault();
       event.stopPropagation();
 
-      if (!event.target) return;
+      if (!event.target || locked) return;
 
-      if (locked) return;
-      const dom = event.target.parentNode;
-      if (dom.classList.toString().indexOf("shape") == -1) return;
-      canvasState.value = event.target.parentNode;
+      const dom = handleSelectShape(event.target);
+      if (!dom) return;
+      canvasState.value = dom;
 
       canvasState.value.classList.add("mark-element");
       let computedStyle = window.getComputedStyle(canvasState.value);
@@ -166,7 +182,8 @@ export default {
     };
 
     return {
-      shape,
+      componentProps,
+      shapeRef,
       dbselectCurComponent,
       selectCurComponent,
       handleDragendShape,
@@ -184,45 +201,49 @@ export default {
   left: 0;
   top: 0;
 }
-.shape-point {
-  position: absolute;
-  z-index: 10;
-  height: 0.5rem;
-  width: 0.5rem;
-  border-radius: 9999px;
-  border-width: 1px;
-  border-style: solid;
-  --tw-border-opacity: 1;
-  border-color: rgb(96 165 250 / var(--tw-border-opacity, 1));
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-  margin-left: -4px;
-  margin-top: -4px;
-}
-.shape-point.lt,
-.shape-point.t,
-.shape-point.rt,
-.shape-point.r,
-.shape-point.rb,
-.shape-point.b,
-.shape-point.lb,
-.shape-point.l {
-  cursor: nwse-resize;
-}
 
-.shape-point.t,
-.shape-point.b {
-  cursor: ns-resize;
-}
+.mark-element {
+  .shape-point {
+    position: absolute;
+    z-index: 10;
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 9999px;
+    border-width: 1px;
+    border-style: solid;
+    --tw-border-opacity: 1;
+    border-color: rgb(96 165 250 / var(--tw-border-opacity, 1));
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+    margin-left: -4px;
+    margin-top: -4px;
+  }
 
-.shape-point.l,
-.shape-point.r {
-  cursor: ew-resize;
-}
+  .shape-point.lt,
+  .shape-point.t,
+  .shape-point.rt,
+  .shape-point.r,
+  .shape-point.rb,
+  .shape-point.b,
+  .shape-point.lb,
+  .shape-point.l {
+    cursor: nwse-resize;
+  }
 
-.shape-point.lb,
-.shape-point.rt {
-  cursor: nesw-resize;
+  .shape-point.t,
+  .shape-point.b {
+    cursor: ns-resize;
+  }
+
+  .shape-point.l,
+  .shape-point.r {
+    cursor: ew-resize;
+  }
+
+  .shape-point.lb,
+  .shape-point.rt {
+    cursor: nesw-resize;
+  }
 }
 </style>
 

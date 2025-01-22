@@ -9,7 +9,7 @@
       </tools-bar>
       <div id="editor" class="editor" ref="editorRef">
         <!-- 网格线 -->
-        <Grid />
+        <!-- <Grid /> -->
         <!-- 拖拽 -->
         <vueRuleTool
           :is-scale-revise="true"
@@ -24,8 +24,17 @@
             <div id="render-control-panel">
               <!--这里不能放任何东西，执行时会被清空-->
               <div style="width: 100%; height: 100%">
-                <shape :defaultStyle="defaultStyle" @change="change">
-                  <div class="component div">1111</div>
+                <shape
+                  :defaultStyle="defaultStyle"
+                  @change="change"
+                  v-if="isShow"
+                >
+                  <template v-slot:default="slotProps">
+                    <component
+                      :is="echarts"
+                      v-bind="slotProps.value"
+                    ></component>
+                  </template>
                 </shape>
               </div>
             </div>
@@ -42,10 +51,12 @@ import { ref, defineAsyncComponent, onMounted, nextTick } from "vue";
 import shape from "./shape/index.vue";
 import Grid from "./grid.vue";
 import vueRuleTool from "../vue-ruler-tool/vue-ruler-tool.vue";
+import echarts from "../echarts/index.vue";
 export default {
   components: {
     shape,
     Grid,
+    echarts,
     vueRuleTool,
     rawComponents: defineAsyncComponent(() =>
       import("./rawComponents/index.vue")
@@ -56,19 +67,24 @@ export default {
     toolsBar: defineAsyncComponent(() => import("./toolsBar/index.vue")),
   },
   setup(props) {
+    let isShow = ref(true);
     const vueRuleToolRef = ref(null);
     let defaultStyle = ref({
       top: 20,
       left: 20,
-      height: 300,
-      width: 300,
+      height: 400,
+      width: 600,
     });
     const editorRef = ref(null);
 
     const change = (data) => {
       if (!data) return;
+      isShow.value = false;
       console.log(data);
       defaultStyle.value = data;
+      nextTick(() => {
+        isShow.value = true;
+      });
     };
 
     onMounted(() => {
@@ -82,6 +98,8 @@ export default {
       defaultStyle,
       change,
       vueRuleToolRef,
+      echarts,
+      isShow,
     };
   },
 };
