@@ -24,11 +24,7 @@
             <div id="render-control-panel">
               <!--这里不能放任何东西，执行时会被清空-->
               <div style="width: 100%; height: 100%">
-                <shape
-                  :defaultStyle="defaultStyle"
-                  @change="change"
-                  v-if="isShow"
-                >
+                <shape :defaultStyle="defaultStyle" @change="change">
                   <template v-slot:default="slotProps">
                     <component
                       :is="echarts"
@@ -67,7 +63,6 @@ export default {
     toolsBar: defineAsyncComponent(() => import("./toolsBar/index.vue")),
   },
   setup(props) {
-    let isShow = ref(true);
     const vueRuleToolRef = ref(null);
     let defaultStyle = ref({
       top: 20,
@@ -79,12 +74,8 @@ export default {
 
     const change = (data) => {
       if (!data) return;
-      isShow.value = false;
       console.log(data);
       defaultStyle.value = data;
-      nextTick(() => {
-        isShow.value = true;
-      });
     };
 
     onMounted(() => {
@@ -99,7 +90,6 @@ export default {
       change,
       vueRuleToolRef,
       echarts,
-      isShow,
     };
   },
 };

@@ -1,13 +1,34 @@
 <template>
-  <e-charts class="chart" :option="option" />
+  <div ref="chartContainer" class="chart-container">
+    <e-charts ref="chart" class="chart" :option="option" />
+  </div>
 </template>
 
 <script>
-import { nextTick, onMounted, ref, watch } from "vue";
-import { uuid } from "../../utils/utils";
-import * as echarts from "echarts";
+import { ref, onMounted, onUnmounted } from "vue";
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { BarChart } from "echarts/charts";
+import {
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+} from "echarts/components";
+
+use([
+  CanvasRenderer,
+  BarChart,
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+]);
+
 export default {
-  setup(props) {
+  name: "micBar",
+  setup() {
+    const chartContainer = ref(null);
+    const chart = ref(null);
+
     const option = {
       title: {
         text: "柱状图",
@@ -26,13 +47,27 @@ export default {
       ],
     };
 
+    const resizeObserver = new ResizeObserver(() => {
+      if (chart.value) {
+        chart.value.resize();
+      }
+    });
+
     onMounted(() => {
-      nextTick(() => {
-        // init();
-      });
+      if (chartContainer.value) {
+        resizeObserver.observe(chartContainer.value);
+      }
+    });
+
+    onUnmounted(() => {
+      if (chartContainer.value) {
+        resizeObserver.unobserve(chartContainer.value);
+      }
     });
 
     return {
+      chartContainer,
+      chart,
       option,
     };
   },
@@ -40,7 +75,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mic-echarts-c {
+.chart-container {
+  width: 100%;
+  height: 100%;
+}
+
+.chart {
   width: 100%;
   height: 100%;
 }

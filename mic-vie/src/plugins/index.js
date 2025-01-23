@@ -42,7 +42,6 @@ export function loadPlugins(app) {
   });
   app.component("e-charts", Echarts);
 
-  echarts.registerTheme("dark");
-
   app.config.globalProperties.$echarts = echarts; // 全局挂载echarts
+  app.config.globalProperties.$echarts.registerTheme("dark"); // 注册 dark 主题
 }
