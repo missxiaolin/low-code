@@ -31,15 +31,20 @@ export function initElement(element) {
     if (element.querySelector(".title")) {
       title = element.querySelector(".title").innerText;
     }
-    let component_name = "";
+    let component_name = "",
+      width = 200,
+      height = 200;
     if (element.querySelector(".title")) {
       component_name =
         element.querySelector(".title").getAttribute("component_name") || "";
+      width = element.querySelector(".title").getAttribute("width") || 200;
+      height = element.querySelector(".title").getAttribute("height") || 200;
     }
+
     const str = `${element.localName}${getSplitTag()}${JSON.stringify(
       raw
-    )}${getSplitTag()}${title}${getSplitTag()}${component_name}`;
-    console.log(str);
+    )}${getSplitTag()}${title}${getSplitTag()}${component_name}${getSplitTag()}${width}${getSplitTag()}${height}`;
+
     event.dataTransfer.setData("text/plain", str);
     event.stopPropagation();
   });

@@ -1,7 +1,13 @@
 <template>
   <div class="vcc-column-ul">
     <div class="column-li" lc-mark>
-      <div class="title" lc_id="echartBar" component_name="echartBar">
+      <div
+        class="title"
+        lc_id="micBar"
+        component_name="micBar"
+        width="400"
+        height="230"
+      >
         柱状图
       </div>
     </div>

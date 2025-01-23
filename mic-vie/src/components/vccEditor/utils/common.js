@@ -1,3 +1,5 @@
+import { customAlphabet, nanoid } from "nanoid";
+
 /**
  * 获得一个节点对应的数据信息，这个函数不负责向上递归查找
  * @param {*} element
@@ -34,10 +36,53 @@ export function isObject(obj) {
   return Object.prototype.toString.apply(obj) === "[object Object]";
 }
 
+export function getRawComponentKey(__rawVueInfo__) {
+  return Object.keys(__rawVueInfo__)[0];
+}
+
+export function getRawComponentContent(__rawVueInfo__) {
+  return __rawVueInfo__[getRawComponentKey(__rawVueInfo__)];
+}
+
 /**
  * @description 生成唯一ID
  */
 export function createUniqueId() {
   const nanoid = customAlphabet("1234567890abcdefghijklmnopqrstuvwxyz", 10);
   return nanoid();
+}
+
+/**
+ * 获得一个数据节点的lc_id属性值
+ * @param {*} __rawVueInfo__
+ * @returns
+ */
+export function getVueInfoLcid(__rawVueInfo__) {
+  const lcid = getRawComponentContent(__rawVueInfo__).lc_id;
+  return lcid;
+}
+
+/**
+ * 是组件库的组件
+ * @param {*} __rawVueInfo__
+ * @returns
+ */
+export function isRawComponents(__rawVueInfo__) {
+  const lcid = getVueInfoLcid(__rawVueInfo__);
+  return !!window.templateSourceMap[lcid];
+}
+
+/**
+ * 获得一个DOM节点的组件父DOM节点
+ * @param {*} parentNode 要传入parentDom
+ * @returns
+ */
+export function findParentDom(parentNode) {
+  if (parentNode.attributes && parentNode.attributes.lc_id) {
+    return parentNode;
+  } else if (parentNode.parentNode) {
+    return findParentDom(parentNode.parentNode);
+  } else {
+    return null;
+  }
 }

@@ -21,16 +21,7 @@
         >
           <!-- 内容区域 -->
           <div class="preview-container">
-            <div id="render-control-panel">
-              <!--这里不能放任何东西，执行时会被清空-->
-              <!-- <div style="width: 100%; height: 100%">
-                <micShape :defaultStyle="defaultStyle" @change="change">
-                  <template v-slot:default="slotProps">
-                    <component is="micBar" v-bind="slotProps.value"></component>
-                  </template>
-                </micShape>
-              </div> -->
-            </div>
+            <div id="render-control-panel"></div>
           </div>
         </vueRuleTool>
       </div>
@@ -91,26 +82,13 @@ export default {
     const customCss = ref("");
     const JSCode = ref("");
     const customData = ref([]);
+    const eventNode = ref(null);
 
     const vueRuleToolRef = ref(null);
-    let defaultStyle = ref({
-      top: 20,
-      left: 20,
-      height: 400,
-      width: 600,
-    });
     const editorRef = ref(null);
 
-    const change = (data) => {
-      if (!data) return;
-      defaultStyle.value = data;
-    };
-
     const currentPointer = (ele) => {
-      mainPanelProvider.setDropInfo({
-        target: ele,
-        index,
-      });
+      console.log(ele);
     };
 
     const convertCssLogicCode = (code) => {
@@ -200,12 +178,13 @@ export default {
             ? props.initCodeEntity.codeStructure
             : getFakeData()
         );
+      window.vccMainPanelProvider = mainPanelProvider;
     };
 
     onMounted(() => {
       Promise.all([import("../../map/load")]).then((res) => {
         init();
-        // this.eventNode = this.initCodeEntity.eventNode;
+        eventNode.value = props.initCodeEntity.eventNode;
         nextTick(() => {
           vueRuleToolRef.value.regenerateScale();
         });
@@ -214,8 +193,6 @@ export default {
 
     return {
       editorRef,
-      defaultStyle,
-      change,
       vueRuleToolRef,
     };
   },

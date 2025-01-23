@@ -109,7 +109,10 @@ export default {
   MZSdyF6HeN: {
     "mic-async-component": { lc_id: "MZSdyF6HeN", __children: [] },
   },
-  echartBar: {
-    echartBar: { lc_id: "barHes3azs", __children: [] },
+  micBar: {
+    "mic-bar": { lc_id: "micBar", __children: [] },
+  },
+  micShape: {
+    "mic-shape": { lc_id: "micShape", __children: [] },
   },
 };

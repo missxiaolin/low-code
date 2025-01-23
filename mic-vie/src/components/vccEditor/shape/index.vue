@@ -2,6 +2,7 @@
   <div
     class="shape"
     ref="shapeRef"
+    :lc_id="lc_id"
     :style="{
       top: `${defaultStyle.top}px`,
       left: `${defaultStyle.left}px`,
@@ -25,13 +26,12 @@
       }"
       @mousedown="(event) => handleStretchedShape(item.direction, event)"
     ></div>
-
-    <slot :value="componentProps"></slot>
+    <component :is="vccComponentName" v-bind="attrs"></component>
   </div>
 </template>
 
 <script>
-import { ref, computed, watch } from "vue";
+import { ref, useAttrs, watch } from "vue";
 import { throttle } from "lodash";
 import { pointRenderData } from "./config";
 import { stretchedComponents } from "../utils/component";
@@ -44,9 +44,18 @@ export default {
         return {};
       },
     },
+    vccComponentName: {
+      type: String,
+      default: "",
+    },
+    lc_id: {
+      type: String,
+      default: "",
+    },
   },
   emits: ["change"],
   setup(props, { emit }) {
+    const attrs = useAttrs();
     let canvasState = ref("");
     const shapeRef = ref(null);
     let locked = false;
@@ -88,10 +97,10 @@ export default {
       if (!dom) return;
       canvasState.value = dom;
 
-      canvasState.value.classList.add("mark-element");
       let computedStyle = window.getComputedStyle(canvasState.value);
       left = parseInt(computedStyle.getPropertyValue("left"));
       top = parseInt(computedStyle.getPropertyValue("top"));
+      window.vccMainPanelProvider.markElement(dom);
     };
 
     // 拖拽事件
@@ -117,12 +126,14 @@ export default {
       const up = () => {
         document.removeEventListener("mousemove", move);
         document.removeEventListener("mouseup", up);
-        emit("change", {
-          top,
-          left,
-          width: props.defaultStyle.width,
-          height: props.defaultStyle.height,
-        });
+
+        window.vccMainPanelProvider.setKeyValue(
+          ":defaultStyle",
+          `{'top':${Number(top)},'left':${Number(left)},'width':${Number(
+            props.defaultStyle.width
+          )},'height':${Number(props.defaultStyle.height)}}`,
+          props.lc_id
+        );
       };
       document.addEventListener("mousemove", move);
       document.addEventListener("mouseup", up);
@@ -172,7 +183,16 @@ export default {
       }, 0);
 
       const up = () => {
-        emit("change", position);
+        window.vccMainPanelProvider.setKeyValue(
+          ":defaultStyle",
+          `{'top':${Number(position.top)},'left':${Number(
+            position.left
+          )},'width':${Number(position.width)},'height':${Number(
+            position.height
+          )}}`,
+          props.lc_id
+        );
+        // emit("change", position);
         locked = false;
         document.removeEventListener("mousemove", move);
         document.removeEventListener("mouseup", up);
@@ -191,6 +211,7 @@ export default {
       pointRenderData,
       canvasState,
       handleStretchedShape,
+      attrs,
     };
   },
 };

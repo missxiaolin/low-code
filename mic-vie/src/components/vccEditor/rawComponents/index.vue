@@ -47,7 +47,7 @@ export default {
       activeNames: ["echartsRow"],
       iconArray: [
         {
-          labelName: "echarts",
+          labelName: "图标",
           className: "echarts-raw",
           componentName: "echartsRow",
         },
