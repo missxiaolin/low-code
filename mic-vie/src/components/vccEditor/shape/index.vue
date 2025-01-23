@@ -36,6 +36,7 @@ import { throttle } from "lodash";
 import { pointRenderData } from "./config";
 import { stretchedComponents } from "../utils/component";
 export default {
+  name: "micShape",
   props: {
     defaultStyle: {
       type: Object,

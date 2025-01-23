@@ -1,8 +1,66 @@
 <template>
   <a-card class="row-container" @click="(e) => e.stopPropagation">
-    <div class="row-container-scrollbar"></div>
+    <div class="row-container-scrollbar">
+      <a-tabs class="attribute-tabs" v-model:activeKey="tabActiveName">
+        <a-tab-pane tab="组件" key="component">
+          <a-collapse
+            v-model:activeKey="collapse.activeNames"
+            :bordered="false"
+            class="row-collapse"
+          >
+            <a-collapse-panel
+              v-for="item in collapse.iconArray"
+              :key="item.componentName"
+              :header="item.labelName"
+              :name="item.componentName"
+            >
+              <keep-alive>
+                <component
+                  :is="item.componentName"
+                  :asyncComponents="asyncComponents"
+                ></component>
+              </keep-alive>
+            </a-collapse-panel>
+          </a-collapse>
+        </a-tab-pane>
+        <a-tab-pane tab="图层" key="structure">
+          <a-empty></a-empty>
+        </a-tab-pane>
+        <a-tab-pane tab="变量" key="data">
+          <a-empty></a-empty>
+        </a-tab-pane>
+      </a-tabs>
+    </div>
   </a-card>
 </template>
+
+<script>
+import { ref, reactive } from "vue";
+import echartsRow from "./ehcarts/index.vue";
+export default {
+  components: {
+    echartsRow,
+  },
+  setup(props) {
+    const tabActiveName = ref("component");
+    const collapse = reactive({
+      activeNames: ["echartsRow"],
+      iconArray: [
+        {
+          labelName: "echarts",
+          className: "echarts-raw",
+          componentName: "echartsRow",
+        },
+      ],
+    });
+
+    return {
+      tabActiveName,
+      collapse,
+    };
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .row-container {

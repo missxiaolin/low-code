@@ -178,3 +178,11 @@ export default {
 
     `;
 }
+
+export function dataEditTem(code, _rawDataStructure) {
+  let codeString = code.replace(
+    "const vccEvents = events;",
+    `const vccEvents = JSON.parse(events); `
+  );
+  return codeString;
+}

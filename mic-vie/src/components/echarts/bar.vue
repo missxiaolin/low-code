@@ -1,27 +1,11 @@
 <template>
   <div ref="chartContainer" class="chart-container">
-    <e-charts ref="chart" theme="dark" :option="option" />
+    <e-charts ref="chart" theme="dark" :option="option" :autoresize="true" />
   </div>
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from "vue";
-import { use } from "echarts/core";
-import { CanvasRenderer } from "echarts/renderers";
-import { BarChart } from "echarts/charts";
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-} from "echarts/components";
-
-use([
-  CanvasRenderer,
-  BarChart,
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-]);
+import { ref, onMounted } from "vue";
 
 export default {
   name: "micBar",
@@ -47,21 +31,8 @@ export default {
       ],
     };
 
-    const resizeObserver = new ResizeObserver(() => {
-      if (chart.value) {
-        chart.value.resize();
-      }
-    });
-
     onMounted(() => {
       if (chartContainer.value) {
-        resizeObserver.observe(chartContainer.value);
-      }
-    });
-
-    onUnmounted(() => {
-      if (chartContainer.value) {
-        resizeObserver.unobserve(chartContainer.value);
       }
     });
 

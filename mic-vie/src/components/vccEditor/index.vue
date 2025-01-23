@@ -23,16 +23,13 @@
           <div class="preview-container">
             <div id="render-control-panel">
               <!--这里不能放任何东西，执行时会被清空-->
-              <div style="width: 100%; height: 100%">
-                <shape :defaultStyle="defaultStyle" @change="change">
+              <!-- <div style="width: 100%; height: 100%">
+                <micShape :defaultStyle="defaultStyle" @change="change">
                   <template v-slot:default="slotProps">
-                    <component
-                      :is="echarts"
-                      v-bind="slotProps.value"
-                    ></component>
+                    <component is="micBar" v-bind="slotProps.value"></component>
                   </template>
-                </shape>
-              </div>
+                </micShape>
+              </div> -->
             </div>
           </div>
         </vueRuleTool>
@@ -44,15 +41,28 @@
 
 <script>
 import { ref, defineAsyncComponent, onMounted, nextTick } from "vue";
-import shape from "./shape/index.vue";
 import Grid from "./grid.vue";
 import vueRuleTool from "../vue-ruler-tool/vue-ruler-tool.vue";
-import echarts from "../echarts/index.vue";
+import { MainPanelProvider } from "../../libs/data-main-panel";
+const getFakeData = () => {
+  return {
+    template: {
+      lc_id: "root",
+      __children: [
+        {
+          div: {
+            class: "container",
+            lc_id: "container",
+            style: "min-height: 100%;",
+          },
+        },
+      ],
+    },
+  };
+};
 export default {
   components: {
-    shape,
     Grid,
-    echarts,
     vueRuleTool,
     rawComponents: defineAsyncComponent(() =>
       import("./rawComponents/index.vue")
@@ -62,7 +72,26 @@ export default {
     ),
     toolsBar: defineAsyncComponent(() => import("./toolsBar/index.vue")),
   },
-  setup(props) {
+  props: {
+    initCodeEntity: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+    asyncComponents: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+  },
+  setup(props, { emit }) {
+    const mainPanelProvider = new MainPanelProvider();
+    const customCss = ref("");
+    const JSCode = ref("");
+    const customData = ref([]);
+
     const vueRuleToolRef = ref(null);
     let defaultStyle = ref({
       top: 20,
@@ -74,13 +103,112 @@ export default {
 
     const change = (data) => {
       if (!data) return;
-      console.log(data);
       defaultStyle.value = data;
     };
 
+    const currentPointer = (ele) => {
+      mainPanelProvider.setDropInfo({
+        target: ele,
+        index,
+      });
+    };
+
+    const convertCssLogicCode = (code) => {
+      customCss.value = code;
+      return code;
+    };
+
+    const convertLogicCode = (JsCode) => {
+      try {
+        let JSCodeInfo = JsCode;
+        // 保留JS代码
+        JSCode.value = JsCode;
+
+        return JSCodeInfo;
+      } catch (e) {
+        console.log(
+          `外部逻辑代码解析出错，解析的逻辑代码为: ${JsCode}, Error: ${e}`
+        );
+      }
+    };
+
+    const convertDataLogic = (arr, isRenderCode = false) => {
+      let obj = {};
+      customData.value = arr || [];
+      arr.forEach((item) => {
+        if (["string", "array", "object"].includes(item.key)) {
+          obj[item.key] = item.value;
+        } else if (item.key === "string") {
+          obj[item.key] = item.value;
+        } else if (item.key === "number") {
+          obj[item.key] = Number(item.value);
+        } else if (item.key === "boolean") {
+          obj[item.key] =
+            item.value === "true" || item.value === true ? true : false;
+        } else {
+          obj[item.key] = item.value;
+        }
+      });
+      if (isRenderCode) {
+        mainPanelProvider.saveJsData(obj);
+        this.renderCode();
+      }
+
+      return obj;
+    };
+
+    const init = () => {
+      mainPanelProvider
+        .onRootElementMounted((rootElement) => {})
+        .onMerged(() => {
+          currentPointer(null);
+        })
+        .onCodeCreated((code) => {
+          // console.log(code);
+          // this.code = code;
+        })
+        .onCodeStructureUpdated((codeRawVueInfo) => {
+          // if (this.$refs.rawComponents) {
+          //   this.$refs.rawComponents.updateCode(codeRawVueInfo);
+          // }
+          // if (this.$refs.vueRuleTool) {
+          //   this.$refs.vueRuleTool.regenerateScale();
+          // }
+          // this.codeRawVueInfo = codeRawVueInfo;
+          // this.notifyParent();
+        })
+        .onNodeDeleted(() => {
+          // this.currentEditRawInfo = null;
+        })
+        .onSelectElement((rawInfo) => {
+          // this.currentEditRawInfo = rawInfo;
+        })
+        .saveCssCodeOnly(
+          convertCssLogicCode(
+            props.initCodeEntity.css ? props.initCodeEntity.css : ""
+          )
+        )
+        .saveJSCodeOnly(
+          convertLogicCode(
+            props.initCodeEntity.JSCode ? props.initCodeEntity.JSCode : ""
+          )
+        )
+        .saveEventNode(props.initCodeEntity.eventNode)
+        .saveJsData(convertDataLogic(props.initCodeEntity.customData || []))
+        .render(
+          props.initCodeEntity.codeStructure
+            ? props.initCodeEntity.codeStructure
+            : getFakeData()
+        );
+    };
+
     onMounted(() => {
-      nextTick(() => {
-        vueRuleToolRef.value.regenerateScale();
+      Promise.all([import("../../map/load")]).then((res) => {
+        init();
+        // this.eventNode = this.initCodeEntity.eventNode;
+        nextTick(() => {
+          vueRuleToolRef.value.regenerateScale();
+        });
       });
     });
 
@@ -89,7 +217,6 @@ export default {
       defaultStyle,
       change,
       vueRuleToolRef,
-      echarts,
     };
   },
 };
@@ -139,21 +266,11 @@ export default {
   border: solid 1px #fff;
 }
 .preview-container {
-  width: 100%;
-  min-height: 100%;
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  background-size: 10px 10px;
-  border: 1px solid var(--el-border-color-light);
   position: relative;
-  z-index: 99;
 }
 #render-control-panel {
   min-height: 100%;
-  width: 100%;
   border-radius: 0px;
-  overflow: hidden;
   box-sizing: border-box;
 
   transition: width 1s;

@@ -13,6 +13,8 @@ import micDrawer from "../components/xl/ant-desine/a-drawer.vue";
 import micModal from "../components/xl/ant-desine/a-modal.vue";
 import flowNode from "../components/flow-node/flowNode.vue";
 import micAsyncComponent from "../components/xl/asyncComponent/index.vue";
+import micBar from "../components/echarts/bar.vue";
+import micShape from "../components/vccEditor/shape/index.vue";
 
 // 引入echarts
 import Echarts from "vue-echarts";
@@ -31,6 +33,8 @@ const components = [
   micDrawer,
   micModal,
   micAsyncComponent,
+  micBar,
+  micShape,
 ];
 
 import "virtual:svg-icons-register";
