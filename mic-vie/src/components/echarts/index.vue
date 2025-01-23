@@ -1,6 +1,6 @@
 <template>
   <div ref="chartContainer" class="chart-container">
-    <e-charts ref="chart" class="chart" :option="option" />
+    <e-charts ref="chart" theme="dark" :option="option" />
   </div>
 </template>
 
@@ -76,11 +76,6 @@ export default {
 
 <style lang="scss" scoped>
 .chart-container {
-  width: 100%;
-  height: 100%;
-}
-
-.chart {
   width: 100%;
   height: 100%;
 }
