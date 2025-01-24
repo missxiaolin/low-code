@@ -5,7 +5,7 @@
 <script>
 import vccEditor from "../../components/vccEditor/index.vue";
 const initCodeStr =
-  '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","id": "vcc-container","style": "width: 1920px; height: 1080px;","lc_id":"container","__children":[]}}]}}';
+  '{"template":{"lc_id":"root","__children":[{"div":{"class":"container","id": "vcc-container","style": "width: 1920px; height: 1080px;background-color: #142A41;position: relative;","lc_id":"container","__children":[]}}]}}';
 
 export default {
   name: "vcc-editor-d",

@@ -8,22 +8,12 @@
         <slot name="toole"></slot>
       </tools-bar>
       <div id="editor" class="editor" ref="editorRef">
-        <!-- 网格线 -->
-        <!-- <Grid /> -->
-        <!-- 拖拽 -->
-        <vueRuleTool
-          :is-scale-revise="true"
-          :parent="true"
-          :width="'100%'"
-          :height="'100%'"
-          :isScaleRevise="true"
-          ref="vueRuleToolRef"
-        >
-          <!-- 内容区域 -->
-          <div class="preview-container">
-            <div id="render-control-panel"></div>
-          </div>
-        </vueRuleTool>
+        <ruler />
+        <!-- <div style="width: 1920px; height: 1080px; background: #ccc"></div> -->
+        <!-- style="width: 1920px; height: 1080px" -->
+        <div class="preview-container">
+          <div id="render-control-panel"></div>
+        </div>
       </div>
     </div>
     <attribute-input> </attribute-input>
@@ -34,6 +24,7 @@
 import { ref, defineAsyncComponent, onMounted, nextTick } from "vue";
 import Grid from "./grid.vue";
 import vueRuleTool from "../vue-ruler-tool/vue-ruler-tool.vue";
+import ruler from "./rule/index.vue";
 import { MainPanelProvider } from "../../libs/data-main-panel";
 const getFakeData = () => {
   return {
@@ -55,6 +46,7 @@ export default {
   components: {
     Grid,
     vueRuleTool,
+    ruler,
     rawComponents: defineAsyncComponent(() =>
       import("./rawComponents/index.vue")
     ),
@@ -84,7 +76,6 @@ export default {
     const customData = ref([]);
     const eventNode = ref(null);
 
-    const vueRuleToolRef = ref(null);
     const editorRef = ref(null);
 
     const currentPointer = (ele) => {
@@ -185,15 +176,11 @@ export default {
       Promise.all([import("../../map/load")]).then((res) => {
         init();
         eventNode.value = props.initCodeEntity.eventNode;
-        nextTick(() => {
-          vueRuleToolRef.value.regenerateScale();
-        });
       });
     });
 
     return {
       editorRef,
-      vueRuleToolRef,
     };
   },
 };
@@ -215,21 +202,24 @@ export default {
     max-height: 100vh;
     flex-direction: column;
     overflow: hidden;
-    margin: 0 10px 0 10px;
   }
   .editor {
     flex: 1;
     height: 100%;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
+    padding-bottom: 100px;
+    padding-right: 200px;
+    background-image: url("/static/images/bg-canvas.png");
   }
   .base-component-container {
     border-radius: 0px;
     background-color: var(--search-bg-color);
+    position: relative;
+    z-index: 99;
   }
 }
 .vcc-main {
-  padding: 10px;
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -243,16 +233,15 @@ export default {
   border: solid 1px #fff;
 }
 .preview-container {
+  width: fit-content;
+  height: fit-content;
+  padding: 60px 0 0 60px;
   position: relative;
 }
 #render-control-panel {
-  min-height: 100%;
+  width: auto;
+  height: auto;
   border-radius: 0px;
   box-sizing: border-box;
-
-  transition: width 1s;
-  > div {
-    min-height: 100%;
-  }
 }
 </style>

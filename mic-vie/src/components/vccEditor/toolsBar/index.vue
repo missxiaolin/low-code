@@ -67,6 +67,9 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: relative;
+  z-index: 99;
+  background-color: var(--search-bg-color);
   ul {
     display: flex;
     flex-direction: row;
