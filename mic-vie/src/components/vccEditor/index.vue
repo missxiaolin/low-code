@@ -9,8 +9,6 @@
       </tools-bar>
       <div id="editor" class="editor" ref="editorRef">
         <ruler />
-        <!-- <div style="width: 1920px; height: 1080px; background: #ccc"></div> -->
-        <!-- style="width: 1920px; height: 1080px" -->
         <div class="preview-container">
           <div id="render-control-panel"></div>
         </div>
@@ -245,3 +243,12 @@ export default {
   box-sizing: border-box;
 }
 </style>
+
+<!-- <style lang="scss">
+#render-control-panel {
+  #vcc-container {
+    transform: scale(1) translate(0px, 0px);
+    transform-origin: 0 0;
+  }
+}
+</style> -->
