@@ -217,11 +217,15 @@ export default {
         let content = this.$refs.vueRulerWrapper;
         this.xScale = [];
         this.yScale = [];
-        this.$refs.verticalRuler.style.height = "100%";
+        if (this.$refs.verticalRuler) {
+          this.$refs.verticalRuler.style.height = "100%";
+        }
         this.getCalc(this.xScale, content.scrollWidth);
         this.getCalc(this.yScale, content.scrollHeight);
         this.$refs.horizontalRuler.style.width = content.scrollWidth + "px";
-        this.$refs.verticalRuler.style.height = content.scrollHeight + "px";
+        if (this.$refs.verticalRuler) {
+          this.$refs.verticalRuler.style.height = content.scrollHeight + "px";
+        }
       }, 200);
     },
     box() {

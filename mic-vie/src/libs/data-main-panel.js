@@ -20,6 +20,7 @@ import {
 
 export class MainPanelProvider {
   constructor(options) {
+    this.isOnload = false;
     // 开启编辑模式
     this.editMode = true;
     this.eventEmitter = new EventEmitter();
@@ -217,7 +218,10 @@ export class MainPanelProvider {
     // elements.forEach((element) => {
     // this.markElement(element);
     // });
-    this.initDropEvent();
+    if (!this.isOnload) {
+      this.initDropEvent();
+      this.isOnload = true;
+    }
   }
 
   /**
@@ -452,7 +456,6 @@ export class MainPanelProvider {
   }
 
   selectElement(uuid) {
-    console.log(uuid);
     const renderControlPanel = this.getControlPanelRoot();
     const element = renderControlPanel.querySelector(`[lc_id="${uuid}"]`);
     if (!element) return;
