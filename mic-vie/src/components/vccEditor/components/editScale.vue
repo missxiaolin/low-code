@@ -24,7 +24,6 @@ export default {
     };
 
     const change = (v) => {
-      console.log(v);
       emit("change", v);
     };
 

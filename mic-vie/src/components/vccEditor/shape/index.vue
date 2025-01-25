@@ -13,6 +13,11 @@
     @click="(event) => selectCurComponent(event)"
     @mousedown="(event) => handleDragendShape(event)"
   >
+    <referLine
+      v-if="canvasState"
+      :scale="scale"
+      :pos="{ x: defaultStyle.left, y: defaultStyle.top }"
+    />
     <div
       v-for="item in pointRenderData"
       :key="item.direction"
@@ -35,8 +40,12 @@ import { ref, useAttrs, watch } from "vue";
 import { throttle } from "lodash";
 import { pointRenderData } from "./config";
 import { stretchedComponents } from "../utils/component";
+import referLine from "./refer-line.vue";
 export default {
   name: "micShape",
+  components: {
+    referLine,
+  },
   props: {
     defaultStyle: {
       type: Object,
@@ -55,6 +64,7 @@ export default {
   },
   emits: ["change"],
   setup(props, { emit }) {
+    const scale = ref(window.vccScale);
     const attrs = useAttrs();
     let canvasState = ref("");
     const shapeRef = ref(null);
@@ -212,6 +222,7 @@ export default {
       canvasState,
       handleStretchedShape,
       attrs,
+      scale,
     };
   },
 };

@@ -74,6 +74,7 @@ export default {
   setup(props, { emit }) {
     const ruleRef = ref(null);
     const scale = ref(1);
+    window.vccScale = scale.value;
     const canvas = ref({
       width: 0,
       height: 0,
@@ -204,10 +205,12 @@ export default {
     });
 
     const handleScaleChange = (v) => {
-      canvas.scale = v;
+      window.vccScale = v;
+      canvas.value.scale = v;
       scale.value = v;
       ruleRef.value.setHRule(canvas.hWidth, canvas.value);
       ruleRef.value.setVRule(canvas.value);
+      mainPanelProvider.reRender();
     };
 
     return {
