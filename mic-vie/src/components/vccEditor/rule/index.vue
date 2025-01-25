@@ -23,10 +23,10 @@
 
 <script>
 import { ref, onMounted, onUnmounted, watchEffect, nextTick } from "vue";
-import { RulerBuilder } from "./index.js";
+import { RulerBuilder } from "./ruleIndex.js";
 
 export default {
-  setup() {
+  setup(props, { expose }) {
     const hRulerWpRef = ref(null);
     const vRulerWpRef = ref(null);
     const hRuler = ref(null);
@@ -36,21 +36,12 @@ export default {
     const vScroll = ref(0);
 
     const cw = document.documentElement.clientWidth;
+    let guideLine = {
+      h: [],
+      v: [],
+    };
 
-    watchEffect(() => {
-      if (!hRulerWpRef.value || !vRulerWpRef.value) {
-        return;
-      }
-      let guideLine = {
-        h: [],
-        v: [],
-      };
-      const canvas = {
-        width: 1920 + 300,
-        height: 1080 + 200,
-        scale: 1,
-      };
-      const hWidth = Math.max(canvas.width, cw);
+    const setHRule = (hWidth, canvas) => {
       if (hRuler.value) {
         hRuler.value.setSize(hWidth, 20, canvas.scale);
       } else {
@@ -71,7 +62,9 @@ export default {
         });
         hRuler.value.setGuideLines(guideLine.h);
       }
+    };
 
+    const setVRule = (canvas) => {
       if (vRuler.value) {
         vRuler.value.setSize(canvas.height, 20, canvas.scale);
       } else {
@@ -93,6 +86,22 @@ export default {
 
         vRuler.value.setGuideLines(guideLine.v);
       }
+    };
+
+    watchEffect(() => {
+      if (!hRulerWpRef.value || !vRulerWpRef.value) {
+        return;
+      }
+
+      const canvas = {
+        width: 1920,
+        height: 1080,
+        scale: 1,
+      };
+      const hWidth = Math.max(canvas.width, cw);
+      setHRule(hWidth, canvas);
+
+      setVRule(canvas);
     });
 
     const onScroll = (ev) => {
@@ -118,6 +127,11 @@ export default {
     onUnmounted(() => {
       const canvasWp = document.getElementById("editor");
       canvasWp?.removeEventListener("scroll", onScroll);
+    });
+
+    expose({
+      setHRule,
+      setVRule,
     });
 
     return {

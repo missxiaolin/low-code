@@ -8,21 +8,24 @@
         <slot name="toole"></slot>
       </tools-bar>
       <div id="editor" class="editor" ref="editorRef">
-        <ruler />
+        <ruler ref="ruleRef" />
+
         <div class="preview-container">
           <div id="render-control-panel"></div>
         </div>
       </div>
+      <edit-scale @change="handleScaleChange" />
     </div>
     <attribute-input> </attribute-input>
   </div>
 </template>
 
 <script>
-import { ref, defineAsyncComponent, onMounted, nextTick } from "vue";
+import { ref, defineAsyncComponent, onMounted, computed } from "vue";
 import Grid from "./grid.vue";
 import vueRuleTool from "../vue-ruler-tool/vue-ruler-tool.vue";
 import ruler from "./rule/index.vue";
+import editScale from "./components/editScale.vue";
 import { MainPanelProvider } from "../../libs/data-main-panel";
 const getFakeData = () => {
   return {
@@ -45,6 +48,7 @@ export default {
     Grid,
     vueRuleTool,
     ruler,
+    editScale,
     rawComponents: defineAsyncComponent(() =>
       import("./rawComponents/index.vue")
     ),
@@ -68,6 +72,14 @@ export default {
     },
   },
   setup(props, { emit }) {
+    const ruleRef = ref(null);
+    const scale = ref(1);
+    const canvas = ref({
+      width: 0,
+      height: 0,
+      hWidth: 0,
+    });
+
     const mainPanelProvider = new MainPanelProvider();
     const customCss = ref("");
     const JSCode = ref("");
@@ -124,9 +136,23 @@ export default {
       return obj;
     };
 
+    const setRule = () => {};
+
     const init = () => {
       mainPanelProvider
-        .onRootElementMounted((rootElement) => {})
+        .onRootElementMounted((rootElement) => {
+          // 渲染完成拿到高度宽度
+          const cw = document.documentElement.clientWidth; // 屏幕宽度
+          const hWidth = Math.max(rootElement.offsetWidth, cw);
+          if (ruleRef.value) {
+            canvas.value.scale = scale.value;
+            canvas.hWidth = hWidth;
+            canvas.value.height = rootElement.offsetHeight + 150;
+            canvas.value.width = hWidth;
+            ruleRef.value.setHRule(hWidth + 250, canvas.value);
+            ruleRef.value.setVRule(canvas.value);
+          }
+        })
         .onMerged(() => {
           currentPointer(null);
         })
@@ -177,8 +203,19 @@ export default {
       });
     });
 
+    const handleScaleChange = (v) => {
+      canvas.scale = v;
+      scale.value = v;
+      ruleRef.value.setHRule(canvas.hWidth, canvas.value);
+      ruleRef.value.setVRule(canvas.value);
+    };
+
     return {
       editorRef,
+      ruleRef,
+      canvas,
+      scale,
+      handleScaleChange,
     };
   },
 };
@@ -244,11 +281,11 @@ export default {
 }
 </style>
 
-<!-- <style lang="scss">
+<style lang="scss">
 #render-control-panel {
   #vcc-container {
-    transform: scale(1) translate(0px, 0px);
+    transform: scale(v-bind(scale)) translate(0px, 0px);
     transform-origin: 0 0;
   }
 }
-</style> -->
+</style>
