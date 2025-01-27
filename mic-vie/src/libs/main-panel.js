@@ -519,6 +519,11 @@ export class MainPanelProvider {
     return this;
   }
 
+  async asyncReRender() {
+    await this._render(this._rawDataStructure);
+    return this;
+  }
+
   /**
    * 保存属性
    * @param {*} resultList

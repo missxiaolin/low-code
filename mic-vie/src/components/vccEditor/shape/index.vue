@@ -13,11 +13,7 @@
     @click="(event) => selectCurComponent(event)"
     @mousedown="(event) => handleDragendShape(event)"
   >
-    <referLine
-      v-if="canvasState"
-      :scale="scale"
-      :pos="{ x: defaultStyle.left, y: defaultStyle.top }"
-    />
+    <referLine v-if="canvasState" :scale="scale" :pos="referPos" />
     <div
       v-for="item in pointRenderData"
       :key="item.direction"
@@ -36,7 +32,7 @@
 </template>
 
 <script>
-import { ref, useAttrs, watch } from "vue";
+import { ref, toRefs, toRef, useAttrs, watch } from "vue";
 import { throttle } from "lodash";
 import { pointRenderData } from "./config";
 import { stretchedComponents } from "../utils/component";
@@ -81,7 +77,11 @@ export default {
       };
     });
 
-    let { top = 0, left = 0, height = 0, width = 0 } = props.defaultStyle;
+    const toProps = toRef(props);
+    const referPos = ref({
+      x: toProps.value.defaultStyle.left,
+      y: toProps.value.defaultStyle.top,
+    });
 
     // 双击事件
     const dbselectCurComponent = (event) => {
@@ -107,9 +107,6 @@ export default {
       if (!dom) return;
       canvasState.value = dom;
 
-      let computedStyle = window.getComputedStyle(canvasState.value);
-      left = parseInt(computedStyle.getPropertyValue("left"));
-      top = parseInt(computedStyle.getPropertyValue("top"));
       window.vccMainPanelProvider.markElement(dom);
     };
 
@@ -122,16 +119,20 @@ export default {
       const startY = e.clientY;
       const startX = e.clientX;
       // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
-      const startTop = top;
-      const startLeft = left;
+      const startTop = toProps.value.defaultStyle.top;
+      const startLeft = toProps.value.defaultStyle.left;
       // 如果元素没有移动，则不保存快照
       const move = throttle((moveEvent) => {
         const curX = moveEvent.clientX;
         const curY = moveEvent.clientY;
-        top = curY - startY + startTop;
-        left = curX - startX + startLeft;
-        canvasState.value.style.left = left + "px";
-        canvasState.value.style.top = top + "px";
+        toProps.value.defaultStyle.top = curY - startY + startTop;
+        toProps.value.defaultStyle.left = curX - startX + startLeft;
+        canvasState.value.style.left = toProps.value.defaultStyle.left + "px";
+        canvasState.value.style.top = toProps.value.defaultStyle.top + "px";
+        referPos.value = {
+          x: toProps.value.defaultStyle.left,
+          y: toProps.value.defaultStyle.top,
+        };
       }, 0);
       const up = () => {
         document.removeEventListener("mousemove", move);
@@ -139,9 +140,11 @@ export default {
 
         window.vccMainPanelProvider.setKeyValue(
           ":defaultStyle",
-          `{'top':${Number(top)},'left':${Number(left)},'width':${Number(
-            props.defaultStyle.width
-          )},'height':${Number(props.defaultStyle.height)}}`,
+          `{'top':${Number(toProps.value.defaultStyle.top)},'left':${Number(
+            toProps.value.defaultStyle.left
+          )},'width':${Number(
+            toProps.value.defaultStyle.width
+          )},'height':${Number(toProps.value.defaultStyle.height)}}`,
           props.lc_id
         );
       };
@@ -177,10 +180,10 @@ export default {
         const data = stretchedComponents(
           point,
           {
-            top: props.defaultStyle.top,
-            left: props.defaultStyle.left,
-            height: props.defaultStyle.height,
-            width: props.defaultStyle.width,
+            top: toProps.value.defaultStyle.top,
+            left: toProps.value.defaultStyle.left,
+            height: toProps.value.defaultStyle.height,
+            width: toProps.value.defaultStyle.width,
           },
           curPositon
         );
@@ -223,6 +226,8 @@ export default {
       handleStretchedShape,
       attrs,
       scale,
+      toProps,
+      referPos,
     };
   },
 };

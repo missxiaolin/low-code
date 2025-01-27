@@ -72,6 +72,9 @@ export default {
     },
   },
   setup(props, { emit }) {
+    const dCode = ref("");
+    // selectInfo
+    const currentEditRawInfo = ref(null);
     const ruleRef = ref(null);
     const scale = ref(1);
     window.vccScale = scale.value;
@@ -158,8 +161,7 @@ export default {
           currentPointer(null);
         })
         .onCodeCreated((code) => {
-          // console.log(code);
-          // this.code = code;
+          dCode.value = code;
         })
         .onCodeStructureUpdated((codeRawVueInfo) => {
           // if (this.$refs.rawComponents) {
@@ -172,10 +174,10 @@ export default {
           // this.notifyParent();
         })
         .onNodeDeleted(() => {
-          // this.currentEditRawInfo = null;
+          currentEditRawInfo.value = null;
         })
         .onSelectElement((rawInfo) => {
-          // this.currentEditRawInfo = rawInfo;
+          currentEditRawInfo.value = rawInfo;
         })
         .saveCssCodeOnly(
           convertCssLogicCode(
@@ -210,7 +212,15 @@ export default {
       scale.value = v;
       ruleRef.value.setHRule(canvas.hWidth, canvas.value);
       ruleRef.value.setVRule(canvas.value);
-      mainPanelProvider.reRender();
+      const rawInfo = currentEditRawInfo.value;
+      mainPanelProvider.asyncReRender();
+      if (rawInfo && Object.keys(rawInfo).length > 0) {
+        setTimeout(() => {
+          mainPanelProvider.selectElement(
+            rawInfo[Object.keys(rawInfo)[0]].lc_id
+          );
+        }, 10);
+      }
     };
 
     return {
@@ -219,6 +229,7 @@ export default {
       canvas,
       scale,
       handleScaleChange,
+      dCode,
     };
   },
 };

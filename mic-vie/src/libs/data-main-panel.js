@@ -147,6 +147,11 @@ export class MainPanelProvider {
     return this;
   }
 
+  async asyncReRender() {
+    await this._render(this._rawDataStructure);
+    return this;
+  }
+
   /**
    * 对外渲染函数：将一个指定的数据结构渲染出来，并会保存这次的渲染记录
    * @param {*} rawDataStructure
