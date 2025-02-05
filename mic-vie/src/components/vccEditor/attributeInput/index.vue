@@ -7,6 +7,9 @@
       }
     "
   >
+    <div class="attribute-empty">
+      <a-empty description="暂且不支持配置"></a-empty>
+    </div>
   </a-card>
 </template>
 

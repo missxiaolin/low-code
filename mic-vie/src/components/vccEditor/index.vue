@@ -16,7 +16,7 @@
       </div>
       <edit-scale :scale="scale" @change="handleScaleChange" />
     </div>
-    <!-- <attribute-input> </attribute-input> -->
+    <attribute-input> </attribute-input>
   </div>
 </template>
 
