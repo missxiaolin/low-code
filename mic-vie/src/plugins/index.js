@@ -14,6 +14,8 @@ import micModal from "../components/xl/ant-desine/a-modal.vue";
 import flowNode from "../components/flow-node/flowNode.vue";
 import micAsyncComponent from "../components/xl/asyncComponent/index.vue";
 import micBar from "../components/echarts/bar.vue";
+import micWordCloud from "../components/echarts/wordCloud.vue";
+import micLine from "../components/echarts/line.vue";
 import micShape from "../components/vccEditor/shape/index.vue";
 
 // 引入echarts
@@ -34,6 +36,8 @@ const components = [
   micModal,
   micAsyncComponent,
   micBar,
+  micWordCloud,
+  micLine,
   micShape,
 ];
 

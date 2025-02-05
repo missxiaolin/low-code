@@ -35,4 +35,38 @@ export const echartsConfig = {
       },
     ],
   },
+  micWordCloud: {
+    source: [
+      {
+        name: "125.88.160.114",
+        value: 1,
+        type: 0,
+      },
+      {
+        name: "140.205.137.163",
+        value: 1,
+        type: 0,
+      },
+      {
+        name: "192.168.31.247",
+        value: 1,
+        type: 0,
+      },
+      {
+        name: "suso56.welogix.cn",
+        value: 1,
+        type: 2,
+      },
+      {
+        name: "fengdie-dev.alipay.net",
+        value: 1,
+        type: 0,
+      },
+      {
+        name: "cssyz.weixiaobang.cn",
+        value: 1,
+        type: 2,
+      },
+    ],
+  },
 };

@@ -19,7 +19,7 @@
 
 <script>
 import { ref, reactive } from "vue";
-import barRow from "./ehcarts/bar.vue";
+import barRow from "./ehcarts/index.vue";
 
 export default {
   components: {

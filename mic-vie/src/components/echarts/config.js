@@ -221,3 +221,56 @@ export const barConfig = {
     y: "y",
   },
 };
+
+export const wordCloudConfig = {
+  global: {
+    fontFamily: "Microsoft Yahei",
+    max: 35,
+    min: 14,
+    rotationRange: {
+      min: -90,
+      max: 90,
+    },
+    rotate: 45,
+    drawType: "preset",
+    shape: "circle",
+    image: "/static/images/echarts-logo.png",
+  },
+  series: [
+    {
+      type: "wordCloud",
+      id: "0_rKQw6lotfKH",
+      name: "0",
+      color: "#0a73ff",
+    },
+    {
+      type: "wordCloud",
+      id: "1_DiXifxaQ8qU",
+      name: "1",
+      color: "#3dabff",
+    },
+    {
+      type: "wordCloud",
+      id: "2_soPxdtvQpdE",
+      name: "2",
+      color: "#79daff",
+    },
+  ],
+  tooltip: {
+    show: false,
+    textStyle: {
+      fontSize: 14,
+      color: "#fff",
+      fontWeight: "normal",
+    },
+    backgroundColor: "rgba(0, 0, 0, 0.65)",
+  },
+  animation: {
+    enabled: true,
+  },
+  dvField: {
+    name: "name",
+    type: "type",
+    value: "value",
+  },
+};

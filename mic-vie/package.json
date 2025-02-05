@@ -32,6 +32,7 @@
     "dayjs": "^1.11.13",
     "dedent": "^1.5.3",
     "echarts": "^5.5.0",
+    "echarts-wordcloud": "^2.1.0",
     "ejs": "^3.1.6",
     "escodegen": "^2.0.0",
     "espree": "^7.3.0",

@@ -8,7 +8,6 @@
 import { ref, toRef, computed } from "vue";
 import { barConfig } from "./config";
 import { merge, groupBy } from "lodash-es";
-import { getFieldMap } from "../_mixins/use-data-center";
 import dayjs from "dayjs";
 import { echartsConfig } from "../_config/eIndex.js";
 import {
@@ -26,6 +25,12 @@ export default {
         return {};
       },
     },
+    data: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   setup(props, { emit, expose }) {
     const chart = ref(null);
@@ -33,7 +38,9 @@ export default {
     const config = toRef(c);
 
     const dv_data = computed(() => {
-      return echartsConfig.micBar.source ?? [];
+      return props.data && props.data.length > 0
+        ? props.data
+        : echartsConfig.micBar.source;
     });
 
     const dv_field = computed(() => {

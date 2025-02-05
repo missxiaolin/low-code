@@ -7,7 +7,7 @@
         :tab-position="'left'"
       >
         <a-tab-pane tab="图表" key="component" class="tab-pane-w">
-          <tb></tb>
+          <barRow />
         </a-tab-pane>
         <a-tab-pane tab="地图" key="map" class="tab-pane-w">
           <a-empty description="尽请期待"></a-empty>
@@ -34,11 +34,11 @@
 
 <script>
 import { ref, reactive } from "vue";
-import tb from "./tb.vue";
+import barRow from "./ehcarts/index.vue";
 
 export default {
   components: {
-    tb,
+    barRow,
   },
   setup(props) {
     const tabActiveName = ref("component");

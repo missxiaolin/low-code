@@ -6,7 +6,7 @@
 <script>
 import { onMounted } from "vue";
 import { deepLCEle } from "../../utils/initRawComponent";
-import rowEchart from "./barRow.vue";
+import rowEchart from "./row.vue";
 
 export default {
   components: {

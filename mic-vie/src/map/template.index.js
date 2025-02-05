@@ -112,6 +112,12 @@ export default {
   micBar: {
     "mic-bar": { lc_id: "micBar", __children: [] },
   },
+  micLine: {
+    "mic-line": { lc_id: "micLine", __children: [] },
+  },
+  micWordCloud: {
+    "mic-word-cloud": { lc_id: "micWordCloud", __children: [] },
+  },
   micShape: {
     "mic-shape": { lc_id: "micShape", __children: [] },
   },
