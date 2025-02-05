@@ -216,4 +216,8 @@ export const barConfig = {
     easing: "cubicOut",
     delay: 0,
   },
+  dvField: {
+    x: "x",
+    y: "y",
+  },
 };

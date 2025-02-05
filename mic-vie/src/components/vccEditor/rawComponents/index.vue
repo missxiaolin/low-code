@@ -1,33 +1,31 @@
 <template>
   <a-card class="row-container" @click="(e) => e.stopPropagation">
     <div class="row-container-scrollbar">
-      <a-tabs class="attribute-tabs" v-model:activeKey="tabActiveName">
-        <a-tab-pane tab="组件" key="component">
-          <a-collapse
-            v-model:activeKey="collapse.activeNames"
-            :bordered="false"
-            class="row-collapse"
-          >
-            <a-collapse-panel
-              v-for="item in collapse.iconArray"
-              :key="item.componentName"
-              :header="item.labelName"
-              :name="item.componentName"
-            >
-              <keep-alive>
-                <component
-                  :is="item.componentName"
-                  :asyncComponents="asyncComponents"
-                ></component>
-              </keep-alive>
-            </a-collapse-panel>
-          </a-collapse>
+      <a-tabs
+        class="attribute-tabs"
+        v-model:activeKey="tabActiveName"
+        :tab-position="'left'"
+      >
+        <a-tab-pane tab="图表" key="component" class="tab-pane-w">
+          <tb></tb>
         </a-tab-pane>
-        <a-tab-pane tab="图层" key="structure">
-          <a-empty></a-empty>
+        <a-tab-pane tab="地图" key="map" class="tab-pane-w">
+          <a-empty description="尽请期待"></a-empty>
         </a-tab-pane>
-        <a-tab-pane tab="变量" key="data">
-          <a-empty></a-empty>
+        <a-tab-pane tab="信息" key="info" class="tab-pane-w">
+          <a-empty description="尽请期待"></a-empty>
+        </a-tab-pane>
+        <a-tab-pane tab="表格" key="table" class="tab-pane-w">
+          <a-empty description="尽请期待"></a-empty>
+        </a-tab-pane>
+        <a-tab-pane tab="控件" key="widget" class="tab-pane-w">
+          <a-empty description="尽请期待"></a-empty>
+        </a-tab-pane>
+        <a-tab-pane tab="媒体" key="media" class="tab-pane-w">
+          <a-empty description="尽请期待"></a-empty>
+        </a-tab-pane>
+        <a-tab-pane tab="其他" key="other" class="tab-pane-w">
+          <a-empty description="尽请期待"></a-empty>
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -36,27 +34,17 @@
 
 <script>
 import { ref, reactive } from "vue";
-import echartsRow from "./ehcarts/index.vue";
+import tb from "./tb.vue";
+
 export default {
   components: {
-    echartsRow,
+    tb,
   },
   setup(props) {
     const tabActiveName = ref("component");
-    const collapse = reactive({
-      activeNames: ["echartsRow"],
-      iconArray: [
-        {
-          labelName: "图标",
-          className: "echarts-raw",
-          componentName: "echartsRow",
-        },
-      ],
-    });
 
     return {
       tabActiveName,
-      collapse,
     };
   },
 };
@@ -68,6 +56,9 @@ export default {
   display: flex;
   height: 100%;
   position: relative;
+  .tab-pane-w {
+    padding: 0 !important;
+  }
   .row-container-scrollbar::-webkit-scrollbar {
     width: 0;
     height: 0;
@@ -75,7 +66,6 @@ export default {
   .row-container-scrollbar {
     height: 100%;
     overflow-y: scroll;
-    padding-right: 16px;
     :deep(.ant-collapse-content-box) {
       padding-right: 0;
     }
@@ -85,6 +75,7 @@ export default {
     padding-right: 0;
     box-sizing: border-box;
     overflow: hidden !important;
+    padding: 0;
   }
   :deep(.ant-collapse) {
     background-color: transparent !important;

@@ -10,7 +10,7 @@ import { barConfig } from "./config";
 import { merge, groupBy } from "lodash-es";
 import { getFieldMap } from "../_mixins/use-data-center";
 import dayjs from "dayjs";
-import { echartsConfig } from "../_config/index.js";
+import { echartsConfig } from "../_config/eIndex.js";
 import {
   getAutoValue,
   getLimitValue,
@@ -37,10 +37,7 @@ export default {
     });
 
     const dv_field = computed(() => {
-      return {
-        x: "x",
-        y: "y",
-      };
+      return config.value.dvField;
     });
 
     const chartData = computed(() => {
@@ -283,7 +280,6 @@ export default {
         animationDelay: animation.delay,
         series: getSeries(),
       };
-      console.log(getSeries());
       return opts;
     });
 
