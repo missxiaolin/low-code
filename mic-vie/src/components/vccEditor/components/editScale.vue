@@ -15,9 +15,15 @@
 import { ref } from "vue";
 export default {
   name: "editScale",
+  props: {
+    scale: {
+      type: Number,
+      default: 1,
+    },
+  },
   emits: ["change"],
   setup(props, { emit }) {
-    const sliderValue = ref(1);
+    const sliderValue = ref(props.scale);
 
     const formatter = (value) => {
       return `${value * 100}%`;

@@ -14,9 +14,9 @@
           <div id="render-control-panel"></div>
         </div>
       </div>
-      <edit-scale @change="handleScaleChange" />
+      <edit-scale :scale="scale" @change="handleScaleChange" />
     </div>
-    <attribute-input> </attribute-input>
+    <!-- <attribute-input> </attribute-input> -->
   </div>
 </template>
 
@@ -76,7 +76,7 @@ export default {
     // selectInfo
     const currentEditRawInfo = ref(null);
     const ruleRef = ref(null);
-    const scale = ref(1);
+    const scale = ref(0.5);
     window.vccScale = scale.value;
     const canvas = ref({
       width: 0,
