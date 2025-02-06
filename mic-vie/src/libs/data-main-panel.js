@@ -270,6 +270,13 @@ export class MainPanelProvider {
     return rawVueInfo;
   }
 
+  /**
+   * 清除选中
+   */
+  clearElementSelect() {
+    this.markElement(null);
+  }
+
   initDropEvent() {
     const renderControlPanel = this.getControlPanelRoot();
     renderControlPanel.addEventListener("dragenter", (event) => {
@@ -424,8 +431,9 @@ export class MainPanelProvider {
    * 保存属性
    * @param {*} resultList
    * @param {*} rawInfo
+   * @param {*} isSelect
    */
-  saveAttribute(resultList, lc_id) {
+  saveAttribute(resultList, lc_id, isSelect = true) {
     const param = resultList;
     const object = getRawComponentContent(window.tree[lc_id]);
 
@@ -452,7 +460,7 @@ export class MainPanelProvider {
 
     // 渲染当前的变更
     this.render(this._rawDataStructure);
-    if (object.lc_id) {
+    if (object.lc_id && isSelect) {
       setTimeout(() => {
         this.selectElement(object.lc_id, object.vccName);
       }, 10);
@@ -469,5 +477,13 @@ export class MainPanelProvider {
       element.click();
     });
     // element.setAttribute("lc-component-name", vueRawTag);
+  }
+
+  /**
+   * 整体json
+   * @returns
+   */
+  getRawDataStructure() {
+    return this._rawDataStructure;
   }
 }

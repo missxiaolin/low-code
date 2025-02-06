@@ -7,11 +7,43 @@
       }
     "
   >
-    <div class="attribute-empty">
-      <a-empty description="暂且不支持配置"></a-empty>
-    </div>
+    <com v-if="currentEditRawInfo"></com>
+    <page v-else></page>
   </a-card>
 </template>
+
+<script>
+import { inject, onMounted, ref } from "vue";
+import Page from "./page.vue";
+import Com from "./component.vue";
+export default {
+  components: {
+    Page,
+    Com,
+  },
+  setup(props) {
+    let currentEditRawInfo = ref("");
+    const mainPanelProvider = inject("mainPanelProvider");
+    onMounted(() => {
+      mainPanelProvider
+        .onSelectElement((rawInfo) => {
+          currentEditRawInfo.value = rawInfo;
+        })
+        .onRootElementMounted((rootElement) => {
+          // document
+          //   .getElementsByTagName("body")[0]
+          //   .addEventListener("click", (e) => {
+          //     this.mainPanelProvider.clearElementSelect();
+          //   });
+        });
+    });
+
+    return {
+      currentEditRawInfo,
+    };
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .attribute-empty {
@@ -35,6 +67,7 @@
     height: 100%;
     box-sizing: border-box;
     overflow: hidden !important;
+    padding: 0 !important;
   }
   .el-scrollbar {
     padding-right: 20px;

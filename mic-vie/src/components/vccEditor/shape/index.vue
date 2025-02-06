@@ -13,7 +13,11 @@
     @click="(event) => selectCurComponent(event)"
     @mousedown="(event) => handleDragendShape(event)"
   >
-    <referLine v-if="canvasState" :scale="scale" :pos="referPos" />
+    <referLine
+      v-if="selectLcId && selectLcId == lc_id"
+      :scale="scale"
+      :pos="referPos"
+    />
     <div
       v-for="item in pointRenderData"
       :key="item.direction"
@@ -32,7 +36,7 @@
 </template>
 
 <script>
-import { ref, toRefs, toRef, useAttrs, watch } from "vue";
+import { ref, toRefs, toRef, useAttrs, watch, onMounted } from "vue";
 import { throttle } from "lodash";
 import { pointRenderData } from "./config";
 import { stretchedComponents } from "../utils/component";
@@ -60,6 +64,7 @@ export default {
   },
   emits: ["change"],
   setup(props, { emit }) {
+    const selectLcId = ref("");
     const scale = ref(window.vccScale);
     const attrs = useAttrs();
     let canvasState = ref("");
@@ -218,6 +223,18 @@ export default {
       document.addEventListener("mouseup", up);
     };
 
+    onMounted(() => {
+      window.vccMainPanelProvider &&
+        window.vccMainPanelProvider.onSelectElement((rawInfo) => {
+          console.log(rawInfo);
+          if (!rawInfo) {
+            selectLcId.value = "";
+            return;
+          }
+          selectLcId.value = rawInfo[Object.keys(rawInfo)[0]].lc_id;
+        });
+    });
+
     return {
       componentProps,
       shapeRef,
@@ -231,6 +248,7 @@ export default {
       scale,
       toProps,
       referPos,
+      selectLcId,
     };
   },
 };

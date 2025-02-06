@@ -36,3 +36,44 @@ export function rotatePoint(point, center, rotate) {
       center.y,
   };
 }
+
+/**
+ * style to obj
+ * @param {*} str
+ * @returns
+ */
+export function styleStringToObj(str) {
+  const styles = str.split(";").reduce((obj, item) => {
+    const [key, value] = item.split(":").map((item) => item.trim());
+    if (key && value) {
+      obj[key] = value;
+    }
+    return obj;
+  }, {});
+  return styles;
+}
+
+/**
+ * obj to array
+ * @param {*} obj
+ * @returns
+ */
+export function objectToArray(obj) {
+  let result = [];
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const element = obj[key];
+      if (
+        typeof element !== "object" &&
+        key != "lc-mark" &&
+        key != "lc_id" &&
+        key != "div-lc-mark" &&
+        key != "vccName"
+      ) {
+        // 这两个是保留字段，不对外提供使用
+        if (key != "") result.push({ key: key, value: element });
+      }
+    }
+  }
+  return result;
+}

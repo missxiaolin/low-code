@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { ref, defineAsyncComponent, onMounted, computed } from "vue";
+import { ref, defineAsyncComponent, onMounted, computed, provide } from "vue";
 import Grid from "./grid.vue";
 import vueRuleTool from "../vue-ruler-tool/vue-ruler-tool.vue";
 import ruler from "./rule/index.vue";
@@ -85,6 +85,7 @@ export default {
     });
 
     const mainPanelProvider = new MainPanelProvider();
+
     const customCss = ref("");
     const JSCode = ref("");
     const customData = ref([]);
@@ -145,6 +146,12 @@ export default {
     const init = () => {
       mainPanelProvider
         .onRootElementMounted((rootElement) => {
+          document
+            .getElementsByTagName("body")[0]
+            .addEventListener("click", (e) => {
+              mainPanelProvider.clearElementSelect();
+            });
+
           // 渲染完成拿到高度宽度
           const cw = document.documentElement.clientWidth; // 屏幕宽度
           const hWidth = Math.max(rootElement.offsetWidth, cw);
@@ -222,6 +229,8 @@ export default {
         }, 10);
       }
     };
+
+    provide("mainPanelProvider", mainPanelProvider);
 
     return {
       editorRef,
