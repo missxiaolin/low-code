@@ -115,6 +115,7 @@ export default {
     text-align: center;
     color: #bcc9d4;
     user-select: none;
+    background: #2e343c;
   }
 
   .config-manager-body {

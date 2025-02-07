@@ -56,6 +56,8 @@ export default {
   display: flex;
   height: 100%;
   position: relative;
+  border-radius: 0px !important;
+  border: none;
   .tab-pane-w {
     padding: 0 !important;
   }
@@ -76,6 +78,7 @@ export default {
     box-sizing: border-box;
     overflow: hidden !important;
     padding: 0;
+    border-radius: 0px !important;
   }
   :deep(.ant-collapse) {
     background-color: transparent !important;

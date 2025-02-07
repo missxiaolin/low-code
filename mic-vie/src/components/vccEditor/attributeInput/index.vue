@@ -25,17 +25,13 @@ export default {
     let currentEditRawInfo = ref("");
     const mainPanelProvider = inject("mainPanelProvider");
     onMounted(() => {
-      mainPanelProvider
-        .onSelectElement((rawInfo) => {
-          currentEditRawInfo.value = rawInfo;
-        })
-        .onRootElementMounted((rootElement) => {
-          // document
-          //   .getElementsByTagName("body")[0]
-          //   .addEventListener("click", (e) => {
-          //     this.mainPanelProvider.clearElementSelect();
-          //   });
-        });
+      mainPanelProvider.onSelectElement((rawInfo) => {
+        if (!rawInfo) {
+          currentEditRawInfo.value = "";
+          return;
+        }
+        currentEditRawInfo.value = rawInfo;
+      });
     });
 
     return {
@@ -63,6 +59,8 @@ export default {
   flex-direction: column;
   position: relative;
   z-index: 99;
+  border: none;
+  border-radius: 0px !important;
   :deep(.ant-card-body) {
     height: 100%;
     box-sizing: border-box;

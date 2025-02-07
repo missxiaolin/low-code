@@ -69,10 +69,11 @@ export default {
   justify-content: space-between;
   position: relative;
   z-index: 99;
-  background-color: var(--search-bg-color);
+  background-color: #1d1e1f;
   ul {
     display: flex;
     flex-direction: row;
+    margin: 0px !important;
     li {
       margin-right: 20px;
     }

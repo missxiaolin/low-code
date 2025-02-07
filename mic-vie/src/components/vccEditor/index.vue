@@ -1,22 +1,24 @@
 <template>
   <div class="editor-box vcc-main">
-    <nav class="base-component-container">
-      <raw-components></raw-components>
-    </nav>
-    <div class="vcc-main-container">
-      <tools-bar>
-        <slot name="toole"></slot>
-      </tools-bar>
-      <div id="editor" class="editor" ref="editorRef">
-        <ruler ref="ruleRef" />
+    <tools-bar class="vcc-tools-bar">
+      <slot name="toole"></slot>
+    </tools-bar>
+    <div class="vcc-main-content">
+      <nav class="base-component-container">
+        <raw-components></raw-components>
+      </nav>
+      <div class="vcc-main-container">
+        <div id="editor" class="editor" ref="editorRef">
+          <ruler ref="ruleRef" />
 
-        <div class="preview-container">
-          <div id="render-control-panel"></div>
+          <div class="preview-container">
+            <div id="render-control-panel"></div>
+          </div>
         </div>
+        <edit-scale :scale="scale" @change="handleScaleChange" />
       </div>
-      <edit-scale :scale="scale" @change="handleScaleChange" />
+      <attribute-input> </attribute-input>
     </div>
-    <attribute-input> </attribute-input>
   </div>
 </template>
 
@@ -249,7 +251,18 @@ export default {
   width: 100%;
   min-height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  .vcc-main-content {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    overflow: hidden;
+  }
+  .vcc-tools-bar {
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+  }
   :deep(.vue-ruler-wrapper) {
     overflow-x: auto;
   }
@@ -269,7 +282,26 @@ export default {
     padding-bottom: 100px;
     padding-right: 200px;
     background-image: url("/static/images/bg-canvas.png");
+    &::-webkit-scrollbar-track {
+      background: transparent !important;
+    }
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #434b55;
+    }
+
+    &::-webkit-scrollbar-corner {
+      display: none;
+    }
+    &::-webkit-scrollbar-corner {
+      display: none; /* 隐藏滚动条角落 */
+    }
   }
+
   .base-component-container {
     border-radius: 0px;
     background-color: var(--search-bg-color);
