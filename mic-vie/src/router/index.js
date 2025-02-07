@@ -57,7 +57,14 @@ export const defaultRoute = [
     path: "/form", // 拖拽表单
     component: () => import("@/views/vcc/form.vue"),
   },
-
+  {
+    path: "/dp/form", // 大屏
+    component: () => import("@/views/vcc/dpForm.vue"),
+  },
+  {
+    path: "/dp/preview", // 大屏展示
+    component: () => import("@/views/vcc/dpPreview.vue"),
+  },
   // {
   //   path: "/:catchAll(.*)", // 表单代码执行
   //   component: () => import("@/views/main/index.vue"),

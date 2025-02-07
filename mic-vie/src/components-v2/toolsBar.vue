@@ -120,6 +120,7 @@ export default {
   ul {
     display: flex;
     flex-direction: row;
+    margin: 0;
     li {
       margin-right: 20px;
     }

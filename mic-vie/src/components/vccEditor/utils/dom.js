@@ -1,3 +1,5 @@
+import { isObject, trim, camelCase } from "lodash-es";
+
 /**
  * // EventListenerOrEventListenerObject
  * @param {*} element
@@ -39,5 +41,18 @@ export function addClass(el, cls) {
   }
   if (!el.classList) {
     el.className = curClass;
+  }
+}
+
+export function setStyle(element, styleName, value = "") {
+  if (!element || !styleName) return;
+
+  if (isObject(styleName)) {
+    Object.keys(styleName).forEach((prop) => {
+      setStyle(element, prop, styleName[prop]);
+    });
+  } else {
+    styleName = camelCase(styleName);
+    element.style[styleName] = value;
   }
 }
