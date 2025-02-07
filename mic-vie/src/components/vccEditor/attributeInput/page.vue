@@ -11,7 +11,7 @@
               placeholder="请输入宽度"
               @blur="
                 (e) => {
-                  handleBlur(e);
+                  handleBlur(e, 'style');
                 }
               "
             ></a-input>
@@ -24,7 +24,7 @@
               v-model:value="styleObj.height"
               @blur="
                 (e) => {
-                  handleBlur(e);
+                  handleBlur(e, 'style');
                 }
               "
               placeholder="请输入高度"
@@ -36,8 +36,32 @@
           <div class="content-item-content">
             <vue3-color-picker
               v-model:pureColor="styleObj['background-color']"
-              @update:pureColor="(e) => handleBlur(e)"
+              @update:pureColor="(e) => handleBlur(e, 'style')"
             ></vue3-color-picker>
+          </div>
+        </li>
+        <li>
+          <div class="label">缩放方式：</div>
+          <div class="content-item-content">
+            <a-radio-group
+              v-model:value="zoomMode"
+              @change="(e) => handleBlur(e.target.value, 'zoomMode')"
+            >
+              <a-radio-button
+                v-for="zm in zoomModeOptions"
+                :key="zm.value"
+                :value="zm.value"
+              >
+                <a-tooltip>
+                  <template #title>{{ zm.label }}</template>
+                  <IconFullscreen v-if="zm.value === 'auto'" />
+                  <IconAdaptWidth v-else-if="zm.value === 'width'" />
+                  <IconAdaptHeight v-else-if="zm.value === 'height'" />
+                  <IconFullscreen v-else-if="zm.value === 'full'" />
+                  <IconStop v-else />
+                </a-tooltip>
+              </a-radio-button>
+            </a-radio-group>
           </div>
         </li>
       </ul>
@@ -48,8 +72,31 @@
 <script>
 import { inject, onMounted, ref } from "vue";
 import { styleStringToObj, objectToArray } from "../utils/utils";
+import {
+  IconFullscreen,
+  IconAdaptAuto,
+  IconAdaptWidth,
+  IconAdaptHeight,
+  IconStop,
+} from "../../icons/index";
+
 export default {
+  components: {
+    IconFullscreen,
+    IconAdaptAuto,
+    IconAdaptWidth,
+    IconAdaptHeight,
+    IconStop,
+  },
   setup() {
+    const zoomMode = ref("default");
+    const zoomModeOptions = ref([
+      { value: "auto", label: "全屏铺满" },
+      { value: "width", label: "等比缩放宽度铺满" },
+      { value: "height", label: "等比缩放高度铺满" },
+      { value: "full", label: "等比缩放高度铺满（可滚动）" },
+      { value: "default", label: "不缩放" },
+    ]);
     const styleObj = ref({
       "background-color": "",
       height: "",
@@ -69,9 +116,19 @@ export default {
         return;
       }
       styleObj.value = styleStringToObj(pageInfo.style);
+      zoomMode.value = pageInfo.zoomMode || "default";
     };
 
-    const handleBlur = () => {
+    const handleBlur = (e, key = "") => {
+      if (key != "style") {
+        pageInfo[key] = e;
+        mainPanelProvider.saveAttribute(
+          objectToArray(pageInfo),
+          pageInfo.lc_id,
+          false
+        );
+        return;
+      }
       const style = styleObj.value;
       const cssString = Object.entries(style)
         .filter(([key, value]) => value !== "")
@@ -96,49 +153,21 @@ export default {
       pageConfig,
       styleObj,
       handleBlur,
+      zoomMode,
+      zoomModeOptions,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.config-manager-page {
-  height: 100%;
-  user-select: none;
-  overflow: auto;
-
-  .config-manager-head {
-    width: 100%;
-    height: 30px;
-    font-size: 12px;
-    line-height: 30px;
-    text-align: center;
-    color: #bcc9d4;
-    user-select: none;
-    background: #2e343c;
-  }
-
-  .config-manager-body {
-    width: 100%;
-    height: auto;
-    overflow: hidden;
-    ul {
-      display: flex;
-      flex-direction: column;
-      padding: 15px;
-      li {
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 5px;
-        .label {
-          min-width: 50px;
-          line-height: 30px;
-        }
-        .content-item-content {
-          flex: 1;
-        }
-      }
-    }
+.content-item-content {
+  flex: 1;
+  :deep(svg) {
+    fill: #a1aeb3;
+    width: 16px;
+    height: 16px;
+    margin-top: 5px;
   }
 }
 </style>
