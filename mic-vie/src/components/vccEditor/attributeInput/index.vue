@@ -7,7 +7,17 @@
       }
     "
   >
-    <com v-if="currentEditRawInfo"></com>
+    <div v-if="currentEditRawInfo">
+      <a-tabs v-model:activeKey="activeKey" class="attribute-tabs">
+        <a-tab-pane key="settings" tab="配置">
+          <com :currentEditRawInfo="currentEditRawInfo"> </com>
+        </a-tab-pane>
+        <a-tab-pane key="data" tab="数据" force-render>
+          <a-empty></a-empty>
+        </a-tab-pane>
+      </a-tabs>
+    </div>
+
     <page v-else></page>
   </a-card>
 </template>
@@ -22,6 +32,7 @@ export default {
     Com,
   },
   setup(props) {
+    let activeKey = ref("settings");
     let currentEditRawInfo = ref("");
     const mainPanelProvider = inject("mainPanelProvider");
     onMounted(() => {
@@ -36,6 +47,7 @@ export default {
 
     return {
       currentEditRawInfo,
+      activeKey,
     };
   },
 };
@@ -95,6 +107,16 @@ export default {
   :deep(.ant-tabs-content-holder) {
     height: 100%;
     overflow-y: scroll;
+  }
+  :deep(.ant-tabs-nav-list) {
+    width: 100%;
+  }
+  :deep(.ant-tabs-tab) {
+    width: 50%;
+    text-align: center;
+    .ant-tabs-tab-btn {
+      width: 100%;
+    }
   }
 }
 </style>

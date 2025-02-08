@@ -77,3 +77,28 @@ export function objectToArray(obj) {
   }
   return result;
 }
+
+/**
+ * {'top':20,'left':20,'width':300,'height':200}
+ * @param {*} str
+ * @returns
+ */
+export function attrStringToObj(str) {
+  str = `(${str})`;
+  const obj = eval(str);
+  return obj;
+}
+
+/**
+ * @param {*} obj
+ * @returns
+ */
+export function attrObjToString(obj) {
+  const str = Object.entries(obj)
+    .map(([key, value]) => `'${key}':${value}`)
+    .join(",");
+
+  const finalStr = `{${str}}`;
+
+  return finalStr;
+}

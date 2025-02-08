@@ -226,7 +226,6 @@ export default {
     onMounted(() => {
       window.vccMainPanelProvider &&
         window.vccMainPanelProvider.onSelectElement((rawInfo) => {
-          console.log(rawInfo);
           if (!rawInfo) {
             selectLcId.value = "";
             return;

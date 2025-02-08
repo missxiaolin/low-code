@@ -627,7 +627,8 @@ $layout-height: 50px;
     ul {
       display: flex;
       flex-direction: column;
-      padding: 15px;
+      padding: 15px 15px 0 15px;
+      margin: 0px;
       li {
         display: flex;
         flex-direction: row;
@@ -636,16 +637,38 @@ $layout-height: 50px;
           min-width: 70px;
           line-height: 30px;
           text-align: right;
+          color: #fff;
         }
         .content-item-content {
           flex: 1;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
           :deep(svg) {
             fill: #a1aeb3;
             width: 16px;
             height: 16px;
             margin-top: 5px;
           }
+          .item-5 {
+            width: 47%;
+          }
         }
+      }
+    }
+    .attribute-input-collapse {
+      height: auto;
+      .ant-collapse-header {
+        padding: 0;
+      }
+      .ant-collapse-expand-icon {
+        position: absolute;
+        right: 15px;
+        top: 5px;
+      }
+      .ant-collapse-header-text {
+        font-size: 14px;
+        margin-left: 10px;
       }
     }
   }

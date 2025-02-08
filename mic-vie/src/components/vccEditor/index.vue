@@ -338,6 +338,9 @@ export default {
 
 <style lang="scss">
 #render-control-panel {
+  & > div {
+    box-shadow: rgba(0, 0, 0, 0.5) 0 0 30px 0;
+  }
   #vcc-container {
     transform: scale(v-bind(scale)) translate(0px, 0px);
     transform-origin: 0 0;
