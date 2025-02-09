@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { ref, inject, defineAsyncComponent } from "vue";
+import { ref, inject, defineAsyncComponent, onMounted, watch } from "vue";
 import {
   attrStringToObj,
   attrObjToString,
@@ -62,21 +62,23 @@ export default {
     const rawObject = ref({});
     const title = ref("");
     const posObj = ref({});
-    if (props.currentEditRawInfo) {
-      rawObject.value =
-        props.currentEditRawInfo[Object.keys(props.currentEditRawInfo)[0]];
-      title.value = rawObject.value.vccName;
-      posObj.value = attrStringToObj(rawObject.value[":defaultStyle"]);
+    const init = () => {
+      if (props.currentEditRawInfo) {
+        rawObject.value =
+          props.currentEditRawInfo[Object.keys(props.currentEditRawInfo)[0]];
+        title.value = rawObject.value.vccName;
+        posObj.value = attrStringToObj(rawObject.value[":defaultStyle"]);
 
-      try {
-        const c = defineAsyncComponent(() =>
-          import(`./config/${rawObject.value.vccComponentName}Config.vue`)
-        );
-        com.value = c;
-      } catch (error) {
-        com.value = "";
+        try {
+          const c = defineAsyncComponent(() =>
+            import(`./config/${rawObject.value.vccComponentName}Config.vue`)
+          );
+          com.value = c;
+        } catch (error) {
+          com.value = "";
+        }
       }
-    }
+    };
 
     const handleUpdate = (e, key) => {
       rawObject.value[key] = `${attrObjToString(e)}`;
@@ -85,6 +87,14 @@ export default {
         rawObject.value.lc_id
       );
     };
+
+    watch(props, (newVal) => {
+      init();
+    });
+
+    onMounted(() => {
+      init();
+    });
 
     return {
       title,
