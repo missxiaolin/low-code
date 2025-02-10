@@ -1,0 +1,1 @@
+import{_ as o,r as a,o as r,c,w as e,b as n,e as p,F as d}from"./index-DeFSTnV4.js";const u=o({},[["render",function(s,f){const t=a("a-collapse-panel"),l=a("a-collapse");return r(),c(l,{bordered:!1,ghost:"",class:"attribute-input-collapse"},{default:e(()=>[n(t,{header:"\u6837\u5F0F"},{default:e(()=>[p("p",null,d(s.text),1)]),_:1})]),_:1})}]]);export{u as default};

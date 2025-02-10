@@ -46,12 +46,10 @@
 <script>
 import { ref, defineAsyncComponent, onMounted, computed, provide } from "vue";
 import Grid from "./grid.vue";
-import vueRuleTool from "../vue-ruler-tool/vue-ruler-tool.vue";
 import ruler from "./rule/index.vue";
 import editScale from "./components/editScale.vue";
 import { MainPanelProvider } from "../../libs/data-main-panel";
 import micShape from "./shape/index.vue";
-import lcCode from "./components/code.vue";
 import { attrStringToObj, attrObjToString, objectToArray } from "./utils/utils";
 const getFakeData = () => {
   return {
@@ -72,9 +70,9 @@ const getFakeData = () => {
 export default {
   components: {
     Grid,
-    vueRuleTool,
     ruler,
     editScale,
+    micShape,
     rawComponents: defineAsyncComponent(() =>
       import("./rawComponents/index.vue")
     ),
@@ -82,8 +80,7 @@ export default {
       import("./attributeInput/index.vue")
     ),
     toolsBar: defineAsyncComponent(() => import("./toolsBar/index.vue")),
-    micShape,
-    lcCode,
+    lcCode: defineAsyncComponent(() => import("./components/code.vue")),
   },
   props: {
     initCodeEntity: {

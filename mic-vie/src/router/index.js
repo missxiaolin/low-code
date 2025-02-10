@@ -18,10 +18,10 @@ const demoRoute = [
     path: "/script/code",
     component: () => import("@/views/demo/code.vue"),
   },
-  {
-    path: "/v3/dp",
-    component: () => import("@/views/demo/v3-dp.vue"),
-  },
+  // {
+  //   path: "/v3/dp",
+  //   component: () => import("@/views/demo/v3-dp.vue"),
+  // },
 ];
 
 export const defaultRoute = [
