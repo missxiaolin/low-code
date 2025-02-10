@@ -189,17 +189,13 @@ export class MainPanelProvider {
     codeForShow = codeForShow.replace(/\s{1}div-lc-mark/g, "");
     this.eventEmitter.emit("codeCreated", codeForShow);
 
-    if (this.editMode) {
-      // 渲染当前代码
-      const readyForMoutedElement = this.createMountedElement();
-      this.appLoad(code, readyForMoutedElement);
-      this.enableEditMode();
-      // // 拍平数据结构
-      this.flatDataStructure(rawDataStructure);
-    } else {
-      // 渲染当前代码
-      this.appLoad(code, this.mountedEle);
-    }
+    // 渲染当前代码
+    // const readyForMoutedElement = this.createMountedElement();
+    // this.appLoad(code, readyForMoutedElement);
+
+    this.enableEditMode();
+    // // 拍平数据结构
+    this.flatDataStructure(rawDataStructure);
 
     return this;
   }

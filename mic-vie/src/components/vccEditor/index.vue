@@ -12,7 +12,18 @@
           <ruler ref="ruleRef" />
 
           <div class="preview-container">
-            <div id="render-control-panel"></div>
+            <div id="render-control-panel">
+              <div
+                :class="comJson.class"
+                :id="comJson.id"
+                :lc_id="comJson.lc_id"
+                :style="comJson.style"
+              >
+                <template v-for="item in comJson.__children">
+                  <mic-shape v-bind="getAttr(item)"></mic-shape>
+                </template>
+              </div>
+            </div>
           </div>
         </div>
         <edit-scale :scale="scale" @change="handleScaleChange" />
@@ -29,6 +40,8 @@ import vueRuleTool from "../vue-ruler-tool/vue-ruler-tool.vue";
 import ruler from "./rule/index.vue";
 import editScale from "./components/editScale.vue";
 import { MainPanelProvider } from "../../libs/data-main-panel";
+import micShape from "./shape/index.vue";
+import { attrStringToObj, attrObjToString, objectToArray } from "./utils/utils";
 const getFakeData = () => {
   return {
     template: {
@@ -58,6 +71,7 @@ export default {
       import("./attributeInput/index.vue")
     ),
     toolsBar: defineAsyncComponent(() => import("./toolsBar/index.vue")),
+    micShape,
   },
   props: {
     initCodeEntity: {
@@ -74,6 +88,8 @@ export default {
     },
   },
   setup(props, { emit }) {
+    let codeRawVueInfo = ref({});
+    let comJson = ref({});
     const dCode = ref("");
     // selectInfo
     const currentEditRawInfo = ref(null);
@@ -96,7 +112,7 @@ export default {
     const editorRef = ref(null);
 
     const currentPointer = (ele) => {
-      console.log(ele);
+      // console.log(ele);
     };
 
     const convertCssLogicCode = (code) => {
@@ -173,14 +189,8 @@ export default {
           dCode.value = code;
         })
         .onCodeStructureUpdated((codeRawVueInfo) => {
-          // if (this.$refs.rawComponents) {
-          //   this.$refs.rawComponents.updateCode(codeRawVueInfo);
-          // }
-          // if (this.$refs.vueRuleTool) {
-          //   this.$refs.vueRuleTool.regenerateScale();
-          // }
-          // this.codeRawVueInfo = codeRawVueInfo;
-          // this.notifyParent();
+          comJson.value = codeRawVueInfo.template.__children[0].div;
+          codeRawVueInfo.value = codeRawVueInfo;
         })
         .onNodeDeleted(() => {
           currentEditRawInfo.value = null;
@@ -234,6 +244,13 @@ export default {
 
     provide("mainPanelProvider", mainPanelProvider);
 
+    const getAttr = (item) => {
+      const share = item["mic-shape"];
+      share["defaultStyle"] = attrStringToObj(share[":defaultStyle"]);
+
+      return share;
+    };
+
     return {
       editorRef,
       ruleRef,
@@ -241,6 +258,8 @@ export default {
       scale,
       handleScaleChange,
       dCode,
+      comJson,
+      getAttr,
     };
   },
 };
