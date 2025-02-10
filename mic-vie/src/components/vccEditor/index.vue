@@ -1,6 +1,9 @@
 <template>
   <div class="editor-box vcc-main">
-    <tools-bar class="vcc-tools-bar">
+    <tools-bar
+      class="vcc-tools-bar"
+      @showCodeDialogVisible="showCodeDialogVisible"
+    >
       <slot name="toole"></slot>
     </tools-bar>
     <div class="vcc-main-content">
@@ -19,8 +22,11 @@
                 :lc_id="comJson.lc_id"
                 :style="comJson.style"
               >
-                <template v-for="item in comJson.__children">
-                  <mic-shape v-bind="getAttr(item)"></mic-shape>
+                <template
+                  v-if="comJson.__children && comJson.__children.length > 0"
+                  v-for="item in comJson.__children"
+                >
+                  <mic-shape v-bind="getAttr(item)" :scale="scale"></mic-shape>
                 </template>
               </div>
             </div>
@@ -30,6 +36,10 @@
       </div>
       <attribute-input> </attribute-input>
     </div>
+    <lcCode
+      v-model:codeDialogVisible="codeDialogVisible"
+      :rawCode="dCode"
+    ></lcCode>
   </div>
 </template>
 
@@ -41,6 +51,7 @@ import ruler from "./rule/index.vue";
 import editScale from "./components/editScale.vue";
 import { MainPanelProvider } from "../../libs/data-main-panel";
 import micShape from "./shape/index.vue";
+import lcCode from "./components/code.vue";
 import { attrStringToObj, attrObjToString, objectToArray } from "./utils/utils";
 const getFakeData = () => {
   return {
@@ -72,6 +83,7 @@ export default {
     ),
     toolsBar: defineAsyncComponent(() => import("./toolsBar/index.vue")),
     micShape,
+    lcCode,
   },
   props: {
     initCodeEntity: {
@@ -88,6 +100,10 @@ export default {
     },
   },
   setup(props, { emit }) {
+    let codeDialogVisible = ref(false);
+    const showCodeDialogVisible = () => {
+      codeDialogVisible.value = true;
+    };
     let codeRawVueInfo = ref({});
     let comJson = ref({});
     const dCode = ref("");
@@ -252,6 +268,8 @@ export default {
     };
 
     return {
+      showCodeDialogVisible,
+      codeDialogVisible,
       editorRef,
       ruleRef,
       canvas,

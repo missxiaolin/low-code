@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { ref, toRefs, toRef, useAttrs, watch, onMounted } from "vue";
+import { ref, toRefs, toRef, useAttrs, watch, onMounted, inject } from "vue";
 import { throttle } from "lodash";
 import { pointRenderData } from "./config";
 import { stretchedComponents } from "../utils/component";
@@ -61,12 +61,15 @@ export default {
       type: String,
       default: "",
     },
+    scale: {
+      type: Number,
+      default: 1,
+    },
   },
   emits: ["change"],
   setup(props, { emit }) {
-    console.log(props);
+    const mainPanelProvider = inject("mainPanelProvider");
     const selectLcId = ref("");
-    const scale = ref(window.vccScale);
     const attrs = useAttrs();
     let canvasState = ref("");
     const shapeRef = ref(null);
@@ -113,7 +116,7 @@ export default {
       if (!dom) return;
       canvasState.value = dom;
 
-      window.vccMainPanelProvider.markElement(dom);
+      mainPanelProvider.markElement(dom);
     };
 
     // 拖拽事件
@@ -132,9 +135,9 @@ export default {
         const curX = moveEvent.clientX;
         const curY = moveEvent.clientY;
         toProps.value.defaultStyle.top =
-          (curY - startY) / scale.value + startTop;
+          (curY - startY) / props.scale + startTop;
         toProps.value.defaultStyle.left =
-          (curX - startX) / scale.value + startLeft;
+          (curX - startX) / props.scale + startLeft;
         canvasState.value.style.left = toProps.value.defaultStyle.left + "px";
         canvasState.value.style.top = toProps.value.defaultStyle.top + "px";
         referPos.value = {
@@ -146,7 +149,7 @@ export default {
         document.removeEventListener("mousemove", move);
         document.removeEventListener("mouseup", up);
 
-        window.vccMainPanelProvider.setKeyValue(
+        mainPanelProvider.setKeyValue(
           ":defaultStyle",
           `{'top':${Number(toProps.value.defaultStyle.top)},'left':${Number(
             toProps.value.defaultStyle.left
@@ -182,8 +185,8 @@ export default {
         // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
         // 因此第一次点击时不触发 move 事件
         const curPositon = {
-          x: (moveEvent.clientX - editorRectInfo.left) / scale.value,
-          y: (moveEvent.clientY - editorRectInfo.top) / scale.value,
+          x: (moveEvent.clientX - editorRectInfo.left) / props.scale,
+          y: (moveEvent.clientY - editorRectInfo.top) / props.scale,
         };
         const data = stretchedComponents(
           point,
@@ -205,7 +208,7 @@ export default {
 
       const up = () => {
         // console.log("position", position);
-        window.vccMainPanelProvider.setKeyValue(
+        mainPanelProvider.setKeyValue(
           ":defaultStyle",
           `{'top':${Number(position.top)},'left':${Number(
             position.left
@@ -225,8 +228,8 @@ export default {
     };
 
     onMounted(() => {
-      window.vccMainPanelProvider &&
-        window.vccMainPanelProvider.onSelectElement((rawInfo) => {
+      mainPanelProvider &&
+        mainPanelProvider.onSelectElement((rawInfo) => {
           if (!rawInfo) {
             selectLcId.value = "";
             return;
@@ -245,7 +248,6 @@ export default {
       canvasState,
       handleStretchedShape,
       attrs,
-      scale,
       toProps,
       referPos,
       selectLcId,
