@@ -1,0 +1,1 @@
+import{_ as r,o,f as e}from"./index-BFdvIdKu.js";const n=r({},[["render",function(t,a){return o(),e("div")}]]);export{n as default};

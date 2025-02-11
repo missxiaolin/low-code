@@ -1,10 +1,5 @@
 <template>
-  <a-collapse
-    :bordered="false"
-    ghost
-    class="attribute-input-collapse"
-    :activeKey="['style', 'tooltip']"
-  >
+  <a-collapse :bordered="false" ghost class="attribute-input-collapse">
     <a-collapse-panel key="style" header="样式">
       <micField label="字体：">
         <a-select
@@ -81,6 +76,7 @@ import {
 export default {
   name: "attribute-input-collapse",
   setup(props) {
+    const activeKey = ref(["style", "tooltip"]);
     const mainPanelProvider = inject("mainPanelProvider");
     const rawVueInfo = mainPanelProvider.getRawVueInfo();
     let pageInfo = {};
@@ -111,6 +107,7 @@ export default {
     });
 
     return {
+      activeKey,
       fontFamilys,
       fontWeights,
       config,
