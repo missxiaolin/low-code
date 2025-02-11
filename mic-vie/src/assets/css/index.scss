@@ -622,8 +622,7 @@ $layout-height: 50px;
 
   .config-manager-body {
     width: 100%;
-    height: auto;
-    overflow: hidden;
+    min-height: calc(100% - 35px);
     ul {
       display: flex;
       flex-direction: column;

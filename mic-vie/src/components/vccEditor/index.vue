@@ -258,8 +258,12 @@ export default {
     provide("mainPanelProvider", mainPanelProvider);
 
     const getAttr = (item) => {
-      const share = item["mic-shape"];
-      share["defaultStyle"] = attrStringToObj(share[":defaultStyle"]);
+      const share = JSON.parse(JSON.stringify(item["mic-shape"]));
+      Object.keys(share).forEach((key) => {
+        if (key.startsWith(":")) {
+          share[key.substring(1)] = attrStringToObj(share[key]);
+        }
+      });
 
       return share;
     };

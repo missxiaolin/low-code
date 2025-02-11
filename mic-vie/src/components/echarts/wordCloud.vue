@@ -29,8 +29,9 @@ export default {
   },
   setup(props, { emit, expose }) {
     const chart = ref(null);
-    const c = merge(wordCloudConfig, props.com.config || {});
-    const config = toRef(c);
+    const c = merge(wordCloudConfig, props.com || {});
+
+    const config = ref(c);
 
     const dv_data = computed(() => {
       return props.data && props.data.length > 0
@@ -42,10 +43,12 @@ export default {
       return config.value.dvField;
     });
 
-    const option = computed(() => {
+    const option = ref({});
+
+    const init = () => {
       const { global, series, tooltip, animation } = config.value;
 
-      return {
+      option.value = {
         tooltip: {
           show: tooltip.show,
           borderWidth: 0,
@@ -84,7 +87,24 @@ export default {
           })),
         },
       };
+    };
+
+    onMounted(() => {
+      init();
     });
+
+    watch(
+      () => props.com,
+      (newVal) => {
+        if (!newVal) return;
+        config.value = merge(wordCloudConfig, newVal || {});
+        init();
+      },
+      {
+        immediate: true,
+        deep: true,
+      }
+    );
 
     return {
       chart,

@@ -20,6 +20,7 @@ import {
 
 export class MainPanelProvider {
   constructor(options) {
+    this.rawVueInfo = {};
     this.isOnload = false;
     // 开启编辑模式
     this.editMode = true;
@@ -241,6 +242,7 @@ export class MainPanelProvider {
     if (realNode) {
       this.currentEditElement = realNode;
       const rawVueInfo = this.markElementInner(realNode);
+      this.rawVueInfo = rawVueInfo;
       // 对外只提供副本，防止外面污染内部
       const codeRawInfoCopy = cloneDeep(rawVueInfo);
       this.eventEmitter.emit("selected", codeRawInfoCopy);
@@ -481,5 +483,9 @@ export class MainPanelProvider {
    */
   getRawDataStructure() {
     return this._rawDataStructure;
+  }
+
+  getRawVueInfo() {
+    return this.rawVueInfo;
   }
 }

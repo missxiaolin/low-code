@@ -94,11 +94,7 @@ export function attrStringToObj(str) {
  * @returns
  */
 export function attrObjToString(obj) {
-  const str = Object.entries(obj)
-    .map(([key, value]) => `'${key}':${value}`)
-    .join(",");
-
-  const finalStr = `{${str}}`;
-
-  return finalStr;
+  const jsonString = JSON.stringify(obj);
+  const replacedString = jsonString.replace(/"/g, "'");
+  return replacedString;
 }

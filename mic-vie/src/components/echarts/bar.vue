@@ -34,7 +34,7 @@ export default {
   },
   setup(props, { emit, expose }) {
     const chart = ref(null);
-    const c = merge(barConfig, props.com.config || {});
+    const c = merge(barConfig, props.com || {});
     const config = toRef(c);
 
     const dv_data = computed(() => {

@@ -8,7 +8,11 @@
     "
   >
     <div v-if="currentEditRawInfo">
-      <a-tabs v-model:activeKey="activeKey" class="attribute-tabs">
+      <a-tabs
+        v-model:activeKey="activeKey"
+        class="attribute-tabs"
+        :destroyInactiveTabPane="true"
+      >
         <a-tab-pane key="settings" tab="配置">
           <com :currentEditRawInfo="currentEditRawInfo"> </com>
         </a-tab-pane>
@@ -78,6 +82,9 @@ export default {
     box-sizing: border-box;
     overflow: hidden !important;
     padding: 0 !important;
+    & > div {
+      height: 100%;
+    }
   }
   .el-scrollbar {
     padding-right: 20px;

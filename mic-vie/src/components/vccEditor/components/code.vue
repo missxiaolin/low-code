@@ -59,7 +59,6 @@ export default {
     };
 
     const outputCode = () => {
-      console.log(props.rawCode);
       return prettyCode();
     };
 

@@ -111,6 +111,10 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
+  &.setting-panel-gui-box::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
   .title {
     padding-left: 10px;
     font-size: 14px;
