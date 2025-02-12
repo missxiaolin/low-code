@@ -93,6 +93,9 @@ export default {
 
 .attribute-tabs {
   height: 100%;
+  :deep(.ant-tabs-nav-operations) {
+    display: none;
+  }
   :deep(.ant-empty) {
     display: flex;
     flex-direction: column;

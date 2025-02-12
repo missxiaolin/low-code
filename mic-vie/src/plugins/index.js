@@ -18,6 +18,7 @@ import micWordCloud from "../components/echarts/wordCloud.vue";
 import micLine from "../components/echarts/line.vue";
 import micShape from "../components/vccEditor/shape/index.vue";
 import micField from "../components/xl/field.vue";
+import micCollapsePanel from "../components/xl/collapse.vue";
 
 // 引入echarts
 import Echarts from "vue-echarts";
@@ -41,6 +42,7 @@ const components = [
   micLine,
   micShape,
   micField,
+  micCollapsePanel,
 ];
 
 import "virtual:svg-icons-register";
