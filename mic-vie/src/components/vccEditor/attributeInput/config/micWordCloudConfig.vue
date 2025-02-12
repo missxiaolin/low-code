@@ -91,7 +91,7 @@ import { uuid } from "../../utils/utils";
 import { rowVueInfo } from "../../../../hooks/rawVueInfo";
 
 export default {
-  name: "attribute-input-collapse",
+  name: "mic-word-config",
   setup(props) {
     const { config } = rowVueInfo(wordCloudConfig);
 

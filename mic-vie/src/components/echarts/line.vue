@@ -107,7 +107,9 @@ export default {
       });
     };
 
-    const option = computed(() => {
+    let option = ref({});
+
+    const init = () => {
       const { global, xAxis, yAxis, tooltip, legend, animation } = config.value;
       const [legendTop, legendLeft] = legend.position.split("-");
       const pointerLineStyle = {
@@ -322,8 +324,25 @@ export default {
         series: getSeries(keys),
       };
 
-      return opts;
+      option.value = opts;
+    };
+
+    onMounted(() => {
+      init();
     });
+
+    watch(
+      () => props.com,
+      (newVal) => {
+        if (!newVal) return;
+        config.value = merge(lineConfig, newVal || {});
+        init();
+      },
+      {
+        immediate: true,
+        deep: true,
+      }
+    );
 
     return {
       chart,

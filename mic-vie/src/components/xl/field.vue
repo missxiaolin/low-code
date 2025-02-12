@@ -1,6 +1,8 @@
 <template>
   <div class="field-box">
-    <div class="label">{{ label }}</div>
+    <div class="label">
+      {{ label }}
+    </div>
     <div
       :class="{
         'content-item-content': true,

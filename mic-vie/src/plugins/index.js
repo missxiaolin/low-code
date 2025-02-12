@@ -20,6 +20,10 @@ import micShape from "../components/vccEditor/shape/index.vue";
 import micField from "../components/xl/field.vue";
 import micCollapsePanel from "../components/xl/collapse.vue";
 import micNumber from "../components/xl/number.vue";
+import micSelect from "../components/xl/select.vue";
+import micColor from "../components/xl/color.vue";
+import micPanel from "../components/xl/panel.vue";
+import micInput from "../components/xl/input.vue";
 
 // 引入echarts
 import Echarts from "vue-echarts";
@@ -45,6 +49,10 @@ const components = [
   micField,
   micCollapsePanel,
   micNumber,
+  micSelect,
+  micColor,
+  micPanel,
+  micInput,
 ];
 
 import "virtual:svg-icons-register";
