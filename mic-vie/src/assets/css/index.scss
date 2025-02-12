@@ -663,11 +663,17 @@ $layout-height: 50px;
       .ant-collapse-expand-icon {
         position: absolute;
         right: 15px;
-        top: 5px;
+        top: 1px;
       }
       .ant-collapse-header-text {
         font-size: 14px;
         margin-left: 10px;
+      }
+      .ant-collapse-item {
+        margin-bottom: 5px;
+      }
+      .ant-collapse-content-box {
+        padding-bottom: 0px;
       }
     }
   }

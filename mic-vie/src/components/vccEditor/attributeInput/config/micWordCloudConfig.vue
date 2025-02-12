@@ -26,9 +26,9 @@
         <a-input-number v-model:value="config.global.rotate"></a-input-number>
       </micField>
     </a-collapse-panel>
-    <!-- <a-collapse-panel header="系列"> </a-collapse-panel> -->
+    <a-collapse-panel header="系列"> </a-collapse-panel>
     <a-collapse-panel key="tooltip" header="提示框">
-      <micField label="旋转步长：">
+      <micField label="是否显示：">
         <a-radio-group v-model:value="config.tooltip.show">
           <a-radio-button :value="true">打开</a-radio-button>
           <a-radio-button :value="false">关闭</a-radio-button>
