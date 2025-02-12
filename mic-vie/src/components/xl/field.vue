@@ -38,6 +38,7 @@ export default {
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+
   .label {
     min-width: 70px;
     line-height: 30px;
@@ -51,6 +52,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
     :deep(.ant-input-number) {
       width: 47%;
     }

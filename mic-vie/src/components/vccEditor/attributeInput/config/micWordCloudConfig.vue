@@ -15,12 +15,16 @@
         <a-input-number v-model:value="config.global.min"></a-input-number>
       </micField>
       <micField label="旋转范围：" :span="2">
-        <a-input-number
+        <mic-number
+          classWrap="item-5"
           v-model:value="config.global.rotationRange.min"
-        ></a-input-number>
-        <a-input-number
+          label="最小值"
+        ></mic-number>
+        <mic-number
+          classWrap="item-5"
           v-model:value="config.global.rotationRange.max"
-        ></a-input-number>
+          label="最大值"
+        ></mic-number>
       </micField>
       <micField label="旋转步长：">
         <a-input-number v-model:value="config.global.rotate"></a-input-number>
@@ -80,49 +84,16 @@
 </template>
 
 <script>
-import { toRef, inject, watch, ref, watchEffect, onMounted } from "vue";
-import { merge } from "lodash-es";
+import { ref, onMounted } from "vue";
 import { wordCloudConfig } from "../../../echarts/config";
 import { fontFamilys, fontWeights } from "../../../../config/select-options";
 import { uuid } from "../../utils/utils";
-import {
-  styleStringToObj,
-  objectToArray,
-  attrObjToString,
-} from "../../utils/utils";
+import { rowVueInfo } from "../../../../hooks/rawVueInfo";
 
 export default {
   name: "attribute-input-collapse",
   setup(props) {
-    const activeKey = ref(["style", "tooltip"]);
-    const mainPanelProvider = inject("mainPanelProvider");
-    const rawVueInfo = mainPanelProvider.getRawVueInfo();
-    let pageInfo = {};
-    try {
-      pageInfo = rawVueInfo[Object.keys(rawVueInfo)];
-    } catch (error) {}
-    if (!pageInfo) {
-      return;
-    }
-    let com = merge(
-      JSON.parse(JSON.stringify(wordCloudConfig)),
-      pageInfo.com || {}
-    );
-
-    const config = ref(com);
-
-    watch(config.value, (newVal) => {
-      pageInfo[":com"] = attrObjToString(JSON.parse(JSON.stringify(newVal)));
-      mainPanelProvider.saveAttribute(
-        objectToArray(pageInfo),
-        pageInfo.lc_id,
-        false
-      );
-    });
-
-    onMounted(() => {
-      //
-    });
+    const { config } = rowVueInfo(wordCloudConfig);
 
     const handleAddItem = () => {
       config.value.series.push({
@@ -143,7 +114,6 @@ export default {
     return {
       handleAddItem,
       handleDelItem,
-      activeKey,
       fontFamilys,
       fontWeights,
       config,

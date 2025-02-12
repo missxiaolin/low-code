@@ -2,7 +2,6 @@ import { ref, watch } from "vue";
 import {
   getAttrJson,
   getAttrKeys,
-  stringToObj,
 } from "../components/vcc/vccComponents/utils/index";
 
 export function saveAttr(props, instance, tagAttr, emitEvent = "childSave") {

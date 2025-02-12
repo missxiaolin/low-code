@@ -19,6 +19,7 @@ import micLine from "../components/echarts/line.vue";
 import micShape from "../components/vccEditor/shape/index.vue";
 import micField from "../components/xl/field.vue";
 import micCollapsePanel from "../components/xl/collapse.vue";
+import micNumber from "../components/xl/number.vue";
 
 // 引入echarts
 import Echarts from "vue-echarts";
@@ -43,6 +44,7 @@ const components = [
   micShape,
   micField,
   micCollapsePanel,
+  micNumber,
 ];
 
 import "virtual:svg-icons-register";

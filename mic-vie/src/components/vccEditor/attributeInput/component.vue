@@ -6,31 +6,35 @@
         <li>
           <div class="label">图表尺寸：</div>
           <div class="content-item-content">
-            <a-input-number
-              class="item-5"
+            <mic-number
+              classWrap="item-5"
               v-model:value="posObj.width"
+              label="宽度"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
-            ></a-input-number>
-            <a-input-number
-              class="item-5"
+            ></mic-number>
+            <mic-number
+              classWrap="item-5"
               v-model:value="posObj.height"
+              label="高度"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
-            ></a-input-number>
+            ></mic-number>
           </div>
         </li>
         <li>
           <div class="label">图表位置：</div>
           <div class="content-item-content">
-            <a-input-number
-              class="item-5"
+            <mic-number
+              classWrap="item-5"
               v-model:value="posObj.left"
+              label="高度"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
-            ></a-input-number>
-            <a-input-number
-              class="item-5"
+            ></mic-number>
+            <mic-number
+              classWrap="item-5"
               v-model:value="posObj.top"
+              label="高度"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
-            ></a-input-number>
+            ></mic-number>
           </div>
         </li>
       </ul>
