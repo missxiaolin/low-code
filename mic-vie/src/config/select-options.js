@@ -150,3 +150,24 @@ export const animationEasings = [
   "bounceOut",
   "bounceInOut",
 ].map((m) => ({ value: m, label: m }));
+
+export const echartsLablePositions = [
+  { value: "top", label: "顶部" },
+  { value: "left", label: "左侧" },
+  { value: "right", label: "右侧" },
+  { value: "bottom", label: "底部" },
+  { value: "inside", label: "内部" },
+  { value: "insideLeft", label: "内-左侧" },
+  { value: "insideRight", label: "内-右侧" },
+  { value: "insideTop", label: "内-顶部" },
+  { value: "insideBottom", label: "内-底部" },
+  { value: "insideTopLeft", label: "内-顶部居左" },
+  { value: "insideBottomLeft", label: "内-底部居左" },
+  { value: "insideTopRight", label: "内-顶部居右" },
+  { value: "insideBottomRight", label: "内-顶部居右" },
+];
+
+export const fillTypes = [
+  { value: "solid", label: "实体填充" },
+  { value: "gradient", label: "渐变填充" },
+];

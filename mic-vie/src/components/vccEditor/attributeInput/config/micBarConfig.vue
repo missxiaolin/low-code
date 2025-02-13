@@ -1,16 +1,15 @@
 <template>
-  <a-collapse :bordered="false" ghost class="attribute-input-collapse">
-  </a-collapse>
+  <div class="attribute-input-collapse"></div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
 import { barConfig } from "../../../echarts/config";
 import {
   fontFamilys,
+  selectSuggests,
+  echartsLablePositions,
   fontWeights,
   axisTypes,
-  selectSuggests,
   titleLocations,
   lineStyles,
   valueFormats,
@@ -19,6 +18,7 @@ import {
   legendLocations,
   orients,
   echartIcons,
+  fillTypes,
   animationEasings,
 } from "../../../../config/select-options";
 import { uuid } from "../../utils/utils";
@@ -29,7 +29,19 @@ export default {
   setup(props) {
     const { config } = rowVueInfo(barConfig);
 
-    const handleAddItem = () => {};
+    const handleAddItem = () => {
+      config.value.series.push({
+        type: "bar",
+        id: `系列${config.value.series.length}_${uuid(7)}`,
+        name: `系列${config.value.series.length}`,
+        color: {
+          type: "solid",
+          value: "#00baff",
+          from: "#fff",
+          to: "#000",
+        },
+      });
+    };
 
     const handleDelItem = () => {
       if (config.value.series.length === 1) {
@@ -42,9 +54,11 @@ export default {
       config,
       handleAddItem,
       handleDelItem,
+      fontFamilys,
+      selectSuggests,
+      echartsLablePositions,
       fontWeights,
       axisTypes,
-      selectSuggests,
       titleLocations,
       lineStyles,
       valueFormats,
@@ -53,6 +67,7 @@ export default {
       legendLocations,
       orients,
       echartIcons,
+      fillTypes,
       animationEasings,
     };
   },

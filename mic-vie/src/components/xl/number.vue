@@ -38,6 +38,20 @@ export default {
 .mic-number {
   display: flex;
   flex-direction: column;
+  :deep(.ant-input-number-affix-wrapper) {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+  :deep(.ant-input-number-prefix) {
+    order: 2;
+    margin-right: 25px;
+    color: #5c6366;
+  }
+  :deep(.ant-input-number-handler-wrap) {
+    right: -37px;
+    opacity: 1;
+  }
   .mic-number-label {
     text-align: left;
     font-size: 12px;

@@ -37,10 +37,12 @@
           classWrap="item-5"
           v-model:value="config.global.rotationRange.min"
           label="最小值"
+          prefix="度"
         ></mic-number>
         <mic-number
           classWrap="item-5"
           v-model:value="config.global.rotationRange.max"
+          prefix="度"
           label="最大值"
         ></mic-number>
       </micField>
@@ -48,13 +50,7 @@
         <a-input-number v-model:value="config.global.rotate"></a-input-number>
       </micField>
     </mic-panel>
-    <mic-panel title="提示框">
-      <micField label="是否显示：">
-        <a-radio-group v-model:value="config.tooltip.show">
-          <a-radio-button :value="true">打开</a-radio-button>
-          <a-radio-button :value="false">关闭</a-radio-button>
-        </a-radio-group>
-      </micField>
+    <mic-panel title="提示框" v-model:checked="config.tooltip.show">
       <micField label="字号：">
         <a-input-number
           v-model:value="config.tooltip.textStyle.fontSize"
@@ -126,6 +122,9 @@ export default {
 .attribute-input-collapse {
   :deep(.ant-collapse-content-box) {
     padding: 15px 15px 0 15px;
+  }
+  :deep(.ant-switch) {
+    margin-left: 10px;
   }
 }
 </style>

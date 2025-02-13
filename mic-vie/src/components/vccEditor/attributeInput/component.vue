@@ -11,11 +11,13 @@
               v-model:value="posObj.width"
               label="宽度"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
+              prefix="px"
             ></mic-number>
             <mic-number
               classWrap="item-5"
               v-model:value="posObj.height"
               label="高度"
+              prefix="px"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
             ></mic-number>
           </div>
@@ -27,12 +29,14 @@
               classWrap="item-5"
               v-model:value="posObj.left"
               label="距离左边"
+              prefix="px"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
             ></mic-number>
             <mic-number
               classWrap="item-5"
               v-model:value="posObj.top"
               label="距离顶部"
+              prefix="px"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
             ></mic-number>
           </div>

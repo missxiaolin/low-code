@@ -22,6 +22,7 @@
           <mic-number
             classWrap="item-5"
             label="粗细"
+            prefix="px"
             v-model:value="slotProps.item.line.width"
           ></mic-number>
           <mic-number
@@ -59,6 +60,7 @@
           <mic-number
             classWrap="item-5"
             label="描边粗细"
+            prefix="px"
             v-model:value="slotProps.item.point.borderWidth"
           ></mic-number>
           <mic-number
@@ -110,17 +112,20 @@
             <mic-number
               classWrap="item-5"
               v-model:value="slotProps.item.label.offset.x"
+              prefix="px"
               label="水平"
             ></mic-number>
             <mic-number
               classWrap="item-5"
               v-model:value="slotProps.item.label.offset.y"
+              prefix="px"
               label="垂直"
             ></mic-number>
           </micField>
           <micField label="旋转角度：">
             <mic-number
               v-model:value="slotProps.item.label.rotate"
+              prefix="度"
             ></mic-number>
           </micField>
           <micField label="文本样式：" :span="2">
@@ -148,6 +153,7 @@
               classWrap="item-5"
               v-model:value="slotProps.item.label.stroke.width"
               label="粗细"
+              prefix="px"
             ></mic-number>
             <mic-color
               classWrap="item-5"
@@ -171,21 +177,25 @@
         <mic-number
           classWrap="item-5"
           v-model:value="config.global.margin.top"
+          prefix="px"
           label="顶部"
         ></mic-number>
         <mic-number
           classWrap="item-5"
           v-model:value="config.global.margin.bottom"
+          prefix="px"
           label="底部"
         ></mic-number>
         <mic-number
           classWrap="item-5"
           v-model:value="config.global.margin.left"
+          prefix="px"
           label="左侧"
         ></mic-number>
         <mic-number
           classWrap="item-5"
           v-model:value="config.global.margin.right"
+          prefix="px"
           label="右侧"
         ></mic-number>
       </micField>
@@ -197,13 +207,7 @@
         />
       </micField>
     </mic-panel>
-    <mic-panel title="X轴">
-      <micField label="是否显示：">
-        <a-radio-group v-model:value="config.xAxis.show">
-          <a-radio-button :value="true">显示</a-radio-button>
-          <a-radio-button :value="false">隐藏</a-radio-button>
-        </a-radio-group>
-      </micField>
+    <mic-panel title="X轴" v-model:checked="config.xAxis.show">
       <micField label="数据类型：">
         <a-radio-group
           v-model:value="config.xAxis.type"
@@ -282,11 +286,13 @@
           <mic-number
             classWrap="item-5"
             v-model:value="config.yAxis.title.display.rotate"
+            prefix="度"
             label="旋转"
           ></mic-number>
           <mic-number
             classWrap="item-5"
             v-model:value="config.yAxis.title.display.offset"
+            prefix="px"
             label="偏移"
           ></mic-number>
         </micField>
@@ -322,7 +328,7 @@
         <micField label="粗细：">
           <mic-number
             v-model:value="config.yAxis.axisLine.width"
-            label="px"
+            prefix="px"
           ></mic-number>
         </micField>
         <micField label="颜色：">
@@ -343,7 +349,7 @@
         <micField label="粗细：">
           <mic-number
             v-model:value="config.yAxis.axisTick.width"
-            label="px"
+            prefix="px"
           ></mic-number>
         </micField>
         <micField label="颜色：">
@@ -377,19 +383,22 @@
           ></a-select>
         </micField>
         <micField label="两端间距：">
-          <a-input-number
+          <mic-number
             v-model:value="config.yAxis.axisLabel.boundaryGap"
-          ></a-input-number>
+            prefix="%"
+          ></mic-number>
         </micField>
         <micField label="展示方式：" :span="2">
           <mic-number
             classWrap="item-5"
             v-model:value="config.yAxis.axisLabel.display.rotate"
+            prefix="度"
             label="旋转"
           ></mic-number>
           <mic-number
             classWrap="item-5"
             v-model:value="config.yAxis.axisLabel.display.margin"
+            prefix="px"
             label="偏移"
           ></mic-number>
         </micField>
@@ -433,6 +442,7 @@
           <mic-number
             v-model:value="config.yAxis.grid.line.width"
             classWrap="item-5"
+            prefix="px"
             label="粗细"
           ></mic-number>
           <mic-color
@@ -444,12 +454,14 @@
           <mic-number
             v-if="config.yAxis.grid.line.type === 'dashed'"
             v-model:value="config.yAxis.grid.line.dashedLength"
+            prefix="px"
             classWrap="item-5"
             label="长度"
           ></mic-number>
           <mic-number
             v-if="config.yAxis.grid.line.type === 'dashed'"
             v-model:value="config.yAxis.grid.line.dashedSpace"
+            prefix="px"
             classWrap="item-5"
             label="间距"
           ></mic-number>
@@ -488,11 +500,13 @@
           <mic-number
             classWrap="item-5"
             v-model:value="config.tooltip.background.padding.h"
+            prefix="px"
             label="水平"
           ></mic-number>
           <mic-number
             classWrap="item-5"
             v-model:value="config.tooltip.background.padding.v"
+            prefix="px"
             label="垂直"
           ></mic-number>
         </micField>
@@ -509,9 +523,10 @@
           ></mic-color>
         </micField>
         <micField label="边框粗细：">
-          <a-input-number
+          <mic-number
             v-model:value="config.tooltip.background.borderWidth"
-          ></a-input-number>
+            prefix="px"
+          ></mic-number>
         </micField>
       </mic-panel>
       <mic-panel v-model:checked="config.tooltip.pointer.show" title="轴指示器">
@@ -527,6 +542,7 @@
             classWrap="item-5"
             label="粗细"
             v-model:value="config.tooltip.pointer.line.width"
+            prefix="px"
           ></mic-number>
           <mic-color
             classWrap="item-5"
@@ -538,24 +554,20 @@
             v-if="config.tooltip.pointer.line.type === 'dashed'"
             classWrap="item-5"
             label="长度"
+            prefix="px"
             v-model:value="config.tooltip.pointer.line.dashedLength"
           ></mic-number>
           <mic-number
             v-if="config.tooltip.pointer.line.type === 'dashed'"
             classWrap="item-5"
             label="间距"
+            prefix="px"
             v-model:value="config.tooltip.pointer.line.dashedSpace"
           ></mic-number>
         </micField>
       </mic-panel>
     </mic-panel>
-    <mic-panel title="图例">
-      <micField label="是否显示：">
-        <a-radio-group v-model:value="config.legend.show">
-          <a-radio-button :value="true">显示</a-radio-button>
-          <a-radio-button :value="false">隐藏</a-radio-button>
-        </a-radio-group>
-      </micField>
+    <mic-panel title="图例" v-model:checked="config.legend.show">
       <micField label="位置：">
         <a-select
           :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -599,30 +611,35 @@
           ></a-select>
         </micField>
         <micField label="宽度：">
-          <a-input-number
+          <mic-number
             v-model:value="config.legend.symbol.width"
-          ></a-input-number>
+            prefix="px"
+          ></mic-number>
         </micField>
         <micField label="高度：">
-          <a-input-number
+          <mic-number
+            prefix="px"
             v-model:value="config.legend.symbol.height"
-          ></a-input-number>
+          ></mic-number>
         </micField>
         <micField label="间隔：">
-          <a-input-number
+          <mic-number
+            prefix="px"
             v-model:value="config.legend.symbol.gap"
-          ></a-input-number>
+          ></mic-number>
         </micField>
       </mic-panel>
       <mic-panel v-model:checked="config.legend.page.enabled" title="翻页功能">
         <micField label="容器尺寸：" :span="2">
           <mic-number
             classWrap="item-5"
+            prefix="px"
             v-model:value="config.legend.page.size.width"
             label="宽度"
           ></mic-number>
           <mic-number
             classWrap="item-5"
+            prefix="px"
             v-model:value="config.legend.page.size.height"
             label="高度"
           ></mic-number>
@@ -662,9 +679,10 @@
         </a-radio-group>
       </micField>
       <micField label="持续时间：">
-        <a-input-number
+        <mic-number
           v-model:value="config.animation.duration"
-        ></a-input-number>
+          prefix="ms"
+        ></mic-number>
       </micField>
       <micField label="缓动效果：">
         <a-select
@@ -673,10 +691,11 @@
         ></a-select>
       </micField>
       <micField label="延迟：">
-        <a-input-number
+        <mic-number
           v-model:value="config.animation.delay"
           :options="animationEasings"
-        ></a-input-number>
+          prefix="ms"
+        ></mic-number>
       </micField>
     </mic-panel>
   </div>
