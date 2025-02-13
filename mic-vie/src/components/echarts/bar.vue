@@ -1,11 +1,11 @@
 <template>
   <div class="chart-container">
-    <e-charts ref="chart" theme="dark" :option="option" :autoresize="true" />
+    <e-charts ref="chart" theme="dark" :option="options" :autoresize="true" />
   </div>
 </template>
 
 <script>
-import { ref, toRef, computed } from "vue";
+import { ref, toRef, computed, onMounted, watch } from "vue";
 import { barConfig } from "./config";
 import { merge, groupBy } from "lodash-es";
 import dayjs from "dayjs";
@@ -100,7 +100,9 @@ export default {
       });
     };
 
-    const option = computed(() => {
+    let options = ref({});
+
+    const init = () => {
       const { global, xAxis, yAxis, tooltip, legend, animation } = config.value;
       const [legendTop, legendLeft] = legend.position.split("-");
       const pointerLineStyle = {
@@ -287,12 +289,29 @@ export default {
         animationDelay: animation.delay,
         series: getSeries(),
       };
-      return opts;
+      options.value = opts;
+    };
+
+    onMounted(() => {
+      init();
     });
+
+    watch(
+      () => props.com,
+      (newVal) => {
+        if (!newVal) return;
+        config.value = merge(barConfig, newVal || {});
+        init();
+      },
+      {
+        immediate: true,
+        deep: true,
+      }
+    );
 
     return {
       chart,
-      option,
+      options,
     };
   },
 };

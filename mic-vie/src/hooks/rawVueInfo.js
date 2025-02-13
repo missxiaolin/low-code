@@ -19,6 +19,21 @@ export function rowVueInfo(c) {
 
   const config = ref(com);
 
+  const getOptions = (data, filters) => {
+    const list = [];
+    if (filters && filters.length > 0) {
+      filters.forEach((m) => {
+        const dto = data.find((n) => n.value == m);
+        if (dto) {
+          list.push(dto);
+        } else {
+          list.push({ value: m, label: m });
+        }
+      });
+    }
+    return list;
+  };
+
   watch(config.value, (newVal) => {
     pageInfo[":com"] = attrObjToString(JSON.parse(JSON.stringify(newVal)));
     mainPanelProvider.saveAttribute(
@@ -33,5 +48,6 @@ export function rowVueInfo(c) {
     pageInfo,
     mainPanelProvider,
     rawVueInfo,
+    getOptions,
   };
 }

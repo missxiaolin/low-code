@@ -225,12 +225,12 @@
           label="最小值"
           :getPopupContainer="(triggerNode) => triggerNode.parentNode"
           v-model:value="config.xAxis.extent.min"
-          :options="selectSuggests"
+          :options="getOptions(selectSuggests, ['auto', 'dataMin', 'dataMax'])"
         ></mic-select>
         <mic-select
           classWrap="item-5"
           label="最大值"
-          :options="selectSuggests"
+          :options="getOptions(selectSuggests, ['auto', 'dataMin', 'dataMax'])"
           :getPopupContainer="(triggerNode) => triggerNode.parentNode"
           v-model:value="config.xAxis.extent.max"
         ></mic-select>
@@ -242,6 +242,201 @@
           size="small"
         />
       </micField>
+      <mic-panel v-model:checked="config.xAxis.title.show" title="轴标题">
+        <micField label="标题显示：">
+          <a-input v-model:value="config.xAxis.title.name"></a-input>
+        </micField>
+        <micField label="位置：">
+          <a-select
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model:value="config.xAxis.title.location"
+            :options="titleLocations"
+          ></a-select>
+        </micField>
+        <micField label="展开方式：" :span="2">
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.xAxis.title.display.rotate"
+            prefix="度"
+            label="旋转"
+          >
+          </mic-number>
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.xAxis.title.display.offset"
+            prefix="px"
+            label="偏移"
+          >
+          </mic-number>
+        </micField>
+        <micField label="文本样式：" :span="2">
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.xAxis.title.textStyle.fontSize"
+            label="字号"
+          ></mic-number>
+          <mic-select
+            classWrap="item-5"
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model:value="config.xAxis.title.textStyle.fontWeight"
+            :options="fontWeights"
+            label="字体粗细"
+          ></mic-select>
+          <mic-color
+            classWrap="item-5"
+            label="颜色"
+            v-model:pureColor="config.xAxis.title.textStyle.color"
+            pickerContainer=".attribute-input-collapse"
+          ></mic-color>
+        </micField>
+      </mic-panel>
+      <mic-panel v-model:checked="config.xAxis.axisLine.show" title="轴线">
+        <micField label="类型：">
+          <a-select
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model:value="config.xAxis.axisLine.type"
+            :options="lineStyles"
+          ></a-select>
+        </micField>
+        <micField label="粗细：">
+          <mic-number
+            v-model:value="config.xAxis.axisLine.width"
+            prefix="px"
+          ></mic-number>
+        </micField>
+        <micField label="颜色：">
+          <mic-color
+            classWrap="item-5"
+            label="颜色"
+            v-model:pureColor="config.xAxis.axisLine.color"
+            pickerContainer=".attribute-input-collapse"
+          ></mic-color>
+        </micField>
+      </mic-panel>
+      <mic-panel v-model:checked="config.xAxis.axisTick.show" title="轴刻度">
+        <micField label="类型：">
+          <a-select
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model="config.xAxis.axisTick.type"
+            :options="lineStyles"
+          ></a-select>
+        </micField>
+        <micField label="粗细：">
+          <mic-number
+            v-model:value="config.xAxis.axisTick.width"
+            prefix="px"
+          ></mic-number>
+        </micField>
+        <micField label="颜色：">
+          <mic-color
+            classWrap="item-5"
+            label="颜色"
+            v-model:pureColor="config.xAxis.axisTick.color"
+            pickerContainer=".attribute-input-collapse"
+          ></mic-color>
+        </micField>
+      </mic-panel>
+      <mic-panel title="轴标签" v-model:checked="config.xAxis.axisLabel.show">
+        <micField label="显示格式：" v-if="config.xAxis.type === 'value'">
+          <a-select
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model="config.xAxis.axisLabel.valueFormat"
+            :options="valueFormats"
+          ></a-select>
+        </micField>
+        <micField label="显示格式：" v-if="config.xAxis.type === 'time'">
+          <a-select
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model="config.xAxis.axisLabel.timeFormat"
+            :options="timeFormats"
+          ></a-select>
+        </micField>
+        <micField label="间隔：">
+          <a-select
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model:value="config.xAxis.axisLabel.interval"
+            :options="getOptions(selectSuggests, ['auto', '0', '1', '2'])"
+          ></a-select>
+        </micField>
+        <micField label="展示方式：" :span="2">
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.xAxis.axisLabel.display.rotate"
+            prefix="度"
+            label="旋转"
+          ></mic-number>
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.xAxis.axisLabel.display.margin"
+            prefix="px"
+            label="偏移"
+          ></mic-number>
+        </micField>
+        <micField label="对齐方式：">
+          <a-select
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model:value="config.xAxis.axisLabel.align"
+            :options="hAligns"
+          ></a-select>
+        </micField>
+        <micField label="文本样式：" :span="2">
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.xAxis.axisLabel.textStyle.fontSize"
+            label="字号"
+          ></mic-number>
+          <mic-select
+            classWrap="item-5"
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model:value="config.xAxis.axisLabel.textStyle.fontWeight"
+            :options="fontWeights"
+            label="字体粗细"
+          ></mic-select>
+          <mic-color
+            classWrap="item-5"
+            label="颜色"
+            v-model:pureColor="config.xAxis.axisLabel.textStyle.color"
+            pickerContainer=".attribute-input-collapse"
+          ></mic-color>
+        </micField>
+      </mic-panel>
+      <mic-panel title="网格线" v-model:checked="config.xAxis.grid.show">
+        <micField label="文本样式：" :span="2">
+          <mic-select
+            classWrap="item-5"
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model:value="config.xAxis.grid.line.type"
+            :options="lineStyles"
+            label="类型"
+          >
+          </mic-select>
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.xAxis.grid.line.width"
+            label="粗细"
+            prefix="px"
+          ></mic-number>
+          <mic-color
+            classWrap="item-5"
+            label="颜色"
+            v-model:pureColor="config.xAxis.grid.line.color"
+            pickerContainer=".attribute-input-collapse"
+          >
+          </mic-color>
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.xAxis.grid.line.dashedLength"
+            label="长度"
+            prefix="px"
+          ></mic-number>
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.xAxis.grid.line.dashedSpace"
+            label="间隔"
+            prefix="px"
+          ></mic-number>
+        </micField>
+      </mic-panel>
     </mic-panel>
     <mic-panel title="Y轴" v-model:checked="config.yAxis.show">
       <micField label="数据类型：">
@@ -261,12 +456,12 @@
           label="最小值"
           v-model:value="config.yAxis.extent.min"
           :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-          :options="selectSuggests"
+          :options="getOptions(selectSuggests, ['auto', 'dataMin', 'dataMax'])"
         ></mic-select>
         <mic-select
           classWrap="item-5"
           label="最大值"
-          :options="selectSuggests"
+          :options="getOptions(selectSuggests, ['auto', 'dataMin', 'dataMax'])"
           :getPopupContainer="(triggerNode) => triggerNode.parentNode"
           v-model:value="config.yAxis.extent.max"
         ></mic-select>
@@ -535,7 +730,7 @@
             :getPopupContainer="(triggerNode) => triggerNode.parentNode"
             classWrap="item-5"
             label="类型"
-            v-model="config.tooltip.pointer.line.type"
+            v-model:value="config.tooltip.pointer.line.type"
             :options="lineStyles"
           ></mic-select>
           <mic-number
@@ -724,7 +919,7 @@ import { rowVueInfo } from "../../../../hooks/rawVueInfo";
 export default {
   name: "mic-line-config",
   setup(props) {
-    const { config } = rowVueInfo(lineConfig);
+    const { config, getOptions } = rowVueInfo(lineConfig);
 
     const handleAddItem = () => {
       config.value.series.push({
@@ -781,6 +976,7 @@ export default {
 
     return {
       config,
+      getOptions,
       handleAddItem,
       handleDelItem,
       fontWeights,

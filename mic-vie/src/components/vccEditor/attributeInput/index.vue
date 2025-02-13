@@ -17,7 +17,7 @@
           <com :currentEditRawInfo="currentEditRawInfo"> </com>
         </a-tab-pane>
         <a-tab-pane key="data" tab="数据" force-render>
-          <a-empty></a-empty>
+          <a-empty description="敬请期待"></a-empty>
         </a-tab-pane>
       </a-tabs>
     </div>
