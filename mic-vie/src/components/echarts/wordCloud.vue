@@ -21,9 +21,9 @@ export default {
       },
     },
     data: {
-      type: Array,
+      type: Object,
       default: () => {
-        return [];
+        return {};
       },
     },
   },
@@ -34,8 +34,8 @@ export default {
     const config = ref(c);
 
     const dv_data = computed(() => {
-      return props.data && props.data.length > 0
-        ? props.data
+      return props.data && Object.keys(props.data).length > 0
+        ? props.data.source
         : echartsConfig.micWordCloud.source;
     });
 
@@ -98,6 +98,18 @@ export default {
       (newVal) => {
         if (!newVal) return;
         config.value = merge(wordCloudConfig, newVal || {});
+        init();
+      },
+      {
+        immediate: true,
+        deep: true,
+      }
+    );
+
+    watch(
+      () => props.data,
+      (newVal) => {
+        if (!newVal) return;
         init();
       },
       {

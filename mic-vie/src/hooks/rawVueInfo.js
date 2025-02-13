@@ -5,7 +5,7 @@ import {
   attrObjToString,
 } from "../components/vccEditor/utils/utils.js";
 
-export function rowVueInfo(c) {
+export function rowVueInfo(c, pageInfoKey = ":com") {
   const mainPanelProvider = inject("mainPanelProvider");
   const rawVueInfo = mainPanelProvider.getRawVueInfo();
   let pageInfo = {};
@@ -15,7 +15,7 @@ export function rowVueInfo(c) {
   if (!pageInfo) {
     return;
   }
-  let com = merge(JSON.parse(JSON.stringify(c)), pageInfo.com || {});
+  let com = merge(JSON.parse(JSON.stringify(c)), pageInfo[pageInfoKey] || {});
 
   const config = ref(com);
 

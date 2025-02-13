@@ -25,12 +25,16 @@
 
       <RightOutlined
         class="mic-panel-icon"
-        v-if="!isShowBody"
+        v-if="!isShowBody && !isExpand"
         @click="showSlot"
       />
-      <DownOutlined class="mic-panel-icon" v-else @click="showSlot" />
+      <DownOutlined
+        class="mic-panel-icon"
+        v-if="isShowBody && !isExpand"
+        @click="showSlot"
+      />
     </div>
-    <div class="mic-panel-body" v-if="isShowBody">
+    <div class="mic-panel-body" v-if="isShowBody || isExpand">
       <slot></slot>
     </div>
   </div>
@@ -44,6 +48,10 @@ export default {
     title: {
       type: String,
       default: "",
+    },
+    isExpand: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props, { emit, slots }) {
@@ -59,6 +67,7 @@ export default {
     };
 
     const showSlot = () => {
+      if (props.isExpand) return;
       if (isDisabled.value == false) return;
       isShowBody.value = !isShowBody.value;
     };

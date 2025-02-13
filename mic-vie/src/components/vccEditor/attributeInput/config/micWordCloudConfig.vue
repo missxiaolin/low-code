@@ -1,81 +1,96 @@
 <template>
   <div class="attribute-input-collapse">
-    <mic-collapse-panel
-      title="系列"
-      v-model:value="config.series"
-      @addItem="handleAddItem"
-      @delItem="handleDelItem"
-    >
-      <template #default="slotProps">
-        <micField label="系列名称：">
-          <a-input v-model:value="slotProps.item.name"></a-input>
+    <template v-if="type == 'component'">
+      <mic-collapse-panel
+        title="系列"
+        v-model:value="config.series"
+        @addItem="handleAddItem"
+        @delItem="handleDelItem"
+      >
+        <template #default="slotProps">
+          <micField label="系列名称：">
+            <a-input v-model:value="slotProps.item.name"></a-input>
+          </micField>
+          <micField label="颜色：">
+            <vue3-color-picker
+              v-model:pureColor="slotProps.item.color"
+              pickerContainer=".attribute-input-collapse"
+            ></vue3-color-picker>
+          </micField>
+        </template>
+      </mic-collapse-panel>
+      <mic-panel title="样式">
+        <micField label="字体：">
+          <a-select
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model:value="config.global.fontFamily"
+            :options="fontFamilys"
+          ></a-select>
         </micField>
-        <micField label="颜色：">
+        <micField label="最大字号：">
+          <a-input-number v-model:value="config.global.max"></a-input-number>
+        </micField>
+        <micField label="最小字号：">
+          <a-input-number v-model:value="config.global.min"></a-input-number>
+        </micField>
+        <micField label="旋转范围：" :span="2">
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.global.rotationRange.min"
+            label="最小值"
+            prefix="度"
+          ></mic-number>
+          <mic-number
+            classWrap="item-5"
+            v-model:value="config.global.rotationRange.max"
+            prefix="度"
+            label="最大值"
+          ></mic-number>
+        </micField>
+        <micField label="旋转步长：">
+          <a-input-number v-model:value="config.global.rotate"></a-input-number>
+        </micField>
+      </mic-panel>
+      <mic-panel title="提示框" v-model:checked="config.tooltip.show">
+        <micField label="字号：">
+          <a-input-number
+            v-model:value="config.tooltip.textStyle.fontSize"
+          ></a-input-number>
+        </micField>
+        <micField label="字体颜色：">
           <vue3-color-picker
-            v-model:pureColor="slotProps.item.color"
+            v-model:pureColor="config.tooltip.textStyle.color"
             pickerContainer=".attribute-input-collapse"
           ></vue3-color-picker>
         </micField>
-      </template>
-    </mic-collapse-panel>
-    <mic-panel title="样式">
-      <micField label="字体：">
-        <a-select
-          :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-          v-model:value="config.global.fontFamily"
-          :options="fontFamilys"
-        ></a-select>
-      </micField>
-      <micField label="最大字号：">
-        <a-input-number v-model:value="config.global.max"></a-input-number>
-      </micField>
-      <micField label="最小字号：">
-        <a-input-number v-model:value="config.global.min"></a-input-number>
-      </micField>
-      <micField label="旋转范围：" :span="2">
-        <mic-number
-          classWrap="item-5"
-          v-model:value="config.global.rotationRange.min"
-          label="最小值"
-          prefix="度"
-        ></mic-number>
-        <mic-number
-          classWrap="item-5"
-          v-model:value="config.global.rotationRange.max"
-          prefix="度"
-          label="最大值"
-        ></mic-number>
-      </micField>
-      <micField label="旋转步长：">
-        <a-input-number v-model:value="config.global.rotate"></a-input-number>
-      </micField>
-    </mic-panel>
-    <mic-panel title="提示框" v-model:checked="config.tooltip.show">
-      <micField label="字号：">
-        <a-input-number
-          v-model:value="config.tooltip.textStyle.fontSize"
-        ></a-input-number>
-      </micField>
-      <micField label="字体颜色：">
-        <vue3-color-picker
-          v-model:pureColor="config.tooltip.textStyle.color"
-          pickerContainer=".attribute-input-collapse"
-        ></vue3-color-picker>
-      </micField>
-      <micField label="字体粗细：">
-        <a-select
-          :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-          v-model:value="config.tooltip.textStyle.fontWeight"
-          :options="fontWeights"
-        ></a-select>
-      </micField>
-      <micField label="背景颜色：">
-        <vue3-color-picker
-          v-model:pureColor="config.tooltip.backgroundColor"
-          pickerContainer=".attribute-input-collapse"
-        ></vue3-color-picker>
-      </micField>
-    </mic-panel>
+        <micField label="字体粗细：">
+          <a-select
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            v-model:value="config.tooltip.textStyle.fontWeight"
+            :options="fontWeights"
+          ></a-select>
+        </micField>
+        <micField label="背景颜色：">
+          <vue3-color-picker
+            v-model:pureColor="config.tooltip.backgroundColor"
+            pickerContainer=".attribute-input-collapse"
+          ></vue3-color-picker>
+        </micField>
+      </mic-panel>
+    </template>
+    <template v-if="type == 'data'">
+      <mic-panel title="字段映射：" :isExpand="true">
+        <micField label="name：">
+          <a-input v-model:value="config.dvField.name"></a-input>
+        </micField>
+        <micField label="type：">
+          <a-input v-model:value="config.dvField.type"></a-input>
+        </micField>
+        <micField label="value：">
+          <a-input v-model:value="config.dvField.value"></a-input>
+        </micField>
+      </mic-panel>
+    </template>
   </div>
 </template>
 
@@ -88,6 +103,12 @@ import { rowVueInfo } from "../../../../hooks/rawVueInfo";
 
 export default {
   name: "mic-word-config",
+  props: {
+    type: {
+      type: String,
+      default: "component",
+    },
+  },
   setup(props) {
     const { config } = rowVueInfo(wordCloudConfig);
 

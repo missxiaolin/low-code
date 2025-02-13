@@ -16,8 +16,8 @@
         <a-tab-pane key="settings" tab="配置">
           <com :currentEditRawInfo="currentEditRawInfo"> </com>
         </a-tab-pane>
-        <a-tab-pane key="data" tab="数据" force-render>
-          <a-empty description="敬请期待"></a-empty>
+        <a-tab-pane key="data" tab="数据">
+          <dataCom :currentEditRawInfo="currentEditRawInfo"></dataCom>
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -30,10 +30,12 @@
 import { inject, onMounted, ref } from "vue";
 import Page from "./page.vue";
 import Com from "./component.vue";
+import dataCom from "./dataCom.vue";
 export default {
   components: {
     Page,
     Com,
+    dataCom,
   },
   setup(props) {
     let activeKey = ref("settings");
@@ -45,6 +47,8 @@ export default {
           currentEditRawInfo.value = "";
           return;
         }
+        if (JSON.stringify(rawInfo) == JSON.stringify(currentEditRawInfo.value))
+          return;
         currentEditRawInfo.value = rawInfo;
       });
     });
