@@ -161,6 +161,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.config-manager-page {
+  background: #1d2126;
+}
 .content-item-content {
   flex: 1;
   :deep(svg) {

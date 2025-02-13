@@ -117,6 +117,10 @@ export default {
   :deep(.ant-tabs-content-holder) {
     height: 100%;
     overflow-y: scroll;
+    background: #1d2126;
+  }
+  :deep(.ant-tabs-nav) {
+    margin-bottom: 0 !important;
   }
   :deep(.ant-tabs-nav-list) {
     width: 100%;

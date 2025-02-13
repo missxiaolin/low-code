@@ -1,5 +1,5 @@
 <template>
-  <a-collapse :bordered="false" ghost class="attribute-input-collapse">
+  <div class="attribute-input-collapse">
     <mic-collapse-panel
       title="系列"
       v-model:value="config.series"
@@ -159,7 +159,7 @@
         </mic-panel>
       </template>
     </mic-collapse-panel>
-    <a-collapse-panel key="global" header="全局">
+    <mic-panel title="全局">
       <micField label="字体：">
         <a-select
           :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -196,8 +196,8 @@
           size="small"
         />
       </micField>
-    </a-collapse-panel>
-    <a-collapse-panel key="x" header="X轴">
+    </mic-panel>
+    <mic-panel title="X轴">
       <micField label="是否显示：">
         <a-radio-group v-model:value="config.xAxis.show">
           <a-radio-button :value="true">显示</a-radio-button>
@@ -238,14 +238,8 @@
           size="small"
         />
       </micField>
-    </a-collapse-panel>
-    <a-collapse-panel key="y" header="Y轴">
-      <micField label="Y轴：">
-        <a-radio-group v-model:value="config.yAxis.show">
-          <a-radio-button :value="true">打开</a-radio-button>
-          <a-radio-button :value="false">关闭</a-radio-button>
-        </a-radio-group>
-      </micField>
+    </mic-panel>
+    <mic-panel title="Y轴" v-model:checked="config.yAxis.show">
       <micField label="数据类型：">
         <a-radio-group
           v-model:value="config.yAxis.type"
@@ -461,8 +455,8 @@
           ></mic-number>
         </micField>
       </mic-panel>
-    </a-collapse-panel>
-    <a-collapse-panel key="tooltip" header="提示框">
+    </mic-panel>
+    <mic-panel title="提示框">
       <micField label="触发方式：">
         <a-radio-group v-model:value="config.tooltip.triggerOn">
           <a-radio-button :value="'mousemove'">悬浮</a-radio-button>
@@ -554,8 +548,8 @@
           ></mic-number>
         </micField>
       </mic-panel>
-    </a-collapse-panel>
-    <a-collapse-panel key="img" header="图例">
+    </mic-panel>
+    <mic-panel title="图例">
       <micField label="是否显示：">
         <a-radio-group v-model:value="config.legend.show">
           <a-radio-button :value="true">显示</a-radio-button>
@@ -659,8 +653,8 @@
           ></mic-color>
         </micField>
       </mic-panel>
-    </a-collapse-panel>
-    <a-collapse-panel key="animation" header="动画">
+    </mic-panel>
+    <mic-panel title="动画">
       <micField label="是否开启：">
         <a-radio-group v-model:value="config.animation.enabled">
           <a-radio-button :value="true">开启</a-radio-button>
@@ -684,12 +678,11 @@
           :options="animationEasings"
         ></a-input-number>
       </micField>
-    </a-collapse-panel>
-  </a-collapse>
+    </mic-panel>
+  </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
 import { lineConfig } from "../../../echarts/config";
 import {
   fontFamilys,
@@ -714,9 +707,58 @@ export default {
   setup(props) {
     const { config } = rowVueInfo(lineConfig);
 
-    const handleAddItem = () => {};
+    const handleAddItem = () => {
+      config.value.series.push({
+        type: "line",
+        id: `${uuid(7)}`,
+        name: "",
+        line: {
+          color: "#34FFF5",
+          style: "solid",
+          width: 1,
+          opacity: 1,
+          smooth: 0.5,
+        },
+        point: {
+          icon: "roundRect",
+          color: "#34FFF5",
+          borderColor: "rgba(0, 0, 0, 0.44)",
+          borderWidth: 1,
+          borderType: "solid",
+          opacity: 1,
+        },
+        label: {
+          show: false,
+          field: "y",
+          valueFormat: "auto",
+          describe: {
+            prefix: "",
+            suffix: "",
+          },
+          offset: {
+            x: 0,
+            y: 0,
+          },
+          rotate: 0,
+          textStyle: {
+            fontSize: 12,
+            color: "#ddd",
+            fontWeight: "normal",
+          },
+          stroke: {
+            color: "#000",
+            width: 0,
+          },
+        },
+      });
+    };
 
-    const handleDelItem = () => {};
+    const handleDelItem = () => {
+      if (config.value.series.length === 1) {
+        return;
+      }
+      config.value.series.splice(config.value.series.splice.length, 1);
+    };
 
     return {
       config,
@@ -738,3 +780,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.attribute-input-collapse {
+  :deep(.ant-switch) {
+    margin-left: 10px;
+  }
+}
+</style>

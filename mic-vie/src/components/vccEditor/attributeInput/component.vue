@@ -26,13 +26,13 @@
             <mic-number
               classWrap="item-5"
               v-model:value="posObj.left"
-              label="高度"
+              label="距离左边"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
             ></mic-number>
             <mic-number
               classWrap="item-5"
               v-model:value="posObj.top"
-              label="高度"
+              label="距离顶部"
               @change="(e) => handleUpdate(posObj, ':defaultStyle')"
             ></mic-number>
           </div>
@@ -120,6 +120,7 @@ export default {
     height: 0;
   }
   .title {
+    margin-top: 10px;
     padding-left: 10px;
     font-size: 14px;
   }

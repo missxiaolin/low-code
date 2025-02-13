@@ -3,6 +3,7 @@
     :class="{
       'mic-panel': true,
       'mic-panel-disabled': !isDisabled,
+      'mic-panel-body-show': isShowBody,
     }"
   >
     <div class="mic-panel-header">
@@ -15,9 +16,13 @@
         size="small"
         @change="switchChange"
       />
-      <div class="panel-title" @click="showSlot">
+      <div class="panel-title" @click="showSlot" v-if="!slots.header">
         {{ title }}
       </div>
+      <div class="panel-title" v-else @click="showSlot">
+        <slot name="header"></slot>
+      </div>
+
       <RightOutlined
         class="mic-panel-icon"
         v-if="!isShowBody"
@@ -41,7 +46,7 @@ export default {
       default: "",
     },
   },
-  setup(props) {
+  setup(props, { emit, slots }) {
     const attrs = useAttrs();
     let isHideSwitch = ref(attrs.checked == undefined ? true : false);
 
@@ -65,6 +70,7 @@ export default {
       isShowBody,
       switchChange,
       showSlot,
+      slots,
     };
   },
 };
@@ -91,14 +97,31 @@ export default {
     .panel-title {
       margin-left: 5px;
       flex: 1;
+      padding-left: 10px;
+      font-size: 14px;
     }
     .mic-panel-icon {
       position: absolute;
-      right: 0;
+      right: 10px;
       top: 10px;
     }
     .mic-switch-hidden {
       display: none;
+    }
+  }
+  .mic-panel-body {
+    padding-right: 10px;
+    padding-top: 10px;
+    background-color: hsl(215deg 15% 8%);
+  }
+}
+</style>
+
+<style lang="scss">
+.mic-panel-body {
+  .mic-panel {
+    .mic-panel-icon {
+      right: 0px !important;
     }
   }
 }

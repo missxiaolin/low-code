@@ -1,6 +1,24 @@
 <template>
-  <a-collapse :bordered="false" ghost class="attribute-input-collapse">
-    <a-collapse-panel key="style" header="样式">
+  <div class="attribute-input-collapse">
+    <mic-collapse-panel
+      title="系列"
+      v-model:value="config.series"
+      @addItem="handleAddItem"
+      @delItem="handleDelItem"
+    >
+      <template #default="slotProps">
+        <micField label="系列名称：">
+          <a-input v-model:value="slotProps.item.name"></a-input>
+        </micField>
+        <micField label="颜色：">
+          <vue3-color-picker
+            v-model:pureColor="slotProps.item.color"
+            pickerContainer=".attribute-input-collapse"
+          ></vue3-color-picker>
+        </micField>
+      </template>
+    </mic-collapse-panel>
+    <mic-panel title="样式">
       <micField label="字体：">
         <a-select
           :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -29,26 +47,8 @@
       <micField label="旋转步长：">
         <a-input-number v-model:value="config.global.rotate"></a-input-number>
       </micField>
-    </a-collapse-panel>
-    <mic-collapse-panel
-      title="系列"
-      v-model:value="config.series"
-      @addItem="handleAddItem"
-      @delItem="handleDelItem"
-    >
-      <template #default="slotProps">
-        <micField label="系列名称：">
-          <a-input v-model:value="slotProps.item.name"></a-input>
-        </micField>
-        <micField label="颜色：">
-          <vue3-color-picker
-            v-model:pureColor="slotProps.item.color"
-            pickerContainer=".attribute-input-collapse"
-          ></vue3-color-picker>
-        </micField>
-      </template>
-    </mic-collapse-panel>
-    <a-collapse-panel key="tooltip" header="提示框">
+    </mic-panel>
+    <mic-panel title="提示框">
       <micField label="是否显示：">
         <a-radio-group v-model:value="config.tooltip.show">
           <a-radio-button :value="true">打开</a-radio-button>
@@ -79,8 +79,8 @@
           pickerContainer=".attribute-input-collapse"
         ></vue3-color-picker>
       </micField>
-    </a-collapse-panel>
-  </a-collapse>
+    </mic-panel>
+  </div>
 </template>
 
 <script>
