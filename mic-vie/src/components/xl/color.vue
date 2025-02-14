@@ -5,7 +5,10 @@
       [`${classWrap}`]: true,
     }"
   >
-    <vue3-color-picker v-bind="attrs"></vue3-color-picker>
+    <vue3-color-picker
+      v-bind="attrs"
+      :pickerContainer="pickerContainer"
+    ></vue3-color-picker>
     <div class="mic-color-label">{{ label }}</div>
   </div>
 </template>
@@ -22,6 +25,10 @@ export default {
     label: {
       type: String,
       default: "",
+    },
+    pickerContainer: {
+      type: String,
+      default: ".attribute-input-collapse",
     },
   },
   setup() {

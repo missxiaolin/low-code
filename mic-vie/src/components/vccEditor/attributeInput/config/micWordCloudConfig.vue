@@ -12,20 +12,16 @@
             <a-input v-model:value="slotProps.item.name"></a-input>
           </micField>
           <micField label="颜色：">
-            <vue3-color-picker
-              v-model:pureColor="slotProps.item.color"
-              pickerContainer=".attribute-input-collapse"
-            ></vue3-color-picker>
+            <mic-color v-model:pureColor="slotProps.item.color"></mic-color>
           </micField>
         </template>
       </mic-collapse-panel>
       <mic-panel title="样式">
         <micField label="字体：">
-          <a-select
-            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+          <mic-select
             v-model:value="config.global.fontFamily"
             :options="fontFamilys"
-          ></a-select>
+          ></mic-select>
         </micField>
         <micField label="最大字号：">
           <a-input-number v-model:value="config.global.max"></a-input-number>
@@ -58,23 +54,20 @@
           ></a-input-number>
         </micField>
         <micField label="字体颜色：">
-          <vue3-color-picker
+          <mic-color
             v-model:pureColor="config.tooltip.textStyle.color"
-            pickerContainer=".attribute-input-collapse"
-          ></vue3-color-picker>
+          ></mic-color>
         </micField>
         <micField label="字体粗细：">
-          <a-select
-            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+          <mic-select
             v-model:value="config.tooltip.textStyle.fontWeight"
             :options="fontWeights"
-          ></a-select>
+          ></mic-select>
         </micField>
         <micField label="背景颜色：">
-          <vue3-color-picker
+          <mic-color
             v-model:pureColor="config.tooltip.backgroundColor"
-            pickerContainer=".attribute-input-collapse"
-          ></vue3-color-picker>
+          ></mic-color>
         </micField>
       </mic-panel>
     </template>

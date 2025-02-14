@@ -5,7 +5,10 @@
       [`${classWrap}`]: true,
     }"
   >
-    <a-select v-bind="attrs"></a-select>
+    <a-select
+      v-bind="attrs"
+      :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+    ></a-select>
     <div class="mic-select-label">{{ label }}</div>
   </div>
 </template>
