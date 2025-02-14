@@ -3,17 +3,18 @@
     <tools-bar
       class="vcc-tools-bar"
       @showCodeDialogVisible="showCodeDialogVisible"
+      @onShowLayer="isFullWidth = !isFullWidth"
     >
       <slot name="toole"></slot>
     </tools-bar>
     <div class="vcc-main-content">
+      <layer :isFullWidth="isFullWidth"></layer>
       <nav class="base-component-container">
         <raw-components></raw-components>
       </nav>
       <div class="vcc-main-container">
         <div id="editor" class="editor" ref="editorRef">
           <ruler ref="ruleRef" />
-
           <div class="preview-container">
             <div id="render-control-panel">
               <div
@@ -45,11 +46,7 @@
 
 <script>
 import { ref, defineAsyncComponent, onMounted, computed, provide } from "vue";
-import Grid from "./grid.vue";
-import ruler from "./rule/index.vue";
-import editScale from "./components/editScale.vue";
 import { MainPanelProvider } from "../../libs/data-main-panel";
-import micShape from "./shape/index.vue";
 import { attrStringToObj, attrObjToString, objectToArray } from "./utils/utils";
 const getFakeData = () => {
   return {
@@ -69,10 +66,11 @@ const getFakeData = () => {
 };
 export default {
   components: {
-    Grid,
-    ruler,
-    editScale,
-    micShape,
+    Layer: defineAsyncComponent(() => import("./components/layer.vue")),
+    Grid: defineAsyncComponent(() => import("./components/grid.vue")),
+    ruler: defineAsyncComponent(() => import("./rule/index.vue")),
+    editScale: defineAsyncComponent(() => import("./components/editScale.vue")),
+    micShape: defineAsyncComponent(() => import("./shape/index.vue")),
     rawComponents: defineAsyncComponent(() =>
       import("./rawComponents/index.vue")
     ),
@@ -97,6 +95,7 @@ export default {
     },
   },
   setup(props, { emit }) {
+    const isFullWidth = ref(false);
     let codeDialogVisible = ref(false);
     const showCodeDialogVisible = () => {
       codeDialogVisible.value = true;
@@ -203,7 +202,7 @@ export default {
         })
         .onCodeStructureUpdated((codeRawVueInfo) => {
           comJson.value = codeRawVueInfo.template.__children[0].div;
-          codeRawVueInfo.value = codeRawVueInfo;
+          codeRawVueInfo.value = JSON.parse(JSON.stringify(codeRawVueInfo));
         })
         .onNodeDeleted(() => {
           currentEditRawInfo.value = null;
@@ -279,6 +278,7 @@ export default {
       dCode,
       comJson,
       getAttr,
+      isFullWidth,
     };
   },
 };
@@ -297,7 +297,7 @@ export default {
     overflow: hidden;
   }
   .vcc-tools-bar {
-    height: auto;
+    height: 40px;
     width: 100%;
     overflow: hidden;
   }

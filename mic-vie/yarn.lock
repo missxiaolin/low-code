@@ -5811,6 +5811,11 @@ vue-demi@^0.13.11:
   resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.13.11.tgz#7d90369bdae8974d87b1973564ad390182410d99"
   integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
 
+vue-draggable-next@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npmmirror.com/vue-draggable-next/-/vue-draggable-next-2.2.1.tgz#adbe98c74610cca8f4eb63f92042681f96920451"
+  integrity sha512-EAMS1IRHF0kZO0o5PMOinsQsXIqsrKT1hKmbICxG3UEtn7zLFkLxlAtajcCcUTisNvQ6TtCB5COjD9a1raNADw==
+
 vue-echarts@^7.0.3:
   version "7.0.3"
   resolved "https://registry.npmmirror.com/vue-echarts/-/vue-echarts-7.0.3.tgz#bf79f7ee0144bbdc6aee5610e8443fed91f6abbe"
