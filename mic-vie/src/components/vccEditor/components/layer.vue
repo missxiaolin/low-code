@@ -2,7 +2,7 @@
   <transition name="width-transition">
     <div :class="['layer-box', { 'full-width': isFullWidth }]">
       <div class="layer-manager-head">图层</div>
-      <div class="layer-manager-body" v-if="isShowLayer">
+      <div class="layer-manager-body">
         <draggable
           :list="list"
           @change="draggableChange"
@@ -12,9 +12,12 @@
             :class="{
               'layer-item': true,
               'draggable-item': true,
+              'draggable-item-active':
+                clickActiveLcId == item['mic-shape'].lc_id,
             }"
             v-for="item in list"
             :key="item"
+            @click="selectItem(item['mic-shape'])"
           >
             <BarsOutlined />
             {{ item["mic-shape"].vccName }}
@@ -27,6 +30,7 @@
 
 <script>
 import { inject, onMounted, ref } from "vue";
+// https://www.itxst.com/vue-draggable-next/tutorial.html
 import { VueDraggableNext } from "vue-draggable-next";
 
 export default {
@@ -40,7 +44,7 @@ export default {
     },
   },
   setup(props) {
-    let isShowLayer = ref(true);
+    let clickActiveLcId = ref("");
     let rawDataStructure = ref({});
     let list = ref([]);
     const mainPanelProvider = inject("mainPanelProvider");
@@ -52,28 +56,41 @@ export default {
       mainPanelProvider.render(rawData);
     };
 
+    const selectItem = (item) => {
+      mainPanelProvider.selectElement(item.lc_id);
+    };
+
     onMounted(() => {
-      mainPanelProvider.onCodeStructureUpdated((codeRawVueInfo) => {
-        isShowLayer.value = false;
-        rawDataStructure.value = mainPanelProvider.getRawDataStructure();
-        list.value = rawDataStructure.value.template.__children[0].div
-          .__children
-          ? JSON.parse(
-              JSON.stringify(
-                rawDataStructure.value.template.__children[0].div.__children
+      mainPanelProvider
+        .onCodeStructureUpdated(() => {
+          rawDataStructure.value = mainPanelProvider.getRawDataStructure();
+          const data = rawDataStructure.value.template.__children[0].div
+            .__children
+            ? JSON.parse(
+                JSON.stringify(
+                  rawDataStructure.value.template.__children[0].div.__children
+                )
               )
-            )
-          : [];
-        setTimeout(() => {
-          isShowLayer.value = true;
+            : [];
+
+          if (JSON.stringify(data) == JSON.stringify(list.value)) return;
+          list.value = data;
+        })
+        .onSelectElement((rawInfo) => {
+          if (!rawInfo) {
+            clickActiveLcId.value = "";
+            return;
+          }
+
+          clickActiveLcId.value = rawInfo["mic-shape"].lc_id;
         });
-      });
     });
     return {
-      isShowLayer,
+      clickActiveLcId,
       rawDataStructure,
       draggableChange,
       list,
+      selectItem,
     };
   },
 };
@@ -99,9 +116,14 @@ export default {
   }
   .layer-manager-body {
     flex: 1;
+    padding-top: 10px;
     .layer-item {
       width: 200px;
       padding: 10px;
+      margin-bottom: 5px;
+      &.draggable-item-active {
+        background: #2681ff;
+      }
     }
   }
 }

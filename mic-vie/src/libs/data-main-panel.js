@@ -443,6 +443,7 @@ export class MainPanelProvider {
         key != "lc-mark" &&
         key != "lc_id" &&
         key != "div-lc-mark" &&
+        key != "vccName" &&
         !isObject(
           object[
             key
