@@ -20,7 +20,7 @@
           <a-tooltip>
             <template #title>预览</template>
             <div class="head-btn">
-              <EyeOutlined />
+              <IconPreview class="head-btn-icon" />
             </div>
           </a-tooltip>
         </div>
@@ -32,7 +32,7 @@
         <a-tooltip>
           <template #title>查看实时代码</template>
           <div class="head-btn">
-            <EyeOutlined @click="showCodeDialogVisible" />
+            <FilePptOutlined @click="showCodeDialogVisible" />
           </div>
         </a-tooltip>
         <a-tooltip>
@@ -48,7 +48,11 @@
 
 <script>
 import { ref } from "vue";
+import { IconPreview } from "../../icons/index";
 export default {
+  components: {
+    IconPreview,
+  },
   emits: ["showCodeDialogVisible", "save", "onShowLayer"],
   setup(props, { emit }) {
     const editMode = ref(true);
@@ -123,6 +127,10 @@ export default {
 
   .head-btn-icon {
     color: #fff;
+    fill: #fff;
+    width: 15px;
+    height: 15px;
+    margin-top: 2px;
 
     &:not(:first-child) {
       border-left: 1px solid rgb(255 235 235 / 10%);
