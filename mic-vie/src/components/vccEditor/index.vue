@@ -5,6 +5,7 @@
       @showCodeDialogVisible="showCodeDialogVisible"
       @onShowLayer="isFullWidth = !isFullWidth"
       @save="save"
+      @preview="preview"
     >
       <slot name="toole"></slot>
     </tools-bar>
@@ -95,7 +96,7 @@ export default {
       },
     },
   },
-  emits: ["updateCodeEntity", "save"],
+  emits: ["updateCodeEntity", "save", "preview"],
   setup(props, { emit }) {
     const isFullWidth = ref(false);
     let codeDialogVisible = ref(false);
@@ -276,7 +277,12 @@ export default {
       return share;
     };
 
+    const preview = () => {
+      emit("preview");
+    };
+
     return {
+      preview,
       save,
       showCodeDialogVisible,
       codeDialogVisible,

@@ -5,6 +5,7 @@
     :initCodeEntity="codeInfoEntity"
     @updateCodeEntity="updateCodeEntity"
     @save="save"
+    @preview="preview"
   />
 </template>
 
@@ -75,6 +76,22 @@ export default {
       });
     };
 
+    const preview = () => {
+      // router.push({
+      //   path: "/dp/preview",
+      //   query: {
+      //     id: route.query.id,
+      //     projectId: route.query.projectId,
+      //   },
+      // });
+      window.open(
+        "/dp/preview?id=" +
+          route.query.id +
+          "&projectId=" +
+          route.query.projectId
+      );
+    };
+
     onMounted(() => {
       init();
     });
@@ -84,6 +101,7 @@ export default {
       isShowVcc,
       updateCodeEntity,
       save,
+      preview,
     };
   },
 };

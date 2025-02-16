@@ -20,7 +20,7 @@
           <a-tooltip>
             <template #title>预览</template>
             <div class="head-btn">
-              <IconPreview class="head-btn-icon" />
+              <IconPreview class="head-btn-icon" @click="preview" />
             </div>
           </a-tooltip>
         </div>
@@ -53,7 +53,7 @@ export default {
   components: {
     IconPreview,
   },
-  emits: ["showCodeDialogVisible", "save", "onShowLayer"],
+  emits: ["showCodeDialogVisible", "save", "onShowLayer", "preview"],
   setup(props, { emit }) {
     const editMode = ref(true);
 
@@ -68,7 +68,13 @@ export default {
     const onShowLayer = () => {
       emit("onShowLayer");
     };
+
+    const preview = () => {
+      emit("preview");
+    };
+
     return {
+      preview,
       onShowLayer,
       editMode,
       onEditModeChange,
