@@ -9,6 +9,11 @@ export const initRoute = [
     label: "项目",
     children: [
       {
+        key: "dpList",
+        path: "/dp/list",
+        label: "大屏列表",
+      },
+      {
         key: "projectList",
         path: "/project/list",
         label: "项目列表",

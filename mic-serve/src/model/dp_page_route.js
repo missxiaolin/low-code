@@ -55,7 +55,7 @@ export default class DpPageRoute {
       });
     let id = _.get(insertResult, [0], 0);
 
-    return id > 0;
+    return id;
   }
 
   /**

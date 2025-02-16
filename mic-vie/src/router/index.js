@@ -49,6 +49,7 @@ export const defaultRoute = [
     path: "/project/component/list",
     component: () => import("@/views/project/component.vue"),
   },
+
   {
     path: "/404",
     component: () => import("@/views/error-page/404.vue"),
@@ -56,6 +57,10 @@ export const defaultRoute = [
   {
     path: "/form", // 拖拽表单
     component: () => import("@/views/vcc/form.vue"),
+  },
+  {
+    path: "/dp/list",
+    component: () => import("@/views/project/dpPage.vue"),
   },
   {
     path: "/dp/form", // 大屏

@@ -68,7 +68,6 @@ export default {
       columns: tableColumns,
       total: 0,
     });
-    onMounted(() => {});
 
     const goVcc = (id = 0) => {
       window.open("/form?projectId=" + route.query.projectId + "&pageId=" + id);
