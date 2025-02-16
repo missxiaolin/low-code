@@ -24,7 +24,6 @@ export default class DpPageRoute {
       "name",
       "tem_json",
       "script_json",
-      "page_html",
       "css",
       "eventNode",
       "customData",

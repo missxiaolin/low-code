@@ -4,6 +4,7 @@
       class="vcc-tools-bar"
       @showCodeDialogVisible="showCodeDialogVisible"
       @onShowLayer="isFullWidth = !isFullWidth"
+      @save="save"
     >
       <slot name="toole"></slot>
     </tools-bar>
@@ -94,6 +95,7 @@ export default {
       },
     },
   },
+  emits: ["updateCodeEntity", "save"],
   setup(props, { emit }) {
     const isFullWidth = ref(false);
     let codeDialogVisible = ref(false);
@@ -171,7 +173,13 @@ export default {
       return obj;
     };
 
-    const setRule = () => {};
+    const updateCodeEntity = (key, data) => {
+      emit("updateCodeEntity", { key, data });
+    };
+
+    const save = () => {
+      emit("save");
+    };
 
     const init = () => {
       mainPanelProvider
@@ -203,6 +211,7 @@ export default {
         .onCodeStructureUpdated((codeRawVueInfo) => {
           comJson.value = codeRawVueInfo.template.__children[0].div;
           codeRawVueInfo.value = JSON.parse(JSON.stringify(codeRawVueInfo));
+          updateCodeEntity("tem_json", JSON.stringify(codeRawVueInfo.value));
         })
         .onNodeDeleted(() => {
           currentEditRawInfo.value = null;
@@ -268,6 +277,7 @@ export default {
     };
 
     return {
+      save,
       showCodeDialogVisible,
       codeDialogVisible,
       editorRef,

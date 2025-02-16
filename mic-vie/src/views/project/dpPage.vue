@@ -68,7 +68,6 @@ export default {
       return {};
     },
   };`,
-      page_html: "",
       css: "",
       eventNode: "[]",
       customData: "[]",
@@ -109,7 +108,7 @@ export default {
         return;
       }
       isShow.value = false;
-      window.open(`/dp/form?id=${res.model}`);
+      window.open(`/dp/form?id=${res.model}&projectId=${projectId}`);
       getPage();
       //   router.push({
       //     path: "/dp/form",
@@ -132,7 +131,7 @@ export default {
     const handleCurrentChange = (page) => {};
 
     const goVcc = (id) => {
-      window.open(`/dp/form?id=${id}`);
+      window.open(`/dp/form?id=${id}&projectId=${projectId}`);
     };
 
     onMounted(() => {
