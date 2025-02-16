@@ -182,12 +182,10 @@ export default {
       emit("save");
     };
 
-    let isOnload = false;
-
     const init = () => {
       mainPanelProvider
         .onRootElementMounted((rootElement) => {
-          if (!rootElement) {
+          if (!rootElement || rootElement == null) {
             rootElement = document.getElementById("render-control-panel");
           }
           document
@@ -196,11 +194,11 @@ export default {
               mainPanelProvider.clearElementSelect();
             });
 
-          if (!isOnload) {
+          if (rootElement != null && rootElement) {
             // 渲染完成拿到高度宽度
             const cw = document.documentElement.clientWidth; // 屏幕宽度
             const hWidth = Math.max(rootElement.offsetWidth, cw);
-            if (ruleRef.value) {
+            if (ruleRef.value && rootElement && rootElement != null) {
               canvas.value.scale = scale.value;
               canvas.hWidth = hWidth;
               canvas.value.height = rootElement.offsetHeight + 150;
