@@ -76,7 +76,11 @@ export default {
       });
     };
 
-    const preview = () => {
+    const preview = async () => {
+      const res = await pageRouteSave(formData.value);
+      if (!res.success) {
+        return;
+      }
       // router.push({
       //   path: "/dp/preview",
       //   query: {
