@@ -46,13 +46,13 @@ export function addClass(el, cls) {
 
 export function setStyle(element, styleName, value = "") {
   if (!element || !styleName) return;
-
   if (isObject(styleName)) {
     Object.keys(styleName).forEach((prop) => {
       setStyle(element, prop, styleName[prop]);
     });
   } else {
     styleName = camelCase(styleName);
+    console.log(styleName, value);
     element.style[styleName] = value;
   }
 }
