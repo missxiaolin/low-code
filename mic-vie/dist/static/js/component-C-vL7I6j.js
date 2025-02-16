@@ -1,1 +1,0 @@
-import{a4 as o}from"./index-COMSe1sn.js";function n(t){return o({url:"/adm/component/list",method:"post",data:t})}function a(t){return o({url:"/adm/component/save",method:"post",data:t})}function e(t){return o({url:"/adm/component/generate",method:"post",data:t})}function r(t){return o({url:"/adm/component/all",method:"post",data:t})}export{a,e as b,n as c,r as d};

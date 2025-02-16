@@ -15,7 +15,7 @@
             <mic-select
               classWrap="item-5"
               label="类型"
-              v-model:value="slotProps.item.line.color"
+              v-model:value="slotProps.item.line.style"
               :options="lineStyles"
             >
             </mic-select>
