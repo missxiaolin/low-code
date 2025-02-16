@@ -1,0 +1,1 @@
+import{a4 as t}from"./index-DaARy9PW.js";function d(a){return t({url:"/adm/dp/page/save",method:"post",data:a})}function e(a){return t({url:"/adm/dp/page/detail",method:"post",data:a})}function o(a){return t({url:"/adm/dp/page/list",method:"post",data:a})}export{o as a,e as b,d as p};

@@ -182,6 +182,8 @@ export default {
       emit("save");
     };
 
+    let isOnload = false;
+
     const init = () => {
       mainPanelProvider
         .onRootElementMounted((rootElement) => {
@@ -194,16 +196,18 @@ export default {
               mainPanelProvider.clearElementSelect();
             });
 
-          // 渲染完成拿到高度宽度
-          const cw = document.documentElement.clientWidth; // 屏幕宽度
-          const hWidth = Math.max(rootElement.offsetWidth, cw);
-          if (ruleRef.value) {
-            canvas.value.scale = scale.value;
-            canvas.hWidth = hWidth;
-            canvas.value.height = rootElement.offsetHeight + 150;
-            canvas.value.width = hWidth;
-            ruleRef.value.setHRule(hWidth + 250, canvas.value);
-            ruleRef.value.setVRule(canvas.value);
+          if (!isOnload) {
+            // 渲染完成拿到高度宽度
+            const cw = document.documentElement.clientWidth; // 屏幕宽度
+            const hWidth = Math.max(rootElement.offsetWidth, cw);
+            if (ruleRef.value) {
+              canvas.value.scale = scale.value;
+              canvas.hWidth = hWidth;
+              canvas.value.height = rootElement.offsetHeight + 150;
+              canvas.value.width = hWidth;
+              ruleRef.value.setHRule(hWidth + 250, canvas.value);
+              ruleRef.value.setVRule(canvas.value);
+            }
           }
         })
         .onMerged(() => {
