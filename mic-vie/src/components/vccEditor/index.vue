@@ -185,6 +185,9 @@ export default {
     const init = () => {
       mainPanelProvider
         .onRootElementMounted((rootElement) => {
+          if (!rootElement) {
+            rootElement = document.getElementById("render-control-panel");
+          }
           document
             .getElementsByTagName("body")[0]
             .addEventListener("click", (e) => {
