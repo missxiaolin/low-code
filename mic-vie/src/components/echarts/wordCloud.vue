@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <e-charts ref="chart" theme="dark" :option="option" :autoresize="true" />
+    <e-charts ref="chart" :theme="theme" :option="option" :autoresize="true" />
   </div>
 </template>
 
@@ -14,6 +14,10 @@ import { echartsConfig } from "../_config/eIndex.js";
 export default {
   name: "micWordCloud",
   props: {
+    theme: {
+      type: String,
+      default: "light", // dark
+    },
     com: {
       type: Object,
       default: () => {

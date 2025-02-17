@@ -1,4 +1,5 @@
 <template>
+  <!-- transform: `translate(${defaultStyle.left}px, ${defaultStyle.top}px)`-->
   <div
     class="shape"
     ref="shapeRef"
@@ -131,7 +132,7 @@ export default {
       const startTop = toProps.value.defaultStyle.top;
       const startLeft = toProps.value.defaultStyle.left;
       // 如果元素没有移动，则不保存快照
-      const move = throttle((moveEvent) => {
+      const move = (moveEvent) => {
         const curX = moveEvent.clientX;
         const curY = moveEvent.clientY;
         toProps.value.defaultStyle.top =
@@ -144,7 +145,7 @@ export default {
           x: toProps.value.defaultStyle.left,
           y: toProps.value.defaultStyle.top,
         };
-      }, 0);
+      };
       const up = () => {
         document.removeEventListener("mousemove", move);
         document.removeEventListener("mouseup", up);

@@ -50,6 +50,7 @@
 import { ref, defineAsyncComponent, onMounted, computed, provide } from "vue";
 import { MainPanelProvider } from "../../libs/data-main-panel";
 import { attrStringToObj, attrObjToString, objectToArray } from "./utils/utils";
+import transform from "lodash/transform";
 const getFakeData = () => {
   return {
     template: {
@@ -403,6 +404,9 @@ export default {
   #vcc-container {
     transform: scale(v-bind(scale)) translate(0px, 0px);
     transform-origin: 0 0;
+    background-color: rgba(13, 42, 67, 0);
+    transition: 0.2s all ease-in-out;
+    will-change: transform;
   }
 }
 </style>

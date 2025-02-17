@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <e-charts ref="chart" theme="dark" :option="option" :autoresize="true" />
+    <e-charts ref="chart" :theme="theme" :option="option" :autoresize="true" />
   </div>
 </template>
 
@@ -19,6 +19,10 @@ import {
 export default {
   name: "micLine",
   props: {
+    theme: {
+      type: String,
+      default: "light", // dark
+    },
     com: {
       type: Object,
       default: () => {
